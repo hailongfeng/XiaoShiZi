@@ -14,6 +14,7 @@ public class Student extends BaseModel {
     private String schoolName	;
     private String schoolClassName;
     private String schoolGradeName	;
+    private String headPortrait	;
 
     @Override
     protected boolean isCorrect() {
@@ -106,5 +107,13 @@ public class Student extends BaseModel {
 
     public void setSchoolGradeName(String schoolGradeName) {
         this.schoolGradeName = schoolGradeName;
+    }
+
+    public String getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setHeadPortrait(String headPortrait) {
+        this.headPortrait = headPortrait;
     }
 }

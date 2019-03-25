@@ -12,6 +12,7 @@ public class Guardian implements Serializable{
     private String parentUserName	;
     private String custody	;
     private String studentName	;
+    private String headPortrait	;
 
     public String getParentId() {
         return parentId;
@@ -43,5 +44,13 @@ public class Guardian implements Serializable{
 
     public void setStudentName(String studentName) {
         this.studentName = studentName;
+    }
+
+    public String getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setHeadPortrait(String headPortrait) {
+        this.headPortrait = headPortrait;
     }
 }

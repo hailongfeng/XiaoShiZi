@@ -1,0 +1,405 @@
+2019-03-25 21:38:11.306 19922-19922/? I/Choreographer: Skipped 2 frames!  The application may be doing too much work on its main thread.
+2019-03-25 21:38:13.324 6228-6235/edu.children.xiaoshizi I/zygote64: Do partial code cache collection, code=24KB, data=29KB
+2019-03-25 21:38:13.326 6228-6235/edu.children.xiaoshizi I/zygote64: After code cache collection, code=24KB, data=29KB
+2019-03-25 21:38:13.326 6228-6235/edu.children.xiaoshizi I/zygote64: Increasing code cache capacity to 128KB
+2019-03-25 21:38:13.974 6228-6228/edu.children.xiaoshizi I/Choreographer: Skipped 2 frames!  The application may be doing too much work on its main thread.
+
+    --------- beginning of system
+2019-03-25 21:38:14.101 6228-6228/edu.children.xiaoshizi D/LoginActivity: root ={"bindingPassword":"1","birthday":"2019-03-20","id":0,"noncestr":"cj74G53wyd","parentCustody":"爸爸","parentId":"5gcnrqBYVl1Qngok8uH","schoolClassId":"uQ8jhJZCPEP1vqA9lQZ","schoolGradeId":"5eaZmroMMgYZu0kX1nB","schoolId":"suA38j1AxGBjWcUJP4h","sex":"M","sign":"ECA78F26B61B69E70522D3C329B64A67","timestamp":"1553521093997","token":"7730a13c-a5d7-4460-b2bc-4b85c28fae8b","userName":"张三"}
+2019-03-25 21:38:14.137 6228-6228/edu.children.xiaoshizi D/NetworkSecurityConfig: No Network Security Config specified, using platform default
+2019-03-25 21:38:14.173 6228-6228/edu.children.xiaoshizi I/Choreographer: Skipped 11 frames!  The application may be doing too much work on its main thread.
+2019-03-25 21:38:14.181 6228-6333/edu.children.xiaoshizi D/OkHttp: --> POST https://app.pinocc.cn/apprest/v1/student/studentBinding
+2019-03-25 21:38:14.181 6228-6333/edu.children.xiaoshizi D/OkHttp: Content-Type: application/json; charset=utf-8
+2019-03-25 21:38:14.181 6228-6333/edu.children.xiaoshizi D/OkHttp: Content-Length: 392
+2019-03-25 21:38:14.182 6228-6333/edu.children.xiaoshizi D/OkHttp: {"bindingPassword":"1","birthday":"2019-03-20","id":0,"noncestr":"cj74G53wyd","parentCustody":"爸爸","parentId":"5gcnrqBYVl1Qngok8uH","schoolClassId":"uQ8jhJZCPEP1vqA9lQZ","schoolGradeId":"5eaZmroMMgYZu0kX1nB","schoolId":"suA38j1AxGBjWcUJP4h","sex":"M","sign":"ECA78F26B61B69E70522D3C329B64A67","timestamp":"1553521093997","token":"7730a13c-a5d7-4460-b2bc-4b85c28fae8b","userName":"张三"}
+2019-03-25 21:38:14.182 6228-6333/edu.children.xiaoshizi D/OkHttp: --> END POST (392-byte body)
+2019-03-25 21:38:15.931 6228-6333/edu.children.xiaoshizi D/libc-netbsd: [getaddrinfo]:  hostname=app.pinocc.cn;  servname=(null);  app_pid=6228;  app_uid=10461;  ai_flags=1024;  ai_family=0; ai_socktype=1 from prox result 0
+2019-03-25 21:38:16.160 6228-6235/edu.children.xiaoshizi I/zygote64: Do partial code cache collection, code=61KB, data=59KB
+2019-03-25 21:38:16.161 6228-6235/edu.children.xiaoshizi I/zygote64: After code cache collection, code=61KB, data=59KB
+2019-03-25 21:38:16.161 6228-6235/edu.children.xiaoshizi I/zygote64: Increasing code cache capacity to 256KB
+2019-03-25 21:38:16.773 4817-4843/? W/Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+2019-03-25 21:38:16.804 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:16.804+08:00[Asia/Shanghai]
+2019-03-25 21:38:16.804 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:38:16.804 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:16.804+08:00[Asia/Shanghai]
+2019-03-25 21:38:16.804 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:38:16.825 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:16.825+08:00[Asia/Shanghai]
+2019-03-25 21:38:16.825 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:38:16.839 6228-6333/edu.children.xiaoshizi D/OkHttp: <-- 200 https://app.pinocc.cn/apprest/v1/student/studentBinding (2656ms)
+2019-03-25 21:38:16.839 6228-6333/edu.children.xiaoshizi D/OkHttp: Server: nginx/1.10.1
+2019-03-25 21:38:16.839 6228-6333/edu.children.xiaoshizi D/OkHttp: Date: Mon, 25 Mar 2019 13:38:15 GMT
+2019-03-25 21:38:16.839 6228-6333/edu.children.xiaoshizi D/OkHttp: Content-Type: application/json;charset=UTF-8
+2019-03-25 21:38:16.839 6228-6333/edu.children.xiaoshizi D/OkHttp: Content-Length: 1089
+2019-03-25 21:38:16.839 6228-6333/edu.children.xiaoshizi D/OkHttp: Connection: keep-alive
+2019-03-25 21:38:16.842 6228-6333/edu.children.xiaoshizi D/OkHttp: {
+2019-03-25 21:38:16.842 6228-6333/edu.children.xiaoshizi D/OkHttp:   "code" : "0",
+2019-03-25 21:38:16.842 6228-6333/edu.children.xiaoshizi D/OkHttp:   "message" : "success",
+2019-03-25 21:38:16.842 6228-6333/edu.children.xiaoshizi D/OkHttp:   "result" : {
+2019-03-25 21:38:16.842 6228-6333/edu.children.xiaoshizi D/OkHttp:     "students" : [ {
+2019-03-25 21:38:16.842 6228-6333/edu.children.xiaoshizi D/OkHttp:       "studentId" : "il9jXQc6jOcstYLZTUt",
+2019-03-25 21:38:16.842 6228-6333/edu.children.xiaoshizi D/OkHttp:       "custody" : "爸爸",
+2019-03-25 21:38:16.842 6228-6333/edu.children.xiaoshizi D/OkHttp:       "birthday" : "2019-03-20",
+2019-03-25 21:38:16.842 6228-6333/edu.children.xiaoshizi D/OkHttp:       "sex" : "M",
+2019-03-25 21:38:16.842 6228-6333/edu.children.xiaoshizi D/OkHttp:       "studentName" : "张三",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "schoolId" : "suA38j1AxGBjWcUJP4h",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "schoolGradeId" : "5eaZmroMMgYZu0kX1nB",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "schoolClassId" : "uQ8jhJZCPEP1vqA9lQZ",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "headPortrait" : "https://single-obs.obs.cn-east-2.myhuaweicloud.com/app_pic/2019032516262786120.jpg",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "schoolName" : "振华女中分校",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "schoolClassName" : "潇湘馆",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "schoolGradeName" : "二年级1"
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:     } ],
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:     "parents" : [ {
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "parentId" : "1",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "parentUserName" : "李大鹏",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "custody" : "爸爸",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "studentName" : "张三",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "headPortrait" : "https://single-obs.obs.cn-east-2.myhuaweicloud.com/app_pic/2019031214321954622.png?x-image-process=image/sharpen,100/quality,Q_90/resize,m_lfit,w_200,h_200"
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:     }, {
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "parentId" : "KVB9Q5xZct8TB2bVr9f",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "parentUserName" : "Hello",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "custody" : "妈妈",
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:       "studentName" : "张三"
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:     } ]
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp:   }
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp: }
+2019-03-25 21:38:16.843 6228-6333/edu.children.xiaoshizi D/OkHttp: <-- END HTTP (1089-byte body)
+2019-03-25 21:38:16.877 6228-6228/edu.children.xiaoshizi D/LoginActivity: onComplete , main
+2019-03-25 21:38:21.321 16656-16656/? D/baidu_location_service: WifiScan finished, in callback.
+2019-03-25 21:38:22.500 6228-6235/edu.children.xiaoshizi I/zygote64: Compiler allocated 6MB to compile void android.view.ViewRootImpl.performTraversals()
+2019-03-25 21:38:23.588 2014-2800/? W/Watchdog_N: !@WatchDog_16913;
+2019-03-25 21:38:25.451 15444-15444/? I/Choreographer: Skipped 1 frames!  The application may be doing too much work on its main thread.
+2019-03-25 21:38:28.661 2014-2273/? W/ActivityManager: Background start not allowed: service Intent { flg=0x4 cmp=com.autonavi.minimap/com.q.m.QS (has extras) } to com.autonavi.minimap/com.q.m.QS from pid=-1 uid=10246 pkg=com.autonavi.minimap
+2019-03-25 21:38:28.711 5026-5026/? I/WeatherS_AutoUpdateWeatherService: onStartJob JobId:-1257952501
+2019-03-25 21:38:28.726 5026-5026/? I/WeatherS_ServiceAutoUpdateWeather: launchUpdateWeatherServiceInDelayTime delay time:6328300, list size = 1
+2019-03-25 21:38:28.735 5026-5026/? I/WeatherS_AutoUpdateWeatherService: doUpdateNow = false
+2019-03-25 21:38:28.735 5026-5026/? I/WeatherS_AutoUpdateWeatherService: updateWeather mCurrentJob = null
+2019-03-25 21:38:28.862 4817-4843/? W/Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+2019-03-25 21:38:28.898 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:28.898+08:00[Asia/Shanghai]
+2019-03-25 21:38:28.898 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:38:28.898 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:28.898+08:00[Asia/Shanghai]
+2019-03-25 21:38:28.898 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:38:28.923 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:28.923+08:00[Asia/Shanghai]
+2019-03-25 21:38:28.923 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:38:31.370 16656-16656/? D/baidu_location_service: WifiScan finished, in callback.
+2019-03-25 21:38:31.413 19922-19922/? I/Choreographer: Skipped 3 frames!  The application may be doing too much work on its main thread.
+2019-03-25 21:38:34.472 2014-2393/? E/WifiStateMachine: Received DATA_STALL, reason=11 seq=4339
+2019-03-25 21:38:34.473 2014-2393/? D/WifiStateMachine: checking internet access for data stall is disabled
+2019-03-25 21:38:35.528 14048-14152/? D/WorkerThreadMonitor: Kill MSF check result[ senderSize:0,sendInterval:42126,receiveInterval=12058,addCmdCount=1279
+2019-03-25 21:38:37.883 2014-2116/? E/BiometricsService.Main: return mBrightness != 0
+2019-03-25 21:38:40.978 4817-4843/? W/Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+2019-03-25 21:38:41.007 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:41.007+08:00[Asia/Shanghai]
+2019-03-25 21:38:41.008 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:38:41.008 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:41.008+08:00[Asia/Shanghai]
+2019-03-25 21:38:41.008 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:38:41.035 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:41.035+08:00[Asia/Shanghai]
+2019-03-25 21:38:41.036 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:38:41.439 16656-16656/? D/baidu_location_service: WifiScan finished, in callback.
+2019-03-25 21:38:43.882 2014-2069/? D/BiometricsService.Main: onGoToSleep
+2019-03-25 21:38:43.883 2014-2069/? I/PowerManagerService: Going to sleep due to screen timeout (uid 1000)...
+2019-03-25 21:38:43.883 2014-2558/? D/BiometricsService.Main: cancelFaceAuthenticateWhileScreenOff reason = cancelRecognitionByScreenOff
+2019-03-25 21:38:43.883 2014-2558/? D/WindowManager: onWakeUp, wakeUpReason = cancelRecognitionByScreenOff
+2019-03-25 21:38:43.883 2014-2069/? D/PowerManagerService: wakelock list dump: mLocks.size=4:
+2019-03-25 21:38:43.883 2014-2558/? D/KeyguardServiceWrapper: onWakeUp
+2019-03-25 21:38:43.883 2014-2069/? D/PowerManagerService: No.0: PARTIAL_WAKE_LOCK              '*job*/subscribedfeeds/com.google/harlen.feng@gmail.com:android'activated(flags=1, uid=1000, pid=2014) total=360486ms)
+2019-03-25 21:38:43.883 2014-2069/? D/PowerManagerService: No.1: PARTIAL_WAKE_LOCK              '*sync*/subscribedfeeds/com.google/harlen.feng@gmail.com'activated(flags=1, uid=1000, pid=2014) total=360429ms)
+2019-03-25 21:38:43.884 2014-2069/? D/PowerManagerService: No.2: PARTIAL_WAKE_LOCK              'CMWakeLock'activated(flags=1, uid=10167, pid=22315) total=2402ms)
+2019-03-25 21:38:43.884 2014-2069/? D/PowerManagerService: No.3: PARTIAL_WAKE_LOCK              'SyncLoopWakeLock'activated(flags=1, uid=1000, pid=2014) total=2ms)
+2019-03-25 21:38:43.884 15444-18439/? I/Kgd.KeyguardService: requestKeyguard, command = cancelRecognitionByScreenOff
+2019-03-25 21:38:43.904 735-735/? E/libc: Access denied finding property "persist.report.tid"
+2019-03-25 21:38:43.919 2014-2116/? E/libc: Access denied finding property "persist.report.tid"
+2019-03-25 21:38:43.922 735-954/? W/SurfaceFlinger: processName=system_server, line=5381, capwithRCLayer=1
+2019-03-25 21:38:43.934 735-735/? E/SurfaceFlinger: display[0]did not cap the ColorOSEdgeFloatBar#0
+2019-03-25 21:38:43.969 2703-2703/? D/xx: setInputState  isInput=false isPre=false
+2019-03-25 21:38:43.969 2703-2703/? D/xx: updateKeyboardKeys mComposer.update ComposingText()=
+2019-03-25 21:38:43.970 1441-1441/? D/fpc_hal: fpc_get_authenticator_id
+2019-03-25 21:38:43.971 1441-1441/? D/fpc_hal: fpc_authenticate operation_id 0
+2019-03-25 21:38:43.971 1441-1441/? D/fpc_tac: fpc_tee_set_cancel
+2019-03-25 21:38:43.971 1441-1441/? D/fpc_hal: fpc_worker_join_task
+2019-03-25 21:38:43.971 1441-1441/? D/fpc_hal: fpc_navigation_pause
+2019-03-25 21:38:43.971 1441-1441/? D/fpc_hal: fpc_worker_join_task
+2019-03-25 21:38:43.978 1441-1441/? D/fpc_tac: fpc_tee_clear_cancel
+2019-03-25 21:38:43.978 1441-1441/? D/fpc_hal: fpc_worker_join_task
+2019-03-25 21:38:43.978 1441-1441/? D/fpc_hal: fpc_navigation_pause
+2019-03-25 21:38:43.978 1441-1441/? D/fpc_hal: fpc_worker_run_task
+2019-03-25 21:38:43.978 1441-1755/? D/fpc_hal: do_authenticate
+2019-03-25 21:38:43.978 1441-1755/? D/fpc_tac: fpc_tee_set_auth_challenge
+2019-03-25 21:38:43.980 1441-1755/? D/fpc_tac: fpc_tee_kpi_start: property value='0' kpi_active=0
+2019-03-25 21:38:43.981 1441-1755/? D/fpc_tac: fpc_tee_capture_image
+2019-03-25 21:38:43.981 1441-1755/? D/fpc_tac: fpc_tee_wait_finger_lost_without_interrupt
+2019-03-25 21:38:43.997 1441-1755/? D/fpc_tac: monitor_trigger before there is no touch down
+2019-03-25 21:38:44.081 2014-2116/? D/BiometricsService.Main: onGoToSleepFinish
+2019-03-25 21:38:44.084 1441-1441/? I/fpc_hal: fpc_set_screen_state
+2019-03-25 21:38:44.084 1441-1441/? D/fpc_tac: fpc_tee_set_screen_state 0
+2019-03-25 21:38:44.089 2014-2116/? I/DisplayPowerController: Blocking screen off
+2019-03-25 21:38:44.090 2014-2116/? I/DisplayPowerController: Unblocked screen off after 1 ms
+2019-03-25 21:38:44.098 15268-15305/? I/DCS-NetHelper: isOppoCtaUpdateServiceOn val:true
+2019-03-25 21:38:44.100 2014-2094/? E/libc: Access denied finding property "persist.report.tid"
+2019-03-25 21:38:44.102 735-2997/? W/SurfaceFlinger: processName=system_server, line=5381, capwithRCLayer=1
+2019-03-25 21:38:44.105 6228-6228/edu.children.xiaoshizi D/LoginActivity:  onPause <<<<<<<<<<<<<<<<<<<<<<<
+2019-03-25 21:38:44.106 6228-6228/edu.children.xiaoshizi D/LoginActivity: onPause >>>>>>>>>>>>>>>>>>>>>>>>
+2019-03-25 21:38:44.108 6228-6235/edu.children.xiaoshizi I/zygote64: Do full code cache collection, code=124KB, data=101KB
+2019-03-25 21:38:44.109 6228-6235/edu.children.xiaoshizi I/zygote64: After code cache collection, code=100KB, data=63KB
+2019-03-25 21:38:44.122 2014-2116/? D/OppoExService: OppoExService  dealScreenoffGesture nGesture = 10001  mGestureCallback = null
+2019-03-25 21:38:44.140 2014-2116/? W/SensorService: SensorEventConnection sensor handle=8, package = com.android.server.display.AutomaticBrightnessController disable
+2019-03-25 21:38:44.140 709-709/? E/qti_sensors_hal: batch:sensor(android.sensor.light) handle:2 enabled:1 flags:0x0 period_ns 500000000
+2019-03-25 21:38:44.141 709-709/? E/qti_sensors_hal: batch:sensor(android.sensor.light) sample_rate=15.000000Hz report_rate_f=0.000000Hz curr sample rate:15.000000 cur rpt rate:0 max:15.000000 min:0.015259
+2019-03-25 21:38:44.141 2014-2116/? W/SensorService: SensorEventConnection sensor handle=7, package = com.android.server.display.AutomaticBrightnessController disable
+2019-03-25 21:38:44.141 2014-2116/? D/SensorService: 	>>> actuating h/w activate handle=7 enabled=0
+2019-03-25 21:38:44.147 709-709/? E/qti_sensors_hal: activate: handle is 57, en is 0
+2019-03-25 21:38:44.147 709-709/? E/qti_sensors_hal: thresh enable ,handle=57, en=0
+2019-03-25 21:38:44.150 2014-2116/? D/SensorService: reset the mRecentEvent handle = 7
+2019-03-25 21:38:44.150 2014-2116/? D/SensorService: disable reset the lastEvent handle = 7 in disable
+2019-03-25 21:38:44.152 2014-2578/? D/SurfaceControl: Set power mode=0, in nativeSetDisplayPowerMode
+2019-03-25 21:38:44.152 2014-2094/? I/DisplayManagerService: Display device changed state: "内置屏幕", OFF
+2019-03-25 21:38:44.152 735-735/? D/SurfaceFlinger: Set power mode=0, type=0 flinger=0x707a8da000
+2019-03-25 21:38:44.153 735-735/? E/SurfaceFlinger: error setOppoPowerStatus:/sys/kernel/oppo_display/power_status(-1)
+2019-03-25 21:38:44.153 2014-2014/? D/WifiStateMachine: wifi rt:0
+2019-03-25 21:38:44.162 704-2726/? I/SDM: DisplayBase::SetDisplayState: Set state = 0, display 0
+2019-03-25 21:38:44.167 2014-2296/? I/InputReader: Reconfiguring input devices.  changes=0x00000004
+2019-03-25 21:38:44.197 2856-2856/? D/OemProximitySensor: onCallStateChanged mSlotId=0:mValue:0/value:0
+2019-03-25 21:38:44.198 2856-2856/? D/OemProximitySensor: onCallStateChanged  state=:IDLE,mLastCallState=IDLE,slotId=0,mLastCallSlotId=-1
+2019-03-25 21:38:44.198 2856-2856/? D/OemProximitySensor: onCallStateChanged mSlotId=1:mValue:0/value:0
+2019-03-25 21:38:44.198 2856-2856/? D/OemProximitySensor: onCallStateChanged  state=:IDLE,mLastCallState=IDLE,slotId=1,mLastCallSlotId=-1
+2019-03-25 21:38:44.216 15444-15444/? W/Kgd.PictorialMediator: checkPictorialDetailsIntent. return
+2019-03-25 21:38:44.223 15444-15444/? I/Choreographer: Skipped 4 frames!  The application may be doing too much work on its main thread.
+2019-03-25 21:38:44.269 14787-6355/? D/libc-netbsd: [getaddrinfo]:  hostname=i.magzine.oppomobile.com;  servname=(null);  app_pid=14787;  app_uid=10082;  ai_flags=1024;  ai_family=0; ai_socktype=1 from prox result 0
+2019-03-25 21:38:44.311 2014-12948/? I/ActivityManager: Process com.coloros.aiservice (pid 5716) has died: cch+6CEM
+2019-03-25 21:38:44.312 2014-2074/? W/zygote64: kill(-5716, 9) failed: No such process
+2019-03-25 21:38:44.312 2014-2074/? I/zygote64: Successfully killed process cgroup uid 10147 pid 5716 in 0ms
+2019-03-25 21:38:44.318 2014-2014/? I/OppoPhoneWindowManager: KeyLockModeReceiver KeyLockMode: 0 ProcessName: com.coloros.aiservice
+2019-03-25 21:38:44.384 816-851/? E/libnav: AbaSuspend skips FOSS deactivate: state was 3
+2019-03-25 21:38:44.388 735-735/? D/SurfaceFlinger: Set power mode=0, type=0 done
+2019-03-25 21:38:44.388 2014-2578/? D/SurfaceControl: Set power mode=0, out nativeSetDisplayPowerMode
+2019-03-25 21:38:44.388 2014-2578/? D/SurfaceControl: Excessive delay in setPowerMode()
+2019-03-25 21:38:44.389 735-2279/? D/DispPerfTask: handlerFingerPress val=0
+2019-03-25 21:38:44.390 708-708/? I/QTI PowerHAL: Got set_interactive hint
+2019-03-25 21:38:44.392 718-780/? E/ANDR-PERF-MPCTL: Invalid profile no. 0, total profiles 0 only
+2019-03-25 21:38:44.394 2014-2116/? I/PowerManagerService: Sleeping (uid 1000)...
+2019-03-25 21:38:44.403 2014-2014/? I/BatteryService: action received : android.intent.action.SCREEN_OFF
+2019-03-25 21:38:44.432 2014-2014/? D/OppoSlienceReCovery: actionandroid.intent.action.SCREEN_OFF
+2019-03-25 21:38:44.441 695-2001/? D/audio_engineer_test: init_acdb_calibration: already finish
+2019-03-25 21:38:44.442 695-2001/? D/audio_hw_extn: audio_extn_set_anc_parameters: anc_enabled:0
+2019-03-25 21:38:44.442 695-2001/? D/audio_hw_spkr_prot: audio_extn_fbsp_set_parameters: Speaker protection disabled
+2019-03-25 21:38:44.494 2014-2069/? W/System.err: java.io.FileNotFoundException: /sys/class/power_supply/battery/batt_jump_soc (No such file or directory)
+2019-03-25 21:38:44.494 2014-2069/? W/System.err:     at java.io.FileInputStream.open0(Native Method)
+2019-03-25 21:38:44.494 2014-2069/? W/System.err:     at java.io.FileInputStream.open(FileInputStream.java:200)
+2019-03-25 21:38:44.494 2014-2069/? W/System.err:     at java.io.FileInputStream.<init>(FileInputStream.java:150)
+2019-03-25 21:38:44.495 2014-2069/? W/System.err:     at java.io.FileReader.<init>(FileReader.java:72)
+2019-03-25 21:38:44.495 2014-2069/? W/System.err:     at com.android.server.OppoPowerConsumedMonitorService.getBatteryJumpSoc(OppoPowerConsumedMonitorService.java:2780)
+2019-03-25 21:38:44.495 2014-2069/? W/System.err:     at com.android.server.OppoPowerConsumedMonitorService.getScreenOffBatteryInfo(OppoPowerConsumedMonitorService.java:883)
+2019-03-25 21:38:44.495 2014-2069/? W/System.err:     at com.android.server.OppoPowerConsumedMonitorService.onScreenOff(OppoPowerConsumedMonitorService.java:2352)
+2019-03-25 21:38:44.495 2014-2069/? W/System.err:     at com.android.server.OppoPowerConsumedMonitorService.-wrap9(Unknown Source:0)
+2019-03-25 21:38:44.495 2014-2069/? W/System.err:     at com.android.server.OppoPowerConsumedMonitorService$MyHandler.handleMessage(OppoPowerConsumedMonitorService.java:2836)
+2019-03-25 21:38:44.495 2014-2069/? W/System.err:     at android.os.Handler.dispatchMessage(Handler.java:106)
+2019-03-25 21:38:44.495 2014-2069/? W/System.err:     at android.os.Looper.loop(Looper.java:197)
+2019-03-25 21:38:44.495 2014-2069/? W/System.err:     at android.os.HandlerThread.run(HandlerThread.java:65)
+2019-03-25 21:38:44.495 2014-2069/? D/OppoPowerMonitor: getScreenOffBatteryInfo mScreenOffBatteryLevel = 79
+2019-03-25 21:38:44.495 2014-2069/? D/OppoPowerMonitor: getScreenOffBatteryInfo mBatteryCapacityScreenOff = 1925
+2019-03-25 21:38:44.495 2014-2069/? D/OppoPowerMonitor: getScreenOffBatteryInfo mBatteryJumpSocScreenOff = 0
+2019-03-25 21:38:44.500 2014-2069/? D/OppoPowerMonitor: /proc/wlan_wakeup_log not exists
+2019-03-25 21:38:44.503 2831-2912/? I/QCNEJ/CndHalConnector: -> SND notifyScreenStateChanged(false)
+2019-03-25 21:38:44.504 2831-2912/? I/QCNEJ/CndHalConnector: -> SND notifyScreenStateChanged(true)
+2019-03-25 21:38:44.523 3466-3498/? W/elsa: WARNING  UidStatisticGlobal::flushRecordToFile, line = 471, Record = 0
+2019-03-25 21:38:44.535 3797-6361/? D/ColorServicesMonitor: start OppoAutoClearService in 3 minutes  507595423/507595424/507595428
+2019-03-25 21:38:44.540 1273-14974/? D/AudioFlinger: getActiveAudioPids pids =
+2019-03-25 21:38:44.589 1273-14974/? I/chatty: uid=1041(audioserver) Binder:1273_A identical 4 lines
+2019-03-25 21:38:44.598 1273-14974/? D/AudioFlinger: getActiveAudioPids pids =
+2019-03-25 21:38:44.619 14048-14048/? D/StandbyModeManager: onReceive action: android.intent.action.SCREEN_OFF
+2019-03-25 21:38:44.619 14048-14048/? D/StandbyModeManager: stop try start standby by mobileOff ON when screenoff
+2019-03-25 21:38:44.626 14048-14048/? D/MSF.C.LogManager: onReceive broadcastreceiver.action = android.intent.action.SCREEN_OFF
+2019-03-25 21:38:44.638 14232-14331/? I/Choreographer: frameHandleService pause to monitor
+2019-03-25 21:38:44.655 2014-5395/? D/ActivityManager: bringUpService for proc:com.coloros.safecenter, isolated:false
+2019-03-25 21:38:44.662 14468-14468/? I/AppProtectService: onReceive() Intent.ACTION_USER_PRESENT
+2019-03-25 21:38:44.744 15732-15770/? W/System.err: java.io.FileNotFoundException: /proc/sys/vm/compact_memory (Permission denied)
+2019-03-25 21:38:44.745 15732-15770/? W/System.err:     at java.io.FileOutputStream.open0(Native Method)
+2019-03-25 21:38:44.745 15732-15770/? W/System.err:     at java.io.FileOutputStream.open(FileOutputStream.java:287)
+2019-03-25 21:38:44.745 15732-15770/? W/System.err:     at java.io.FileOutputStream.<init>(FileOutputStream.java:223)
+2019-03-25 21:38:44.745 15732-15770/? W/System.err:     at java.io.FileOutputStream.<init>(FileOutputStream.java:171)
+2019-03-25 21:38:44.745 15732-15770/? W/System.err:     at java.io.FileWriter.<init>(FileWriter.java:90)
+2019-03-25 21:38:44.745 15732-15770/? W/System.err:     at com.coloros.athena.d.a.o(OppoClearUtil.java:5104)
+2019-03-25 21:38:44.745 15732-15770/? W/System.err:     at com.coloros.athena.a.handleMessage(AthenaHandler.java:1143)
+2019-03-25 21:38:44.745 15732-15770/? W/System.err:     at android.os.Handler.dispatchMessage(Handler.java:106)
+2019-03-25 21:38:44.745 15732-15770/? W/System.err:     at android.os.Looper.loop(Looper.java:197)
+2019-03-25 21:38:44.745 15732-15770/? W/System.err:     at android.os.HandlerThread.run(HandlerThread.java:65)
+2019-03-25 21:38:44.898 2014-2369/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:44.898+08:00[Asia/Shanghai]
+2019-03-25 21:38:44.912 2014-2369/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:44.906+08:00[Asia/Shanghai]
+2019-03-25 21:38:44.921 2014-2369/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:38:44.948 1273-14974/? D/AudioFlinger: getActiveAudioPids pids =
+2019-03-25 21:38:45.007 1273-14974/? I/chatty: uid=1041(audioserver) Binder:1273_A identical 12 lines
+2019-03-25 21:38:45.012 1273-14974/? D/AudioFlinger: getActiveAudioPids pids =
+2019-03-25 21:38:45.179 2014-2023/? I/zygote64: Background concurrent copying GC freed 348548(22MB) AllocSpace objects, 153(3MB) LOS objects, 42% free, 44MB/77MB, paused 519us total 299.457ms
+2019-03-25 21:38:47.910 5243-5243/? W/MessengerIpcClient: Received response for unknown request: 1
+2019-03-25 21:38:47.945 5243-5243/? W/MessengerIpcClient: Received response for unknown request: 1
+2019-03-25 21:38:48.969 15444-15444/? D/KeyguardViewMediator: handleShow
+2019-03-25 21:38:49.070 15444-15444/? D/Kgd.KeyguardPagedView: this.getScrollY() ==0
+2019-03-25 21:38:49.073 2014-3840/? I/StatusBarManagerService: disable, what:19398656, pkg:com.android.systemui token:android.os.BinderProxy@ad315f2
+2019-03-25 21:38:49.073 2014-3840/? I/StatusBarManagerService: disableLocked, what:1280000, pkg:com.android.systemui userId: 0 token:android.os.BinderProxy@ad315f2 net1:1280000 net2:0
+2019-03-25 21:38:49.117 15444-15444/? D/StatusBar: disable<e i a s b H!R!c s q >
+2019-03-25 21:38:49.134 15444-15444/? D/StatusBar: disable<e i a s b H R c s q >
+2019-03-25 21:38:49.140 2014-5395/? I/StatusBarManagerService: disable, what:19398656, pkg:com.android.systemui token:android.os.BinderProxy@ad315f2
+2019-03-25 21:38:49.155 15444-15444/? D/Kgd.PictorialWallpaperManager: getLastBackupWallpaperInfo : canRead = true, isPictorialResExit = false
+2019-03-25 21:38:49.156 15444-15444/? I/Choreographer: Skipped 9 frames!  The application may be doing too much work on its main thread.
+2019-03-25 21:38:49.167 2014-3840/? I/StatusBarManagerService: disableLocked, what:c00000, pkg:Window{c9cfbe6 u0 StatusBar} userId: 0 token:android.os.Binder@7baa65 net1:1e80000 net2:0
+2019-03-25 21:38:49.234 15444-15444/? I/StatusBar: setNavigationBarColor() vis:2000 color:0 expandNavBar:false mNavigationBarEnableStatus:0
+2019-03-25 21:38:49.235 15444-15444/? I/ColorNavigationBarController: hideNavigationBarFromKeyguard
+2019-03-25 21:38:49.236 15444-15444/? D/StatusBar: disable<e i a s B!H R C!s q >
+2019-03-25 21:38:49.238 15444-15444/? I/Choreographer: Skipped 3 frames!  The application may be doing too much work on its main thread.
+2019-03-25 21:38:49.247 2014-5395/? I/StatusBarManagerService: disable, what:19398656, pkg:com.android.systemui token:android.os.BinderProxy@ad315f2
+2019-03-25 21:38:49.288 15444-15444/? I/Choreographer: Skipped 1 frames!  The application may be doing too much work on its main thread.
+2019-03-25 21:38:49.362 15444-15444/? E/PhoneState: iconId is 0android.widget.ImageView{5883789 G.ED..... ......I. 0,0-14,32 #7f140240 app:id/data_inout}
+2019-03-25 21:38:49.382 15444-15444/? D/OppoStatusBarIconTextView: updateResources()
+2019-03-25 21:38:49.389 15444-15444/? I/Choreographer: Skipped 5 frames!  The application may be doing too much work on its main thread.
+2019-03-25 21:38:51.494 16656-16656/? D/baidu_location_service: WifiScan finished, in callback.
+2019-03-25 21:38:53.083 4817-4843/? W/Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+2019-03-25 21:38:53.118 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:53.116+08:00[Asia/Shanghai]
+2019-03-25 21:38:53.118 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:38:53.118 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:53.118+08:00[Asia/Shanghai]
+2019-03-25 21:38:53.118 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:38:53.148 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:38:53.148+08:00[Asia/Shanghai]
+2019-03-25 21:38:53.149 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:38:53.598 2014-2800/? W/Watchdog_N: !@WatchDog_16914;
+2019-03-25 21:38:53.812 22315-5186/? E/Auth: [GoogleAccountDataServiceImpl] getToken() -> NETWORK_ERROR. Account: <ELLIDED:-2008123303>, App: com.google.android.gms, Service: oauth2:https://www.googleapis.com/auth/contextcontroller
+    qbl: Error when calling server.
+        at gyk.c(:com.google.android.gms@14799021@14.7.99 (040408-223214910):291)
+        at gyk.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):11)
+        at gyk.b(Unknown Source:0)
+        at gwv.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):22)
+        at ipx.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):7)
+        at ipx.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):153)
+        at iox.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):2)
+        at iou.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):15)
+        at iou.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):6)
+        at gth.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):33)
+        at gth.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):81)
+        at gtq.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):3)
+        at gtp.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):2)
+        at gtp.c(:com.google.android.gms@14799021@14.7.99 (040408-223214910):6)
+        at gtp.b(:com.google.android.gms@14799021@14.7.99 (040408-223214910):1)
+        at gtn.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):1)
+        at qtx.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):1)
+        at qsl.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):2)
+        at ejo.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):24)
+        at eer.run(:com.google.android.gms@14799021@14.7.99 (040408-223214910):2)
+        at eep.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):2)
+        at eep.handleMessage(:com.google.android.gms@14799021@14.7.99 (040408-223214910):14)
+        at qzo.run(:com.google.android.gms@14799021@14.7.99 (040408-223214910):4)
+        at rab.run(:com.google.android.gms@14799021@14.7.99 (040408-223214910):21)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1162)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:636)
+        at rgd.run(Unknown Source:7)
+        at java.lang.Thread.run(Thread.java:764)
+     Caused by: java.net.SocketTimeoutException: failed to connect to android.googleapis.com/216.58.221.234 (port 443) from /192.168.0.100 (port 47116) after 30000ms
+        at libcore.io.IoBridge.connectErrno(IoBridge.java:185)
+        at libcore.io.IoBridge.connect(IoBridge.java:130)
+        at java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:129)
+        at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:356)
+        at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200)
+        at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182)
+        at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:357)
+        at java.net.Socket.connect(Socket.java:616)
+        at com.android.okhttp.internal.Platform.connectSocket(Platform.java:145)
+        at com.android.okhttp.internal.io.RealConnection.connectSocket(RealConnection.java:141)
+        at com.android.okhttp.internal.io.RealConnection.connect(RealConnection.java:112)
+        at com.android.okhttp.internal.http.StreamAllocation.findConnection(StreamAllocation.java:184)
+        at com.android.okhttp.internal.http.StreamAllocation.findHealthyConnection(StreamAllocation.java:126)
+        at com.android.okhttp.internal.http.StreamAllocation.newStream(StreamAllocation.java:95)
+        at com.android.okhttp.internal.http.HttpEngine.connect(HttpEngine.java:281)
+        at com.android.okhttp.internal.http.HttpEngine.sendRequest(HttpEngine.java:224)
+        at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:461)
+        at com.android.okhttp.internal.huc.HttpURLConnectionImpl.connect(HttpURLConnectionImpl.java:127)
+        at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getOutputStream(HttpURLConnectionImpl.java:258)
+        at com.android.okhttp.internal.huc.DelegatingHttpsURLConnection.getOutputStream(DelegatingHttpsURLConnection.java:218)
+2019-03-25 21:38:53.812 22315-5186/? E/Auth:     at com.android.okhttp.internal.huc.HttpsURLConnectionImpl.getOutputStream(Unknown Source:0)
+        at aach.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):37)
+        at ixb.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):1)
+        at gxw.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):7)
+        at gxw.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):3)
+        at gyk.c(:com.google.android.gms@14799021@14.7.99 (040408-223214910):76)
+        	... 27 more
+2019-03-25 21:38:53.820 22315-5186/? W/Auth: [GetToken] GetToken failed with status code: NetworkError
+2019-03-25 21:38:53.822 22315-5186/? W/AuthSessionAuthenticato: Auth related exception is being ignored: NetworkError
+2019-03-25 21:38:53.911 22315-5186/? E/ctxmgr: [BaseServerTask]Server task (FetchAclSet) got error statusCode=-1.
+    com.android.volley.VolleyError: Unable to obtain auth token - is the device online?
+        at ejo.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):31)
+        at eer.run(:com.google.android.gms@14799021@14.7.99 (040408-223214910):2)
+        at eep.a(:com.google.android.gms@14799021@14.7.99 (040408-223214910):2)
+        at eep.handleMessage(:com.google.android.gms@14799021@14.7.99 (040408-223214910):14)
+        at qzo.run(:com.google.android.gms@14799021@14.7.99 (040408-223214910):4)
+        at rab.run(:com.google.android.gms@14799021@14.7.99 (040408-223214910):21)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1162)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:636)
+        at rgd.run(Unknown Source:7)
+        at java.lang.Thread.run(Thread.java:764)
+2019-03-25 21:38:53.939 22315-5186/? W/ctxmgr: [WorkManager]Long workInfo: pkg=com.google.android.gms, lbl=NetworkManager#getAcl, start=2019-03-25 21:33:22.678+0800, stop=2019-03-25 21:38:53.933+0800, durtn=331255ms
+2019-03-25 21:38:54.034 22315-5186/? D/libc-netbsd: [getaddrinfo]:  hostname=android.googleapis.com;  servname=(null);  app_pid=22315;  app_uid=10167;  ai_flags=1024;  ai_family=0; ai_socktype=1 from prox result 0
+2019-03-25 21:38:55.954 2014-2083/? E/BatteryExternalStatsWorker: no controller energy info supplied for wifi
+2019-03-25 21:38:55.954 2014-2083/? E/BatteryExternalStatsWorker: no controller energy info supplied for bluetooth
+2019-03-25 21:39:00.533 2014-2393/? E/WifiStateMachine: Received DATA_STALL, reason=11 seq=4340
+2019-03-25 21:39:00.533 2014-2393/? D/WifiStateMachine: checking internet access for data stall is disabled
+2019-03-25 21:39:01.587 16656-16656/? D/baidu_location_service: WifiScan finished, in callback.
+2019-03-25 21:39:05.200 4817-4843/? W/Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+2019-03-25 21:39:05.232 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:05.232+08:00[Asia/Shanghai]
+2019-03-25 21:39:05.232 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:05.232 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:05.232+08:00[Asia/Shanghai]
+2019-03-25 21:39:05.233 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:05.265 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:05.265+08:00[Asia/Shanghai]
+2019-03-25 21:39:05.265 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:11.710 16656-16656/? D/baidu_location_service: WifiScan finished, in callback.
+2019-03-25 21:39:11.765 19922-19922/? I/Choreographer: Skipped 3 frames!  The application may be doing too much work on its main thread.
+2019-03-25 21:39:16.078 2014-2014/? I/EntropyMixer: Writing entropy...
+2019-03-25 21:39:17.308 4817-4843/? W/Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+2019-03-25 21:39:17.346 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:17.346+08:00[Asia/Shanghai]
+2019-03-25 21:39:17.347 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:17.347 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:17.347+08:00[Asia/Shanghai]
+2019-03-25 21:39:17.347 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:17.376 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:17.376+08:00[Asia/Shanghai]
+2019-03-25 21:39:17.377 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:18.575 2014-2393/? E/WifiStateMachine: Received DATA_STALL, reason=11 seq=4341
+2019-03-25 21:39:18.576 2014-2393/? D/WifiStateMachine: checking internet access for data stall is disabled
+2019-03-25 21:39:21.811 16656-16656/? D/baidu_location_service: WifiScan finished, in callback.
+2019-03-25 21:39:21.888 19922-19922/? I/Choreographer: Skipped 4 frames!  The application may be doing too much work on its main thread.
+2019-03-25 21:39:23.614 2014-2800/? W/Watchdog_N: !@WatchDog_16915;
+2019-03-25 21:39:29.423 4817-4843/? W/Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+2019-03-25 21:39:29.465 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:29.465+08:00[Asia/Shanghai]
+2019-03-25 21:39:29.465 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:29.466 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:29.466+08:00[Asia/Shanghai]
+2019-03-25 21:39:29.466 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:29.495 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:29.495+08:00[Asia/Shanghai]
+2019-03-25 21:39:29.495 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:31.919 19922-19922/? I/Choreographer: Skipped 1 frames!  The application may be doing too much work on its main thread.
+2019-03-25 21:39:31.934 16656-16656/? D/baidu_location_service: WifiScan finished, in callback.
+2019-03-25 21:39:35.529 14048-14152/? D/WorkerThreadMonitor: Kill MSF check result[ senderSize:0,sendInterval:102127,receiveInterval=12017,addCmdCount=1279
+2019-03-25 21:39:41.538 4817-4843/? W/Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+2019-03-25 21:39:41.568 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:41.568+08:00[Asia/Shanghai]
+2019-03-25 21:39:41.569 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:41.569 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:41.569+08:00[Asia/Shanghai]
+2019-03-25 21:39:41.569 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:41.598 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:41.597+08:00[Asia/Shanghai]
+2019-03-25 21:39:41.598 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:42.032 16656-16656/? D/baidu_location_service: WifiScan finished, in callback.
+2019-03-25 21:39:42.848 2014-12950/? D/WifiStateMachine: Adjust rssi from -57 to -60
+2019-03-25 21:39:42.851 22315-1981/? E/WakeLock: GCM_HB_ALARM release without a matched acquire!
+2019-03-25 21:39:42.935 2014-12948/? D/WifiStateMachine: Adjust rssi from -57 to -60
+2019-03-25 21:39:44.499 2014-2069/? D/OppoService: getCurrentFlashLightState:6
+2019-03-25 21:39:52.133 16656-16656/? D/baidu_location_service: WifiScan finished, in callback.
+2019-03-25 21:39:53.622 2014-2800/? W/Watchdog_N: !@WatchDog_16916;
+2019-03-25 21:39:53.638 4817-4843/? W/Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+2019-03-25 21:39:53.669 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:53.669+08:00[Asia/Shanghai]
+2019-03-25 21:39:53.669 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:53.669 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:53.669+08:00[Asia/Shanghai]
+2019-03-25 21:39:53.669 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:39:53.700 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:39:53.700+08:00[Asia/Shanghai]
+2019-03-25 21:39:53.700 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:40:02.213 16656-16656/? D/baidu_location_service: WifiScan finished, in callback.
+2019-03-25 21:40:05.745 4817-4843/? W/Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+2019-03-25 21:40:05.773 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:40:05.773+08:00[Asia/Shanghai]
+2019-03-25 21:40:05.774 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:40:05.774 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:40:05.774+08:00[Asia/Shanghai]
+2019-03-25 21:40:05.774 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:40:05.809 4817-4843/? D/RecurrenceRule: Resolving using anchor 2019-03-25T21:40:05.809+08:00[Asia/Shanghai]
+2019-03-25 21:40:05.809 4817-4843/? D/RecurrenceRule: Cycle 26 from 2019-03-01T00:00+08:00[Asia/Shanghai] to 2019-04-01T00:00+08:00[Asia/Shanghai]
+2019-03-25 21:40:09.071 15404-15680/? D/Q.fts.BgCpu.Total: 2019-03-25 21:40:09 cpu:79 - wall:99  FTSMsgOperator transCount:0 transCost:0 transAvg:0.0 FTSTroopOperator transCount:0 transCost:0 transAvg:0.0
+2019-03-25 21:40:09.613 15404-15458/? D/BatteryStats.BgCpu: bgPrintCpuCostSofar msfrecv=4604[15525],   fts=9264[15680]
+2019-03-25 21:40:12.330 16656-16656/? D/baidu_location_service: WifiScan finished, in callback.
+2019-03-25 21:40:12.697 2014-2393/? E/WifiStateMachine: Received DATA_STALL, reason=11 seq=4342
+2019-03-25 21:40:12.698 2014-2393/? D/WifiStateMachine: checking internet access for data stall is disabled

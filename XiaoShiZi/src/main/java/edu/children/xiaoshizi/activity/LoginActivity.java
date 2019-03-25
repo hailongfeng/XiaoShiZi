@@ -88,9 +88,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         findView(R.id.btnGetSchoolInfo, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSchoolInfo(1);
-                getSchoolInfo(2);
-                getSchoolInfo(3);
+//                getSchoolInfo(1);
+//                getSchoolInfo(2);
+//                getSchoolInfo(3);
                 studentBinding();
             }
         });
@@ -100,13 +100,28 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
     private void studentBinding() {
+//        {
+//            "timestamp": "1558423511000",
+//                "noncestr": "noncestr",
+//                "sign": "ECA78F26B61B69E70522D3C329B64A67",
+//                "token": "7730a13c-a5d7-4460-b2bc-4b85c28fae8b",
+//                "parentId": "5gcnrqBYVl1Qngok8uH",
+//                "userName": "张三",
+//                "sex": "M",
+//                "schoolId": "suA38j1AxGBjWcUJP4h",
+//                "schoolGradeId": "5eaZmroMMgYZu0kX1nB",
+//                "schoolClassId": "uQ8jhJZCPEP1vqA9lQZ",
+//                "birthday": "2019-03-20",
+//                "parentCustody": "爸爸",
+//                "bindingPassword": "1"
+//        }
         RequestBindStudentParam param=new RequestBindStudentParam();
         param.setTimestamp(System.currentTimeMillis()+"");
         param.setNoncestr(StringUtils.randomString(10));
         param.setSign("ECA78F26B61B69E70522D3C329B64A67");
         param.setToken(Constant.TEST_TOKEN);
         param.setParentId(Constant.TEST_USER_ID);
-        param.setUserName("小明");
+        param.setUserName("张三");
         param.setSex("M");
         param.setSchoolId("suA38j1AxGBjWcUJP4h");
         param.setSchoolGradeId("5eaZmroMMgYZu0kX1nB");

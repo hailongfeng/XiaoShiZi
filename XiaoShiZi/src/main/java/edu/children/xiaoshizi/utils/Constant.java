@@ -6,5 +6,5 @@ public class Constant {
     public static final String BASEURL = "https://app.pinocc.cn/apprest/v1/";
     public static final String ENCRYPT_KEY = "e2a20e623195754aa981";
     public static final String TEST_TOKEN = "7730a13c-a5d7-4460-b2bc-4b85c28fae8b";
-    public static final String TEST_USER_ID = "5gcnrqBYVI1Qngok8uH";
+    public static final String TEST_USER_ID = "5gcnrqBYVl1Qngok8uH";
 }
