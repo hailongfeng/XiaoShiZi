@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">XiaoShiZi</string>
+    <string name="title_activity_xsz_base">XszBaseActivity</string>
+</resources>

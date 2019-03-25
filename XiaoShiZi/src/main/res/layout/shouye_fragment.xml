@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/activity_page">
+<LinearLayout
+    android:background="#51ACFE"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="50dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <com.flyco.roundview.RoundLinearLayout
+            android:layout_width="300dp"
+            android:orientation="horizontal"
+            android:layout_height="40dp"
+            android:gravity="center"
+            app:rv_backgroundColor="#86C5FE"
+            app:rv_cornerRadius="10dp"
+            >
+            <ImageView
+                android:src="@drawable/icon_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:text="搜索您想要的东西"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </com.flyco.roundview.RoundLinearLayout>
+        <com.flyco.roundview.RoundTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="投稿"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/icon_search"
+            />
+    </LinearLayout>
+
+</LinearLayout>
+    <com.ogaclejapan.smarttablayout.SmartTabLayout
+        android:id="@+id/viewpagertab"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/colorPrimary"
+        app:stl_indicatorAlwaysInCenter="false"
+        app:stl_indicatorInFront="false"
+        app:stl_indicatorInterpolation="smart"
+        app:stl_indicatorColor="@color/white"
+        app:stl_indicatorThickness="2dp"
+        app:stl_indicatorCornerRadius="2dp"
+        app:stl_underlineColor="#4D000000"
+        app:stl_underlineThickness="0dp"
+        app:stl_dividerColor="#4D000000"
+        app:stl_dividerThickness="0dp"
+        app:stl_defaultTabTextAllCaps="true"
+        app:stl_defaultTabTextColor="@color/white"
+        app:stl_defaultTabTextSize="18sp"
+        app:stl_defaultTabTextHorizontalPadding="16dp"
+        app:stl_defaultTabTextMinWidth="0dp"
+        app:stl_distributeEvenly="false"
+        />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</LinearLayout>
