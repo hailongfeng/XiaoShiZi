@@ -5,13 +5,23 @@ import android.support.v4.app.Fragment;
 
 import com.gyf.barlibrary.ImmersionBar;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.School;
+import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.fragment.ShouYeFragment;
 import edu.children.xiaoshizi.fragment.WoDeFragment;
+import edu.children.xiaoshizi.logic.LogicService;
+import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
+import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import zuo.biao.library.base.BaseBottomTabActivity;
+import zuo.biao.library.util.Log;
 
 public class MainActivity extends BaseBottomTabActivity {
+    private static final String TAG = "MainActivity";
+
     private static final String[] TAB_NAMES = {"主页", "消息", "发现", "设置"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +31,57 @@ public class MainActivity extends BaseBottomTabActivity {
         initView();
         initData();
         initEvent();
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
+        LogicService.getSchoolInfo(context, 1, new ApiSubscriber<List<School>>() {
+            @Override
+            public void onNext(List<School> schools) {
+                Log.d(TAG,"1"+schools.size());
+                for (School school:schools) {
+                    school.pid="";
+                    school.type=1;
+                    DbUtils.saveSchool(school);
+                }
+            }
+
+            @Override
+            protected void onFail(NetErrorException error) {
+                Log.d(TAG,error.getMessage());
+            }
+        });
+        LogicService.getSchoolInfo(context, 2, new ApiSubscriber<List<School>>() {
+            @Override
+            public void onNext(List<School> schools) {
+                for (School school:schools) {
+                    school.type=2;
+                    school.pid="suA38j1AxGBjWcUJP4h";
+                    DbUtils.saveSchool(school);
+                }
+            }
+
+            @Override
+            protected void onFail(NetErrorException error) {
+                Log.d(TAG,error.getMessage());
+            }
+        });
+        LogicService.getSchoolInfo(context, 3, new ApiSubscriber<List<School>>() {
+            @Override
+            public void onNext(List<School> schools) {
+                for (School school:schools) {
+                    school.type=3;
+                    school.pid="o33hGG7RPcmkHHvZ4EW";
+                    DbUtils.saveSchool(school);
+                }
+            }
+
+            @Override
+            protected void onFail(NetErrorException error) {
+                Log.d(TAG,error.getMessage());
+            }
+        });
     }
 
     @Override

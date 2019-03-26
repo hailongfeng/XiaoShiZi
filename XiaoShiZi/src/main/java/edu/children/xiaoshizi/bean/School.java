@@ -1,26 +1,31 @@
 package edu.children.xiaoshizi.bean;
 
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import java.io.Serializable;
 
-import zuo.biao.library.base.BaseModel;
+import edu.children.xiaoshizi.db.XSZDatabase;
 
-public class School implements Serializable  {
-    private String id;
-    private String schoolName;
+@Table(database = XSZDatabase.class)
+public class School extends BaseModel {
 
-    public String getId() {
-        return id;
-    }
+    @PrimaryKey
+    public String id;
+    @Column
+    public String pid;
+    @Column
+    public String schoolName;
+    @Column
+    public int type;
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getSchoolName() {
-        return schoolName;
-    }
-
-    public void setSchoolName(String schoolName) {
-        this.schoolName = schoolName;
+    @Override
+    public String toString() {
+        return "School{" +
+                "schoolName='" + schoolName + '\'' +
+                ", type=" + type +
+                '}';
     }
 }

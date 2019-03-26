@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/activity_page"
+    android:background="@color/white"
+    tools:context=".activity.BindingStudentActivity">
+
+    <RelativeLayout
+        style="@style/topbar_bg"
+        android:background="@color/transparent">
+
+        <ImageButton style="@style/xsz_topbar_return_img" />
+
+        <TextView
+            style="@style/topbar_title"
+            android:layout_centerHorizontal="true"
+            android:text="绑定学生信息" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/match_match"
+        android:layout_weight="1">
+
+        <ScrollView style="@style/match_match">
+
+            <LinearLayout style="@style/ll_vertical_match_match">
+
+                <View style="@style/divider_horizontal_1px" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="重要提示"
+                    android:textColor="@color/yellow" />
+
+                <View style="@style/divider_horizontal_1px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_student_name"
+                    style="@style/content_item_white">
+
+                    <TextView
+                        style="@style/content_item_lf_tv"
+                        android:layout_width="80dp"
+                        android:text="姓名" />
+
+                    <EditText
+                        style="@style/content_item_lf_tv"
+                        android:layout_weight="1"
+                        android:text="姓名" />
+                </LinearLayout>
+
+                <View style="@style/divider_horizontal_1px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_student_sex"
+                    style="@style/content_item_white">
+
+                    <TextView
+                        style="@style/content_item_lf_tv"
+                        android:layout_width="80dp"
+                        android:text="姓别" />
+
+                    <RadioGroup
+                        android:orientation="horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <RadioButton
+                            android:text="男"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <RadioButton
+                            android:text="女"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <View style="@style/divider_horizontal_1px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_student_birthday"
+                    style="@style/content_item_white">
+
+                    <TextView
+                        style="@style/content_item_lf_tv"
+                        android:layout_width="80dp"
+                        android:text="出声年月" />
+
+                    <TextView
+                        android:id="@+id/txt_student_birthday"
+                        style="@style/content_item_lf_tv"
+                        android:layout_weight="1"
+                        android:text="" />
+
+                    <ImageView
+                        style="@style/content_item_rt_img"
+                        android:padding="0dp" />
+                </LinearLayout>
+
+                <View style="@style/divider_horizontal_1px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_student_school"
+                    style="@style/content_item_white">
+
+                    <TextView
+                        style="@style/content_item_lf_tv"
+                        android:layout_width="80dp"
+                        android:text="学校名称" />
+                    <TextView
+                        android:id="@+id/txt_student_school"
+                        style="@style/content_item_lf_tv"
+                        android:layout_weight="1"
+                        android:text="" />
+
+                    <ImageView
+                        style="@style/content_item_rt_img"
+                        android:padding="0dp" />
+                </LinearLayout>
+
+                <View style="@style/divider_horizontal_1px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_student_gradle"
+                    style="@style/content_item_white">
+
+                    <TextView
+                        style="@style/content_item_lf_tv"
+                        android:layout_width="80dp"
+                        android:text="年级" />
+
+                    <TextView
+                        android:id="@+id/txt_student_gradle"
+                        style="@style/content_item_lf_tv"
+                        android:layout_weight="1"
+                        android:text="" />
+
+                    <ImageView
+                        style="@style/content_item_rt_img"
+                        android:padding="0dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_student_banji"
+                    style="@style/content_item_white">
+
+                    <TextView
+                        style="@style/content_item_lf_tv"
+                        android:layout_width="80dp"
+                        android:text="年级" />
+
+                    <TextView
+                        android:id="@+id/txt_student_banji"
+                        style="@style/content_item_lf_tv"
+                        android:layout_weight="1"
+                        android:text="" />
+
+                    <ImageView
+                        style="@style/content_item_rt_img"
+                        android:padding="0dp" />
+                </LinearLayout>
+                <View style="@style/divider_horizontal_1px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_student_guanxi"
+                    style="@style/content_item_white">
+
+                    <TextView
+                        style="@style/content_item_lf_tv"
+                        android:layout_width="80dp"
+                        android:text="关系" />
+
+                    <TextView
+                        android:id="@+id/txt_student_guanxi"
+                        style="@style/content_item_lf_tv"
+                        android:layout_weight="1"
+                        android:text="" />
+
+                    <ImageView
+                        style="@style/content_item_rt_img"
+                        android:padding="0dp" />
+                </LinearLayout>
+
+                <View style="@style/divider_horizontal_1px" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="重要提示"
+                    android:textColor="@color/yellow" />
+                <View style="@style/divider_horizontal_1px" />
+                <LinearLayout
+                    android:id="@+id/ll_student_bangdingmima"
+                    style="@style/content_item_white">
+
+                    <TextView
+                        style="@style/content_item_lf_tv"
+                        android:layout_width="80dp"
+                        android:text="绑定密码" />
+
+                    <TextView
+                        style="@style/content_item_lf_tv"
+                        android:layout_weight="1"
+                        android:text="" />
+
+                    <ImageView
+                        style="@style/content_item_rt_img"
+                        android:padding="0dp" />
+                </LinearLayout>
+                <View style="@style/divider_horizontal_1px" />
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/btn_bind_student"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="20dp"
+                    android:gravity="center"
+                    android:text="绑定"
+                    android:textColor="@android:color/white"
+                    app:rv_backgroundColor="@color/colorPrimary"
+                    app:rv_backgroundPressColor="@color/colorPrimaryDark"
+                    app:rv_cornerRadius="5dp" />
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</LinearLayout>

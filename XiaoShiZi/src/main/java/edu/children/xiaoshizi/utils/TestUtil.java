@@ -17,6 +17,8 @@ package edu.children.xiaoshizi.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.children.xiaoshizi.bean.Custody;
+import edu.children.xiaoshizi.bean.Student;
 import edu.children.xiaoshizi.bean.User;
 
 
@@ -63,6 +65,57 @@ public class TestUtil {
 			user.setName("Name" + userId);
 			user.setPhone(String.valueOf(1311736568 + (i + userId)*(page + userId)));
 			user.setStarred(i%2 == 0);
+			list.add(user);
+		}
+		return list;
+	}
+
+	public static List<Student> getStudentList(int page, int count) {
+		List<Student> list = new ArrayList<Student>();
+		long userId;
+		Student user;
+		int length = (count <= 0 || count > URLS.length ? URLS.length : count);
+		int index;
+		for (int i = 0; i < length ; i++) {
+			userId = i + page*length + 1;
+			index = i + page*length;
+			while (index >= URLS.length) {
+				index -= URLS.length;
+			}
+			if (index < 0) {
+				index = 0;
+			}
+
+			user = new Student();
+			user.setId(userId);
+			user.setSex("M");
+			user.setStudentName("小明");
+			user.setSchoolName("上海市外国语小学");
+			user.setSchoolGradeName("三年级");
+			user.setSchoolClassName("二班");
+			user.setCustody("小明爸爸");
+			list.add(user);
+		}
+		return list;
+	}
+	public static List<Custody> getCustodyList(int page, int count) {
+		List<Custody> list = new ArrayList<Custody>();
+		long userId;
+		Custody user;
+		int length = (count <= 0 || count > URLS.length ? URLS.length : count);
+		int index;
+		for (int i = 0; i < length ; i++) {
+			userId = i + page*length + 1;
+			index = i + page*length;
+			while (index >= URLS.length) {
+				index -= URLS.length;
+			}
+			if (index < 0) {
+				index = 0;
+			}
+
+			user = new Custody();
+			user.setCustody("小明爸爸");
 			list.add(user);
 		}
 		return list;

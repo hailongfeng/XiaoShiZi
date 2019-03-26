@@ -32,11 +32,14 @@
                 android:layout_height="wrap_content" />
         </com.flyco.roundview.RoundLinearLayout>
         <com.flyco.roundview.RoundTextView
+            android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="投稿"
+            android:gravity="center_vertical"
             android:textColor="@color/white"
-            android:drawableLeft="@drawable/icon_search"
+            android:drawableLeft="@drawable/icon_edit"
+            android:drawablePadding="5dp"
             />
     </LinearLayout>
 

@@ -100,21 +100,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
     private void studentBinding() {
-//        {
-//            "timestamp": "1558423511000",
-//                "noncestr": "noncestr",
-//                "sign": "ECA78F26B61B69E70522D3C329B64A67",
-//                "token": "7730a13c-a5d7-4460-b2bc-4b85c28fae8b",
-//                "parentId": "5gcnrqBYVl1Qngok8uH",
-//                "userName": "张三",
-//                "sex": "M",
-//                "schoolId": "suA38j1AxGBjWcUJP4h",
-//                "schoolGradeId": "5eaZmroMMgYZu0kX1nB",
-//                "schoolClassId": "uQ8jhJZCPEP1vqA9lQZ",
-//                "birthday": "2019-03-20",
-//                "parentCustody": "爸爸",
-//                "bindingPassword": "1"
-//        }
         RequestBindStudentParam param=new RequestBindStudentParam();
         param.setTimestamp(System.currentTimeMillis()+"");
         param.setNoncestr(StringUtils.randomString(10));
@@ -151,41 +136,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
         });
     }
-    private void getSchoolInfo(int type) {
-        SortedMap sm = new TreeMap<String,String>();
-        sm.put("timestamp", System.currentTimeMillis()+"");
-        sm.put("noncestr", StringUtils.randomString(10));
-        sm.put("sign", Tools.createSign(sm));
-        sm.put("token", Constant.TEST_TOKEN);
-        if (type==2){
-            sm.put("parentId","suA38j1AxGBjWcUJP4h");
-        }else if (type==3){
-            sm.put("parentId","o33hGG7RPcmkHHvZ4EW");
-        }else {
-            sm.put("parentId", "1");
-        }
-        sm.put("type",type);
-        String root = JSONObject.toJSONString(sm);
-        Log.d(TAG,"root ="+root);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),root);
-        ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
-        RetrofitClient.execute(apiService.getSchoolInfo(requestBody),new DisposableObserver<Response<List<School>>>(){
 
-            @Override
-            public void onNext(Response<List<School>> response) {
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onComplete() {
-                Log.d(TAG,"onComplete , "+Thread.currentThread().getName());
-            }
-        });
-    }
 
     private void getVeryCode() {
         SortedMap sm = new TreeMap<String,String>();
