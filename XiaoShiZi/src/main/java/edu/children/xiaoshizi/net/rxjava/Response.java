@@ -7,6 +7,7 @@ package edu.children.xiaoshizi.net.rxjava;
  * date : 2018/12/13 16:13
  */
 public class Response<T> {
+    public static final int SUCCESS=0;
     int code;
     String message;
     T result;

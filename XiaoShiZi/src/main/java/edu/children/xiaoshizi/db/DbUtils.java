@@ -17,9 +17,16 @@ public class DbUtils {
             school.save();
     }
     public static List<School> getSchoolByType(int type,String pid){
-        return SQLite.select().from(School.class)
-                .where(School_Table.type.eq(type),School_Table.pid.eq(pid))
-                .queryList();
+        if (type==1){
+            return SQLite.select().from(School.class)
+                    .where(School_Table.type.eq(type))
+                    .queryList();
+        }else {
+            return SQLite.select().from(School.class)
+                    .where(School_Table.type.eq(type),School_Table.parentId.eq(pid))
+                    .queryList();
+        }
+
     }
 
 }

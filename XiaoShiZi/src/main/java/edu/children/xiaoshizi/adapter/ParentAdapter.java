@@ -20,16 +20,17 @@ import android.view.ViewGroup;
 import edu.children.xiaoshizi.adapter.view.CustodyView;
 import edu.children.xiaoshizi.adapter.view.UserView;
 import edu.children.xiaoshizi.bean.Custody;
+import edu.children.xiaoshizi.bean.Parent;
 import edu.children.xiaoshizi.bean.User;
 import zuo.biao.library.base.BaseAdapter;
 
 /**用户adapter
  * @author Lemon
  */
-public class CustodyAdapter extends BaseAdapter<Custody,CustodyView> {
+public class ParentAdapter extends BaseAdapter<Parent,CustodyView> {
 	//	private static final String TAG = "UserAdapter";
 
-	public CustodyAdapter(Activity context) {
+	public ParentAdapter(Activity context) {
 		super(context);
 	}
 

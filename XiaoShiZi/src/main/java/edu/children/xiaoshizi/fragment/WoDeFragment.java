@@ -16,39 +16,70 @@ package edu.children.xiaoshizi.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.flyco.roundview.RoundTextView;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.BindingStudentActivity;
-import edu.children.xiaoshizi.activity.RealNameAuthActivity;
-import edu.children.xiaoshizi.adapter.CustodyAdapter;
+import edu.children.xiaoshizi.activity.ChangeUserInfoActivity;
+import edu.children.xiaoshizi.activity.ParentInfoActivity;
+import edu.children.xiaoshizi.adapter.ParentAdapter;
 import edu.children.xiaoshizi.adapter.StudentAdapter;
-import edu.children.xiaoshizi.bean.Custody;
+import edu.children.xiaoshizi.bean.Parent;
 import edu.children.xiaoshizi.bean.Student;
-import edu.children.xiaoshizi.utils.TestUtil;
-import zuo.biao.library.base.BaseFragment;
+import edu.children.xiaoshizi.bean.User;
 import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
 
 /**设置fragment
  * @author Lemon
  * @use new WoDeFragment(),详细使用见.DemoFragmentActivity(initData方法内)
  */
-public class WoDeFragment extends BaseFragment implements OnClickListener, OnDialogButtonClickListener {
+public class WoDeFragment extends XszBaseFragment implements OnClickListener, OnDialogButtonClickListener {
+
+	@BindView(R.id.iv_user_face)
+	RoundedImageView iv_user_face;;
+	@BindView(R.id.txt_user_name)
+	TextView txt_user_name;;
+
+	@BindView(R.id.txt_user_telphone)
+	TextView txt_user_telphone;;
+	@BindView(R.id.btn_add_student)
+	RoundTextView btn_add_student;;
+	@BindView(R.id.iv_user_setting)
+	ImageView iv_user_setting;;
+
 	@BindView(R.id.rvBaseRecycler)
-	RecyclerView rvBaseRecycler;;
+	RecyclerView rvStudentsRecycler;
+
+	@BindView(R.id.cv_no_students)
+	CardView cv_no_students;
+	@BindView(R.id.btn_no_student_bind)
+	RoundTextView btn_no_student_bind;
+
 	private StudentAdapter studentAdapter;
 	@BindView(R.id.rvCustodyRecycler)
-	RecyclerView rvCustodyRecycler;;
-	private CustodyAdapter custodyAdapter;
+	RecyclerView rvParentRecycler;;
+	private ParentAdapter parentAdapter;
+
+
+
 	//与Activity通信<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	/**创建一个Fragment实例
@@ -80,28 +111,37 @@ public class WoDeFragment extends BaseFragment implements OnClickListener, OnDia
 		return view;
 	}
 
-
+	@Override
+	public void onResume() {
+		super.onResume();
+		String headPortrait= DemoApplication.getInstance().getUser().getHeadPortrait();
+		Glide.with(context).load(headPortrait ).into(iv_user_face);
+	}
 
 	//UI显示区(操作UI，但不存在数据获取或处理代码，也不存在事件监听代码)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	@Override
 	public void initView() {//必须调用
 
-		rvBaseRecycler.setLayoutManager(new LinearLayoutManager(context));
+		rvStudentsRecycler.setLayoutManager(new LinearLayoutManager(context));
 		studentAdapter = new StudentAdapter(context);
-		rvBaseRecycler.setAdapter(studentAdapter);
-		List<Student> list= TestUtil.getStudentList(0,2);
-		studentAdapter.refresh(list);
-
+		rvStudentsRecycler.setAdapter(studentAdapter);
 
         //设置布局管理器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rvCustodyRecycler.setLayoutManager(linearLayoutManager);
-        custodyAdapter = new CustodyAdapter(context);
-        rvCustodyRecycler.setAdapter(custodyAdapter);
-        List<Custody> list1= TestUtil.getCustodyList(0,4);
-        custodyAdapter.refresh(list1);
+        rvParentRecycler.setLayoutManager(linearLayoutManager);
+        parentAdapter = new ParentAdapter(context);
+		parentAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intent=new Intent(context,ParentInfoActivity.class);
+				intent.putExtra("index",position);
+				toActivity(intent);
+			}
+		});
+        rvParentRecycler.setAdapter(parentAdapter);
+
 	}
 	//UI显示区(操作UI，但不存在数据获取或处理代码，也不存在事件监听代码)>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -118,6 +158,30 @@ public class WoDeFragment extends BaseFragment implements OnClickListener, OnDia
 
 	@Override
 	public void initData() {//必须调用
+		User user=DemoApplication.getInstance().getUser();
+		String userName=user.getUserName();
+		if (userName!=null){
+			txt_user_name.setText(userName);
+		}else {
+			txt_user_name.setText("");
+		}
+		loadImage(user.getHeadPortrait(),iv_user_face);
+		txt_user_telphone.setText(DemoApplication.getInstance().getUser().getLoginName());
+
+		List<Student> list= DemoApplication.getInstance().getLoginRespon().getStudents();
+//		list.clear();
+		if (list.size()==0){
+			btn_add_student.setVisibility(View.GONE);
+			rvStudentsRecycler.setVisibility(View.GONE);
+			cv_no_students.setVisibility(View.VISIBLE);
+		}else {
+			cv_no_students.setVisibility(View.GONE);
+			studentAdapter.refresh(list);
+		}
+
+		List<Parent> list1= DemoApplication.getInstance().getLoginRespon().getParents();
+		parentAdapter.refresh(list1);
+
 
 	}
 
@@ -148,6 +212,7 @@ public class WoDeFragment extends BaseFragment implements OnClickListener, OnDia
 		findView(R.id.ll_my_jiazhangjianyi, this);
 		findView(R.id.ll_my_shezhi, this);
 		findView(R.id.ll_my_fenxiang, this);
+		findView(R.id.btn_no_student_bind, this);
 	}
 
 
@@ -175,10 +240,12 @@ public class WoDeFragment extends BaseFragment implements OnClickListener, OnDia
 		switch (v.getId()) {
 			case R.id.iv_user_setting:
 				showShortToast("设置");
+				toActivity(new Intent(context, ChangeUserInfoActivity.class));
 				break;
+			case R.id.btn_no_student_bind:
 			case R.id.btn_add_student:
-//				toActivity(new Intent(context, BindingStudentActivity.class));
-				toActivity(new Intent(context, RealNameAuthActivity.class));
+				toActivity(new Intent(context, BindingStudentActivity.class));
+//				toActivity(new Intent(context, RealNameAuthActivity.class));
 				break;
 			default:
 				break;

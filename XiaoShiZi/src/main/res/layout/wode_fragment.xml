@@ -24,6 +24,7 @@
                        android:layout_width="80dp"
                        android:layout_height="80dp"
                        android:layout_margin="10dp"
+                       android:scaleType="fitXY"
                        android:src="@mipmap/ic_launcher"
                        app:riv_border_color="@color/white"
                        app:riv_border_width="1dp"
@@ -40,10 +41,10 @@
                        android:textSize="18sp"
                        android:text="李大鹏" />
                    <TextView
+                       android:id="@+id/txt_user_telphone"
                        android:text="18697386272"
                        android:layout_toRightOf="@id/iv_user_face"
                        android:layout_below="@id/txt_user_name"
-                       android:id="@+id/txt_user_telphone"
                        android:gravity="center_vertical"
                        android:textColor="@color/white"
                        android:textSize="18sp"
@@ -69,6 +70,43 @@
                    android:layout_marginTop="110dp"
                    android:id="@id/rvBaseRecycler"
                    style="@style/lv" />
+               <android.support.v7.widget.CardView
+                   android:id="@+id/cv_no_students"
+                   android:layout_marginTop="110dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="180dp"
+                   android:layout_marginLeft="10dp"
+                   android:layout_marginRight="10dp"
+                   android:layout_marginBottom="20dp"
+                   android:visibility="gone"
+                   app:cardBackgroundColor="@color/white"
+                   app:cardCornerRadius="8dp"
+                   app:cardElevation="8dp">
+                   <LinearLayout
+                       android:orientation="vertical"
+                       android:gravity="center"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent">
+                       <TextView
+                           android:text="您当前还未绑定您的孩子噢"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content" />
+                       <com.flyco.roundview.RoundTextView
+                           android:layout_marginTop="5dp"
+                           android:id="@+id/btn_no_student_bind"
+                           android:layout_width="150dp"
+                           android:layout_height="40dp"
+                           android:layout_centerInParent="true"
+                           android:gravity="center"
+                           android:text="立即绑定"
+                           android:padding="10dp"
+                           android:textColor="@android:color/white"
+                           app:rv_backgroundColor="@color/colorPrimary"
+                           app:rv_backgroundPressColor="@color/colorPrimaryDark"
+                           app:rv_cornerRadius="15dp" />
+                   </LinearLayout>
+
+               </android.support.v7.widget.CardView>
            </FrameLayout>
 
             <com.flyco.roundview.RoundTextView
@@ -87,7 +125,7 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 app:cardBackgroundColor="@color/white"

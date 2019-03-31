@@ -65,6 +65,7 @@ public class StudentView extends BaseView<Student> implements OnClickListener {
 	public TextView tvUserViewName;
 	public TextView txt_child_school;
 	public TextView txt_child_gradle;
+	public TextView txt_child_Guardian;
 	public Button btn_student_jiebang;
 	@SuppressLint("InflateParams")
 	@Override
@@ -76,6 +77,7 @@ public class StudentView extends BaseView<Student> implements OnClickListener {
 		txt_child_school = findView(R.id.txt_child_gradle);
 		txt_child_gradle = findView(R.id.txt_child_Guardian);
 		btn_student_jiebang = findView(R.id.btn_student_jiebang, this);
+		txt_child_Guardian = findView(R.id.txt_child_Guardian, this);
 
 		return super.createView();
 	}
@@ -84,6 +86,11 @@ public class StudentView extends BaseView<Student> implements OnClickListener {
 	public void bindView(Student data_){
 		this.data = data_;
 		Log.d(TAG,"data=null : "+(data==null));
+		txt_child_birthday.setText(data.getBirthday());
+		txt_child_name.setText(data.getStudentName());
+		txt_child_school.setText(data.getSchoolName());
+		txt_child_gradle.setText(data.getSchoolGradeName());
+		txt_child_Guardian.setText(data.getCustody());
 	}
 
 	@Override

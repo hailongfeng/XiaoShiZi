@@ -1,11 +1,16 @@
 package edu.children.xiaoshizi.utils;
 
-import java.io.UnsupportedEncodingException;
-import java.security.SecureRandom;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Random;
+import android.text.TextUtils;
 
+import java.security.SecureRandom;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Created by Horrarndoo on 2017/4/5.
+ * 字符串工具类
+ */
 public class StringUtils {
     public static final String MD5 = "MD5";
     public static final String SHA1 = "SHA-1";
@@ -28,142 +33,84 @@ public class StringUtils {
             return new SecureRandom();
         }
     };
-
-    public StringUtils() {
-    }
-
-    public static CharSequence escapeForXml(CharSequence input) {
-        return escapeForXml(input, StringUtils.XmlEscapeMode.safe);
-    }
-
-    public static CharSequence escapeForXmlAttribute(CharSequence input) {
-        return escapeForXml(input, StringUtils.XmlEscapeMode.forAttribute);
-    }
-
-    public static CharSequence escapeForXmlAttributeApos(CharSequence input) {
-        return escapeForXml(input, StringUtils.XmlEscapeMode.forAttributeApos);
-    }
-
-    public static CharSequence escapeForXmlText(CharSequence input) {
-        return escapeForXml(input, StringUtils.XmlEscapeMode.forText);
-    }
-
-    private static CharSequence escapeForXml(CharSequence input, StringUtils.XmlEscapeMode xmlEscapeMode) {
-        if (input == null) {
-            return null;
+    /**
+     * 判断字符串是否有值，如果为null或者是空字符串或者只有空格或者为"null"字符串，则返回true，否则则返回false
+     */
+    public static boolean isEmpty(String value) {
+        if (value != null && !"".equalsIgnoreCase(value.trim())
+                && !"null".equalsIgnoreCase(value.trim())) {
+            return false;
         } else {
-            int len = input.length();
-            StringBuilder out = new StringBuilder((int)((double)len * 1.3D));
-            int last = 0;
-            int i = 0;
-
-            while(i < len) {
-                String toAppend;
-                toAppend = null;
-                char ch = input.charAt(i);
-                label60:
-                switch(xmlEscapeMode) {
-                    case safe:
-                        switch(ch) {
-                            case '"':
-                                toAppend = "&quot;";
-                                break label60;
-                            case '&':
-                                toAppend = "&amp;";
-                                break label60;
-                            case '\'':
-                                toAppend = "&apos;";
-                                break label60;
-                            case '<':
-                                toAppend = "&lt;";
-                                break label60;
-                            case '>':
-                                toAppend = "&gt;";
-                            default:
-                                break label60;
-                        }
-                    case forAttribute:
-                        switch(ch) {
-                            case '"':
-                                toAppend = "&quot;";
-                                break label60;
-                            case '&':
-                                toAppend = "&amp;";
-                                break label60;
-                            case '\'':
-                                toAppend = "&apos;";
-                                break label60;
-                            case '<':
-                                toAppend = "&lt;";
-                            default:
-                                break label60;
-                        }
-                    case forAttributeApos:
-                        switch(ch) {
-                            case '&':
-                                toAppend = "&amp;";
-                                break label60;
-                            case '\'':
-                                toAppend = "&apos;";
-                                break label60;
-                            case '<':
-                                toAppend = "&lt;";
-                            default:
-                                break label60;
-                        }
-                    case forText:
-                        switch(ch) {
-                            case '&':
-                                toAppend = "&amp;";
-                                break;
-                            case '<':
-                                toAppend = "&lt;";
-                        }
-                }
-
-                if (toAppend != null) {
-                    if (i > last) {
-                        out.append(input, last, i);
-                    }
-
-                    out.append(toAppend);
-                    ++i;
-                    last = i;
-                } else {
-                    ++i;
-                }
-            }
-
-            if (last == 0) {
-                return input;
-            } else {
-                if (i > last) {
-                    out.append(input, last, i);
-                }
-
-                return out;
-            }
+            return true;
         }
     }
 
-    public static String encodeHex(byte[] bytes) {
-        char[] hexChars = new char[bytes.length * 2];
-
-        for(int j = 0; j < bytes.length; ++j) {
-            int v = bytes[j] & 255;
-            hexChars[j * 2] = HEX_CHARS[v >>> 4];
-            hexChars[j * 2 + 1] = HEX_CHARS[v & 15];
-        }
-
-        return new String(hexChars);
+    /**
+     * 判断邮箱格式是否正确
+     * @param email
+     * @return
+     */
+    public  static boolean isEmail(String email) {
+        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(email);
+        return m.matches();
     }
 
-    public static byte[] toUtf8Bytes(String string) {
-        try {
-            return string.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException var2) {
-            throw new IllegalStateException("UTF-8 encoding not supported by platform", var2);
+    public static boolean isPhoneNumberValid(String phoneNumber) {
+        boolean isValid = false;
+        String expression = "^1[3|4|5|7|8]\\d{9}$";
+        CharSequence inputStr = phoneNumber;
+        Pattern pattern = Pattern.compile(expression);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
         }
+        return isValid;
+    }
+
+    public static boolean isPhoneNumberValid(String areaCode, String phoneNumber) {
+        if (TextUtils.isEmpty(phoneNumber)) {
+            return false;
+        }
+
+        if (phoneNumber.length() < 5) {
+            return false;
+        }
+
+        if (TextUtils.equals(areaCode, "+86") || TextUtils.equals(areaCode, "86")) {
+            return isPhoneNumberValid(phoneNumber);
+        }
+
+        boolean isValid = false;
+        String expression = "^[0-9]*$";
+        CharSequence inputStr = phoneNumber;
+        Pattern pattern = Pattern.compile(expression);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
+        }
+        return isValid;
+    }
+
+    public static boolean isPhoneFormat(String areaCode, String phoneNumber) {
+        if (TextUtils.isEmpty(phoneNumber)) {
+            return false;
+        }
+
+        if (phoneNumber.length() < 7) {
+            return false;
+        }
+
+        boolean isValid = false;
+        String expression = "^[0-9]*$";
+        CharSequence inputStr = phoneNumber;
+        Pattern pattern = Pattern.compile(expression);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
+        }
+        return isValid;
     }
 
     public static String insecureRandomString(int length) {
@@ -197,115 +144,4 @@ public class StringUtils {
         return numbersAndLetters[index % numbersAndLetters.length];
     }
 
-    public static boolean isNotEmpty(CharSequence cs) {
-        return !isNullOrEmpty(cs);
-    }
-
-    public static boolean isNullOrEmpty(CharSequence cs) {
-        return cs == null || isEmpty(cs);
-    }
-
-    public static boolean isNotEmpty(CharSequence... css) {
-        CharSequence[] var1 = css;
-        int var2 = css.length;
-
-        for(int var3 = 0; var3 < var2; ++var3) {
-            CharSequence cs = var1[var3];
-            if (isNullOrEmpty(cs)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public static boolean isNullOrEmpty(CharSequence... css) {
-        CharSequence[] var1 = css;
-        int var2 = css.length;
-
-        for(int var3 = 0; var3 < var2; ++var3) {
-            CharSequence cs = var1[var3];
-            if (isNotEmpty(cs)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public static boolean isEmpty(CharSequence cs) {
-        return cs.length() == 0;
-    }
-
-    public static String collectionToString(Collection<? extends Object> collection) {
-        return toStringBuilder(collection, " ").toString();
-    }
-
-    public static StringBuilder toStringBuilder(Collection<? extends Object> collection, String delimiter) {
-        StringBuilder sb = new StringBuilder(collection.size() * 20);
-        Iterator it = collection.iterator();
-
-        while(it.hasNext()) {
-            Object cs = it.next();
-            sb.append(cs);
-            if (it.hasNext()) {
-                sb.append(delimiter);
-            }
-        }
-
-        return sb;
-    }
-
-    public static String returnIfNotEmptyTrimmed(String string) {
-        if (string == null) {
-            return null;
-        } else {
-            String trimmedString = string.trim();
-            return trimmedString.length() > 0 ? trimmedString : null;
-        }
-    }
-
-    public static boolean nullSafeCharSequenceEquals(CharSequence csOne, CharSequence csTwo) {
-        return nullSafeCharSequenceComparator(csOne, csTwo) == 0;
-    }
-
-    public static int nullSafeCharSequenceComparator(CharSequence csOne, CharSequence csTwo) {
-        if (csOne == null ^ csTwo == null) {
-            return csOne == null ? -1 : 1;
-        } else {
-            return csOne == null && csTwo == null ? 0 : csOne.toString().compareTo(csTwo.toString());
-        }
-    }
-
-    public static <CS extends CharSequence> CS requireNotNullOrEmpty(CS cs, String message) {
-        if (isNullOrEmpty(cs)) {
-            throw new IllegalArgumentException(message);
-        } else {
-            return cs;
-        }
-    }
-
-    public static <CS extends CharSequence> CS requireNullOrNotEmpty(CS cs, String message) {
-        if (cs == null) {
-            return null;
-        } else if (cs.toString().isEmpty()) {
-            throw new IllegalArgumentException(message);
-        } else {
-            return cs;
-        }
-    }
-
-    public static String maybeToString(CharSequence cs) {
-        return cs == null ? null : cs.toString();
-    }
-
-    private static enum XmlEscapeMode {
-        safe,
-        forAttribute,
-        forAttributeApos,
-        forText;
-
-        private XmlEscapeMode() {
-        }
-    }
 }

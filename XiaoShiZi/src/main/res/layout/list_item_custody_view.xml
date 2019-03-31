@@ -9,7 +9,7 @@
     android:gravity="center_horizontal"
     android:layout_height="wrap_content">
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/iv_custody_face"
+        android:id="@+id/iv_parent_face"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_margin="10dp"
@@ -18,7 +18,7 @@
         app:riv_border_width="1dp"
         app:riv_oval="true" />
     <TextView
-        android:id="@+id/txt_custody_name"
+        android:id="@+id/txt_parent_name"
         style="@style/text_middle"
         android:text="小明爷爷" />
 

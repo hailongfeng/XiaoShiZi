@@ -7,7 +7,7 @@ import zuo.biao.library.base.BaseModel;
 /**
  * 监护人
  */
-public class Guardian implements Serializable{
+public class Parent implements Serializable{
     private String parentId	;
     private String parentUserName	;
     private String custody	;

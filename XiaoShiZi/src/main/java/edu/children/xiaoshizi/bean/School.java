@@ -15,7 +15,7 @@ public class School extends BaseModel {
     @PrimaryKey
     public String id;
     @Column
-    public String pid;
+    public String parentId;
     @Column
     public String schoolName;
     @Column
