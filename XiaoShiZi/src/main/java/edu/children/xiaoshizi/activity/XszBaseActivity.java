@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
 import zuo.biao.library.base.BaseActivity;
 
-public class XszBaseActivity extends BaseActivity {
+public abstract class XszBaseActivity extends BaseActivity {
 
   protected  RequestOptions glideOptions = new RequestOptions()
             .placeholder(R.drawable.student_face_default)//图片加载出来前，显示的图片
@@ -27,23 +27,9 @@ public class XszBaseActivity extends BaseActivity {
         super.setContentView(layoutResID);
         //绑定初始化ButterKnife
         ButterKnife.bind(this);
-    }
-
-
-
-    @Override
-    public void initView() {
-
-    }
-
-    @Override
-    public void initData() {
-
-    }
-
-    @Override
-    public void initEvent() {
-
+        initView();
+        initData();
+        initEvent();
     }
 
     // Activity页面onResume函数重载

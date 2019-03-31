@@ -45,6 +45,7 @@ import edu.children.xiaoshizi.adapter.StudentAdapter;
 import edu.children.xiaoshizi.bean.Parent;
 import edu.children.xiaoshizi.bean.Student;
 import edu.children.xiaoshizi.bean.User;
+import edu.children.xiaoshizi.utils.StringUtils;
 import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
 
 /**设置fragment
@@ -160,7 +161,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener, On
 	public void initData() {//必须调用
 		User user=DemoApplication.getInstance().getUser();
 		String userName=user.getUserName();
-		if (userName!=null){
+		if (!StringUtils.isEmpty(userName)){
 			txt_user_name.setText(userName);
 		}else {
 			txt_user_name.setText("");

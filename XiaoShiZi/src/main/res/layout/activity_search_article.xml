@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/activity_page"
+    android:background="@color/white"
+    >
+    <LinearLayout
+        android:background="@color/gray_slight"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="50dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <com.flyco.roundview.RoundLinearLayout
+                android:id="@+id/rll_search"
+                android:layout_width="0dp"
+                android:orientation="horizontal"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:layout_margin="5dp"
+                app:rv_backgroundColor="@color/white"
+                app:rv_cornerRadius="10dp"
+                >
+                <ImageView
+                    android:src="@drawable/icon_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:text="放大镜"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </com.flyco.roundview.RoundLinearLayout>
+            <TextView
+                android:text="取消"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        style="@style/ll_vertical_match_wrap"
+        >
+        <RelativeLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="历史记录"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:id="@+id/iv_delete_all"
+                android:src="@drawable/icon_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <ListView
+            android:id="@id/lvBaseList"
+            style="@style/lv"
+            />
+    </LinearLayout>
+</LinearLayout>

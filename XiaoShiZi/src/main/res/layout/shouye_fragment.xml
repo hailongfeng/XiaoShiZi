@@ -13,6 +13,7 @@
         android:gravity="center"
         android:layout_height="wrap_content">
         <com.flyco.roundview.RoundLinearLayout
+            android:id="@+id/rll_search"
             android:layout_width="300dp"
             android:orientation="horizontal"
             android:layout_height="40dp"
@@ -32,6 +33,7 @@
                 android:layout_height="wrap_content" />
         </com.flyco.roundview.RoundLinearLayout>
         <com.flyco.roundview.RoundTextView
+            android:id="@+id/rtv_contribute"
             android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

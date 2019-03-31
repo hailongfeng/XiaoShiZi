@@ -14,6 +14,7 @@ limitations under the License.*/
 
 package edu.children.xiaoshizi.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -27,6 +28,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.activity.SearchArticleActivity;
 import zuo.biao.library.base.BaseFragment;
 import zuo.biao.library.ui.AlertDialog;
 import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
@@ -128,9 +130,8 @@ public class ShouYeFragment extends BaseFragment implements OnClickListener, OnD
 	public void initEvent() {//必须调用
 
 //		ivSettingHead.setOnClickListener(this);
-
-//		findView(R.id.llSettingSetting).setOnClickListener(this);
-//		findView(R.id.llSettingAbout).setOnClickListener(this);
+		findView(R.id.rll_search,this);
+		findView(R.id.rtv_contribute,this);
 //		findView(R.id.llSettingLogout).setOnClickListener(this);
 	}
 
@@ -157,9 +158,9 @@ public class ShouYeFragment extends BaseFragment implements OnClickListener, OnD
 	@Override
 	public void onClick(View v) {//直接调用不会显示v被点击效果
 		switch (v.getId()) {
-//			case R.id.llSettingSetting:
-////				toActivity(SettingActivity.createIntent(context));
-//				break;
+			case R.id.rll_search:
+				toActivity(new Intent(context,SearchArticleActivity.class));
+				break;
 //			case R.id.llSettingAbout:
 ////				toActivity(AboutActivity.createIntent(context));
 //				break;

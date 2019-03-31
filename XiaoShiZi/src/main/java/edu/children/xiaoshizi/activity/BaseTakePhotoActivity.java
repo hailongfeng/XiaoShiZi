@@ -23,7 +23,7 @@ import edu.children.xiaoshizi.utils.FileUtil;
 import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
 
-public class BaseTakePhotoActivity extends XszBaseActivity implements TakePhoto.TakeResultListener, InvokeListener {
+public abstract class BaseTakePhotoActivity extends XszBaseActivity implements TakePhoto.TakeResultListener, InvokeListener {
     TakePhoto takePhoto;
     InvokeParam invokeParam;
     File file;

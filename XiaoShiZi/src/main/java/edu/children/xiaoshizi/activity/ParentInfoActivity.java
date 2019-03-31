@@ -42,7 +42,6 @@ public class ParentInfoActivity extends XszBaseActivity  {
 
     @Override
     public void initView() {
-        super.initView();
         ImmersionBar.with(this)
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
@@ -50,7 +49,6 @@ public class ParentInfoActivity extends XszBaseActivity  {
 
     @Override
     public void initData() {
-        super.initData();
         int index=getIntent().getIntExtra("index",0);
         Parent parent= DemoApplication.getInstance().getLoginRespon().getParents().get(index);
         loadImage(parent.getHeadPortrait(),iv_parent_face);
@@ -59,6 +57,10 @@ public class ParentInfoActivity extends XszBaseActivity  {
         txt_parent_guanxi.setText(parent.getCustody());
     }
 
+    @Override
+    public void initEvent() {
+
+    }
 
 
 }

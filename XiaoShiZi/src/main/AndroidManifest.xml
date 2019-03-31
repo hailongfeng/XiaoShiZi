@@ -51,17 +51,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.XszBaseActivity"
-            android:label="@string/title_activity_xsz_base"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.ChangeUserInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <meta-data
             android:name="UMENG_APPKEY"
@@ -72,6 +66,7 @@
             android:value="豌豆荚" />
 
         <activity android:name=".activity.BaseTakePhotoActivity" />
+        <activity android:name=".activity.SearchArticleActivity"></activity>
     </application>
 
 </manifest>

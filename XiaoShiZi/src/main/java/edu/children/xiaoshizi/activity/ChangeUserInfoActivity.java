@@ -62,7 +62,6 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
 
     @Override
     public void initView() {
-        super.initView();
         ImmersionBar.with(this)
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
@@ -70,12 +69,12 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
 
     @Override
     public void initData() {
-        super.initData();
+
     }
+
 
     @Override
     public void initEvent() {
-        super.initEvent();
         findView(R.id.ll_user_face).setOnClickListener(this);
         findView(R.id.btn_change_user).setOnClickListener(this);
 
