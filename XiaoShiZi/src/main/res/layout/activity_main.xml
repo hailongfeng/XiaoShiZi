@@ -55,7 +55,7 @@
             <ImageView
                 android:id="@+id/ivBottomTabTab2"
                 style="@style/bottom_tab_iv"
-                android:src="@drawable/main_wode_selector" />
+                android:src="@drawable/main_anquangongju_selector" />
 
             <TextView
                 android:id="@+id/tvBottomTabTab2"
@@ -71,7 +71,7 @@
             <ImageView
                 android:id="@+id/ivBottomTabTab3"
                 style="@style/bottom_tab_iv"
-                android:src="@drawable/main_anquangongju_selector" />
+                android:src="@drawable/main_wode_selector" />
 
             <TextView
                 android:id="@+id/tvBottomTabTab3"

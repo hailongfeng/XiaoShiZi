@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
@@ -22,6 +23,13 @@ public abstract class XszBaseActivity extends BaseActivity {
             .placeholder(R.drawable.student_face_default)//图片加载出来前，显示的图片
             .fallback( R.drawable.student_face_default) //url为空的时候,显示的图片
             .error(R.drawable.student_face_default);//图片加载失败后，显示的图片
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        PushAgent.getInstance(context).onAppStart();
+    }
+
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);

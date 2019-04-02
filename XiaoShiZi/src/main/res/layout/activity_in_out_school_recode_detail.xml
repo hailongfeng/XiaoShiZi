@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/activity_page"
+    android:background="@color/white">
+
+    <RelativeLayout
+        style="@style/topbar_bg"
+        android:background="@color/gray_slight">
+
+        <ImageButton style="@style/xsz_topbar_return_img" />
+
+        <TextView
+            style="@style/topbar_title"
+            android:layout_centerHorizontal="true"
+            android:text="记录详情" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_user_face1"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/student_face_default"
+            app:riv_border_color="@color/white"
+            app:riv_border_width="1dp"
+            app:riv_corner_radius="15dp"
+            app:riv_oval="false" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_user_face2"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/student_face_default"
+            app:riv_border_color="@color/white"
+            app:riv_border_width="1dp"
+            app:riv_oval="false" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@id/iv_user_face2"
+            android:layout_toRightOf="@id/iv_user_face1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="相似度" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="80%" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ddd" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

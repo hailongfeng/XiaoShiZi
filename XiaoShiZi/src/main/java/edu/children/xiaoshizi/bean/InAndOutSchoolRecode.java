@@ -5,31 +5,21 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-import java.io.Serializable;
-
 import edu.children.xiaoshizi.db.XSZDatabase;
 
 @Table(database = XSZDatabase.class)
-public class School extends BaseModel {
+public class InAndOutSchoolRecode extends BaseModel {
 
     @PrimaryKey
     public String id;
     @Column
-    public String parentId;
+    public String snapPicUrl;
     @Column
-    public String gradeId;
+    public String imgPicUrl;
     @Column
-    public String schoolName;
+    public long similarity;
     @Column
-    public int sortNum;
+    public long lastTime;
     @Column
-    public int type;
-
-    @Override
-    public String toString() {
-        return "School{" +
-                "schoolName='" + schoolName + '\'' +
-                ", type=" + type +
-                '}';
-    }
+    public String triggerTime;
 }

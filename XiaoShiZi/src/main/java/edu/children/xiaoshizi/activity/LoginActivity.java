@@ -23,7 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import edu.children.xiaoshizi.bean.LoginRespon;
+import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.ApiService;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
@@ -94,18 +96,11 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
 
 
     private void getVeryCode() {
-        SortedMap sm = new TreeMap<String,String>();
+        TreeMap sm = new TreeMap<String,String>();
         String phone=edit_user_phone.getText().toString();
         if (StringUtils.isEmpty(phone))
-        sm.put("phoneNumber","18697386272");
-        sm.put("timestamp", System.currentTimeMillis()+"");
-        sm.put("noncestr", StringUtils.randomString(10));
-        sm.put("sign", Tools.createSign(sm));
-        String root = JSONObject.toJSONString(sm);
-        Log.d(TAG,"root ="+root);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),root);
-        ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
-        RetrofitClient.execute(apiService.getVerifyCode(requestBody),new ApiSubscriber<Response>(){
+            sm.put("phoneNumber","18697386272");
+        LogicService.post(context, APIMethod.getVerifyCode,sm,new ApiSubscriber<Response>(){
             @Override
             public void onNext(Response response) {
                 Log.d(TAG,"response code:"+response.getCode());
@@ -128,7 +123,9 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         sm.put("phoneNumber",phoneNumber);
         sm.put("verifyCode",verifyCode);
         sm.put("deviceToken","");
-        LogicService.login(context, sm, new ApiSubscriber<Response<LoginRespon>>() {
+        sm.put("mobileType", "Android");
+        sm.put("deviceToken", DemoApplication.getInstance().getDeviceToken());
+        LogicService.post(context, APIMethod.login,sm, new ApiSubscriber<Response<LoginRespon>>() {
             @Override
             public void onNext(Response<LoginRespon> respon) {
                 DemoApplication.getInstance().setLoginRespon(respon.getResult());
@@ -144,6 +141,54 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
             }
         });
 
+    }
+
+    void test1(){
+        TreeMap sm = new TreeMap<String,String>();
+        String phoneNumber=edit_user_phone.getText().toString();
+        sm.put("studentId","");
+        sm.put("studentId","2019-04-01");
+        LogicService.post(context, APIMethod.findStudentSnapMsg,sm, new ApiSubscriber<Response<List<InAndOutSchoolRecode>>>() {
+            @Override
+            public void onNext(Response<List<InAndOutSchoolRecode>> respon) {
+            }
+
+            @Override
+            protected void onFail(NetErrorException error) {
+                error.printStackTrace();
+            }
+        });
+    }
+    void test2(){
+        TreeMap sm = new TreeMap<String,String>();
+        String phoneNumber=edit_user_phone.getText().toString();
+        sm.put("snapMsgId","");
+        LogicService.post(context, APIMethod.findSnapMsgById,sm, new ApiSubscriber<Response<List<InAndOutSchoolRecode>>>() {
+            @Override
+            public void onNext(Response<List<InAndOutSchoolRecode>> respon) {
+            }
+
+            @Override
+            protected void onFail(NetErrorException error) {
+                error.printStackTrace();
+            }
+        });
+    }
+    void test3(){
+        TreeMap sm = new TreeMap<String,String>();
+        String phoneNumber=edit_user_phone.getText().toString();
+        sm.put("snapMsgId","");
+        sm.put("feedbackResult","1");
+        LogicService.post(context, APIMethod.findStudentSnapMsg,sm, new ApiSubscriber<Response<List<InAndOutSchoolRecode>>>() {
+            @Override
+            public void onNext(Response<List<InAndOutSchoolRecode>> respon) {
+            }
+
+            @Override
+            protected void onFail(NetErrorException error) {
+                error.printStackTrace();
+            }
+        });
     }
 
     @Override

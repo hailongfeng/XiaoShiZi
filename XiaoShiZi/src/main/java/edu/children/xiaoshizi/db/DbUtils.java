@@ -31,6 +31,9 @@ public class DbUtils {
                 .queryList();
     }
 
+    public static <T extends BaseModel>  void deleteModel(Class<T> clazz){
+        SQLite.delete(clazz);
+    }
     public static <T extends BaseModel>  void saveModel(T model){
         model.save();
     }

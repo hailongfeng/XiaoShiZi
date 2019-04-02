@@ -91,25 +91,9 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener, On
 	}
 
 	//与Activity通信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		//类相关初始化，必须使用<<<<<<<<<<<<<<<<
-		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(R.layout.wode_fragment, container, false);
-		ButterKnife.bind(this, view);
-		setContentView(view);
-		//类相关初始化，必须使用>>>>>>>>>>>>>>>>
-
-		//功能归类分区方法，必须调用<<<<<<<<<<
-		initView();
-		initData();
-		initEvent();
-		//功能归类分区方法，必须调用>>>>>>>>>>
-
-		return view;
+	int getLayoutId() {
+		return R.layout.wode_fragment;
 	}
 
 	@Override

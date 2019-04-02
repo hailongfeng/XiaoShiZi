@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ListView中的ItemView里不要用Button等默认hasFocus的控件，以免onItemClick事件无响应 -->
+<!-- 如果一定要用，则必须在根布局加上 android:descendantFocusability="blocksDescendants" -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/ll_horizontal_match_wrap"
+    android:background="@drawable/white_to_alpha"
+    android:padding="4dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            >
+            <ImageView
+                android:id="@+id/txt_student_in_out_school_recode_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dp"
+                android:src="@drawable/wode_shengridangao" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/txt_student_in_out_school_recode_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:text="08:30" />
+            <TextView
+                android:id="@+id/txt_student_in_out_school_recode_miaoshu"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:text="到校" />
+        </LinearLayout>
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/rtv_view_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="查看详情"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="right"
+            android:gravity="center_vertical"
+            app:rv_textPressColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorPrimary"
+            android:drawablePadding="5dp"
+            />
+</LinearLayout>

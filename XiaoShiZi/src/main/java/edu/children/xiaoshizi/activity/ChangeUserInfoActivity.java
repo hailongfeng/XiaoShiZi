@@ -22,6 +22,7 @@ import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.User;
+import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
@@ -99,7 +100,7 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
         sm.put("workingAddress",edt_user_work_adddress.getText().toString());
         sm.put("homeAddress",edt_user_home_adddress.getText().toString());
         sm.put("headPortrait",headPortrait);
-        LogicService.saveMyProfile(context, sm, new ApiSubscriber<Response<User>>() {
+        LogicService.post(context, APIMethod.saveMyProfile, sm, new ApiSubscriber<Response<User>>() {
             @Override
             public void onNext(Response<User> respon) {
                User newUser=  respon.getResult();
@@ -139,6 +140,7 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
                     JSONObject jsonObject=jsonArray.getJSONObject(0);
                     Log.d(TAG,jsonObject.getString("objectUrl"));
                     Log.d(TAG,jsonObject.getString("objectUrlWithStyle"));
+                    Log.d(TAG,jsonObject.getString("fileName"));
                     headPortrait=jsonObject.getString("objectUrlWithStyle");
                 }
 

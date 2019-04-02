@@ -24,6 +24,7 @@ import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.db.DbUtils;
+import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
@@ -176,7 +177,7 @@ public class BindingStudentActivity extends XszBaseActivity  implements View.OnC
                 sm.put("birthday", txt_student_birthday.getText().toString());
                 sm.put("parentCustody",STUDENT_GUARDIAN_GUANXI[currentGuanXi] );
                 sm.put("bindingPassword", edt_bindingPassword.getText().toString());
-                LogicService.studentBinding(context, sm, new ApiSubscriber<Response<LoginRespon>>() {
+                LogicService.post(context, APIMethod.studentBinding, sm, new ApiSubscriber<Response<LoginRespon>>() {
                     @Override
                     public void onNext(Response<LoginRespon> response) {
                         if (response.getCode()==Response.SUCCESS){

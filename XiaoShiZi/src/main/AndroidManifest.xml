@@ -55,18 +55,19 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.ChangeUserInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5c9f629d61f564f48f0010de" />
+            android:value="5ca1c9ee20365714de0016c7" />
         <!-- Channel ID用来标识App的推广渠道，作为推送消息时给用户分组的一个维度。 -->
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="豌豆荚" />
 
         <activity android:name=".activity.BaseTakePhotoActivity" />
-        <activity android:name=".activity.SearchArticleActivity"></activity>
+        <activity android:name=".activity.SearchArticleActivity" />
+        <activity android:name=".activity.InOutSchoolRecodeDetailActivity"></activity>
     </application>
 
 </manifest>

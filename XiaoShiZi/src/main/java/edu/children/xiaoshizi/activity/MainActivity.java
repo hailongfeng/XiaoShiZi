@@ -1,6 +1,5 @@
 package edu.children.xiaoshizi.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -13,11 +12,12 @@ import java.util.TreeMap;
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
-import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.db.DbUtils;
+import edu.children.xiaoshizi.fragment.SafeToolFragment;
 import edu.children.xiaoshizi.fragment.ShouYeFragment;
 import edu.children.xiaoshizi.fragment.WoDeFragment;
+import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
@@ -33,6 +33,7 @@ public class MainActivity extends BaseBottomTabActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PushAgent.getInstance(context).onAppStart();
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
@@ -42,65 +43,29 @@ public class MainActivity extends BaseBottomTabActivity {
 
 
     void getSchools() {
-        LogicService.getSchoolInfo(context, 1, new ApiSubscriber<Response<List<School>>>() {
+        LogicService.post(context, APIMethod.loadSchoolData,null, new ApiSubscriber<Response<List<School>>>() {
             @Override
             public void onNext(Response<List<School>> listResponse) {
-                Log.d(TAG, "1" + listResponse.getResult().size());
-                DbUtils.saveSchool(listResponse.getResult());
+                if (listResponse.getResult().size()>0){
+                    Log.d(TAG, "School size =" + listResponse.getResult().size());
+                    DbUtils.deleteModel(School.class);
+                    DbUtils.saveModelList(listResponse.getResult());
+                }else {
+                    Log.w(TAG,"无数据");
+                }
             }
-
             @Override
             protected void onFail(NetErrorException error) {
                 Log.d(TAG, error.getMessage());
             }
-        });
-        LogicService.getSchoolInfo(context, 2, new ApiSubscriber<Response<List<School>>>() {
-            @Override
-            public void onNext(Response<List<School>> listResponse) {
-                Log.d(TAG, "2" + listResponse.getResult().size());
-                DbUtils.saveSchool(listResponse.getResult());
-            }
 
-            @Override
-            protected void onFail(NetErrorException error) {
-                Log.d(TAG, error.getMessage());
-            }
-        });
-        LogicService.getSchoolInfo(context, 3, new ApiSubscriber<Response<List<School>>>() {
-            @Override
-            public void onNext(Response<List<School>> listResponse) {
-                Log.d(TAG, "3" + listResponse.getResult().size());
-                DbUtils.saveSchool(listResponse.getResult());
-            }
-
-            @Override
-            protected void onFail(NetErrorException error) {
-                Log.d(TAG, error.getMessage());
-            }
         });
     }
 
     @Override
     public void initData() {
         super.initData();
-        PushAgent.getInstance(this).onAppStart();
-        TreeMap sm = new TreeMap<String, String>();
-        sm.put("userId", DemoApplication.getInstance().getUser().getUserId());
-
-        /*
-        LogicService.getStudentsAndParents(context,sm,new ApiSubscriber<Response<LoginRespon>>() {
-            @Override
-            public void onNext(Response<LoginRespon> respon) {
-                DemoApplication.getInstance().setLoginRespon(respon.getResult());
-                DemoApplication.getInstance().setUser(respon.getResult().getLoginResp());
-            }
-
-            @Override
-            protected void onFail(NetErrorException error) {
-                error.printStackTrace();
-            }
-        });
-        */
+        getSchools();
     }
 
     @Override
@@ -149,7 +114,7 @@ public class MainActivity extends BaseBottomTabActivity {
             case 1:
                 return ShouYeFragment.createInstance();
             case 2:
-                return WoDeFragment.createInstance();
+                return SafeToolFragment.createInstance(0);
             case 3:
                 return WoDeFragment.createInstance();
             default:

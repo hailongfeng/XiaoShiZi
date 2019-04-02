@@ -15,20 +15,27 @@ limitations under the License.*/
 package edu.children.xiaoshizi;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.widget.RemoteViews;
 
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UmengMessageHandler;
+import com.umeng.message.UmengNotificationClickHandler;
+import com.umeng.message.entity.UMessage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.bean.User;
+import edu.children.xiaoshizi.logic.UmengMessageHandle;
 import edu.children.xiaoshizi.utils.ActivityLifecycle;
 import zuo.biao.library.base.BaseApplication;
 import zuo.biao.library.util.Log;
@@ -50,6 +57,7 @@ public class DemoApplication extends BaseApplication {
 	private List<Activity> activities=new ArrayList<>();
 
 
+	private String deviceToken=null;
 
 	@Override
 	public void onCreate() {
@@ -57,6 +65,7 @@ public class DemoApplication extends BaseApplication {
 		context = this;
 		FlowManager.init(new FlowConfig.Builder(this).build());
 		registerActivityLifecycleCallbacks(new ActivityLifecycle());
+		new UmengMessageHandle(this).init();
 	}
 	@Override
 	protected void attachBaseContext(Context base) {
@@ -64,24 +73,12 @@ public class DemoApplication extends BaseApplication {
 		MultiDex.install(this) ;
 	}
 
-	void  initUment(){
-//		UMConfigure.init(this, "5b90e5e9f29d982634000285", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "15d9d427ff1ea729a7a9dc8abaca9060");
-//		UMConfigure.init(Context context, int deviceType, String pushSecret);
-		UMConfigure.init(this, deviceType, pushSecret);
-		PushAgent mPushAgent = PushAgent.getInstance(this);
-		//注册推送服务，每次调用register方法都会回调该接口
-		mPushAgent.register(new IUmengRegisterCallback() {
-			@Override
-			public void onSuccess(String deviceToken) {
-				Log.i("token", "22222");
-				//注册成功会返回device token
-				Log.i("token", deviceToken+"");
-			}
-			@Override
-			public void onFailure(String s, String s1) {
-				Log.i("tokens", s+","+s1+"");
-			}
-		});
+	public String getDeviceToken() {
+		return deviceToken;
+	}
+
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
 	}
 
 	public User getUser() {

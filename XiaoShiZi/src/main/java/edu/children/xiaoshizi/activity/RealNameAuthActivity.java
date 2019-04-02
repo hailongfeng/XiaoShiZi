@@ -9,7 +9,7 @@ import edu.children.xiaoshizi.R;
 import zuo.biao.library.base.BaseActivity;
 import zuo.biao.library.ui.ItemDialog;
 
-public class RealNameAuthActivity extends BaseActivity  implements View.OnClickListener{
+public class RealNameAuthActivity extends XszBaseActivity  implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

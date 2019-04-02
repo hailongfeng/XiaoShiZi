@@ -18,7 +18,7 @@ import zuo.biao.library.base.BaseActivity;
 /**
  * 第一联系人
  */
-public class UserInfoActivity extends BaseActivity implements View.OnClickListener{
+public class UserInfoActivity extends XszBaseActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

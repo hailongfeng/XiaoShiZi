@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.List;
 import java.util.Map;
 
+import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.bean.Student;
@@ -25,34 +26,42 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
 
 public interface ApiService {
 
 
     @Multipart
-    @POST("upload/uploadPic")
+    @POST("v1/upload/uploadPic")
     Observable<Response<JSONArray>> uploadFile(@PartMap Map<String, RequestBody> params, @Part List<MultipartBody.Part> parts);
 
-    @POST("sendSms")
+    @POST("v1/sendSms")
     Observable<Response> getVerifyCode(@Body RequestBody requestBody);
 
-    @POST("login")
+    @POST("v1/login")
     Observable<Response<LoginRespon>> login(@Body RequestBody requestBody);
 
-    @POST("school/loadSchoolData")
-    Observable<Response<List<School>>> getSchoolInfo(@Body RequestBody requestBody);
+    @POST("{apiVerison}/school/loadSchoolData")
+    Observable<Response<List<School>>> loadSchoolData(@Path("apiVerison") String apiVerison, @Body RequestBody requestBody);
 
-    @POST("student/studentBinding")
+    @POST("v1/student/studentBinding")
     Observable<Response<LoginRespon>> studentBinding(@Body RequestBody requestBody);
 
-    @POST("sysUser/getStudentsAndParents")
+    @POST("v1/sysUser/getStudentsAndParents")
     Observable<Response<LoginRespon>> getStudentsAndParents(@Body RequestBody requestBody);
 
-    @POST("sysUser/getMyProfile")
+    @POST("v1/sysUser/getMyProfile")
     Observable<Response<User>> getMyProfile(@Body RequestBody requestBody);
 
-    @POST("sysUser/saveMyProfile")
+    @POST("v1/sysUser/saveMyProfile")
     Observable<Response<User>> saveMyProfile(@Body RequestBody requestBody);
+
+    @POST("v1/student/findStudentSnapMsg")
+    Observable<Response<List<InAndOutSchoolRecode>>> findStudentSnapMsg(@Body RequestBody requestBody);
+    @POST("v1/student/findSnapMsgById")
+    Observable<Response<InAndOutSchoolRecode>> findSnapMsgById(@Body RequestBody requestBody);
+    @POST("v1/student/doSnapMsgFeedBack")
+    Observable<Response<User>> doSnapMsgFeedBack(@Body RequestBody requestBody);
 
 
 }

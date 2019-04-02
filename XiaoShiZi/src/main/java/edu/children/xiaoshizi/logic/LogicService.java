@@ -5,7 +5,6 @@ import android.content.Context;
 import com.alibaba.fastjson.JSONObject;
 
 import java.io.File;
-import java.nio.file.FileStore;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,14 +15,13 @@ import java.util.TreeMap;
 
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.net.rxjava.RetrofitClient;
-import edu.children.xiaoshizi.utils.Constant;
 import edu.children.xiaoshizi.utils.StringUtils;
 import edu.children.xiaoshizi.utils.Tools;
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.http.Header;
 import zuo.biao.library.util.Log;
 
 public class LogicService {
@@ -58,23 +56,9 @@ public class LogicService {
         return requestBody;
     }
 
-
-    public static void login(Context context,TreeMap<String,String> param,  Observer subscriber) {
-        SortedMap sm = param;
-        sm.put("mobileType", "Android");
-        sm.put("timestamp", System.currentTimeMillis()+"");
-        sm.put("noncestr", StringUtils.randomString(10));
-        sm.put("sign", Tools.createSign(sm));
-        String root = JSONObject.toJSONString(sm);
-        Log.d(TAG,"root ="+root);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),root);
-        ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
-        RetrofitClient.execute(apiService.login(requestBody),subscriber);
-    }
-
     public static void uploadPic(Context context, TreeMap<String,String> param, List<File> files,  Observer subscriber) {
         SortedMap<String,String> sm = param;
-        appendCommonParam(sm);
+        appendCommonParam(sm,true);
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);//表单类型
         for (File file:files){
@@ -94,78 +78,56 @@ public class LogicService {
     }
 
 
-    public static void getSchoolInfo(Context context, int type, Observer subscriber) {
-        SortedMap sm = new TreeMap<String,String>();
-        sm.put("timestamp", System.currentTimeMillis()+"");
-        sm.put("noncestr", StringUtils.randomString(10));
-        sm.put("sign", Tools.createSign(sm));
-        sm.put("token", Constant.TEST_TOKEN);
-        if (type==2){
-            sm.put("parentId","suA38j1AxGBjWcUJP4h");
-        }else if (type==3){
-            sm.put("parentId","o33hGG7RPcmkHHvZ4EW");
-        }else {
-            sm.put("parentId", "1");
+
+    public static void post(Context context,final APIMethod method,TreeMap<String,String> param,  Observer subscriber){
+        if (param==null){
+            param=new TreeMap<String,String>();
         }
-        sm.put("type",type);
-        String root = JSONObject.toJSONString(sm);
+        if (method==APIMethod.getVerifyCode||method==APIMethod.login){
+            //no case
+            appendCommonParam(param,false);
+        }else {
+            appendCommonParam(param,true);
+        }
+        String root = JSONObject.toJSONString(param);
         Log.d(TAG,"root ="+root);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),root);
         ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
-        RetrofitClient.execute(apiService.getSchoolInfo(requestBody),subscriber);
+        Observable observable=null;
+        if (method==APIMethod.getVerifyCode){
+            observable=apiService.getVerifyCode(requestBody);
+        }else if (method==APIMethod.login){
+            observable=apiService.login(requestBody);
+        }else if (method==APIMethod.loadSchoolData){
+            observable=apiService.loadSchoolData(APIVersion.v2.name(),requestBody);
+        }else if (method==APIMethod.findStudentSnapMsg){
+            observable=apiService.findStudentSnapMsg(requestBody);
+        }else if (method==APIMethod.findSnapMsgById){
+            observable=apiService.findSnapMsgById(requestBody);
+        }else if (method==APIMethod.doSnapMsgFeedBack){
+            observable=apiService.doSnapMsgFeedBack(requestBody);
+        }else if (method==APIMethod.getStudentsAndParents){
+            observable=apiService.getStudentsAndParents(requestBody);
+        }else if (method==APIMethod.studentBinding){
+            observable=apiService.studentBinding(requestBody);
+        }else if (method==APIMethod.getMyProfile){
+            observable=apiService.getMyProfile(requestBody);
+        }else if (method==APIMethod.saveMyProfile){
+            observable=apiService.saveMyProfile(requestBody);
+        }
+        if (observable!=null) {
+            RetrofitClient.execute(observable, subscriber);
+        }else {
+            Log.e(TAG,"参数错误");
+        }
     }
-
-    public static void getStudentsAndParents(Context context,TreeMap<String,String> param,  Observer subscriber) {
-        SortedMap sm = param;
-        appendCommonParam(sm);
-        String root = JSONObject.toJSONString(sm);
-        Log.d(TAG,"root ="+root);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),root);
-        ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
-        RetrofitClient.execute(apiService.getStudentsAndParents(requestBody),subscriber);
-    }
-
-
-    public static void studentBinding(Context context,TreeMap<String,String> param,  Observer subscriber) {
-        SortedMap sm = param;
-        appendCommonParam(sm);
-        String root = JSONObject.toJSONString(sm);
-        Log.d(TAG,"root ="+root);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),root);
-        ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
-        RetrofitClient.execute(apiService.studentBinding(requestBody),subscriber);
-    }
-
-
-    public static void getMyProfile(Context context,TreeMap<String,String> param,  Observer subscriber) {
-        SortedMap sm = param;
-        appendCommonParam(sm);
-        String root = JSONObject.toJSONString(sm);
-        Log.d(TAG,"root ="+root);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),root);
-        ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
-        RetrofitClient.execute(apiService.getMyProfile(requestBody),subscriber);
-    }
-
-    public static void saveMyProfile(Context context,TreeMap<String,String> param,  Observer subscriber) {
-        SortedMap sm = param;
-        appendCommonParam(sm);
-        String root = JSONObject.toJSONString(sm);
-        Log.d(TAG,"root ="+root);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),root);
-        ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
-        RetrofitClient.execute(apiService.saveMyProfile(requestBody),subscriber);
-    }
-
-
-
-
-    private static void appendCommonParam(SortedMap sm){
+    private static void appendCommonParam(SortedMap sm,boolean isNeedToken){
         sm.put("timestamp", System.currentTimeMillis()+"");
         sm.put("noncestr", StringUtils.randomString(10));
-        String token=DemoApplication.getInstance().getUser().getToken();
-        sm.put("token", token);
+        if (isNeedToken) {
+            String token = DemoApplication.getInstance().getUser().getToken();
+            sm.put("token", token);
+        }
         sm.put("sign", Tools.createSign(sm));
     }
-
 }

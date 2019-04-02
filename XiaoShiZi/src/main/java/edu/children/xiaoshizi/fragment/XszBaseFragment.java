@@ -12,11 +12,15 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
 import zuo.biao.library.base.BaseFragment;
 
 
 public abstract class XszBaseFragment extends BaseFragment {
+
+    protected String TAG=this.getClass().getSimpleName();
+
     protected RequestOptions glideOptions = new RequestOptions()
             .placeholder(R.drawable.student_face_default)//图片加载出来前，显示的图片
             .fallback( R.drawable.student_face_default) //url为空的时候,显示的图片
@@ -28,4 +32,17 @@ public abstract class XszBaseFragment extends BaseFragment {
                 .apply(glideOptions)
                 .into(imageView);
     }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        setContentView(getLayoutId());
+        ButterKnife.bind(this, view);
+        initView();
+        initData();
+        initEvent();
+        return view;
+    }
+
+
+    abstract int getLayoutId();
 }
