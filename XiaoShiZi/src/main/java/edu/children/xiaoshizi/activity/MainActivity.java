@@ -1,15 +1,17 @@
 package edu.children.xiaoshizi.activity;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 
 import com.gyf.barlibrary.ImmersionBar;
-import com.umeng.message.PushAgent;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.List;
-import java.util.TreeMap;
 
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.School;
@@ -22,26 +24,20 @@ import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
-import zuo.biao.library.base.BaseBottomTabActivity;
 import zuo.biao.library.util.Log;
 
-public class MainActivity extends BaseBottomTabActivity {
+public class MainActivity extends XszBaseActivity {
     private static final String TAG = "MainActivity";
 
     private static final String[] TAB_NAMES = {"主页", "消息", "发现", "设置"};
 
+    @BindView(R.id.bottomBar)
+    BottomBar bottomBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PushAgent.getInstance(context).onAppStart();
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        initView();
-        initData();
-        initEvent();
     }
-
-
     void getSchools() {
         LogicService.post(context, APIMethod.loadSchoolData,null, new ApiSubscriber<Response<List<School>>>() {
             @Override
@@ -64,63 +60,69 @@ public class MainActivity extends BaseBottomTabActivity {
 
     @Override
     public void initData() {
-        super.initData();
         getSchools();
     }
 
+    private Fragment fragments[]={
+            ShouYeFragment.createInstance(),
+            ShouYeFragment.createInstance(),
+            SafeToolFragment.createInstance(0),
+            WoDeFragment.createInstance()
+    };
+
+    private int currentPosition=0;
+    @Override
+    public void initEvent() {
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {            @Override
+        public void onTabSelected(@IdRes int tabId) {
+            int position =0;
+            if (tabId == R.id.tab_favorites) {
+                position=0;
+            // change your content accordingly.
+            }else if (tabId == R.id.tab_nearby) {
+                position=1;// The tab with id R.id.tab_favorites was selected,
+                // change your content accordingly.
+            }else if (tabId == R.id.tab_friends) {                    // The tab with id R.id.tab_favorites was selected,
+                position=2;
+            }else if (tabId == R.id.tab_wo) {                    // The tab with id R.id.tab_favorites was selected,
+                position=3;
+            }
+            if (currentPosition==position){
+                return;
+            }
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.hide(fragments[currentPosition]);
+            if (fragments[position].isAdded() == false) {
+                ft.add(R.id.flMainTabFragmentContainer, fragments[position]);
+            }
+            ft.show(fragments[position]).commit();
+
+        }});
+    }
+
+
     @Override
     public void initView() {
-        super.initView();
         ImmersionBar.with(this)
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
     }
 
-    @Override
-    protected int[] getTabClickIds() {
-        return new int[]{R.id.llBottomTabTab0, R.id.llBottomTabTab1, R.id.llBottomTabTab2, R.id.llBottomTabTab3};
-    }
-
-    @Override
-    protected int[][] getTabSelectIds() {
-        return new int[][]{
-                new int[]{R.id.ivBottomTabTab0, R.id.ivBottomTabTab1, R.id.ivBottomTabTab2, R.id.ivBottomTabTab3},//顶部图标
-                new int[]{R.id.tvBottomTabTab0, R.id.tvBottomTabTab1, R.id.tvBottomTabTab2, R.id.tvBottomTabTab3}//底部文字
-        };
-    }
-
-    @Override
-    public int getFragmentContainerResId() {
-        return R.id.flMainTabFragmentContainer;
-    }
 
 
-    @Override
-    protected void selectTab(int position) {
-        //导致切换时闪屏，建议去掉BottomTabActivity中的topbar，在fragment中显示topbar
-        //		rlBottomTabTopbar.setVisibility(position == 2 ? View.GONE : View.VISIBLE);
-
-//        tvBaseTitle.setText(TAB_NAMES[position]);
-
-        //点击底部tab切换顶部tab，非必要
-//        if (position == 2 && position == currentPosition && demoTabFragment != null) {
-//            demoTabFragment.selectNext();
+//    @Override
+//    protected Fragment getFragment(int position) {
+//        switch (position) {
+//            case 1:
+//                return ShouYeFragment.createInstance();
+//            case 2:
+//                return SafeToolFragment.createInstance(0);
+//            case 3:
+//                return WoDeFragment.createInstance();
+//            default:
+//                return ShouYeFragment.createInstance();
 //        }
-    }
-
-    @Override
-    protected Fragment getFragment(int position) {
-        switch (position) {
-            case 1:
-                return ShouYeFragment.createInstance();
-            case 2:
-                return SafeToolFragment.createInstance(0);
-            case 3:
-                return WoDeFragment.createInstance();
-            default:
-                return ShouYeFragment.createInstance();
-        }
-    }
+//    }
 
     private long mPressedTime = 0;
     @Override
