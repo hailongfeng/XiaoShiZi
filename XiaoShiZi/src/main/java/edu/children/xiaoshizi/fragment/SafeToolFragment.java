@@ -51,11 +51,11 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     TextView txt_student_name;
     @BindView(R.id.txt_student_birthday)
     TextView txt_student_birthday;
-    @BindView(R.id.txt_child_school)
+    @BindView(R.id.txt_student_school)
     TextView txt_student_school;
-    @BindView(R.id.txt_child_gradle)
+    @BindView(R.id.txt_student_gradle)
     TextView txt_student_gradle;
-    @BindView(R.id.txt_child_Guardian)
+    @BindView(R.id.txt_student_Guardian)
     TextView txt_student_Guardian;
 
 

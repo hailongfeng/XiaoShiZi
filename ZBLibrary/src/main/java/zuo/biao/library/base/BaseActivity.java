@@ -510,18 +510,18 @@ public abstract class BaseActivity extends FragmentActivity implements ActivityP
 
 	@Override
 	protected void onResume() {
-		Log.d(TAG, "\n onResume <<<<<<<<<<<<<<<<<<<<<<<");
+//		Log.d(TAG, "\n onResume <<<<<<<<<<<<<<<<<<<<<<<");
 		super.onResume();
 		isRunning = true;
-		Log.d(TAG, "onResume >>>>>>>>>>>>>>>>>>>>>>>>\n");
+//		Log.d(TAG, "onResume >>>>>>>>>>>>>>>>>>>>>>>>\n");
 	}
 
 	@Override
 	protected void onPause() {
-		Log.d(TAG, "\n onPause <<<<<<<<<<<<<<<<<<<<<<<");
+//		Log.d(TAG, "\n onPause <<<<<<<<<<<<<<<<<<<<<<<");
 		super.onPause();
 		isRunning = false;
-		Log.d(TAG, "onPause >>>>>>>>>>>>>>>>>>>>>>>>\n");
+//		Log.d(TAG, "onPause >>>>>>>>>>>>>>>>>>>>>>>>\n");
 	}
 
 	/**销毁并回收内存
