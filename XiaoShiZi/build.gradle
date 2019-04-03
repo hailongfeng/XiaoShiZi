@@ -56,7 +56,7 @@ dependencies {
 
     implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
-
+    implementation 'com.dou361.dialogui:jjdxm-dialogui:1.0.3'
     implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     implementation 'com.youth.banner:banner:1.4.10'
     implementation 'com.makeramen:roundedimageview:2.3.0'

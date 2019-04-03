@@ -179,7 +179,7 @@ public class BindingStudentActivity extends XszBaseActivity  implements View.OnC
                 sm.put("bindingPassword", edt_bindingPassword.getText().toString());
                 LogicService.post(context, APIMethod.studentBinding, sm, new ApiSubscriber<Response<LoginRespon>>() {
                     @Override
-                    public void onNext(Response<LoginRespon> response) {
+                    public void onSuccess(Response<LoginRespon> response) {
                         if (response.getCode()==Response.SUCCESS){
                             showShortToast("绑定成功");
                            LoginRespon loginRespon=response.getResult();

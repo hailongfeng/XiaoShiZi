@@ -1,6 +1,7 @@
 package edu.children.xiaoshizi.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dou361.dialogui.DialogUIUtils;
+import com.dou361.dialogui.bean.BuildBean;
 import com.flyco.roundview.RoundTextView;
 import com.gyf.barlibrary.ImmersionBar;
 
@@ -102,7 +105,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
             sm.put("phoneNumber","18697386272");
         LogicService.post(context, APIMethod.getVerifyCode,sm,new ApiSubscriber<Response>(){
             @Override
-            public void onNext(Response response) {
+            public void onSuccess(Response response) {
                 Log.d(TAG,"response code:"+response.getCode());
                 Log.d(TAG,"onNext  , "+Thread.currentThread().getName());
                 showShortToast("验证码发送成功");
@@ -117,6 +120,9 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
     }
 
     private void login() {
+        BuildBean buildBean=DialogUIUtils.showLoading(context, "正在登录",true,false,false,true);
+//        buildBean.dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        buildBean.show();
         String verifyCode=edit_verifyCode.getText().toString();
         TreeMap sm = new TreeMap<String,String>();
         String phoneNumber=edit_user_phone.getText().toString();
@@ -127,16 +133,21 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         sm.put("deviceToken", DemoApplication.getInstance().getDeviceToken());
         LogicService.post(context, APIMethod.login,sm, new ApiSubscriber<Response<LoginRespon>>() {
             @Override
-            public void onNext(Response<LoginRespon> respon) {
+            public void onSuccess(Response<LoginRespon> respon) {
+                DialogUIUtils.dismiss(buildBean);
+                Log.d(TAG,"phoneNumber="+phoneNumber);
+                respon.getResult().getLoginResp().setPhone(phoneNumber);
                 DemoApplication.getInstance().setLoginRespon(respon.getResult());
                 DemoApplication.getInstance().setUser(respon.getResult().getLoginResp());
 //                DemoApplication.getInstance().getUser().setToken(Constant.TEST_TOKEN);
-                toActivity(new Intent(context,MainActivity.class));
+                toActivity(new Intent(context,MainActivity.class),false);
                 finish();
             }
 
             @Override
             protected void onFail(NetErrorException error) {
+                DialogUIUtils.dismiss(buildBean);
+                showShortToast(error.getMessage());
                 error.printStackTrace();
             }
         });
@@ -150,7 +161,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         sm.put("studentId","2019-04-01");
         LogicService.post(context, APIMethod.findStudentSnapMsg,sm, new ApiSubscriber<Response<List<InAndOutSchoolRecode>>>() {
             @Override
-            public void onNext(Response<List<InAndOutSchoolRecode>> respon) {
+            public void onSuccess(Response<List<InAndOutSchoolRecode>> respon) {
             }
 
             @Override
@@ -165,7 +176,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         sm.put("snapMsgId","");
         LogicService.post(context, APIMethod.findSnapMsgById,sm, new ApiSubscriber<Response<List<InAndOutSchoolRecode>>>() {
             @Override
-            public void onNext(Response<List<InAndOutSchoolRecode>> respon) {
+            public void onSuccess(Response<List<InAndOutSchoolRecode>> respon) {
             }
 
             @Override
@@ -181,7 +192,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         sm.put("feedbackResult","1");
         LogicService.post(context, APIMethod.findStudentSnapMsg,sm, new ApiSubscriber<Response<List<InAndOutSchoolRecode>>>() {
             @Override
-            public void onNext(Response<List<InAndOutSchoolRecode>> respon) {
+            public void onSuccess(Response<List<InAndOutSchoolRecode>> respon) {
             }
 
             @Override

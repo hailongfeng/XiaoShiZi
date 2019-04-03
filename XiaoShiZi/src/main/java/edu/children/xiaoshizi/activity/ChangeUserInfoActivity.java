@@ -51,14 +51,12 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
     @BindView(R.id.edt_user_id_cardno)
     EditText edt_user_id_cardno;
     private String headPortrait="https://single-obs.obs.cn-east-2.myhuaweicloud.com:443/app_pic/head_portrait/5gcnrqBYVl1Qngok8uH/2019033111033725425.jpg";
-
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        user=DemoApplication.getInstance().getUser();
         setContentView(R.layout.activity_change_user_info);
-        initView();
-        initData();
-        initEvent();
     }
 
     @Override
@@ -70,7 +68,14 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
 
     @Override
     public void initData() {
-
+        edt_user_name.setText(user.getUserName());
+        edt_user_phone.setText(user.getPhone());
+        loadImage(user.getHeadPortrait(),iv_user_face);
+        edt_user_home_adddress.setText(user.getHomeAddress());
+        edt_user_dizhi.setText(user.getHomeAddress());
+        edt_user_work_adddress.setText(user.getWorkingAddress());
+        edt_user_email.setText(user.getEmail());
+        edt_user_id_cardno.setText(user.getCardNum());
     }
 
 
@@ -102,7 +107,7 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
         sm.put("headPortrait",headPortrait);
         LogicService.post(context, APIMethod.saveMyProfile, sm, new ApiSubscriber<Response<User>>() {
             @Override
-            public void onNext(Response<User> respon) {
+            public void onSuccess(Response<User> respon) {
                User newUser=  respon.getResult();
                User user= DemoApplication.getInstance().getUser();
                user.setUserName(newUser.getUserName());
@@ -135,7 +140,7 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
             files.add(test);
             LogicService.uploadPic(context,sm,files, new ApiSubscriber<Response<JSONArray>>() {
                 @Override
-                public void onNext(Response<JSONArray> respon) {
+                public void onSuccess(Response<JSONArray> respon) {
                     JSONArray jsonArray=respon.getResult();
                     JSONObject jsonObject=jsonArray.getJSONObject(0);
                     Log.d(TAG,jsonObject.getString("objectUrl"));
@@ -150,7 +155,6 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
                 }
             });
         }
-
     }
 
     @Override

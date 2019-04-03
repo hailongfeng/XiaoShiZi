@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/activity_page">
-
-    <FrameLayout
-        android:id="@+id/flMainTabFragmentContainer"
-        style="@style/match_match"
-        android:layout_weight="1" >
-    </FrameLayout>
-
-    <View style="@style/divider_horizontal_1px_gray" />
-
+    style="@style/activity_page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <com.roughike.bottombar.BottomBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="56dp"
         android:layout_alignParentBottom="true"
-        app:bb_inActiveTabColor="#222222"
-        app:bb_activeTabColor="@color/colorPrimary"
         app:bb_tabXmlResource="@xml/bottombar_tabs" />
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/flMainTabFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomBar"></FrameLayout>
+</RelativeLayout>

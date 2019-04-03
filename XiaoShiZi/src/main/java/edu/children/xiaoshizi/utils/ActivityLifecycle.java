@@ -21,21 +21,21 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityResumed(Activity activity) {
-        android.util.Log.d(TAG,activity.getClass().getSimpleName()+"...onResumed");
+//        android.util.Log.d(TAG,activity.getClass().getSimpleName()+"...onResumed");
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
-        android.util.Log.d(TAG,activity.getClass().getSimpleName()+"...onPaused");
+//        android.util.Log.d(TAG,activity.getClass().getSimpleName()+"...onPaused");
     }
 
     @Override
     public void onActivityStopped(Activity activity) {
-        android.util.Log.d(TAG,activity.getClass().getSimpleName()+"...onStopped");
+//        android.util.Log.d(TAG,activity.getClass().getSimpleName()+"...onStopped");
     }
     @Override
     public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-        android.util.Log.d(TAG,activity.getClass().getSimpleName()+"...onSaveInstanceState");
+//        android.util.Log.d(TAG,activity.getClass().getSimpleName()+"...onSaveInstanceState");
     }
 
     @Override

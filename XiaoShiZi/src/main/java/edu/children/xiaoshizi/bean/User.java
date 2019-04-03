@@ -42,6 +42,7 @@ public class User extends BaseModel {
 	private String workingAddress;
 	private String homeAddress;
 	private String email;
+	private String cardNum;
 
 	/**默认构造方法，JSON等解析时必须要有
 	 */
@@ -169,5 +170,13 @@ public class User extends BaseModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getCardNum() {
+		return cardNum;
+	}
+
+	public void setCardNum(String cardNum) {
+		this.cardNum = cardNum;
 	}
 }

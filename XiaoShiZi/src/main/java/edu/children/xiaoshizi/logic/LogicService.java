@@ -108,6 +108,8 @@ public class LogicService {
             observable=apiService.doSnapMsgFeedBack(requestBody);
         }else if (method==APIMethod.getStudentsAndParents){
             observable=apiService.getStudentsAndParents(requestBody);
+        }else if (method==APIMethod.verifiedSubmit){
+            observable=apiService.verifiedSubmit(requestBody);
         }else if (method==APIMethod.studentBinding){
             observable=apiService.studentBinding(requestBody);
         }else if (method==APIMethod.getMyProfile){

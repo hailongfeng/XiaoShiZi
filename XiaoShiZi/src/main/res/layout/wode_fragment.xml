@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/activity_page">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         style="@style/ll_vertical_match_match"
         android:layout_weight="1" >
         <LinearLayout style="@style/ll_vertical_match_match" >
@@ -236,6 +236,6 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

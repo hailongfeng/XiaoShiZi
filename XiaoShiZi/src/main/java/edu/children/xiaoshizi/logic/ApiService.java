@@ -10,6 +10,7 @@ import java.util.Map;
 
 import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import edu.children.xiaoshizi.bean.LoginRespon;
+import edu.children.xiaoshizi.bean.RealNameAuthInfo;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.bean.Student;
 import edu.children.xiaoshizi.bean.User;
@@ -49,6 +50,8 @@ public interface ApiService {
 
     @POST("v1/sysUser/getStudentsAndParents")
     Observable<Response<LoginRespon>> getStudentsAndParents(@Body RequestBody requestBody);
+    @POST("v1/sysUser/verifiedSubmit")
+    Observable<Response<RealNameAuthInfo>> verifiedSubmit(@Body RequestBody requestBody);
 
     @POST("v1/sysUser/getMyProfile")
     Observable<Response<User>> getMyProfile(@Body RequestBody requestBody);

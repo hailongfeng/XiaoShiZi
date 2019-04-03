@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.activity.MessageActivity;
 import edu.children.xiaoshizi.adapter.InOutSchoolRecodeAdapter;
 import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import edu.children.xiaoshizi.bean.Student;
@@ -41,10 +43,29 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     private int mParamCurrentStudentIndex=0;
     private String mParam2;
 
+    @BindView(R.id.rl_student_detail)
+    RelativeLayout rl_student_detail;
+    @BindView(R.id.iv_student_face)
+    ImageView iv_student_face;
+    @BindView(R.id.txt_student_name)
+    TextView txt_student_name;
+    @BindView(R.id.txt_student_birthday)
+    TextView txt_student_birthday;
+    @BindView(R.id.txt_child_school)
+    TextView txt_student_school;
+    @BindView(R.id.txt_child_gradle)
+    TextView txt_student_gradle;
+    @BindView(R.id.txt_child_Guardian)
+    TextView txt_student_Guardian;
+
+
+
     @BindView(R.id.lvBaseList)
     ListView lvBaseList;
     @BindView(R.id.txt_date)
     TextView txt_date;
+    @BindView(R.id.iv_message)
+    ImageView iv_message;
     @BindView(R.id.iv_change_date)
     ImageView iv_change_date;
     InOutSchoolRecodeAdapter inOutSchoolRecodeAdapter;
@@ -80,28 +101,6 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
         return R.layout.fragment_save_tool;
     }
 
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-//
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
 
     @Override
     public void initView() {
@@ -111,14 +110,20 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
 
     @Override
     public void initData() {
+
+        loadImage(student.getHeadPortrait(),iv_student_face);
+        txt_student_name.setText(student.getStudentName());
+        txt_student_birthday.setText(student.getStudentName());
+        txt_student_school.setText(student.getSchoolName());
+        txt_student_gradle.setText(student.getSchoolGradeName()+","+student.getSchoolClassName());
+        txt_student_Guardian.setText(student.getCustody());
         String birthday=selectedDate[0] + "-" + (selectedDate[1] + 1) + "-" + selectedDate[2];
         TreeMap sm = new TreeMap<String,String>();
         sm.put("studentId",student.getStudentId());
         sm.put("snapMsgDate",birthday);
-        ;
         LogicService.post(context, APIMethod.findStudentSnapMsg,sm,new ApiSubscriber<Response<List<InAndOutSchoolRecode>>>(){
             @Override
-            public void onNext(Response<List<InAndOutSchoolRecode>> response) {
+            public void onSuccess(Response<List<InAndOutSchoolRecode>> response) {
                 inOutSchoolRecodeAdapter.refresh(response.getResult());
             }
 
@@ -133,13 +138,22 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     @Override
     public void initEvent() {
         iv_change_date.setOnClickListener(this);
+        iv_message.setOnClickListener(this);
+        rl_student_detail.setOnClickListener(this);
     }
     private static final int REQUEST_TO_DATE_PICKER = 1;
     private int[] selectedDate = new int[]{1971, 0, 1};
     @Override
     public void onClick(View v) {
-        toActivity(DatePickerWindow.createIntent(context, new int[]{1971, 0, 1}
+        if (v.getId()==R.id.iv_message){
+            toActivity(new Intent(context, MessageActivity.class));
+
+        }else if (v.getId()==R.id.iv_change_date){
+            toActivity(DatePickerWindow.createIntent(context, new int[]{1971, 0, 1}
                 , TimeUtil.getDateDetail(System.currentTimeMillis())), REQUEST_TO_DATE_PICKER, false);
+        }else if (v.getId()==R.id.rl_student_detail){
+
+        }
     }
 
     @Override

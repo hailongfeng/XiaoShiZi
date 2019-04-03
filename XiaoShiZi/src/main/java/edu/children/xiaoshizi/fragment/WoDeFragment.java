@@ -40,6 +40,8 @@ import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.BindingStudentActivity;
 import edu.children.xiaoshizi.activity.ChangeUserInfoActivity;
 import edu.children.xiaoshizi.activity.ParentInfoActivity;
+import edu.children.xiaoshizi.activity.RealNameAuthActivity;
+import edu.children.xiaoshizi.activity.UserInfoActivity;
 import edu.children.xiaoshizi.adapter.ParentAdapter;
 import edu.children.xiaoshizi.adapter.StudentAdapter;
 import edu.children.xiaoshizi.bean.Parent;
@@ -225,12 +227,12 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener, On
 		switch (v.getId()) {
 			case R.id.iv_user_setting:
 				showShortToast("设置");
-				toActivity(new Intent(context, ChangeUserInfoActivity.class));
+				toActivity(new Intent(context, UserInfoActivity.class));
 				break;
 			case R.id.btn_no_student_bind:
 			case R.id.btn_add_student:
-				toActivity(new Intent(context, BindingStudentActivity.class));
-//				toActivity(new Intent(context, RealNameAuthActivity.class));
+//				toActivity(new Intent(context, BindingStudentActivity.class));
+				toActivity(new Intent(context, RealNameAuthActivity.class));
 				break;
 			default:
 				break;

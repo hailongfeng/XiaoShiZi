@@ -10,14 +10,24 @@ import java.net.UnknownHostException;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.subscribers.ResourceSubscriber;
 
-public abstract class ApiSubscriber<T> extends DisposableObserver<T> {
+public abstract class ApiSubscriber<T extends Response> extends DisposableObserver<T> {
 
     @Override
     public void onComplete() {
 
     }
+
     @Override
-    public void onError(Throwable e) {
+    public final void onNext(T t) {
+        if (t.getCode()==Response.SUCCESS){
+            onSuccess(t);
+        }else {
+            onError(new RuntimeException(t.getMessage()));
+        }
+    }
+
+    @Override
+    public final void onError(Throwable e) {
         NetErrorException error = null;
         if (e != null) {
             // 对不是自定义抛出的错误进行解析
@@ -37,13 +47,13 @@ public abstract class ApiSubscriber<T> extends DisposableObserver<T> {
                 error = new NetErrorException(e.getMessage(), NetErrorException.OTHER);
             }
         }
-
         // 回调抽象方法
         onFail(error);
     }
 
     /**
-     * 回调错误
+     * 回调接口
      */
+    protected abstract void onSuccess(T Response);
     protected abstract void onFail(NetErrorException error);
 }

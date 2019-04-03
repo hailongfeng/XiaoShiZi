@@ -15,6 +15,7 @@ import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.School;
+import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.fragment.SafeToolFragment;
 import edu.children.xiaoshizi.fragment.ShouYeFragment;
@@ -33,23 +34,26 @@ public class MainActivity extends XszBaseActivity {
 
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
     void getSchools() {
-        LogicService.post(context, APIMethod.loadSchoolData,null, new ApiSubscriber<Response<List<School>>>() {
+        LogicService.post(context, APIMethod.loadSchoolData, null, new ApiSubscriber<Response<List<School>>>() {
             @Override
-            public void onNext(Response<List<School>> listResponse) {
-                if (listResponse.getResult().size()>0){
+            public void onSuccess(Response<List<School>> listResponse) {
+                if (listResponse.getResult().size() > 0) {
                     Log.d(TAG, "School size =" + listResponse.getResult().size());
                     DbUtils.deleteModel(School.class);
                     DbUtils.saveModelList(listResponse.getResult());
-                }else {
-                    Log.w(TAG,"无数据");
+                } else {
+                    Log.w(TAG, "无数据");
                 }
             }
+
             @Override
             protected void onFail(NetErrorException error) {
                 Log.d(TAG, error.getMessage());
@@ -58,46 +62,71 @@ public class MainActivity extends XszBaseActivity {
         });
     }
 
+    void getMyprofile() {
+        LogicService.post(context, APIMethod.getMyProfile, null, new ApiSubscriber<Response<User>>() {
+            @Override
+            public void onSuccess(Response<User> listResponse) {
+                User newUser= listResponse.getResult();
+                User oldUser=DemoApplication.getInstance().getUser();
+                oldUser.setLoginName(newUser.getLoginName());
+                oldUser.setUserName(newUser.getUserName());
+                oldUser.setHeadPortrait(newUser.getHeadPortrait());
+                oldUser.setEmail(newUser.getEmail());
+                oldUser.setWorkingAddress(newUser.getWorkingAddress());
+                oldUser.setHomeAddress(newUser.getHomeAddress());
+                oldUser.setCardNum(newUser.getCardNum());
+            }
+
+            @Override
+            protected void onFail(NetErrorException error) {
+                Log.d(TAG, error.getMessage());
+            }
+
+        });
+    }
     @Override
     public void initData() {
         getSchools();
+        getMyprofile();
     }
 
-    private Fragment fragments[]={
+    private Fragment fragments[] = {
             ShouYeFragment.createInstance(),
             ShouYeFragment.createInstance(),
             SafeToolFragment.createInstance(0),
             WoDeFragment.createInstance()
     };
 
-    private int currentPosition=0;
+    private int currentPosition = 0;
+
     @Override
     public void initEvent() {
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {            @Override
-        public void onTabSelected(@IdRes int tabId) {
-            int position =0;
-            if (tabId == R.id.tab_favorites) {
-                position=0;
-            // change your content accordingly.
-            }else if (tabId == R.id.tab_nearby) {
-                position=1;// The tab with id R.id.tab_favorites was selected,
-                // change your content accordingly.
-            }else if (tabId == R.id.tab_friends) {                    // The tab with id R.id.tab_favorites was selected,
-                position=2;
-            }else if (tabId == R.id.tab_wo) {                    // The tab with id R.id.tab_favorites was selected,
-                position=3;
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(@IdRes int tabId) {
+                int position = 0;
+                if (tabId == R.id.tab_shouye) {
+                    position = 0;
+                } else if (tabId == R.id.tab_aqkt) {
+                    position = 1;
+                } else if (tabId == R.id.tab_aqgj) {
+                    position = 2;
+                } else if (tabId == R.id.tab_wo) {
+                    position = 3;
+                }
+                if (currentPosition == position) {
+                    return;
+                }
+                Log.d(TAG,"position : "+position);
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.hide(fragments[currentPosition]);
+                if (fragments[position].isAdded() == false) {
+                    ft.add(R.id.flMainTabFragmentContainer, fragments[position]);
+                }
+                ft.show(fragments[position]).commit();
+                currentPosition=position;
             }
-            if (currentPosition==position){
-                return;
-            }
-            FragmentTransaction ft = fragmentManager.beginTransaction();
-            ft.hide(fragments[currentPosition]);
-            if (fragments[position].isAdded() == false) {
-                ft.add(R.id.flMainTabFragmentContainer, fragments[position]);
-            }
-            ft.show(fragments[position]).commit();
-
-        }});
+        });
     }
 
 
@@ -106,25 +135,13 @@ public class MainActivity extends XszBaseActivity {
         ImmersionBar.with(this)
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.add(R.id.flMainTabFragmentContainer, fragments[currentPosition]);
+        ft.show(fragments[currentPosition]).commit();
     }
 
-
-
-//    @Override
-//    protected Fragment getFragment(int position) {
-//        switch (position) {
-//            case 1:
-//                return ShouYeFragment.createInstance();
-//            case 2:
-//                return SafeToolFragment.createInstance(0);
-//            case 3:
-//                return WoDeFragment.createInstance();
-//            default:
-//                return ShouYeFragment.createInstance();
-//        }
-//    }
-
     private long mPressedTime = 0;
+
     @Override
     public void onBackPressed() {
         long mNowTime = System.currentTimeMillis();//获取第一次按键时间

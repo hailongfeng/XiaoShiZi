@@ -6,6 +6,7 @@ public enum  APIMethod {
     loadSchoolData,
     getStudentsAndParents,
     studentBinding,
+    verifiedSubmit,
     getMyProfile,
     saveMyProfile,
     findStudentSnapMsg,

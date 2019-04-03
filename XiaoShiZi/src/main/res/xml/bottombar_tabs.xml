@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
     <tab
-        id="@+id/tab_favorites"
-        icon="@drawable/main_shouye_normal"
-        title="Favorites"
-        barColorWhenSelected="#5D4037" />
+        id="@+id/tab_shouye"
+        icon="@drawable/ic_favorites"
+        title="首页"/>
     <tab
-        id="@+id/tab_nearby"
-        icon="@drawable/main_aqkt_nomal"
-        title="Nearby"
-        barColorWhenSelected="#5D4037" />
+        id="@+id/tab_aqkt"
+        icon="@drawable/ic_favorites"
+        title="安全课堂"/>
     <tab
-        id="@+id/tab_friends"
-        icon="@drawable/main_aqgj_normal"
-        title="Friends"
-        barColorWhenSelected="#5D4037" />
+        id="@+id/tab_aqgj"
+        icon="@drawable/ic_favorites"
+        title="安全工具" />
     <tab
         id="@+id/tab_wo"
-        icon="@drawable/main_wo_normal"
-        title="Friends"
-        barColorWhenSelected="#5D4037" />
+        icon="@drawable/ic_favorites"
+        title="我的"/>
 </tabs>

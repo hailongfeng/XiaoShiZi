@@ -5,22 +5,29 @@
     android:background="@color/white"
     >
     <RelativeLayout
+        android:id="@+id/rl_student_detail"
         style="@style/topbar_bg"
         android:background="@color/colorPrimary">
-
-        <ImageButton style="@style/xsz_topbar_return_img" />
-
         <TextView
             style="@style/topbar_title"
+            android:textColor="@color/white"
             android:layout_centerHorizontal="true"
-            android:text="第一联系人/本人" />
+            android:text="安全工具" />
+        <ImageView
+            android:id="@+id/iv_message"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
     <RelativeLayout
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/iv_user_face"
+            android:id="@+id/iv_student_face"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
@@ -32,24 +39,24 @@
 
         <TextView
             android:layout_marginTop="10dp"
-            android:id="@+id/txt_user_name"
+            android:id="@+id/txt_student_name"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center_vertical"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_user_face"
+            android:layout_toRightOf="@id/iv_student_face"
             android:textSize="18sp"
             android:text="李大鹏" />
         <ImageView
-            android:id="@+id/txt_user_tmp"
-            android:layout_toRightOf="@id/txt_user_name"
+            android:id="@+id/txt_student_tmp"
+            android:layout_toRightOf="@id/txt_student_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_key"
             android:layout_centerVertical="true" />
 
         <ImageView
-            android:id="@+id/iv_user_setting"
+            android:id="@+id/iv_student_setting"
             android:scaleType="fitXY"
             android:src="@drawable/forward2_light"
             android:layout_alignParentRight="true"
@@ -89,7 +96,7 @@
                         android:src="@drawable/wode_shengridangao" />
 
                     <TextView
-                        android:id="@+id/txt_child_birthday"
+                        android:id="@+id/txt_student_birthday"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
@@ -110,7 +117,7 @@
                         android:src="@drawable/wode_shengridangao" />
 
                     <TextView
-                        android:id="@+id/txt_child_school"
+                        android:id="@+id/txt_student_school"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
@@ -132,7 +139,7 @@
                         android:src="@drawable/wode_shengridangao" />
 
                     <TextView
-                        android:id="@+id/txt_child_gradle"
+                        android:id="@+id/txt_student_gradle"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
@@ -152,7 +159,7 @@
                         android:layout_marginRight="6dp"
                         android:src="@drawable/wode_shengridangao" />
                     <TextView
-                        android:id="@+id/txt_child_Guardian"
+                        android:id="@+id/txt_student_Guardian"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
