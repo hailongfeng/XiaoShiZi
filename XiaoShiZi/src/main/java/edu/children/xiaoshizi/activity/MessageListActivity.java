@@ -1,7 +1,10 @@
 package edu.children.xiaoshizi.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -15,10 +18,11 @@ import edu.children.xiaoshizi.bean.Message;
 import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.utils.TestUtil;
 import zuo.biao.library.base.BaseHttpListActivity;
+import zuo.biao.library.base.BaseListActivity;
 import zuo.biao.library.interfaces.AdapterCallBack;
 import zuo.biao.library.util.JSON;
 
-public class MessageActivity extends BaseHttpListActivity<Message, ListView, MessageAdapter> {
+public class MessageListActivity extends BaseListActivity<Message, ListView, MessageAdapter> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +33,7 @@ public class MessageActivity extends BaseHttpListActivity<Message, ListView, Mes
         initView();
         initData();
         initEvent();
-        srlBaseHttpList.autoRefresh();
+        onRefresh();
     }
 
     @Override
@@ -49,22 +53,16 @@ public class MessageActivity extends BaseHttpListActivity<Message, ListView, Mes
 
     @Override
     public void getListAsync(int page) {
+        List<Message> data=new ArrayList<>();
         new Handler().postDelayed(new Runnable() {
 
             @Override
             public void run() {
-                List<Message> data=new ArrayList<>();
                 for (int i = 0; i <10 ; i++) {
                     data.add(new Message(i+"","消息："+i));
                 }
-                onHttpResponse(-page, page >= 5 ? null : JSON.toJSONString(data), null);
+                onLoadSucceed(page, data);
             }
         }, 1000);
-
-    }
-
-    @Override
-    public List<Message> parseArray(String json) {
-        return JSON.parseArray(json, Message.class);
     }
 }

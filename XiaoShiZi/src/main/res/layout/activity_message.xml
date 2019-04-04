@@ -16,24 +16,9 @@
             android:layout_centerHorizontal="true"
             android:text="消息" />
     </RelativeLayout>
-    <!-- BaseHttpRecyclerXXX的子类布局layout中，SmartRefreshLayout和RecyclerView必须有，且它们的id必须按以下写法 -->
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        style="@style/match_match"
-        android:layout_below="@+id/rl_title"
-        android:id="@id/srlBaseHttpList"
-        app:srlEnableLoadMore="true"
-        app:srlEnablePreviewInEditMode="true"
-        >
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            style="@style/match_wrap"
-            />
-        <ListView
-            android:id="@id/lvBaseList"
-            style="@style/lv"
-            />
-
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            style="@style/match_wrap"
-            />
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <ListView
+        android:layout_below="@id/rl_title"
+        android:id="@id/lvBaseList"
+        style="@style/lv"
+        />
 </RelativeLayout>

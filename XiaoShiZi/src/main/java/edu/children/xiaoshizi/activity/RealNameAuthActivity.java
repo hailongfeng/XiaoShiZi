@@ -149,21 +149,23 @@ public class RealNameAuthActivity extends BaseTakePhotoActivity  implements View
                     Log.d(TAG,jsonObject.getString("objectUrl"));
                     Log.d(TAG,jsonObject.getString("objectUrlWithStyle"));
                     Log.d(TAG,jsonObject.getString("fileName"));
-                    Bitmap bitmap = BitmapFactory.decodeFile(result.getImage().getOriginalPath());
                     if (currentPic==1){
-                        iv_credentials_zhengmian.setImageBitmap(bitmap);
-                        rtv_credentials_zhengmian.setVisibility(View.GONE);
                         pic_zhengmian_url=jsonObject.getString("objectUrlWithStyle");
+                        loadImage(pic_zhengmian_url,iv_credentials_zhengmian);
+                        rtv_credentials_zhengmian.setVisibility(View.GONE);
+                        iv_credentials_zhengmian.setVisibility(View.VISIBLE);
                     }else {
-                        iv_credentials_fanmian.setImageBitmap(bitmap);
-                        rtv_credentials_fanmian.setVisibility(View.GONE);
                         pic_fanmian_url=jsonObject.getString("objectUrlWithStyle");
+                        loadImage(pic_fanmian_url,iv_credentials_fanmian);
+                        rtv_credentials_fanmian.setVisibility(View.GONE);
+                        iv_credentials_fanmian.setVisibility(View.VISIBLE);
                     }
                 }
 
                 @Override
                 protected void onFail(NetErrorException error) {
                     error.printStackTrace();
+                    showShortToast(error.getMessage());
                 }
             });
         }
@@ -177,7 +179,6 @@ public class RealNameAuthActivity extends BaseTakePhotoActivity  implements View
         }
         switch (requestCode) {
             case DIALOG_SET_CREDENTIAL:
-                //setTintColor(position);
                 currentCredentialsType = position;
                 String guangxi = TOPBAR_SCHOOL_NAMES[position];
                 txt_user_credentials_type.setText(guangxi);

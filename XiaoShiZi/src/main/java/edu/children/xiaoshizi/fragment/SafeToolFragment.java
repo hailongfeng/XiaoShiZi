@@ -1,12 +1,9 @@
 package edu.children.xiaoshizi.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -14,14 +11,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
 
 import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
-import edu.children.xiaoshizi.activity.MessageActivity;
+import edu.children.xiaoshizi.activity.MessageListActivity;
 import edu.children.xiaoshizi.adapter.InOutSchoolRecodeAdapter;
 import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import edu.children.xiaoshizi.bean.Student;
@@ -30,11 +26,8 @@ import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
-import edu.children.xiaoshizi.utils.DateUtil;
-import edu.children.xiaoshizi.utils.StringUtils;
-import zuo.biao.library.ui.AlertDialog;
+import zuo.biao.library.ui.BottomMenuWindow;
 import zuo.biao.library.ui.DatePickerWindow;
-import zuo.biao.library.util.Log;
 import zuo.biao.library.util.TimeUtil;
 
 public class SafeToolFragment extends XszBaseFragment implements View.OnClickListener {
@@ -43,8 +36,8 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     private int mParamCurrentStudentIndex=0;
     private String mParam2;
 
-    @BindView(R.id.rl_student_detail)
-    RelativeLayout rl_student_detail;
+    @BindView(R.id.rl_student_switch)
+    RelativeLayout rl_student_switch;
     @BindView(R.id.iv_student_face)
     ImageView iv_student_face;
     @BindView(R.id.txt_student_name)
@@ -84,6 +77,11 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     }
 
     @Override
+    int getLayoutId() {
+        return R.layout.fragment_save_tool;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -93,13 +91,13 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
         selectedDate[0]=calendar.get(Calendar.YEAR);
         selectedDate[1]=calendar.get(Calendar.MONTH);
         selectedDate[2]=calendar.get(Calendar.DAY_OF_MONTH);
-        student =DemoApplication.getInstance().getLoginRespon().getStudents().get(mParamCurrentStudentIndex);
+        List<Student> students=DemoApplication.getInstance().getLoginRespon().getStudents();
+        BINDING_STUDENT_NAMES =new String[students.size()];
+        for (int i = 0; i < students.size(); i++) {
+            BINDING_STUDENT_NAMES[i]=students.get(i).getStudentName();
+        }
     }
 
-    @Override
-    int getLayoutId() {
-        return R.layout.fragment_save_tool;
-    }
 
 
     @Override
@@ -110,13 +108,7 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
 
     @Override
     public void initData() {
-
-        loadImage(student.getHeadPortrait(),iv_student_face);
-        txt_student_name.setText(student.getStudentName());
-        txt_student_birthday.setText(student.getStudentName());
-        txt_student_school.setText(student.getSchoolName());
-        txt_student_gradle.setText(student.getSchoolGradeName()+","+student.getSchoolClassName());
-        txt_student_Guardian.setText(student.getCustody());
+        changeCurrentStudent(mParamCurrentStudentIndex);
         String birthday=selectedDate[0] + "-" + (selectedDate[1] + 1) + "-" + selectedDate[2];
         TreeMap sm = new TreeMap<String,String>();
         sm.put("studentId",student.getStudentId());
@@ -139,21 +131,36 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     public void initEvent() {
         iv_change_date.setOnClickListener(this);
         iv_message.setOnClickListener(this);
-        rl_student_detail.setOnClickListener(this);
+        rl_student_switch.setOnClickListener(this);
     }
     private static final int REQUEST_TO_DATE_PICKER = 1;
+    private static final int REQUEST_TO_SELECT_STUDENT = 2;
     private int[] selectedDate = new int[]{1971, 0, 1};
+
+    private static String[] BINDING_STUDENT_NAMES;
+
     @Override
     public void onClick(View v) {
         if (v.getId()==R.id.iv_message){
-            toActivity(new Intent(context, MessageActivity.class));
-
+            toActivity(new Intent(context, MessageListActivity.class));
         }else if (v.getId()==R.id.iv_change_date){
             toActivity(DatePickerWindow.createIntent(context, new int[]{1971, 0, 1}
                 , TimeUtil.getDateDetail(System.currentTimeMillis())), REQUEST_TO_DATE_PICKER, false);
-        }else if (v.getId()==R.id.rl_student_detail){
-
+        }else if (v.getId()==R.id.rl_student_switch){
+            toActivity(BottomMenuWindow.createIntent(context, BINDING_STUDENT_NAMES)
+                    .putExtra(BottomMenuWindow.INTENT_TITLE, "选择学生"), REQUEST_TO_SELECT_STUDENT, false);
         }
+    }
+
+    private void changeCurrentStudent(int position){
+        mParamCurrentStudentIndex=position;
+        student =DemoApplication.getInstance().getLoginRespon().getStudents().get(mParamCurrentStudentIndex);
+        loadImage(student.getHeadPortrait(),iv_student_face);
+        txt_student_name.setText(student.getStudentName());
+        txt_student_birthday.setText(student.getStudentName());
+        txt_student_school.setText(student.getSchoolName());
+        txt_student_gradle.setText(student.getSchoolGradeName()+","+student.getSchoolClassName());
+        txt_student_Guardian.setText(student.getCustody());
     }
 
     @Override
@@ -171,18 +178,20 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
                         for (int i = 0; i < list.size(); i++) {
                             selectedDate[i] = list.get(i);
                         }
-
-//                        showShortToast("选择的日期为" + selectedDate[0] + "-" + (selectedDate[1] + 1) + "-" + selectedDate[2]);
                         String birthday=selectedDate[0] + "-" + (selectedDate[1] + 1) + "-" + selectedDate[2];
                         txt_date.setText(birthday);
                         initData();
                     }
                 }
                 break;
+            case REQUEST_TO_SELECT_STUDENT:
+                if (data != null) {
+                    int position = data.getIntExtra(BottomMenuWindow.RESULT_ITEM_ID, -1);
+                    if (position >= 0) {
+                        changeCurrentStudent(position);
+                    }
+                }
+                break;
         }
-    }
-
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
     }
 }

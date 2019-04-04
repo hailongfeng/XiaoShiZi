@@ -18,15 +18,20 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.activity.MessageDetailActivity;
 import edu.children.xiaoshizi.bean.Message;
 import edu.children.xiaoshizi.bean.Parent;
+import zuo.biao.library.base.BaseModel;
 import zuo.biao.library.base.BaseView;
+import zuo.biao.library.ui.WebViewActivity;
 
 /**用户View
  * @author Lemon
@@ -42,20 +47,22 @@ import zuo.biao.library.base.BaseView;
  * <br> userView.setOnDataChangedListener(onDataChangedListener);data = userView.getData();//非必需
  * <br> userView.setOnClickListener(onClickListener);//非必需
  */
-public class MessageView extends BaseView<Message> {
+public class MessageView extends BaseView<Message>  implements View.OnClickListener {
 	private static final String TAG = "UserView";
 
 	public MessageView(Activity context, ViewGroup parent) {
 		super(context, R.layout.list_item_message_view, parent);
 	}
 
-	public RoundedImageView iv_custody_face;
-	public TextView txt_custody_name;
+	public ImageView iv_message_icon;
+	public TextView txt_message_content;
+	public Button btn_message_detail;
 	@SuppressLint("InflateParams")
 	@Override
 	public View createView() {
-		iv_custody_face = findView(R.id.iv_parent_face);
-		txt_custody_name = findView(R.id.txt_parent_name);
+		iv_message_icon = findView(R.id.iv_message_icon);
+		txt_message_content = findView(R.id.txt_message_content);
+		btn_message_detail = findView(R.id.btn_message_detail,this);
 		return super.createView();
 	}
 
@@ -65,5 +72,14 @@ public class MessageView extends BaseView<Message> {
 //		String headPortrait=data.getHeadPortrait();
 //		Glide.with(context).load(headPortrait ).into(iv_custody_face);
 //		txt_custody_name.setText(data.getParentUserName());
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.btn_message_detail:
+				toActivity(MessageDetailActivity.createIntent(context, data));
+				break;
+		}
 	}
 }

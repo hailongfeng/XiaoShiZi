@@ -5,7 +5,6 @@
     android:background="@color/white"
     >
     <RelativeLayout
-        android:id="@+id/rl_student_detail"
         style="@style/topbar_bg"
         android:background="@color/colorPrimary">
         <TextView
@@ -15,7 +14,7 @@
             android:text="安全工具" />
         <ImageView
             android:id="@+id/iv_message"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/icon_message"
@@ -23,6 +22,7 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/rl_student_switch"
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -45,14 +45,15 @@
             android:gravity="center_vertical"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/iv_student_face"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:text="李大鹏" />
         <ImageView
             android:id="@+id/txt_student_tmp"
             android:layout_toRightOf="@id/txt_student_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_key"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/icon_sex_man"
             android:layout_centerVertical="true" />
 
         <ImageView
@@ -100,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:text="2018.08.16" />
                 </LinearLayout>
 
@@ -121,7 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:text="上海市外国语小学" />
                 </LinearLayout>
 
@@ -143,7 +144,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:text="二年级，三班" />
                 </LinearLayout>
 
@@ -163,7 +164,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:text="小明妈妈" />
                 </LinearLayout>
             </LinearLayout>
@@ -183,7 +184,7 @@
                 <TextView
                     android:id="@+id/btn_student_jiebang"
                     android:text="正常入校"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     android:textColor="@color/colorPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -195,7 +196,7 @@
     <TextView
         android:layout_width="match_parent"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:layout_margin="10dp"
         android:text="出入校门记录"
         android:layout_height="wrap_content" />
@@ -218,9 +219,10 @@
                 android:layout_height="wrap_content" />
             <ImageView
                 android:id="@+id/iv_change_date"
-                android:src="@drawable/icon_key"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:scaleType="center"
+                android:src="@drawable/icon_arraw_down"
+                android:layout_width="50dp"
+                android:layout_height="match_parent" />
         </LinearLayout>
         <ListView
             android:layout_marginTop="30dp"

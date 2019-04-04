@@ -120,9 +120,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
     }
 
     private void login() {
-        BuildBean buildBean=DialogUIUtils.showLoading(context, "正在登录",true,false,false,true);
-//        buildBean.dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        buildBean.show();
+        showLoading("正在登陆");
         String verifyCode=edit_verifyCode.getText().toString();
         TreeMap sm = new TreeMap<String,String>();
         String phoneNumber=edit_user_phone.getText().toString();
@@ -134,7 +132,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         LogicService.post(context, APIMethod.login,sm, new ApiSubscriber<Response<LoginRespon>>() {
             @Override
             public void onSuccess(Response<LoginRespon> respon) {
-                DialogUIUtils.dismiss(buildBean);
+                hideLoading();
                 Log.d(TAG,"phoneNumber="+phoneNumber);
                 respon.getResult().getLoginResp().setPhone(phoneNumber);
                 DemoApplication.getInstance().setLoginRespon(respon.getResult());
@@ -146,7 +144,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
 
             @Override
             protected void onFail(NetErrorException error) {
-                DialogUIUtils.dismiss(buildBean);
+                hideLoading();
                 showShortToast(error.getMessage());
                 error.printStackTrace();
             }

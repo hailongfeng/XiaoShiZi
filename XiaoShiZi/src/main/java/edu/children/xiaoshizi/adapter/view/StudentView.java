@@ -52,7 +52,7 @@ import zuo.biao.library.util.StringUtil;
  * <br> userView.setOnDataChangedListener(onDataChangedListener);data = userView.getData();//非必需
  * <br> userView.setOnClickListener(onClickListener);//非必需
  */
-public class StudentView extends BaseView<Student> implements OnClickListener {
+public class StudentView extends XszBaseView<Student> implements OnClickListener {
 	private static final String TAG = StudentView.class.getSimpleName();
 
 	public StudentView(Activity context, ViewGroup parent) {
@@ -70,6 +70,7 @@ public class StudentView extends BaseView<Student> implements OnClickListener {
 	@SuppressLint("InflateParams")
 	@Override
 	public View createView() {
+
 		iv_child_face = findView(R.id.iv_child_face, this);
 		txt_child_name = findView(R.id.txt_child_name, this);
 		txt_child_birthday = findView(R.id.txt_child_birthday, this);
@@ -86,6 +87,7 @@ public class StudentView extends BaseView<Student> implements OnClickListener {
 	public void bindView(Student data_){
 		this.data = data_;
 		Log.d(TAG,"data=null : "+(data==null));
+		loadImage(data.getHeadPortrait(),iv_child_face);
 		txt_child_birthday.setText(data.getBirthday());
 		txt_child_name.setText(data.getStudentName());
 		txt_child_school.setText(data.getSchoolName());
@@ -98,9 +100,9 @@ public class StudentView extends BaseView<Student> implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.btn_student_jiebang:
 			if (this.data!=null){
-				showShortToast("解绑 111:"+data.getStudentName());
+				showShortToast("解绑:"+data.getStudentName());
 			}else {
-				showShortToast("解绑222");
+				showShortToast("解绑");
 			}
 			break;
 		default:

@@ -43,7 +43,7 @@ import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
  * @author Lemon
  * @use new WoDeFragment(),详细使用见.DemoFragmentActivity(initData方法内)
  */
-public class HuangjinwuFragment extends BaseFragment implements OnClickListener, OnDialogButtonClickListener {
+public class HuangjinwuFragment extends XszBaseFragment implements OnClickListener, OnDialogButtonClickListener {
 //	private static final String TAG = "WoDeFragment";
 
     @BindView(R.id.banner)
@@ -51,7 +51,6 @@ public class HuangjinwuFragment extends BaseFragment implements OnClickListener,
     @BindView(R.id.rvBaseRecycler)
     RecyclerView rvBaseRecycler;;
     private UserAdapter userAdapter;
-	//与Activity通信<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	/**创建一个Fragment实例
 	 * @return
@@ -60,27 +59,11 @@ public class HuangjinwuFragment extends BaseFragment implements OnClickListener,
 		return new HuangjinwuFragment();
 	}
 
-	//与Activity通信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		//类相关初始化，必须使用<<<<<<<<<<<<<<<<
-		super.onCreateView(inflater, container, savedInstanceState);
-		//类相关初始化，必须使用>>>>>>>>>>>>>>>>
-        View view = inflater.inflate(R.layout.huangjinwu_fragment, container, false);
-        ButterKnife.bind(this, view);
-        setContentView(view);
-		//功能归类分区方法，必须调用<<<<<<<<<<
-		initView();
-		initData();
-		initEvent();
-		//功能归类分区方法，必须调用>>>>>>>>>>
-
-		return view;
+	int getLayoutId() {
+		return R.layout.huangjinwu_fragment;
 	}
-
 
 
 	//UI显示区(操作UI，但不存在数据获取或处理代码，也不存在事件监听代码)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -95,18 +78,6 @@ public class HuangjinwuFragment extends BaseFragment implements OnClickListener,
 		userAdapter.refresh(list);
 //		ivSettingHead = findView(R.id.ivSettingHead);
 	}
-	//UI显示区(操作UI，但不存在数据获取或处理代码，也不存在事件监听代码)>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
-
-
-
-
-
-
-	//Data数据区(存在数据获取或处理代码，但不存在事件监听代码)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	@Override
 	public void initData() {//必须调用
@@ -127,27 +98,10 @@ public class HuangjinwuFragment extends BaseFragment implements OnClickListener,
 		context.finish();
 	}
 
-
-	//Data数据区(存在数据获取或处理代码，但不存在事件监听代码)>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
-
-
-
-
-	//Event事件区(只要存在事件监听代码就是)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
 	@Override
 	public void initEvent() {//必须调用
 
-//		ivSettingHead.setOnClickListener(this);
-
 	}
-
-
-
 
 	@Override
 	public void onDialogButtonClick(int requestCode, boolean isPositive) {
@@ -182,30 +136,5 @@ public class HuangjinwuFragment extends BaseFragment implements OnClickListener,
 				break;
 		}
 	}
-
-
-
-
-	//生命周期、onActivityResult<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-
-	//生命周期、onActivityResult>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-	//Event事件区(只要存在事件监听代码就是)>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
-
-
-
-
-	//内部类,尽量少用<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-
-	//内部类,尽量少用>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 }

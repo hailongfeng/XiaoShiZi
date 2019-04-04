@@ -38,7 +38,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MessageActivity"></activity>
+        <activity android:name=".activity.MessageListActivity"></activity>
         <activity android:name=".activity.LinkmanActivity" />
         <activity android:name=".activity.RealNameAuthActivity" />
         <activity android:name=".activity.BindingStudentActivity" />
@@ -52,11 +52,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activity.MainActivity"/>
         <activity
-            android:name=".activity.ChangeUserInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activity.ChangeUserInfoActivity" />
 
         <meta-data
             android:name="UMENG_APPKEY"

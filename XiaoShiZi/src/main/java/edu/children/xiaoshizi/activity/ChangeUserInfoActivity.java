@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.gyf.barlibrary.ImmersionBar;
 import com.jph.takephoto.model.TResult;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ import zuo.biao.library.util.Log;
 public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements View.OnClickListener, ItemDialog.OnDialogItemClickListener {
     private static final int REQUEST_TO_DATE_PICKER = 1;
     @BindView(R.id.iv_user_face)
-    ImageView iv_user_face;
+    RoundedImageView iv_user_face;
     @BindView(R.id.edt_user_name)
     EditText edt_user_name;
     @BindView(R.id.rg_user_sex)
@@ -130,8 +131,8 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
     public void takeSuccess(TResult result) {
         super.takeSuccess(result);
         if(test.exists()){
-            Bitmap bitmap = BitmapFactory.decodeFile(result.getImage().getOriginalPath());
-            iv_user_face.setImageBitmap(bitmap);
+//            Bitmap bitmap = BitmapFactory.decodeFile(result.getImage().getOriginalPath());
+//            iv_user_face.setImageBitmap(bitmap);
 
             TreeMap sm = new TreeMap<String,String>();
             sm.put("width","80");
@@ -147,6 +148,7 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
                     Log.d(TAG,jsonObject.getString("objectUrlWithStyle"));
                     Log.d(TAG,jsonObject.getString("fileName"));
                     headPortrait=jsonObject.getString("objectUrlWithStyle");
+                    loadImage(headPortrait,iv_user_face);
                 }
 
                 @Override

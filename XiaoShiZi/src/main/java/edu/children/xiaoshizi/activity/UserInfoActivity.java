@@ -140,7 +140,7 @@ public class UserInfoActivity extends XszBaseActivity  implements View.OnClickLi
             @Override
             protected void onFail(NetErrorException error) {
                 error.printStackTrace();
-                showShortToast("验证码发送失败，请重试");
+                showShortToast(error.getMessage());
             }
         });
     }

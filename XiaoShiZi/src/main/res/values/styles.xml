@@ -1,23 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:textSize">@dimen/text_size_micro</item>
     </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="bottom_tab_ll" parent="ll_vertical_match_match">
         <item name="android:layout_width">0dp</item>
@@ -31,5 +21,9 @@
 
     <style name="xsz_topbar_return_img" parent="topbar_left_btn">
         <item name="android:src">@drawable/icon_back</item>
+    </style>
+    <style name="xsz_main_tab_text_appearance" parent="@style/TextAppearance.AppCompat.Medium">
+        <item name="android:textSize">@dimen/text_size_small</item>
+
     </style>
 </resources>

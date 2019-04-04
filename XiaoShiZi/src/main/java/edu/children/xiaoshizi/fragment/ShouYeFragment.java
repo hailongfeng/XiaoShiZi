@@ -37,7 +37,7 @@ import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
  * @author Lemon
  * @use new WoDeFragment(),详细使用见.DemoFragmentActivity(initData方法内)
  */
-public class ShouYeFragment extends BaseFragment implements OnClickListener, OnDialogButtonClickListener {
+public class ShouYeFragment extends XszBaseFragment implements OnClickListener, OnDialogButtonClickListener {
 //	private static final String TAG = "WoDeFragment";
 
 	//与Activity通信<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -51,24 +51,10 @@ public class ShouYeFragment extends BaseFragment implements OnClickListener, OnD
 
 	//与Activity通信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-
-
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		//类相关初始化，必须使用<<<<<<<<<<<<<<<<
-		super.onCreateView(inflater, container, savedInstanceState);
-		setContentView(R.layout.shouye_fragment);
-		//类相关初始化，必须使用>>>>>>>>>>>>>>>>
-
-		//功能归类分区方法，必须调用<<<<<<<<<<
-		initView();
-		initData();
-		initEvent();
-		//功能归类分区方法，必须调用>>>>>>>>>>
-
-		return view;
+	int getLayoutId() {
+		return R.layout.shouye_fragment;
 	}
-
 
 
 	//UI显示区(操作UI，但不存在数据获取或处理代码，也不存在事件监听代码)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

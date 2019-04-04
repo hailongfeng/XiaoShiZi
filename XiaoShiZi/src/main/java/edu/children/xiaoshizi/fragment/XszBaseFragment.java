@@ -1,5 +1,6 @@
 package edu.children.xiaoshizi.fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.dou361.dialogui.DialogUIUtils;
 
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
@@ -21,7 +23,7 @@ public abstract class XszBaseFragment extends BaseFragment {
 
     protected String TAG=this.getClass().getSimpleName();
 
-    protected RequestOptions glideOptions = new RequestOptions()
+    protected  static RequestOptions glideOptions = new RequestOptions()
             .placeholder(R.drawable.student_face_default)//图片加载出来前，显示的图片
             .fallback( R.drawable.student_face_default) //url为空的时候,显示的图片
             .error(R.drawable.student_face_default);//图片加载失败后，显示的图片
@@ -43,6 +45,13 @@ public abstract class XszBaseFragment extends BaseFragment {
         return view;
     }
 
+    private Dialog loadingDialog=null;
+    protected  void showLoading(String msg){
+        loadingDialog=DialogUIUtils.showLoading(context, msg,true,false,false,true).show();
+    }
+    protected  void hideLoading(){
+        DialogUIUtils.dismiss(loadingDialog);
+    }
 
     abstract int getLayoutId();
 }
