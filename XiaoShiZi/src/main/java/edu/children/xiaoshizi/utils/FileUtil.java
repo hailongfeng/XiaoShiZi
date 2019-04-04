@@ -65,6 +65,12 @@ public class FileUtil {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
+    public static long getCacheSize() {
+        long imageSize=getFileOrDirSize(getCacheDir(Constant.CACHE_DIR_IMAGE));
+        long fileSize=getFileOrDirSize(getCacheDir(Constant.CACHE_DIR_FILE));
+        return imageSize+fileSize;
+    }
+
     public static long getFileOrDirSize(File file) {
         if (!file.exists()) return 0;
         if (!file.isDirectory()) return file.length();
@@ -115,4 +121,7 @@ public class FileUtil {
         }
         return result;
     }
+
+
+
 }

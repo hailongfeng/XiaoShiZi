@@ -26,6 +26,7 @@ import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
+import edu.children.xiaoshizi.utils.DateUtil;
 import zuo.biao.library.ui.BottomMenuWindow;
 import zuo.biao.library.ui.DatePickerWindow;
 import zuo.biao.library.util.TimeUtil;
@@ -87,17 +88,16 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
         if (getArguments() != null) {
             mParamCurrentStudentIndex = getArguments().getInt(ARG_PARAM_CURRENT_STUDENT);
         }
-        Calendar calendar=Calendar.getInstance();
-        selectedDate[0]=calendar.get(Calendar.YEAR);
-        selectedDate[1]=calendar.get(Calendar.MONTH);
-        selectedDate[2]=calendar.get(Calendar.DAY_OF_MONTH);
         List<Student> students=DemoApplication.getInstance().getLoginRespon().getStudents();
         BINDING_STUDENT_NAMES =new String[students.size()];
         for (int i = 0; i < students.size(); i++) {
             BINDING_STUDENT_NAMES[i]=students.get(i).getStudentName();
         }
+        Calendar calendar=Calendar.getInstance();
+        currentDate=DateUtil.format(calendar.getTime(),DateUtil.P1);
     }
 
+    private String currentDate="";
 
 
     @Override
@@ -109,10 +109,9 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     @Override
     public void initData() {
         changeCurrentStudent(mParamCurrentStudentIndex);
-        String birthday=selectedDate[0] + "-" + (selectedDate[1] + 1) + "-" + selectedDate[2];
         TreeMap sm = new TreeMap<String,String>();
         sm.put("studentId",student.getStudentId());
-        sm.put("snapMsgDate",birthday);
+        sm.put("snapMsgDate",currentDate);
         LogicService.post(context, APIMethod.findStudentSnapMsg,sm,new ApiSubscriber<Response<List<InAndOutSchoolRecode>>>(){
             @Override
             public void onSuccess(Response<List<InAndOutSchoolRecode>> response) {
@@ -135,7 +134,7 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     }
     private static final int REQUEST_TO_DATE_PICKER = 1;
     private static final int REQUEST_TO_SELECT_STUDENT = 2;
-    private int[] selectedDate = new int[]{1971, 0, 1};
+//    private int[] selectedDate = new int[]{1971, 0, 1};
 
     private static String[] BINDING_STUDENT_NAMES;
 
@@ -174,12 +173,16 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
                 if (data != null) {
                     ArrayList<Integer> list = data.getIntegerArrayListExtra(DatePickerWindow.RESULT_DATE_DETAIL_LIST);
                     if (list != null && list.size() >= 3) {
-                        selectedDate = new int[list.size()];
+                        int selectedDate[] = new int[list.size()];
                         for (int i = 0; i < list.size(); i++) {
                             selectedDate[i] = list.get(i);
                         }
-                        String birthday=selectedDate[0] + "-" + (selectedDate[1] + 1) + "-" + selectedDate[2];
-                        txt_date.setText(birthday);
+                        Calendar calendar=Calendar.getInstance();
+                        calendar.set(Calendar.YEAR,selectedDate[0]);
+                        calendar.set(Calendar.MONTH,(selectedDate[1]));
+                        calendar.set(Calendar.DAY_OF_MONTH,(selectedDate[2]));
+                        currentDate=DateUtil.format(calendar.getTime(),DateUtil.P1);
+                        txt_date.setText(currentDate);
                         initData();
                     }
                 }

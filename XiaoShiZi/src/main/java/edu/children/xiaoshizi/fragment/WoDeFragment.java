@@ -47,14 +47,16 @@ import edu.children.xiaoshizi.adapter.StudentAdapter;
 import edu.children.xiaoshizi.bean.Parent;
 import edu.children.xiaoshizi.bean.Student;
 import edu.children.xiaoshizi.bean.User;
+import edu.children.xiaoshizi.utils.FileUtil;
 import edu.children.xiaoshizi.utils.StringUtils;
 import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
+import zuo.biao.library.util.Log;
 
 /**设置fragment
  * @author Lemon
  * @use new WoDeFragment(),详细使用见.DemoFragmentActivity(initData方法内)
  */
-public class WoDeFragment extends XszBaseFragment implements OnClickListener, OnDialogButtonClickListener {
+public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 
 	@BindView(R.id.iv_user_face)
 	RoundedImageView iv_user_face;;
@@ -168,26 +170,14 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener, On
 
 		List<Parent> list1= DemoApplication.getInstance().getLoginRespon().getParents();
 		parentAdapter.refresh(list1);
-
-
+		long size=FileUtil.getCacheSize();
+		Log.d(TAG,"cache size="+size);
 	}
 
 
 	private void logout() {
 		context.finish();
 	}
-
-
-	//Data数据区(存在数据获取或处理代码，但不存在事件监听代码)>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
-
-
-
-
-	//Event事件区(只要存在事件监听代码就是)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	@Override
 	public void initEvent() {//必须调用
@@ -201,25 +191,6 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener, On
 		findView(R.id.ll_my_fenxiang, this);
 		findView(R.id.btn_no_student_bind, this);
 	}
-
-
-
-
-	@Override
-	public void onDialogButtonClick(int requestCode, boolean isPositive) {
-		if (! isPositive) {
-			return;
-		}
-
-		switch (requestCode) {
-		case 0:
-			logout();
-			break;
-		default:
-			break;
-		}
-	}
-
 
 
 	@Override

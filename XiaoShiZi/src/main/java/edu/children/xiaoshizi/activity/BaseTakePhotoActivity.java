@@ -19,6 +19,7 @@ import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import java.io.File;
 
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.utils.Constant;
 import edu.children.xiaoshizi.utils.FileUtil;
 import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
@@ -39,7 +40,7 @@ public abstract class BaseTakePhotoActivity extends XszBaseActivity implements T
     }
     public void initEvents(){
         //各控件初始化
-        file = new File(FileUtil.getCacheDir("images"), System.currentTimeMillis() + ".png");
+        file = new File(FileUtil.getCacheDir(Constant.CACHE_DIR_FILE), System.currentTimeMillis() + ".png");
         uri = Uri.fromFile(file);
         size = Math.min(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
         cropOptions = new CropOptions.Builder().setOutputX(size).setOutputX(size).setWithOwnCrop(false).create();

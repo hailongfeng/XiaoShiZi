@@ -27,7 +27,7 @@ public class User extends BaseModel {
 	public static final int SEX_FEMALE = 1;
 	public static final int SEX_UNKNOWN = 2;
 
-	private int sex; //性别
+	private String sex; //性别
 	private String head; //头像
 	private String name; //名字
 	private String phone; //电话号码
@@ -57,19 +57,24 @@ public class User extends BaseModel {
 		this(id);
 		this.name = name;
 	}
-	
 
-	/**
-	 * 以下getter和setter可以自动生成
-	 * <br>  eclipse: 右键菜单 > Source > Generate Getters and Setters
-	 * <br>  android studio: 右键菜单 > Generate > Getter and Setter
-	 */
-	
-	
-	public int getSex() {
+
+	public String getSex() {
 		return sex;
 	}
-	public void setSex(int sex) {
+	public String getSexName() {
+		String tsex="未知";
+		if (sex!=null){
+			if (sex.equals("M")){
+				tsex="男";
+			}else if (sex.equals("F")){
+				tsex="女";
+			}
+		}
+		return tsex;
+	}
+
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 	public String getHead() {

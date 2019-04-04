@@ -7,5 +7,6 @@ public class Constant {
     public static final String ENCRYPT_KEY = "e2a20e623195754aa981";
     public static final String TEST_TOKEN =  "4272a474-6055-4696-a638-eaef06f25431";
     public static final String TEST_USER_ID = "5gcnrqBYVl1Qngok8uH";
-    public static final String CACHE_DIR = "";
+    public static final String CACHE_DIR_IMAGE = "image";
+    public static final String CACHE_DIR_FILE = "file";
 }

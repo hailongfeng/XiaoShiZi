@@ -55,7 +55,7 @@
                        android:layout_marginRight="10dp"
                        android:id="@+id/iv_user_setting"
                        android:scaleType="fitXY"
-                       android:src="@drawable/wode_setting"
+                       android:src="@drawable/icon_setting"
                        android:layout_alignParentRight="true"
                        android:layout_alignParentTop="true"
                        android:layout_width="wrap_content"
@@ -118,8 +118,8 @@
                 android:textSize="14sp"
                 android:gravity="center"
                 android:text="添加学生"
-                android:drawableLeft="@drawable/icon_student_add"
-                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/icon_add_student"
+                android:drawablePadding="5dp"
                 android:textColor="@color/colorPrimary"
                 app:rv_cornerRadius="5dp" />
 
@@ -152,6 +152,8 @@
                     android:id="@+id/ll_my_jifen"
                     style="@style/content_item_white" >
                     <ImageView
+                        android:src="@drawable/icon_jifen"
+                        android:layout_marginRight="10dp"
                         style="@style/content_item_lf_img"
                         android:padding="0dp" />
                     <TextView
@@ -169,6 +171,8 @@
                         android:id="@+id/ll_my_huancun"
                         style="@style/content_item_white" >
                         <ImageView
+                            android:src="@drawable/icon_cache"
+                            android:layout_marginRight="10dp"
                             style="@style/content_item_lf_img"
                             android:padding="0dp" />
                         <TextView
@@ -186,6 +190,8 @@
                         android:id="@+id/ll_my_jiazhangjianyi"
                         style="@style/content_item_white" >
                         <ImageView
+                            android:src="@drawable/icon_edit_gray"
+                            android:layout_marginRight="10dp"
                             style="@style/content_item_lf_img"
                             android:padding="0dp" />
                         <TextView
@@ -203,7 +209,9 @@
                         android:id="@+id/ll_my_shezhi"
                         style="@style/content_item_white" >
                         <ImageView
+                            android:src="@drawable/icon_setting_gray"
                             style="@style/content_item_lf_img"
+                            android:layout_marginRight="10dp"
                             android:padding="0dp" />
                         <TextView
                             style="@style/content_item_lf_tv"
@@ -220,6 +228,8 @@
                         android:id="@+id/ll_my_fenxiang"
                         style="@style/content_item_white" >
                         <ImageView
+                            android:src="@drawable/icon_share_gray"
+                            android:layout_marginRight="10dp"
                             style="@style/content_item_lf_img"
                             android:padding="0dp" />
                         <TextView

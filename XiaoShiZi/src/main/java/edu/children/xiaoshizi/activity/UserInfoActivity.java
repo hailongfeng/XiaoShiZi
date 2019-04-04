@@ -42,21 +42,21 @@ public class UserInfoActivity extends XszBaseActivity  implements View.OnClickLi
     @BindView(R.id.iv_user_face)
     ImageView iv_user_face;
     @BindView(R.id.edt_user_name)
-    EditText edt_user_name;
+    TextView edt_user_name;
     @BindView(R.id.rg_user_sex)
-    RadioGroup rg_user_sex;
+    TextView rg_user_sex;
     @BindView(R.id.edt_user_dizhi)
-    EditText edt_user_dizhi;
+    TextView edt_user_dizhi;
     @BindView(R.id.edt_user_phone)
-    EditText edt_user_phone;
+    TextView edt_user_phone;
     @BindView(R.id.edt_user_email)
-    EditText edt_user_email;
+    TextView edt_user_email;
     @BindView(R.id.edt_user_work_adddress)
-    EditText edt_user_work_adddress;
+    TextView edt_user_work_adddress;
     @BindView(R.id.edt_user_home_adddress)
-    EditText edt_user_home_adddress;
+    TextView edt_user_home_adddress;
     @BindView(R.id.edt_user_id_cardno)
-    EditText edt_user_id_cardno;
+    TextView edt_user_id_cardno;
     private String headPortrait="https://single-obs.obs.cn-east-2.myhuaweicloud.com:443/app_pic/head_portrait/5gcnrqBYVl1Qngok8uH/2019033111033725425.jpg";
     private User user;
 
@@ -84,6 +84,7 @@ public class UserInfoActivity extends XszBaseActivity  implements View.OnClickLi
         edt_user_work_adddress.setText(user.getWorkingAddress());
         edt_user_email.setText(user.getEmail());
         edt_user_id_cardno.setText(user.getCardNum());
+        rg_user_sex.setText(user.getSexName());
     }
 
     @Override

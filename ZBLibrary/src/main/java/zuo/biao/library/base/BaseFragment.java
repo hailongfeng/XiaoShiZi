@@ -328,18 +328,14 @@ public abstract class BaseFragment extends Fragment implements FragmentPresenter
 
 	@Override
 	public void onResume() {
-		Log.d(TAG, "\n onResume <<<<<<<<<<<<<<<<<<<<<<<");
 		super.onResume();
 		isRunning = true;
-		Log.d(TAG, "onResume >>>>>>>>>>>>>>>>>>>>>>>>\n");
 	}
 
 	@Override
 	public void onPause() {
-		Log.d(TAG, "\n onPause <<<<<<<<<<<<<<<<<<<<<<<");
 		super.onPause();
 		isRunning = false;
-		Log.d(TAG, "onPause >>>>>>>>>>>>>>>>>>>>>>>>\n");
 	}
 
 	/**销毁并回收内存
