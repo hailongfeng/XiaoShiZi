@@ -57,6 +57,7 @@ public class DemoApplication extends BaseApplication {
 	private List<Activity> activities=new ArrayList<>();
 
 
+
 	private String deviceToken=null;
 
 	@Override

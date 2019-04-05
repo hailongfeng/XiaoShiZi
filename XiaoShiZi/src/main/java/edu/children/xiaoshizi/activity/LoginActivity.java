@@ -1,50 +1,35 @@
 package edu.children.xiaoshizi.activity;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
-import com.alibaba.fastjson.JSONObject;
-import com.dou361.dialogui.DialogUIUtils;
-import com.dou361.dialogui.bean.BuildBean;
-import com.flyco.roundview.RoundTextView;
 import com.gyf.barlibrary.ImmersionBar;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.Banner;
 import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
+import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.logic.APIMethod;
-import edu.children.xiaoshizi.logic.ApiService;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
-import edu.children.xiaoshizi.net.rxjava.RetrofitClient;
-import edu.children.xiaoshizi.utils.Constant;
-import edu.children.xiaoshizi.utils.FileUtil;
-import edu.children.xiaoshizi.utils.IOUtil;
 import edu.children.xiaoshizi.utils.StringUtils;
-import edu.children.xiaoshizi.utils.Tools;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.EasyPermissions;
-import zuo.biao.library.base.BaseActivity;
 import zuo.biao.library.util.Log;
 
 public class LoginActivity extends XszBaseActivity implements View.OnClickListener {
@@ -138,8 +123,10 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                 DemoApplication.getInstance().setLoginRespon(respon.getResult());
                 DemoApplication.getInstance().setUser(respon.getResult().getLoginResp());
 //                DemoApplication.getInstance().getUser().setToken(Constant.TEST_TOKEN);
-                toActivity(new Intent(context,MainActivity.class),false);
-                finish();
+
+                t1();
+//                toActivity(new Intent(context,MainActivity.class),false);
+//                finish();
             }
 
             @Override
@@ -149,55 +136,44 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                 error.printStackTrace();
             }
         });
-
     }
 
-    void test1(){
-        TreeMap sm = new TreeMap<String,String>();
-        String phoneNumber=edit_user_phone.getText().toString();
-        sm.put("studentId","");
-        sm.put("studentId","2019-04-01");
-        LogicService.post(context, APIMethod.findStudentSnapMsg,sm, new ApiSubscriber<Response<List<InAndOutSchoolRecode>>>() {
-            @Override
-            public void onSuccess(Response<List<InAndOutSchoolRecode>> respon) {
-            }
-
-            @Override
-            protected void onFail(NetErrorException error) {
-                error.printStackTrace();
-            }
-        });
-    }
-    void test2(){
-        TreeMap sm = new TreeMap<String,String>();
-        String phoneNumber=edit_user_phone.getText().toString();
-        sm.put("snapMsgId","");
-        LogicService.post(context, APIMethod.findSnapMsgById,sm, new ApiSubscriber<Response<List<InAndOutSchoolRecode>>>() {
-            @Override
-            public void onSuccess(Response<List<InAndOutSchoolRecode>> respon) {
-            }
-
-            @Override
-            protected void onFail(NetErrorException error) {
-                error.printStackTrace();
-            }
-        });
-    }
-    void test3(){
-        TreeMap sm = new TreeMap<String,String>();
-        String phoneNumber=edit_user_phone.getText().toString();
-        sm.put("snapMsgId","");
-        sm.put("feedbackResult","1");
-        LogicService.post(context, APIMethod.findStudentSnapMsg,sm, new ApiSubscriber<Response<List<InAndOutSchoolRecode>>>() {
-            @Override
-            public void onSuccess(Response<List<InAndOutSchoolRecode>> respon) {
-            }
-
-            @Override
-            protected void onFail(NetErrorException error) {
-                error.printStackTrace();
-            }
-        });
+    void t1(){
+        Observable.create(
+                new ObservableOnSubscribe<String>(){
+                    @Override
+                    public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                        TreeMap sm = new TreeMap<String,String>();
+                        try {
+                            retrofit2.Response<List<Banner>> response=LogicService.post(context,APIMethod.loadSysBannerList,sm);
+                            emitter.onNext("111");
+                            retrofit2.Response<List<LoadContentCategoryResponse>> response1=LogicService.post(context,APIMethod.loadContentCategory,sm);
+                            emitter.onNext("222");
+                            if (response.isSuccessful()&&response1.isSuccessful()){
+                                List<Banner> banners=response.body();
+                                Log.d(TAG,"banner size="+banners.size());
+                            }else {
+                                emitter.onError(new RuntimeException("服务器错误"));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            emitter.onError(e);
+                        }
+                    }
+                }).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        Log.d(TAG, "accept = " + s);
+                        showShortToast(s);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        showShortToast(throwable.getMessage());
+                    }
+                });
     }
 
     @Override

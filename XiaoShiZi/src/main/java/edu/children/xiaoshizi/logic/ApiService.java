@@ -8,7 +8,10 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.List;
 import java.util.Map;
 
+import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.Banner;
 import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
+import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.bean.RealNameAuthInfo;
 import edu.children.xiaoshizi.bean.School;
@@ -19,6 +22,7 @@ import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -41,6 +45,12 @@ public interface ApiService {
 
     @POST("v1/login")
     Observable<Response<LoginRespon>> login(@Body RequestBody requestBody);
+
+    @POST("v1/sys/loadSysBannerList")
+    Call<retrofit2.Response<List<Banner>>> loadSysBannerList(@Body RequestBody requestBody);
+    @POST("v1/index/loadContentCategory")
+    Call<retrofit2.Response<LoadContentCategoryResponse>> loadContentCategory(@Body RequestBody requestBody);
+
 
     @POST("{apiVerison}/school/loadSchoolData")
     Observable<Response<List<School>>> loadSchoolData(@Path("apiVerison") String apiVerison, @Body RequestBody requestBody);

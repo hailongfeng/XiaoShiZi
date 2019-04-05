@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6dp"
-                    android:src="@drawable/wode_shengridangao" />
+                    android:src="@drawable/icon_shengri" />
 
                 <TextView
                     android:id="@+id/txt_child_birthday"
@@ -80,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6dp"
-                    android:src="@drawable/wode_shengridangao" />
+                    android:src="@drawable/icon_school" />
 
                 <TextView
                     android:id="@+id/txt_child_school"
@@ -102,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6dp"
-                    android:src="@drawable/wode_shengridangao" />
+                    android:src="@drawable/icon_gradle_banji" />
 
                 <TextView
                     android:id="@+id/txt_child_gradle"
@@ -123,7 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6dp"
-                    android:src="@drawable/wode_shengridangao" />
+                    android:src="@drawable/icon_guanxi" />
                 <TextView
                     android:id="@+id/txt_child_Guardian"
                     android:layout_width="wrap_content"

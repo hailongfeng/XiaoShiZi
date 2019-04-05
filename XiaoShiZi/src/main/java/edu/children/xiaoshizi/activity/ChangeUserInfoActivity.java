@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.alibaba.fastjson.JSONArray;
@@ -77,6 +78,15 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
         edt_user_work_adddress.setText(user.getWorkingAddress());
         edt_user_email.setText(user.getEmail());
         edt_user_id_cardno.setText(user.getCardNum());
+        boolean isMan=user.getSex()==null?true:user.getSex().equals("M")?true:false;
+        if (isMan){
+            ((RadioButton)rg_user_sex.getChildAt(0)).setChecked(true);
+            ((RadioButton)rg_user_sex.getChildAt(1)).setChecked(false);
+        }else {
+            ((RadioButton)rg_user_sex.getChildAt(0)).setChecked(false);
+            ((RadioButton)rg_user_sex.getChildAt(1)).setChecked(true);
+        }
+
     }
 
 

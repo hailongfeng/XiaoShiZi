@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/activity_page"
     android:background="@color/white"
-    tools:context=".activity.UserInfoActivity">
+    tools:context=".activity.ChangeUserInfoActivity">
 
     <RelativeLayout
         style="@style/topbar_bg"
@@ -48,6 +48,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_margin="10dp"
+                        android:scaleType="center"
                         android:src="@mipmap/ic_launcher"
                         app:riv_border_color="@color/white"
                         app:riv_border_width="1dp"
@@ -64,8 +65,8 @@
                         android:layout_width="80dp"
                         android:text="姓名" />
 
-                    <EditText
-                        android:id="@+id/edt_user_name"
+                    <TextView
+                        android:id="@+id/txt_user_name"
                         style="@style/content_item_lf_tv"
                         android:layout_weight="1"
                         android:text="姓名" />
@@ -81,26 +82,11 @@
                         style="@style/content_item_lf_tv"
                         android:layout_width="80dp"
                         android:text="姓别" />
+                    <TextView
+                        android:id="@+id/txt_user_sex"
+                        style="@style/content_item_lf_tv"
+                        android:layout_weight="1" />
 
-                    <RadioGroup
-                        android:id="@+id/rg_user_sex"
-                        android:orientation="horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-                        <RadioButton
-                            android:text="男"
-                            android:tag="M"
-                            android:checked="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <RadioButton
-                            android:text="女"
-                            android:tag="F"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </RadioGroup>
                 </LinearLayout>
                 <View style="@style/divider_horizontal_1px" />
 
@@ -113,8 +99,8 @@
                         android:layout_width="80dp"
                         android:text="所在地" />
 
-                    <EditText
-                        android:id="@+id/edt_user_dizhi"
+                    <TextView
+                        android:id="@+id/txt_user_dizhi"
                         style="@style/content_item_lf_tv"
                         android:layout_weight="1" />
                 </LinearLayout>
@@ -129,8 +115,8 @@
                         android:layout_width="80dp"
                         android:text="手机号" />
 
-                    <EditText
-                        android:id="@+id/edt_user_phone"
+                    <TextView
+                        android:id="@+id/txt_user_phone"
                         style="@style/content_item_lf_tv"
                         android:layout_weight="1" />
                 </LinearLayout>
@@ -145,8 +131,8 @@
                         android:layout_width="80dp"
                         android:text="电子邮箱" />
 
-                    <EditText
-                        android:id="@+id/edt_user_email"
+                    <TextView
+                        android:id="@+id/txt_user_email"
                         style="@style/content_item_lf_tv"
                         android:layout_weight="1" />
                 </LinearLayout>
@@ -161,8 +147,8 @@
                         android:layout_width="80dp"
                         android:text="工作地址" />
 
-                    <EditText
-                        android:id="@+id/edt_user_work_adddress"
+                    <TextView
+                        android:id="@+id/txt_user_work_adddress"
                         style="@style/content_item_lf_tv"
                         android:layout_weight="1" />
                 </LinearLayout>
@@ -177,8 +163,8 @@
                         android:layout_width="80dp"
                         android:text="家庭地址" />
 
-                    <EditText
-                        android:id="@+id/edt_user_home_adddress"
+                    <TextView
+                        android:id="@+id/txt_user_home_adddress"
                         style="@style/content_item_lf_tv"
                         android:layout_weight="1" />
                 </LinearLayout>
@@ -193,8 +179,8 @@
                         android:layout_width="80dp"
                         android:text="身份证号" />
 
-                    <EditText
-                        android:id="@+id/edt_user_id_cardno"
+                    <TextView
+                        android:id="@+id/txt_user_id_cardno"
                         style="@style/content_item_lf_tv"
                         android:layout_weight="1" />
                 </LinearLayout>

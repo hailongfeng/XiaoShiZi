@@ -17,32 +17,30 @@ package edu.children.xiaoshizi.adapter;
 import android.app.Activity;
 import android.view.ViewGroup;
 
-import edu.children.xiaoshizi.adapter.view.InAndOutSchoolRecodeView;
+import edu.children.xiaoshizi.adapter.view.ArticleView;
 import edu.children.xiaoshizi.adapter.view.UserView;
-import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
-import edu.children.xiaoshizi.bean.Student;
+import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.User;
 import zuo.biao.library.base.BaseAdapter;
 
 /**用户adapter
  * @author Lemon
  */
-public class InOutSchoolRecodeAdapter extends BaseAdapter<InAndOutSchoolRecode, InAndOutSchoolRecodeView> {
+public class ArticleAdapter extends BaseAdapter<Article, ArticleView> {
 	//	private static final String TAG = "UserAdapter";
-	private Student student;
-	public InOutSchoolRecodeAdapter(Activity context, Student student) {
+
+	public ArticleAdapter(Activity context) {
 		super(context);
-		this.student=student;
 	}
 
 	@Override
-	public InAndOutSchoolRecodeView createView(int position, ViewGroup parent) {
-		return new InAndOutSchoolRecodeView(context, parent );
+	public ArticleView createView(int position, ViewGroup parent) {
+		return new ArticleView(context, parent);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return position;
+		return getItem(position).getId();
 	}
 
 }

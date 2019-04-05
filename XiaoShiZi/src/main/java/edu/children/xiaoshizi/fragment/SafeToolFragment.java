@@ -29,6 +29,7 @@ import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.DateUtil;
 import zuo.biao.library.ui.BottomMenuWindow;
 import zuo.biao.library.ui.DatePickerWindow;
+import zuo.biao.library.util.Log;
 import zuo.biao.library.util.TimeUtil;
 
 public class SafeToolFragment extends XszBaseFragment implements View.OnClickListener {
@@ -99,22 +100,33 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
 
     private String currentDate="";
 
-
     @Override
     public void initView() {
-        inOutSchoolRecodeAdapter= new InOutSchoolRecodeAdapter(context);
+        txt_date.setText(currentDate);
+        inOutSchoolRecodeAdapter= new InOutSchoolRecodeAdapter(context,student);
         lvBaseList.setAdapter(inOutSchoolRecodeAdapter);
     }
 
     @Override
     public void initData() {
-        changeCurrentStudent(mParamCurrentStudentIndex);
+        changeCurrentStudent(0);
+        getRecodeByDate(student.getStudentId(),currentDate);
+    }
+
+    private void getRecodeByDate(String studentId,String snapMsgDate) {
         TreeMap sm = new TreeMap<String,String>();
-        sm.put("studentId",student.getStudentId());
-        sm.put("snapMsgDate",currentDate);
+        sm.put("studentId",studentId);
+        sm.put("snapMsgDate",snapMsgDate);
         LogicService.post(context, APIMethod.findStudentSnapMsg,sm,new ApiSubscriber<Response<List<InAndOutSchoolRecode>>>(){
             @Override
             public void onSuccess(Response<List<InAndOutSchoolRecode>> response) {
+                for (InAndOutSchoolRecode recode:response.getResult()){
+                    recode.student=SafeToolFragment.this.student;
+                }
+                Log.d(TAG,"InAndOutSchoolRecode size="+response.getResult().size());
+                if (response.getResult().size()==0){
+                    showShortToast("暂无记录");
+                }
                 inOutSchoolRecodeAdapter.refresh(response.getResult());
             }
 
@@ -183,7 +195,7 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
                         calendar.set(Calendar.DAY_OF_MONTH,(selectedDate[2]));
                         currentDate=DateUtil.format(calendar.getTime(),DateUtil.P1);
                         txt_date.setText(currentDate);
-                        initData();
+                        getRecodeByDate(student.getStudentId(),currentDate);
                     }
                 }
                 break;
@@ -191,7 +203,9 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
                 if (data != null) {
                     int position = data.getIntExtra(BottomMenuWindow.RESULT_ITEM_ID, -1);
                     if (position >= 0) {
+                        mParamCurrentStudentIndex=position;
                         changeCurrentStudent(position);
+                        getRecodeByDate(student.getStudentId(),currentDate);
                     }
                 }
                 break;

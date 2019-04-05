@@ -4,11 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.heima.tabview.library.TabView;
+import com.heima.tabview.library.TabViewChild;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,10 +36,10 @@ import zuo.biao.library.util.Log;
 public class MainActivity extends XszBaseActivity {
     private static final String TAG = "MainActivity";
 
-    private static final String[] TAB_NAMES = {"主页", "消息", "发现", "设置"};
-
-    @BindView(R.id.bottomBar)
+//    @BindView(R.id.bottomBar)
     BottomBar bottomBar;
+    @BindView(R.id.tabView)
+    TabView tabView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,47 +103,30 @@ public class MainActivity extends XszBaseActivity {
             WoDeFragment.createInstance()
     };
 
-    private int currentPosition = 0;
-
     @Override
     public void initEvent() {
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+        tabView.setOnTabChildClickListener(new TabView.OnTabChildClickListener() {
             @Override
-            public void onTabSelected(@IdRes int tabId) {
-                int position = 0;
-                if (tabId == R.id.tab_shouye) {
-                    position = 0;
-                } else if (tabId == R.id.tab_aqkt) {
-                    position = 1;
-                } else if (tabId == R.id.tab_aqgj) {
-                    position = 2;
-                } else if (tabId == R.id.tab_wo) {
-                    position = 3;
-                }
-                if (currentPosition == position) {
-                    return;
-                }
-                Log.d(TAG,"position : "+position);
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                ft.hide(fragments[currentPosition]);
-                if (fragments[position].isAdded() == false) {
-                    ft.add(R.id.flMainTabFragmentContainer, fragments[position]);
-                }
-                ft.show(fragments[position]).commit();
-                currentPosition=position;
+            public void onTabChildClick(int  position, ImageView currentImageIcon, TextView currentTextView) {
             }
         });
     }
-
 
     @Override
     public void initView() {
         ImmersionBar.with(this)
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.add(R.id.flMainTabFragmentContainer, fragments[currentPosition]);
-        ft.show(fragments[currentPosition]).commit();
+        List<TabViewChild> tabViewChildList=new ArrayList<>();
+        TabViewChild tabViewChild01=new TabViewChild(R.drawable.main_tab_shouye_select,R.drawable.main_tab_shouye_normal,"首页",  fragments[0]);
+        TabViewChild tabViewChild02=new TabViewChild(R.drawable.main_tab_aqkt_select,R.drawable.main_tab_aqkt_normal,"安全课堂",  fragments[1]);
+        TabViewChild tabViewChild03=new TabViewChild(R.drawable.main_tab_aqgj_select,R.drawable.main_tab_aqgj_normal,"安全工具",  fragments[2]);
+        TabViewChild tabViewChild04=new TabViewChild(R.drawable.main_tab_wo_select,R.drawable.main_tab_wo_normal,"我的",fragments[3]);
+        tabViewChildList.add(tabViewChild01);
+        tabViewChildList.add(tabViewChild02);
+        tabViewChildList.add(tabViewChild03);
+        tabViewChildList.add(tabViewChild04);
+        tabView.setTabViewChild(tabViewChildList,fragmentManager);
     }
 
     private long mPressedTime = 0;

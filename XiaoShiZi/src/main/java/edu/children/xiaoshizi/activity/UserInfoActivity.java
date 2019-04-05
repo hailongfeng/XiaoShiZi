@@ -41,23 +41,22 @@ public class UserInfoActivity extends XszBaseActivity  implements View.OnClickLi
     private static final int REQUEST_TO_DATE_PICKER = 1;
     @BindView(R.id.iv_user_face)
     ImageView iv_user_face;
-    @BindView(R.id.edt_user_name)
-    TextView edt_user_name;
-    @BindView(R.id.rg_user_sex)
-    TextView rg_user_sex;
-    @BindView(R.id.edt_user_dizhi)
-    TextView edt_user_dizhi;
-    @BindView(R.id.edt_user_phone)
-    TextView edt_user_phone;
-    @BindView(R.id.edt_user_email)
-    TextView edt_user_email;
-    @BindView(R.id.edt_user_work_adddress)
-    TextView edt_user_work_adddress;
-    @BindView(R.id.edt_user_home_adddress)
-    TextView edt_user_home_adddress;
-    @BindView(R.id.edt_user_id_cardno)
-    TextView edt_user_id_cardno;
-    private String headPortrait="https://single-obs.obs.cn-east-2.myhuaweicloud.com:443/app_pic/head_portrait/5gcnrqBYVl1Qngok8uH/2019033111033725425.jpg";
+    @BindView(R.id.txt_user_name)
+    TextView txt_user_name;
+    @BindView(R.id.txt_user_sex)
+    TextView txt_user_sex;
+    @BindView(R.id.txt_user_dizhi)
+    TextView txt_user_dizhi;
+    @BindView(R.id.txt_user_phone)
+    TextView txt_user_phone;
+    @BindView(R.id.txt_user_email)
+    TextView txt_user_email;
+    @BindView(R.id.txt_user_work_adddress)
+    TextView txt_user_work_adddress;
+    @BindView(R.id.txt_user_home_adddress)
+    TextView txt_user_home_adddress;
+    @BindView(R.id.txt_user_id_cardno)
+    TextView txt_user_id_cardno;
     private User user;
 
     @Override
@@ -76,15 +75,15 @@ public class UserInfoActivity extends XszBaseActivity  implements View.OnClickLi
 
     @Override
     public void initData() {
-        edt_user_name.setText(user.getUserName());
-        edt_user_phone.setText(user.getPhone());
+        txt_user_name.setText(user.getUserName());
+        txt_user_phone.setText(user.getPhone());
         loadImage(user.getHeadPortrait(),iv_user_face);
-        edt_user_home_adddress.setText(user.getHomeAddress());
-        edt_user_dizhi.setText(user.getHomeAddress());
-        edt_user_work_adddress.setText(user.getWorkingAddress());
-        edt_user_email.setText(user.getEmail());
-        edt_user_id_cardno.setText(user.getCardNum());
-        rg_user_sex.setText(user.getSexName());
+        txt_user_home_adddress.setText(user.getHomeAddress());
+        txt_user_dizhi.setText(user.getHomeAddress());
+        txt_user_work_adddress.setText(user.getWorkingAddress());
+        txt_user_email.setText(user.getEmail());
+        txt_user_id_cardno.setText(user.getCardNum());
+        txt_user_sex.setText(user.getSexName());
     }
 
     @Override

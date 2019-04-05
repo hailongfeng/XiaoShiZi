@@ -4,17 +4,20 @@
     style="@style/activity_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.roughike.bottombar.BottomBar
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        app:bb_titleTextAppearance="@style/xsz_main_tab_text_appearance"
-        app:bb_tabXmlResource="@xml/bottombar_tabs" />
-
-    <FrameLayout
-        android:id="@+id/flMainTabFragmentContainer"
+    <com.heima.tabview.library.TabView
+        android:id="@+id/tabView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottomBar"></FrameLayout>
+        app:tab_textViewSelColor="@color/colorPrimary"
+        app:tab_textViewUnSelColor="@color/black"
+        app:tab_tabViewBackgroundColor="@color/white"
+        app:imageViewTextViewMargin="1dip"
+        app:tab_imageViewHeight="25dip"
+        app:tab_imageViewWidth="25dip"
+        app:tab_tabViewDefaultPosition="0"
+        app:tab_tabViewGravity="bottom"
+        app:tab_tabViewHeight="52dip"
+        app:tab_textViewSize="12sp"
+        >
+    </com.heima.tabview.library.TabView>
 </RelativeLayout>

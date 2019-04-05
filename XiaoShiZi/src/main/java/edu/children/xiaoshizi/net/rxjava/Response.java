@@ -7,16 +7,16 @@ package edu.children.xiaoshizi.net.rxjava;
  * date : 2018/12/13 16:13
  */
 public class Response<T> {
-    public static final int SUCCESS=0;
-    int code;
+    public static final String SUCCESS="0";
+    String code;
     String message;
     T result;
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

@@ -54,6 +54,8 @@ dependencies {
     implementation 'com.github.Raizlabs.DBFlow:dbflow-core:4.2.4'
     implementation 'com.github.Raizlabs.DBFlow:dbflow:4.2.4'
 
+    compile 'com.github.open-android:FragmentTabhostUtils:0.5.0'
+
     implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
     implementation 'com.dou361.dialogui:jjdxm-dialogui:1.0.3'

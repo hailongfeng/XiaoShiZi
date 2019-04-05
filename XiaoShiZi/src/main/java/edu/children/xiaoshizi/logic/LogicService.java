@@ -5,6 +5,7 @@ import android.content.Context;
 import com.alibaba.fastjson.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,8 @@ import io.reactivex.Observer;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Retrofit;
 import zuo.biao.library.util.Log;
 
 public class LogicService {
@@ -77,7 +80,28 @@ public class LogicService {
         RetrofitClient.execute(apiService.uploadFile(params,parts),subscriber);
     }
 
-
+    public static retrofit2.Response post(Context context,final APIMethod method,TreeMap<String,String> param) throws IOException {
+        if (param==null){
+            param=new TreeMap<String,String>();
+        }
+        if (method==APIMethod.getVerifyCode||method==APIMethod.login){
+            //no case
+            appendCommonParam(param,false);
+        }else {
+            appendCommonParam(param,true);
+        }
+        String root = JSONObject.toJSONString(param);
+        Log.d(TAG,"root ="+root);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),root);
+        ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
+        Call observable=null;
+        if (method==APIMethod.loadSysBannerList){
+            observable=apiService.loadSysBannerList(requestBody);
+        }else if (method==APIMethod.loadContentCategory){
+            observable=apiService.loadContentCategory(requestBody);
+        }
+        return observable.execute();
+    }
 
     public static void post(Context context,final APIMethod method,TreeMap<String,String> param,  Observer subscriber){
         if (param==null){

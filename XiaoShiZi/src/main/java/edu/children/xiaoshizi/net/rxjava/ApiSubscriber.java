@@ -22,7 +22,7 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
     @Override
     public final void onNext(T t) {
         Log.d(TAG,"code:"+t.getCode()+"，message ："+t.getMessage());
-        if (t.getCode()==Response.SUCCESS){
+        if (t.getCode().equals(Response.SUCCESS)){
             onSuccess(t);
         }else {
             onError(new RuntimeException(t.getMessage()));

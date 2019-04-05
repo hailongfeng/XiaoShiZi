@@ -43,6 +43,10 @@ public class User extends BaseModel {
 	private String homeAddress;
 	private String email;
 	private String cardNum;
+	private String verifiedStatus; //是否实名认证。1 是 0不是
+	private String firstGuardianStatus; //是否第一联系人。1 是，0不是
+
+
 
 	/**默认构造方法，JSON等解析时必须要有
 	 */
@@ -183,5 +187,21 @@ public class User extends BaseModel {
 
 	public void setCardNum(String cardNum) {
 		this.cardNum = cardNum;
+	}
+
+	public String getVerifiedStatus() {
+		return verifiedStatus;
+	}
+
+	public void setVerifiedStatus(String verifiedStatus) {
+		this.verifiedStatus = verifiedStatus;
+	}
+
+	public String getFirstGuardianStatus() {
+		return firstGuardianStatus;
+	}
+
+	public void setFirstGuardianStatus(String firstGuardianStatus) {
+		this.firstGuardianStatus = firstGuardianStatus;
 	}
 }

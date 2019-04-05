@@ -22,29 +22,51 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_student_face"
-            android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_width="145dp"
+            android:layout_height="203dp"
             android:layout_alignParentLeft="true"
-            android:layout_margin="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
             android:scaleType="fitXY"
             android:src="@drawable/student_face_default"
             app:riv_border_color="@color/white"
             app:riv_border_width="1dp"
             app:riv_corner_radius="15dp"
             app:riv_oval="false" />
-
+        <TextView
+            android:id="@+id/txt_student_name"
+            android:text="小明"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_middle"
+            android:layout_width="145dp"
+            android:gravity="center"
+            android:layout_below="@id/iv_student_face"
+            android:layout_height="wrap_content" />
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_student_recognite_face"
             android:layout_width="150dp"
             android:layout_height="200dp"
             android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:scaleType="fitXY"
             android:src="@drawable/student_face_default"
             app:riv_border_color="@color/white"
             app:riv_border_width="1dp"
+            app:riv_corner_radius="15dp"
             app:riv_oval="false" />
-
+        <TextView
+            android:layout_alignParentRight="true"
+            android:text="人脸识别图"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_middle"
+            android:layout_width="145dp"
+            android:gravity="center"
+            android:layout_below="@id/iv_student_recognite_face"
+            android:layout_height="wrap_content" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,9 +99,7 @@
         android:id="@+id/cv_no_students"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_margin="10dp"
         android:padding="20dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
@@ -87,6 +107,7 @@
         <LinearLayout
             style="@style/ll_vertical_match_wrap">
             <LinearLayout
+                android:padding="5dp"
                 style="@style/ll_horizontal_match_wrap"
                 >
                 <TextView
@@ -101,6 +122,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
+                android:padding="5dp"
                 style="@style/ll_horizontal_match_wrap">
                 <TextView
                     android:text="出入理由"
@@ -119,6 +141,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:gravity="center"
+        android:layout_marginTop="50dp"
         android:layout_height="wrap_content">
         <com.flyco.roundview.RoundTextView
             android:id="@+id/rtv_recognite_error"
