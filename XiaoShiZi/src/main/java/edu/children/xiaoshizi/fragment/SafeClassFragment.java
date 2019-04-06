@@ -14,15 +14,30 @@ limitations under the License.*/
 
 package edu.children.xiaoshizi.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import net.lucode.hackware.magicindicator.FragmentContainerHelper;
+import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
+import net.lucode.hackware.magicindicator.buildins.circlenavigator.CircleNavigator;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -31,6 +46,7 @@ import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.ArticleDetailActivity;
 import edu.children.xiaoshizi.adapter.ArticleAdapter;
+import edu.children.xiaoshizi.adapter.ExamplePagerAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
 import edu.children.xiaoshizi.logic.APIMethod;
@@ -44,112 +60,61 @@ import zuo.biao.library.util.Log;
 /**
  * 首页文章界面
  */
-public class SafeClassFragment extends XszBaseFragment implements OnClickListener, OnDialogButtonClickListener {
+public class SafeClassFragment extends XszBaseFragment implements OnClickListener {
 
+	private static final String[] CHANNELS = new String[]{"CUPCAKE", "DONUT", "ECLAIR", "GINGERBREAD", "HONEYCOMB", "ICE_CREAM_SANDWICH", "JELLY_BEAN", "KITKAT", "LOLLIPOP", "M", "NOUGAT"};
+	private List<String> mDataList = Arrays.asList(CHANNELS);
+	private ExamplePagerAdapter mExamplePagerAdapter = new ExamplePagerAdapter(mDataList);
 
-    @BindView(R.id.rvBaseRecycler)
-    RecyclerView rvBaseRecycler;
-    private ArticleAdapter articleAdapter;
-	private ArticleType articleType;
-    private List<Article> articles;
-	@Override
-	int getLayoutId() {
-		return R.layout.huangjinwu_fragment;
+	@BindView(R.id.magic_indicator)
+	MagicIndicator magicIndicator;
+	@BindView(R.id.view_pager)
+	ViewPager mViewPager;
+
+	public static SafeClassFragment newInstance(String param1, String param2) {
+		SafeClassFragment fragment = new SafeClassFragment();
+		return fragment;
 	}
 
+	@Override
+	int getLayoutId() {
+		return R.layout.fragment_safe_class;
+	}
+
+
+	@Override
+	public void onClick(View v) {
+
+	}
 
 	@Override
 	public void initView() {
-		articleType=(ArticleType) getArguments().getSerializable("articleType");
-		Log.d(TAG,"articleType==null ,,,"+(articleType==null));
-        rvBaseRecycler.setLayoutManager(new LinearLayoutManager(context));
-        DividerItemDecoration divider = new DividerItemDecoration(context,DividerItemDecoration.VERTICAL);
-        divider.setDrawable(ContextCompat.getDrawable(context,R.drawable.list_view_divider));
-        rvBaseRecycler.addItemDecoration(divider);
-        articleAdapter = new ArticleAdapter(context);
-		rvBaseRecycler.setAdapter(articleAdapter);
-		articleAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		mViewPager.setAdapter(mExamplePagerAdapter);
+		initMagicIndicator1();
+	}
+
+	@Override
+	public void initData() {
+
+	}
+
+	@Override
+	public void initEvent() {
+
+	}
+	private void initMagicIndicator1() {
+		CircleNavigator circleNavigator = new CircleNavigator(context);
+		circleNavigator.setCircleCount(CHANNELS.length);
+		circleNavigator.setCircleColor(Color.RED);
+		circleNavigator.setCircleClickListener(new CircleNavigator.OnCircleClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				//点击查看某个文章
-                Intent intent=new Intent(context,ArticleDetailActivity.class);
-                Article article= articles.get(position);
-                intent.putExtra("article",article);
-                intent.putExtra("articleType",articleType);
-				String title=articleType.getTitle()+"|"+article.getTitle();
-                intent.putExtra(INTENT_TITLE,title);
-                toActivity(intent);
+			public void onClick(int index) {
+				mViewPager.setCurrentItem(index);
 			}
 		});
-
-		ArticleType firstArticleType=DemoApplication.getInstance().getContentCategoryResponse().getCategoryResps().get(0);
-		if (articleType.equals(firstArticleType)){
-            articles =DemoApplication.getInstance().getContentCategoryResponse().getContentResps();
-			articleAdapter.refresh(articles);
-		}else {
-			getArticleContentById(articleType.getCategoryId()+"");
-		}
-
+		magicIndicator.setNavigator(circleNavigator);
+		ViewPagerHelper.bind(magicIndicator, mViewPager);
 	}
 
-	void getArticleContentById(String categoryId){
-		TreeMap sm = new TreeMap<String,String>();
-		sm.put("categoryId",categoryId);
-		LogicService.post(context, APIMethod.loadContentByCategory,sm, new ApiSubscriber<Response<List<Article>>>() {
-			@Override
-			public void onSuccess(Response<List<Article>> response) {
-                articles=response.getResult();
-				articleAdapter.refresh(articles);
-			}
-
-			@Override
-			protected void onFail(NetErrorException error) {
-				error.printStackTrace();
-			}
-		});
-	}
-
-	@Override
-	public void initData() {//必须调用
-
-	}
-
-	@Override
-	public void initEvent() {//必须调用
-
-	}
-
-	@Override
-	public void onDialogButtonClick(int requestCode, boolean isPositive) {
-		if (! isPositive) {
-			return;
-		}
-
-		switch (requestCode) {
-		case 0:
-			break;
-		default:
-			break;
-		}
-	}
-
-
-
-	@Override
-	public void onClick(View v) {//直接调用不会显示v被点击效果
-		switch (v.getId()) {
-//			case R.id.llSettingSetting:
-////				toActivity(SettingActivity.createIntent(context));
-//				break;
-//			case R.id.llSettingAbout:
-////				toActivity(AboutActivity.createIntent(context));
-//				break;
-//			case R.id.llSettingLogout:
-//				new AlertDialog(context, "退出登录", "确定退出登录？", true, 0, this).show();
-//				break;
-			default:
-				break;
-		}
-	}
 
 }

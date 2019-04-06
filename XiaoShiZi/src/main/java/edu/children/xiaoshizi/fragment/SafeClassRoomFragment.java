@@ -14,10 +14,13 @@ limitations under the License.*/
 
 package edu.children.xiaoshizi.fragment;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +29,21 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.flyco.roundview.RoundTextView;
+
+import net.lucode.hackware.magicindicator.FragmentContainerHelper;
+import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
+import net.lucode.hackware.magicindicator.buildins.UIUtil;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import edu.children.xiaoshizi.R;
@@ -37,102 +55,109 @@ import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
  */
 public class SafeClassRoomFragment extends XszBaseFragment implements OnClickListener {
 
-	@BindView(R.id.fl_safe_content)
-	FrameLayout fl_safe_content;;
-	@BindView(R.id.txt_seclass)
-	RoundTextView txt_seclass;;
-	@BindView(R.id.txt_selab)
-	RoundTextView txt_selab;;
-
-	private int currentTab=1;
-
-	public static SafeClassRoomFragment createInstance() {
-		return new SafeClassRoomFragment();
-	}
+	private static final String[] CHANNELS = new String[]{"安全课堂", "安全实验室"};
+	private List<Fragment> mFragments = new ArrayList<Fragment>();
+	private FragmentContainerHelper mFragmentContainerHelper = new FragmentContainerHelper();
+	@BindView(R.id.magic_indicator)
+	MagicIndicator magicIndicator;
 
 	@Override
 	int getLayoutId() {
 		return R.layout.fragment_save_class_room;
 	}
 
-
 	@Override
-	public void initView() {//必须调用
-		setIndexSelected(0);
+	public void initView() {
+		initFragments();
+		initMagicIndicator1();
+		mFragmentContainerHelper.handlePageSelected(0, false);
+		switchPages(0);
 	}
 
 	@Override
-	public void initData() {//必须调用
-
-	}
-
-
-	private void logout() {
-		context.finish();
-	}
-
-	@Override
-	public void initEvent() {//必须调用
-		txt_seclass.setOnClickListener(this);
-		txt_selab.setOnClickListener(this);
+	public void initData() {
 
 	}
 
 	@Override
-	public void onClick(View v) {//直接调用不会显示v被点击效果
-		switch (v.getId()) {
-			case R.id.txt_seclass:
-				changeTab(0);
-				setIndexSelected(0);
-				break;
-			case R.id.txt_selab:
-				changeTab(1);
-				setIndexSelected(1);
-				break;
-			default:
-				break;
-		}
-	}
-	//添加到数组
-	Fragment mFragments[] = new Fragment[]{new ArticleFragment(),new ArticleFragment()};
-	void changeTab(int position){
-		if (currentTab==position){
-			return;
-		}
-		if (currentTab==0){
-			txt_seclass.setTextColor(getResources().getColor(R.color.colorPrimary));
-			txt_seclass.getDelegate().setBackgroundColor(getResources().getColor(R.color.white));
-			txt_seclass.getDelegate().setCornerRadius(20);
+	public void initEvent() {
 
-			txt_selab.setTextColor(getResources().getColor(R.color.white));
-			txt_selab.getDelegate().setBackgroundColor(getResources().getColor(R.color.transparent));
-			txt_selab.getDelegate().setCornerRadius(0);
-		}else {
-			txt_selab.setTextColor(getResources().getColor(R.color.colorPrimary));
-			txt_selab.getDelegate().setBackgroundColor(getResources().getColor(R.color.white));
-			txt_selab.getDelegate().setCornerRadius(20);
-
-			txt_seclass.setTextColor(getResources().getColor(R.color.white));
-			txt_seclass.getDelegate().setBackgroundColor(getResources().getColor(R.color.transparent));
-			txt_seclass.getDelegate().setCornerRadius(0);
-		}
 	}
 
-	private void setIndexSelected(int index) {
-		if(currentTab==index){
-			return;
-		}
+
+	private void switchPages(int index) {
 		FragmentManager fragmentManager = context.getSupportFragmentManager();
-		FragmentTransaction ft = fragmentManager.beginTransaction();
-		//隐藏
-		ft.hide(mFragments[currentTab]);
-		//判断是否添加
-		if(!mFragments[index].isAdded()){
-			ft.add(R.id.content,mFragments[index]).show(mFragments[index]);
-		}else {
-			ft.show(mFragments[index]);
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		Fragment fragment;
+		for (int i = 0, j = mFragments.size(); i < j; i++) {
+			if (i == index) {
+				continue;
+			}
+			fragment = mFragments.get(i);
+			if (fragment.isAdded()) {
+				fragmentTransaction.hide(fragment);
+			}
 		}
-		ft.commit();
-		currentTab=index;
+		fragment = mFragments.get(index);
+		if (fragment.isAdded()) {
+			fragmentTransaction.show(fragment);
+		} else {
+			fragmentTransaction.add(R.id.fragment_container, fragment);
+		}
+		fragmentTransaction.commitAllowingStateLoss();
 	}
+
+	private void initFragments() {
+		mFragments.add(SafeClassFragment.newInstance("",""));
+		mFragments.add(SafeLabFragment.newInstance("",""));
+	}
+
+	private void initMagicIndicator1() {
+		magicIndicator.setBackgroundResource(R.drawable.round_indicator_bg);
+		CommonNavigator commonNavigator = new CommonNavigator(context);
+		commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+			@Override
+			public int getCount() {
+				return CHANNELS.length;
+			}
+
+			@Override
+			public IPagerTitleView getTitleView(Context context, final int index) {
+				ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
+				clipPagerTitleView.setText(CHANNELS[index]);
+				clipPagerTitleView.setTextColor(Color.parseColor("#FFFFFF"));
+				clipPagerTitleView.setClipColor(getResources().getColor(R.color.colorPrimary));
+				clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						mFragmentContainerHelper.handlePageSelected(index);
+						switchPages(index);
+					}
+				});
+				return clipPagerTitleView;
+			}
+
+			@Override
+			public IPagerIndicator getIndicator(Context context) {
+				LinePagerIndicator indicator = new LinePagerIndicator(context);
+				float navigatorHeight = context.getResources().getDimension(R.dimen.common_navigator_height);
+				float borderWidth = UIUtil.dip2px(context, 1);
+				float lineHeight = navigatorHeight - 2 * borderWidth;
+				indicator.setLineHeight(lineHeight);
+				indicator.setRoundRadius(lineHeight / 2);
+				indicator.setYOffset(borderWidth);
+				indicator.setColors(Color.parseColor("#FFFFFF"));
+				return indicator;
+			}
+		});
+		magicIndicator.setNavigator(commonNavigator);
+		mFragmentContainerHelper.attachMagicIndicator(magicIndicator);
+	}
+
+	@Override
+	public void onClick(View v) {
+
+	}
+
+
 }

@@ -26,6 +26,7 @@ import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.db.DbUtils;
+import edu.children.xiaoshizi.fragment.SafeClassRoomFragment;
 import edu.children.xiaoshizi.fragment.SafeToolFragment;
 import edu.children.xiaoshizi.fragment.ShouYeFragment;
 import edu.children.xiaoshizi.fragment.WoDeFragment;
@@ -102,7 +103,7 @@ public class MainActivity extends XszBaseActivity {
 
     private Fragment fragments[] = {
             ShouYeFragment.createInstance(),
-            ShouYeFragment.createInstance(),
+            new SafeClassRoomFragment(),
             SafeToolFragment.createInstance(0),
             WoDeFragment.createInstance()
     };
