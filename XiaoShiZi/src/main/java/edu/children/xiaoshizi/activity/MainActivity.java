@@ -14,12 +14,15 @@ import com.heima.tabview.library.TabViewChild;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.db.DbUtils;
@@ -47,7 +50,7 @@ public class MainActivity extends XszBaseActivity {
         setContentView(R.layout.activity_main);
     }
 
-    void getSchools() {
+   private void getSchools() {
         LogicService.post(context, APIMethod.loadSchoolData, null, new ApiSubscriber<Response<List<School>>>() {
             @Override
             public void onSuccess(Response<List<School>> listResponse) {
@@ -59,7 +62,6 @@ public class MainActivity extends XszBaseActivity {
                     Log.w(TAG, "无数据");
                 }
             }
-
             @Override
             protected void onFail(NetErrorException error) {
                 Log.d(TAG, error.getMessage());
@@ -68,7 +70,7 @@ public class MainActivity extends XszBaseActivity {
         });
     }
 
-    void getMyprofile() {
+    private void getMyprofile() {
         LogicService.post(context, APIMethod.getMyProfile, null, new ApiSubscriber<Response<User>>() {
             @Override
             public void onSuccess(Response<User> listResponse) {
@@ -94,6 +96,8 @@ public class MainActivity extends XszBaseActivity {
     public void initData() {
         getSchools();
         getMyprofile();
+        loadSeClassRoomContentCategory();
+        loadSeLabContentCategory();
     }
 
     private Fragment fragments[] = {
@@ -128,9 +132,7 @@ public class MainActivity extends XszBaseActivity {
         tabViewChildList.add(tabViewChild04);
         tabView.setTabViewChild(tabViewChildList,fragmentManager);
     }
-
     private long mPressedTime = 0;
-
     @Override
     public void onBackPressed() {
         long mNowTime = System.currentTimeMillis();//获取第一次按键时间
@@ -141,5 +143,36 @@ public class MainActivity extends XszBaseActivity {
             this.finish();
             DemoApplication.getInstance().exit();
         }
+    }
+
+    private void loadSeClassRoomContentCategory() {
+        TreeMap sm = new TreeMap<String,String>();
+        LogicService.post(context,APIMethod.loadSeClassRoomContentCategory,sm,new ApiSubscriber<Response<LoadContentCategoryResponse>>() {
+
+            @Override
+            protected void onSuccess(Response<LoadContentCategoryResponse> response) {
+                DemoApplication.getInstance().setContentSeClassCategoryResponse(response.getResult());
+            }
+
+            @Override
+            protected void onFail(NetErrorException error) {
+
+            }
+        });
+    }
+    private void loadSeLabContentCategory() {
+        TreeMap sm = new TreeMap<String,String>();
+        LogicService.post(context,APIMethod.loadSeLabContentCategory,sm,new ApiSubscriber<Response<LoadContentCategoryResponse>>() {
+
+            @Override
+            protected void onSuccess(Response<LoadContentCategoryResponse> response) {
+                DemoApplication.getInstance().setContentSeLabCategoryResponse(response.getResult());
+            }
+
+            @Override
+            protected void onFail(NetErrorException error) {
+                error.printStackTrace();
+            }
+        });
     }
 }

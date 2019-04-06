@@ -18,19 +18,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.SearchArticleActivity;
-import zuo.biao.library.base.BaseFragment;
-import zuo.biao.library.ui.AlertDialog;
+import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.Banner;
+import edu.children.xiaoshizi.utils.GlideImageLoader;
 import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
 
 /**设置fragment
@@ -38,18 +42,12 @@ import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
  * @use new WoDeFragment(),详细使用见.DemoFragmentActivity(initData方法内)
  */
 public class ShouYeFragment extends XszBaseFragment implements OnClickListener, OnDialogButtonClickListener {
-//	private static final String TAG = "WoDeFragment";
+	@BindView(R.id.banner)
+	com.youth.banner.Banner banner;
 
-	//与Activity通信<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-	/**创建一个Fragment实例
-	 * @return
-	 */
 	public static ShouYeFragment createInstance() {
 		return new ShouYeFragment();
 	}
-
-	//与Activity通信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 	@Override
 	int getLayoutId() {
@@ -57,38 +55,34 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 	}
 
 
-	//UI显示区(操作UI，但不存在数据获取或处理代码，也不存在事件监听代码)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-//	private ImageView ivSettingHead;
 	@Override
 	public void initView() {//必须调用
+		List<ArticleType> articleTypes=DemoApplication.getInstance().getContentCategoryResponse().getCategoryResps();
 
-//		ivSettingHead = findView(R.id.ivSettingHead);
+		FragmentPagerItems.Creator creator=FragmentPagerItems.with(context);
+		for (ArticleType articleType:articleTypes){
+			Bundle bundle=new Bundle();
+			bundle.putSerializable("articleType",articleType);
+			creator.add(articleType.getTitle(), ArticleFragment.class,bundle);
+		}
 		FragmentManager fragmentManager=context.getSupportFragmentManager();
 		FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
-				fragmentManager, FragmentPagerItems.with(context)
-				.add("黄金屋", HuangjinwuFragment.class)
-				.add("放大镜", FangDaJingFragment.class)
-				.create());
-
+				fragmentManager, creator.create());
 		ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 		viewPager.setAdapter(adapter);
-
 		SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
 		viewPagerTab.setViewPager(viewPager);
+
+		List<Banner> banners=DemoApplication.getInstance().getBanners();
+		banner.setImageLoader(new GlideImageLoader());
+		List<String> images=new ArrayList<String>();
+		for (Banner b:banners){
+			images.add(b.getBannerImage());
+		}
+		banner.setImages(images);
+		banner.start();
+
 	}
-	//UI显示区(操作UI，但不存在数据获取或处理代码，也不存在事件监听代码)>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
-
-
-
-
-
-
-	//Data数据区(存在数据获取或处理代码，但不存在事件监听代码)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	@Override
 	public void initData() {//必须调用
@@ -100,17 +94,6 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 		context.finish();
 	}
 
-
-	//Data数据区(存在数据获取或处理代码，但不存在事件监听代码)>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
-
-
-
-
-	//Event事件区(只要存在事件监听代码就是)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	@Override
 	public void initEvent() {//必须调用

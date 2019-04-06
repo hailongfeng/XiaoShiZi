@@ -35,15 +35,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MessageListActivity" />
-        <activity android:name=".activity.LinkmanActivity" />
-        <activity android:name=".activity.RealNameAuthActivity" />
-        <activity android:name=".activity.BindingStudentActivity" />
-        <activity android:name=".activity.ParentInfoActivity" />
-        <activity android:name=".activity.UserInfoActivity" />
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,19 +45,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.MessageListActivity" />
+        <activity android:name=".activity.LinkmanActivity" />
+        <activity android:name=".activity.RealNameAuthActivity" />
+        <activity android:name=".activity.BindingStudentActivity" />
+        <activity android:name=".activity.ParentInfoActivity" />
+        <activity android:name=".activity.UserInfoActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.ChangeUserInfoActivity" />
+        <activity android:name=".activity.SearchArticleActivity" />
+        <activity android:name=".activity.InOutSchoolRecodeDetailActivity" />
+        <activity android:name=".activity.ReconiceFeedBackActivity" />
+        <activity android:name=".activity.ArticleDetailActivity"></activity>
+        <activity android:name=".activity.VideoActivity">
 
+        </activity>
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5ca1c9ee20365714de0016c7" /> <!-- Channel ID用来标识App的推广渠道，作为推送消息时给用户分组的一个维度。 -->
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="豌豆荚" />
-
-        <activity android:name=".activity.SearchArticleActivity" />
-        <activity android:name=".activity.InOutSchoolRecodeDetailActivity" />
-        <activity android:name=".activity.ReconiceFeedBackActivity"></activity>
     </application>
 
 </manifest>

@@ -50,71 +50,8 @@ import zuo.biao.library.util.StringUtil;
  * <br> userView.setOnDataChangedListener(onDataChangedListener);data = userView.getData();//非必需
  * <br> userView.setOnClickListener(onClickListener);//非必需
  */
-public class ArticleView extends BaseView<Article> implements OnClickListener {
-	private static final String TAG = "UserView";
-
-	public ArticleView(Activity context, ViewGroup parent) {
-		super(context, R.layout.list_item_artivle_view, parent);
-	}
-
-	public ImageView ivUserViewHead;
-	public ImageView ivUserViewStar;
-
-	public TextView tvUserViewSex;
-
-	public TextView tvUserViewName;
-	public TextView tvUserViewId;
-	public TextView tvUserViewNumber;
-	@SuppressLint("InflateParams")
-	@Override
-	public View createView() {
-		ivUserViewHead = findView(R.id.ivUserViewHead, this);
-		ivUserViewStar = findView(R.id.ivUserViewStar, this);
-
-		tvUserViewSex = findView(R.id.tvUserViewSex, this);
-
-		tvUserViewName = findView(R.id.tvUserViewName);
-		tvUserViewId = findView(R.id.tvUserViewId);
-		tvUserViewNumber = findView(R.id.tvUserViewNumber);
-
-		return super.createView();
-	}
-
-	@Override
-	public void bindView(Article data_){
-		super.bindView(data_ != null ? data_ : new Article());
-
-//		Glide.with(context).asBitmap().load(data.getHead()).into(new SimpleTarget<Bitmap>() {
-//
-//			@Override
-//			public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
-//				ivUserViewHead.setImageBitmap(CommonUtil.toRoundCorner(bitmap, bitmap.getWidth()/2));
-//			}
-//		});
-
-//		ivUserViewStar.setImageResource(data.getStarred() ? R.drawable.icon_search : R.drawable.icon_search);
-
-//		tvUserViewSex.setBackgroundResource(data.getSex() == User.SEX_FEMALE
-//				? R.drawable.circle_pink : R.drawable.circle_blue);
-//		tvUserViewSex.setText(data.getSex() == User.SEX_FEMALE ?  "女" : "男");
-//		tvUserViewSex.setTextColor(getColor(data.getSex() == User.SEX_FEMALE ? R.color.pink : R.color.blue));
-
-//		tvUserViewName.setText(StringUtil.getTrimedString(data.getName()));
-//		tvUserViewId.setText("ID:" + data.getId());
-//		tvUserViewNumber.setText("Phone:" + StringUtil.getNoBlankString(data.getPhone()));
-	}
-
-	@Override
-	public void onClick(View v) {
-		if (BaseModel.isCorrect(data) == false) {
-			return;
-		}
-		switch (v.getId()) {
-		case R.id.ivUserViewHead:
-//			toActivity(WebViewActivity.createIntent(context, data.getName(), data.getHead()));
-			break;
-		default:
-			break;
-		}
+public abstract class ArticleView extends XszBaseView<Article> implements OnClickListener {
+	public ArticleView(Activity context, int layoutResId, ViewGroup parent) {
+		super(context, layoutResId, parent);
 	}
 }

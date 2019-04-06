@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/activity_page"
+    android:background="@color/white"
+    tools:context=".activity.ChangeUserInfoActivity">
+
+    <RelativeLayout
+        style="@style/topbar_bg"
+        android:background="@color/gray_slight">
+
+        <ImageButton style="@style/xsz_topbar_return_img" />
+
+        <TextView
+            style="@style/topbar_title"
+            android:layout_centerHorizontal="true"
+            android:text="第一联系人/本人" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:id="@+id/lin_web"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+    </LinearLayout>
+</LinearLayout>

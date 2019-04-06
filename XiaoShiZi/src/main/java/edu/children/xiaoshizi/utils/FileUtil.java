@@ -2,10 +2,12 @@ package edu.children.xiaoshizi.utils;
 
 import android.os.Environment;
 import android.os.StatFs;
+import android.text.TextUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import edu.children.xiaoshizi.DemoApplication;
 import zuo.biao.library.util.Log;
@@ -121,7 +123,5 @@ public class FileUtil {
         }
         return result;
     }
-
-
 
 }

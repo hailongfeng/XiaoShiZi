@@ -14,6 +14,8 @@ public class Article extends BaseModel {
 
     private String contentId;
     private String title;
+    private String bannerImage;
+    private String introduce;
     private String activityVideoUrl;
     private String activityVideoImageUrl;
     private String contentType;
@@ -61,5 +63,21 @@ public class Article extends BaseModel {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public String getBannerImage() {
+        return bannerImage;
+    }
+
+    public void setBannerImage(String bannerImage) {
+        this.bannerImage = bannerImage;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
     }
 }

@@ -17,30 +17,50 @@ package edu.children.xiaoshizi.adapter;
 import android.app.Activity;
 import android.view.ViewGroup;
 
+import edu.children.xiaoshizi.adapter.view.ArticleImageView;
+import edu.children.xiaoshizi.adapter.view.ArticleVideoView;
 import edu.children.xiaoshizi.adapter.view.ArticleView;
-import edu.children.xiaoshizi.adapter.view.UserView;
 import edu.children.xiaoshizi.bean.Article;
-import edu.children.xiaoshizi.bean.User;
 import zuo.biao.library.base.BaseAdapter;
 
 /**用户adapter
  * @author Lemon
  */
 public class ArticleAdapter extends BaseAdapter<Article, ArticleView> {
-	//	private static final String TAG = "UserAdapter";
 
 	public ArticleAdapter(Activity context) {
 		super(context);
 	}
 
 	@Override
-	public ArticleView createView(int position, ViewGroup parent) {
-		return new ArticleView(context, parent);
+	public int getItemViewType(int position) {
+//		内容类型。IT 图文，VT 视频
+		String type=getItem(position).getContentType();
+		if (type.equals("IT")){
+			return 1;
+		}else {
+			return 2;
+		}
+	}
+
+	@Override
+	public int getViewTypeCount() {
+		return 2;
+	}
+
+	@Override
+	public ArticleView createView(int viewType, ViewGroup parent) {
+		if (viewType==1){
+			return new ArticleImageView(context, parent);
+		}else {
+			return new ArticleVideoView(context, parent);
+		}
 	}
 
 	@Override
 	public long getItemId(int position) {
 		return getItem(position).getId();
 	}
+
 
 }

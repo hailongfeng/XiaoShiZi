@@ -1,12 +1,14 @@
 package edu.children.xiaoshizi.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
 import com.gyf.barlibrary.ImmersionBar;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -77,7 +79,8 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         findView(R.id.btn_login, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+//                login();
+                t1();
             }
         });
     }
@@ -138,40 +141,109 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         });
     }
 
+    private boolean login2() {
+//        showLoading("正在登陆");
+        String verifyCode=edit_verifyCode.getText().toString();
+        TreeMap sm = new TreeMap<String,String>();
+        String phoneNumber=edit_user_phone.getText().toString();
+        sm.put("phoneNumber",phoneNumber);
+        sm.put("verifyCode",verifyCode);
+        sm.put("deviceToken","");
+        sm.put("mobileType", "Android");
+        sm.put("deviceToken", DemoApplication.getInstance().getDeviceToken());
+        try {
+            Response<LoginRespon> response =LogicService.post(context, APIMethod.login,sm);
+            if (response.getCode().equals(Response.SUCCESS)) {
+                response.getResult().getLoginResp().setPhone(phoneNumber);
+                DemoApplication.getInstance().setLoginRespon(response.getResult());
+                DemoApplication.getInstance().setUser(response.getResult().getLoginResp());
+                return true;
+            }else {
+                return false;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean loadSysBannerList() {
+        TreeMap sm = new TreeMap<String,String>();
+        try {
+            Response<List<Banner>> response=LogicService.post(context,APIMethod.loadSysBannerList,sm);
+            if (response.getCode().equals(Response.SUCCESS)) {
+                DemoApplication.getInstance().setBanners(response.getResult());
+                return true;
+            }else {
+                return false;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    private boolean loadContentCategory() {
+        TreeMap sm = new TreeMap<String,String>();
+        try {
+            Response<LoadContentCategoryResponse> response=LogicService.post(context,APIMethod.loadContentCategory,sm);
+            if (response.getCode().equals(Response.SUCCESS)) {
+                DemoApplication.getInstance().setContentCategoryResponse(response.getResult());
+                return true;
+            }else {
+                return false;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
     void t1(){
         Observable.create(
-                new ObservableOnSubscribe<String>(){
+                new ObservableOnSubscribe<Integer>(){
                     @Override
-                    public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-                        TreeMap sm = new TreeMap<String,String>();
-                        try {
-                            retrofit2.Response<List<Banner>> response=LogicService.post(context,APIMethod.loadSysBannerList,sm);
-                            emitter.onNext("111");
-                            retrofit2.Response<List<LoadContentCategoryResponse>> response1=LogicService.post(context,APIMethod.loadContentCategory,sm);
-                            emitter.onNext("222");
-                            if (response.isSuccessful()&&response1.isSuccessful()){
-                                List<Banner> banners=response.body();
-                                Log.d(TAG,"banner size="+banners.size());
+                    public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
+                        emitter.onNext(0);
+                        boolean loginResult=login2();
+                        if (loginResult){
+                            emitter.onNext(1);
+                            boolean loadSysBannerListResult=loadSysBannerList();
+                            boolean loadContentCategoryResult=loadContentCategory();
+                            if(loginResult&&loadSysBannerListResult&&loadContentCategoryResult) {
+                                emitter.onNext(2);
                             }else {
-                                emitter.onError(new RuntimeException("服务器错误"));
+                                emitter.onError(new RuntimeException("同步数据失败"));
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            emitter.onError(e);
+                        }else {
+                            emitter.onError(new RuntimeException("登录失败"));
                         }
                     }
                 }).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
+                .subscribe(new Consumer<Integer>() {
                     @Override
-                    public void accept(String s) throws Exception {
-                        Log.d(TAG, "accept = " + s);
-                        showShortToast(s);
+                    public void accept(Integer r) throws Exception {
+                        if (r==0){
+                            showLoading("正在登陆");
+                        }else if (r==1){
+                            hideLoading();
+                            showLoading("正在同步数据");
+                        }else if (r==2){
+                            hideLoading();
+                            toActivity(new Intent(context,MainActivity.class),false);
+                            finish();
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         showShortToast(throwable.getMessage());
+                        hideLoading();
                     }
                 });
     }

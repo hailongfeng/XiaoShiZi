@@ -2,11 +2,13 @@ package edu.children.xiaoshizi.net.rxjava;
 
 import com.alibaba.fastjson.JSONException;
 import com.google.gson.JsonParseException;
+import com.umeng.analytics.MobclickAgent;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import edu.children.xiaoshizi.DemoApplication;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.subscribers.ResourceSubscriber;
 import zuo.biao.library.util.Log;
@@ -54,11 +56,12 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
         }
         // 回调抽象方法
         onFail(error);
+        MobclickAgent.reportError(DemoApplication.getInstance(),error);
     }
 
     /**
      * 回调接口
      */
-    protected abstract void onSuccess(T Response);
+    protected abstract void onSuccess(T response);
     protected abstract void onFail(NetErrorException error);
 }

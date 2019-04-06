@@ -15,6 +15,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import edu.children.xiaoshizi.DemoApplication;
+import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.net.rxjava.RetrofitClient;
 import edu.children.xiaoshizi.utils.StringUtils;
 import edu.children.xiaoshizi.utils.Tools;
@@ -80,7 +81,7 @@ public class LogicService {
         RetrofitClient.execute(apiService.uploadFile(params,parts),subscriber);
     }
 
-    public static retrofit2.Response post(Context context,final APIMethod method,TreeMap<String,String> param) throws IOException {
+    public static Response post(Context context, final APIMethod method, TreeMap<String,String> param) throws IOException {
         if (param==null){
             param=new TreeMap<String,String>();
         }
@@ -95,12 +96,16 @@ public class LogicService {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),root);
         ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
         Call observable=null;
-        if (method==APIMethod.loadSysBannerList){
+        if (method==APIMethod.login){
+            observable=apiService.login(requestBody);
+        }else if (method==APIMethod.loadSysBannerList){
             observable=apiService.loadSysBannerList(requestBody);
         }else if (method==APIMethod.loadContentCategory){
             observable=apiService.loadContentCategory(requestBody);
         }
-        return observable.execute();
+        retrofit2.Response r=observable.execute();
+        return (Response) r.body();
+
     }
 
     public static void post(Context context,final APIMethod method,TreeMap<String,String> param,  Observer subscriber){
@@ -120,9 +125,9 @@ public class LogicService {
         Observable observable=null;
         if (method==APIMethod.getVerifyCode){
             observable=apiService.getVerifyCode(requestBody);
-        }else if (method==APIMethod.login){
+        }/*else if (method==APIMethod.login){
             observable=apiService.login(requestBody);
-        }else if (method==APIMethod.loadSchoolData){
+        }*/else if (method==APIMethod.loadSchoolData){
             observable=apiService.loadSchoolData(APIVersion.v2.name(),requestBody);
         }else if (method==APIMethod.findStudentSnapMsg){
             observable=apiService.findStudentSnapMsg(requestBody);
@@ -140,7 +145,25 @@ public class LogicService {
             observable=apiService.getMyProfile(requestBody);
         }else if (method==APIMethod.saveMyProfile){
             observable=apiService.saveMyProfile(requestBody);
+        }else if (method==APIMethod.loadContentByCategory){
+            observable=apiService.loadContentByCategory(requestBody);
+        }else if (method==APIMethod.loadContentById){
+            observable=apiService.loadContentById(requestBody);
         }
+        else if (method==APIMethod.loadSeLabContentCategory){
+            observable=apiService.loadSeLabContentCategory(requestBody);
+        }else if (method==APIMethod.loadSafeLabContentByCategory){
+            observable=apiService.loadSafeLabContentByCategory(requestBody);
+        }else if (method==APIMethod.loadSafeLabContentById){
+            observable=apiService.loadSafeLabContentById(requestBody);
+        }else if (method==APIMethod.loadSeClassRoomContentCategory){
+            observable=apiService.loadSeClassRoomContentCategory(requestBody);
+        }else if (method==APIMethod.loadSeClassRoomContentByCategory){
+            observable=apiService.loadSeClassRoomContentByCategory(requestBody);
+        }else if (method==APIMethod.loadSeClassRoomContentById){
+            observable=apiService.loadSeClassRoomContentById(requestBody);
+        }
+
         if (observable!=null) {
             RetrofitClient.execute(observable, subscriber);
         }else {

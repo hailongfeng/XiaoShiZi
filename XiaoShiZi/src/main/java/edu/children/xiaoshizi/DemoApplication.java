@@ -15,30 +15,23 @@ limitations under the License.*/
 package edu.children.xiaoshizi;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.content.Context;
 import android.support.multidex.MultiDex;
-import android.widget.RemoteViews;
 
+import com.blankj.utilcode.util.Utils;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.umeng.commonsdk.UMConfigure;
-import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.PushAgent;
-import com.umeng.message.UmengMessageHandler;
-import com.umeng.message.UmengNotificationClickHandler;
-import com.umeng.message.entity.UMessage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+import edu.children.xiaoshizi.bean.Banner;
+import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.logic.UmengMessageHandle;
 import edu.children.xiaoshizi.utils.ActivityLifecycle;
 import zuo.biao.library.base.BaseApplication;
-import zuo.biao.library.util.Log;
 
 /**Application
  * @author harlen
@@ -55,7 +48,10 @@ public class DemoApplication extends BaseApplication {
 	private User user;
 	private LoginRespon loginRespon;
 	private List<Activity> activities=new ArrayList<>();
-
+	private List<Banner> banners;
+	private LoadContentCategoryResponse contentCategoryResponse;
+	private LoadContentCategoryResponse contentSeClassCategoryResponse;
+	private LoadContentCategoryResponse contentSeLabCategoryResponse;
 
 
 	private String deviceToken=null;
@@ -65,6 +61,7 @@ public class DemoApplication extends BaseApplication {
 		super.onCreate();
 		context = this;
 		FlowManager.init(new FlowConfig.Builder(this).build());
+		Utils.init(context);
 		registerActivityLifecycleCallbacks(new ActivityLifecycle());
 		new UmengMessageHandle(this).init();
 	}
@@ -114,4 +111,35 @@ public class DemoApplication extends BaseApplication {
 		System.exit(0);
 	}
 
+	public List<Banner> getBanners() {
+		return banners;
+	}
+
+	public void setBanners(List<Banner> banners) {
+		this.banners = banners;
+	}
+
+	public LoadContentCategoryResponse getContentCategoryResponse() {
+		return contentCategoryResponse;
+	}
+
+	public void setContentCategoryResponse(LoadContentCategoryResponse contentCategoryResponse) {
+		this.contentCategoryResponse = contentCategoryResponse;
+	}
+
+	public LoadContentCategoryResponse getContentSeClassCategoryResponse() {
+		return contentSeClassCategoryResponse;
+	}
+
+	public void setContentSeClassCategoryResponse(LoadContentCategoryResponse contentSeClassCategoryResponse) {
+		this.contentSeClassCategoryResponse = contentSeClassCategoryResponse;
+	}
+
+	public LoadContentCategoryResponse getContentSeLabCategoryResponse() {
+		return contentSeLabCategoryResponse;
+	}
+
+	public void setContentSeLabCategoryResponse(LoadContentCategoryResponse contentSeLabCategoryResponse) {
+		this.contentSeLabCategoryResponse = contentSeLabCategoryResponse;
+	}
 }

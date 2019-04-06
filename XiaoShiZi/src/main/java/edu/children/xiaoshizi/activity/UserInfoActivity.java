@@ -37,7 +37,7 @@ import edu.children.xiaoshizi.utils.StringUtils;
 import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
 
-public class UserInfoActivity extends XszBaseActivity  implements View.OnClickListener {
+public class UserInfoActivity extends XszBaseActivity implements View.OnClickListener {
     private static final int REQUEST_TO_DATE_PICKER = 1;
     @BindView(R.id.iv_user_face)
     ImageView iv_user_face;
@@ -62,7 +62,7 @@ public class UserInfoActivity extends XszBaseActivity  implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user=DemoApplication.getInstance().getUser();
+        user = DemoApplication.getInstance().getUser();
         setContentView(R.layout.activity_user_info);
     }
 
@@ -77,7 +77,7 @@ public class UserInfoActivity extends XszBaseActivity  implements View.OnClickLi
     public void initData() {
         txt_user_name.setText(user.getUserName());
         txt_user_phone.setText(user.getPhone());
-        loadImage(user.getHeadPortrait(),iv_user_face);
+        loadImage(user.getHeadPortrait(), iv_user_face);
         txt_user_home_adddress.setText(user.getHomeAddress());
         txt_user_dizhi.setText(user.getHomeAddress());
         txt_user_work_adddress.setText(user.getWorkingAddress());
@@ -91,7 +91,7 @@ public class UserInfoActivity extends XszBaseActivity  implements View.OnClickLi
         findView(R.id.btn_change_user).setOnClickListener(this);
     }
 
-    class SendMsgDialogView{
+    class SendMsgDialogView {
         @BindView(R.id.txt_user_phone)
         TextView txt_dialog_user_phone;
         @BindView(R.id.edt_user_input_code)
@@ -101,14 +101,16 @@ public class UserInfoActivity extends XszBaseActivity  implements View.OnClickLi
         @BindView(R.id.btn_sure)
         RoundTextView btn_dialog_sure;
     }
+
     SendMsgDialogView sendMsgDialogView;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_change_user:
                 getVeryCode();
                 View rootView = View.inflate(context, R.layout.dialog_send_msg_view, null);
-                sendMsgDialogView=new SendMsgDialogView();
+                sendMsgDialogView = new SendMsgDialogView();
                 ButterKnife.bind(sendMsgDialogView, rootView);
                 sendMsgDialogView.txt_dialog_user_phone.setText(user.getLoginName());
                 sendMsgDialogView.btn_dialog_resend.setOnClickListener(this);
@@ -124,16 +126,17 @@ public class UserInfoActivity extends XszBaseActivity  implements View.OnClickLi
                 break;
         }
     }
+
     private void getVeryCode() {
-        TreeMap sm = new TreeMap<String,String>();
-        String phone=user.getPhone();
+        TreeMap sm = new TreeMap<String, String>();
+        String phone = user.getPhone();
         if (StringUtils.isEmpty(phone))
-            sm.put("phoneNumber","18697386272");
-        LogicService.post(context, APIMethod.getVerifyCode,sm,new ApiSubscriber<Response>(){
+            sm.put("phoneNumber", "18697386272");
+        LogicService.post(context, APIMethod.getVerifyCode, sm, new ApiSubscriber<Response>() {
             @Override
             public void onSuccess(Response response) {
-                Log.d(TAG,"response code:"+response.getCode());
-                Log.d(TAG,"onNext  , "+Thread.currentThread().getName());
+                Log.d(TAG, "response code:" + response.getCode());
+                Log.d(TAG, "onNext  , " + Thread.currentThread().getName());
                 showShortToast("验证码发送成功");
             }
 

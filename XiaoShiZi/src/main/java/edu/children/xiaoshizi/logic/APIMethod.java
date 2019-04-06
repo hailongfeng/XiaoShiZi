@@ -14,4 +14,12 @@ public enum  APIMethod {
     findStudentSnapMsg,
     findSnapMsgById,
     doSnapMsgFeedBack,
+    loadContentByCategory,
+    loadContentById,
+    loadSeLabContentCategory,
+    loadSafeLabContentByCategory,
+    loadSafeLabContentById,
+    loadSeClassRoomContentCategory,
+    loadSeClassRoomContentByCategory,
+    loadSeClassRoomContentById,
 }

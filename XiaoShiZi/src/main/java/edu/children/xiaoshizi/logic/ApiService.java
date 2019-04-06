@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.List;
 import java.util.Map;
 
+import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
 import edu.children.xiaoshizi.bean.Banner;
 import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
@@ -44,13 +45,7 @@ public interface ApiService {
     Observable<Response> getVerifyCode(@Body RequestBody requestBody);
 
     @POST("v1/login")
-    Observable<Response<LoginRespon>> login(@Body RequestBody requestBody);
-
-    @POST("v1/sys/loadSysBannerList")
-    Call<retrofit2.Response<List<Banner>>> loadSysBannerList(@Body RequestBody requestBody);
-    @POST("v1/index/loadContentCategory")
-    Call<retrofit2.Response<LoadContentCategoryResponse>> loadContentCategory(@Body RequestBody requestBody);
-
+    Call<Response<LoginRespon>> login(@Body RequestBody requestBody);
 
     @POST("{apiVerison}/school/loadSchoolData")
     Observable<Response<List<School>>> loadSchoolData(@Path("apiVerison") String apiVerison, @Body RequestBody requestBody);
@@ -75,6 +70,32 @@ public interface ApiService {
     Observable<Response<InAndOutSchoolRecode>> findSnapMsgById(@Body RequestBody requestBody);
     @POST("v1/student/doSnapMsgFeedBack")
     Observable<Response<User>> doSnapMsgFeedBack(@Body RequestBody requestBody);
+
+    //首页
+    @POST("v1/sys/loadSysBannerList")
+    Call<Response<List<Banner>>> loadSysBannerList(@Body RequestBody requestBody);
+    @POST("v1/index/loadContentCategory")
+    Call<Response<LoadContentCategoryResponse>> loadContentCategory(@Body RequestBody requestBody);
+    @POST("v1/index/loadContentByCategory")
+    Observable<Response<List<Article>>> loadContentByCategory(@Body RequestBody requestBody);
+    @POST("v1/index/loadContentById")
+    Observable<Response<Article>> loadContentById(@Body RequestBody requestBody);
+
+
+    //安全实验室
+    @POST("v1/safeLab/loadSeLabContentCategory")
+    Observable<Response<LoadContentCategoryResponse>> loadSeLabContentCategory(@Body RequestBody requestBody);
+    @POST("v1/safeLab/loadContentByCategory")
+    Observable<Response<List<Article>>> loadSafeLabContentByCategory(@Body RequestBody requestBody);
+    @POST("v1/safeLab/loadContentById")
+    Observable<Response<Article>> loadSafeLabContentById(@Body RequestBody requestBody);
+    //安全课堂
+    @POST("v1/safeclassroom/loadSeContentCategory")
+    Observable<Response<LoadContentCategoryResponse>> loadSeClassRoomContentCategory(@Body RequestBody requestBody);
+    @POST("v1/safeclassroom/loadContentByCategory")
+    Observable<Response<List<Article>>> loadSeClassRoomContentByCategory(@Body RequestBody requestBody);
+    @POST("v1/safeclassroom/loadContentById")
+    Observable<Response<Article>> loadSeClassRoomContentById(@Body RequestBody requestBody);
 
 
 }
