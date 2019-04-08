@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ListView中的ItemView里不要用Button等默认hasFocus的控件，以免onItemClick事件无响应 -->
+<!-- 如果一定要用，则必须在根布局加上 android:descendantFocusability="blocksDescendants" -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/ll_vertical_match_wrap"
+    android:background="@drawable/list_item_white_to_alpha"
+    android:padding="4dp">
+    <com.flyco.roundview.RoundFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rv_cornerRadius="5dp"
+        >
+        <ImageView
+            android:id="@+id/iv_course_pic"
+            style="@style/img_fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/student_face_default" />
+    </com.flyco.roundview.RoundFrameLayout>
+        <TextView
+            android:id="@+id/txt_course_name"
+            android:padding="5dp"
+            android:text="第一课"
+            android:layout_gravity="left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+</LinearLayout>

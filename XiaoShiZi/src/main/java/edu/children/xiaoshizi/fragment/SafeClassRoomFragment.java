@@ -46,7 +46,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
+import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import zuo.biao.library.base.BaseFragment;
 import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
 
@@ -140,7 +143,7 @@ public class SafeClassRoomFragment extends XszBaseFragment implements OnClickLis
 			@Override
 			public IPagerIndicator getIndicator(Context context) {
 				LinePagerIndicator indicator = new LinePagerIndicator(context);
-				float navigatorHeight = context.getResources().getDimension(R.dimen.common_navigator_height);
+				float navigatorHeight = context.getResources().getDimension(R.dimen.common_navigator_height1);
 				float borderWidth = UIUtil.dip2px(context, 1);
 				float lineHeight = navigatorHeight - 2 * borderWidth;
 				indicator.setLineHeight(lineHeight);

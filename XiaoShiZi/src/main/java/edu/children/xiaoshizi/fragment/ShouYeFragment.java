@@ -44,7 +44,8 @@ import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
 public class ShouYeFragment extends XszBaseFragment implements OnClickListener, OnDialogButtonClickListener {
 	@BindView(R.id.banner)
 	com.youth.banner.Banner banner;
-
+	@BindView(R.id.viewpagertab)
+	SmartTabLayout viewPagerTab;
 	public static ShouYeFragment createInstance() {
 		return new ShouYeFragment();
 	}
@@ -70,7 +71,6 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 				fragmentManager, creator.create());
 		ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 		viewPager.setAdapter(adapter);
-		SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
 		viewPagerTab.setViewPager(viewPager);
 
 		List<Banner> banners=DemoApplication.getInstance().getBanners();

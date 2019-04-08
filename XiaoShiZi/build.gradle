@@ -9,7 +9,7 @@ android {
     }
     defaultConfig {
         applicationId "edu.children.xiaoshizi"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 17
         versionCode 1
         versionName "1.0"
@@ -63,7 +63,7 @@ dependencies {
     implementation 'com.github.Raizlabs.DBFlow:dbflow-core:4.2.4'
     implementation 'com.github.Raizlabs.DBFlow:dbflow:4.2.4'
 
-    compile 'com.github.open-android:FragmentTabhostUtils:0.5.0'
+    implementation 'com.github.open-android:FragmentTabhostUtils:0.5.0'
     compile 'com.github.hackware1993:MagicIndicator:1.5.0'
     implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
@@ -78,6 +78,7 @@ dependencies {
     implementation 'com.just.agentweb:filechooser:4.0.2'// (可选)
     implementation 'com.blankj:utilcode:1.5.1'
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
+    implementation 'com.github.linhaojian:Omnipotent:1.2'
 
     implementation 'com.umeng.umsdk:analytics:8.0.0'
     implementation 'com.umeng.umsdk:common:2.0.0'

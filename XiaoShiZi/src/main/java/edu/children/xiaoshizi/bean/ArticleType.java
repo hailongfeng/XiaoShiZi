@@ -14,6 +14,7 @@ public class ArticleType extends BaseModel {
     private int sortNum;
     private String type;
     private String title;
+    private String bannerImage;
 
     @Override
     protected boolean isCorrect() {
@@ -51,5 +52,13 @@ public class ArticleType extends BaseModel {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getBannerImage() {
+        return bannerImage;
+    }
+
+    public void setBannerImage(String bannerImage) {
+        this.bannerImage = bannerImage;
     }
 }

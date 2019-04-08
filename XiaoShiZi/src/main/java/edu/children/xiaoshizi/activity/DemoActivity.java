@@ -1,56 +1,42 @@
-package edu.children.xiaoshizi.fragment;
+package edu.children.xiaoshizi.activity;
 
-import android.content.Context;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.fragment.DemoFragment;
 import zuo.biao.library.util.Log;
 
-public class SafeLabFragment extends XszBaseFragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
+public class DemoActivity extends XszBaseActivity {
     @BindView(R.id.viewpagertab)
     SmartTabLayout viewPagerTab;
 
     @BindView(R.id.viewpager)
     ViewPager viewPager;
-
-
-    public static SafeLabFragment newInstance(String param1, String param2) {
-        SafeLabFragment fragment = new SafeLabFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
     @Override
-    int getLayoutId() {
-        return R.layout.fragment_safe_lab;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_demo);
     }
 
     @Override
     public void initView() {
-        List<ArticleType> articleTypes= DemoApplication.getInstance().getContentSeLabCategoryResponse().getCategoryResps();
+        List<ArticleType> articleTypes=new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            ArticleType articleType=new ArticleType();
+            articleType.setTitle("tt"+i);
+        }
         FragmentPagerItems.Creator creator1=FragmentPagerItems.with(context);
         Log.d(TAG,"articleTypes size==="+articleTypes.size());
         for (ArticleType articleType:articleTypes){
@@ -60,7 +46,7 @@ public class SafeLabFragment extends XszBaseFragment {
             creator1.add(articleType.getTitle(), DemoFragment.class,bundle);
         }
 
-        FragmentManager fragmentManager=getFragmentManager();
+        FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 fragmentManager, creator1.create());
         viewPager.setAdapter(adapter);

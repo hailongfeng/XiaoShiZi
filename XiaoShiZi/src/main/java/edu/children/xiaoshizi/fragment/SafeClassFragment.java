@@ -47,8 +47,10 @@ import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.ArticleDetailActivity;
 import edu.children.xiaoshizi.adapter.ArticleAdapter;
 import edu.children.xiaoshizi.adapter.ExamplePagerAdapter;
+import edu.children.xiaoshizi.adapter.GradlePagerAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
@@ -58,19 +60,18 @@ import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
 import zuo.biao.library.util.Log;
 
 /**
- * 首页文章界面
+ * 安全课堂，年级列表
  */
 public class SafeClassFragment extends XszBaseFragment implements OnClickListener {
 
-	private static final String[] CHANNELS = new String[]{"CUPCAKE", "DONUT", "ECLAIR", "GINGERBREAD", "HONEYCOMB", "ICE_CREAM_SANDWICH", "JELLY_BEAN", "KITKAT", "LOLLIPOP", "M", "NOUGAT"};
-	private List<String> mDataList = Arrays.asList(CHANNELS);
-	private ExamplePagerAdapter mExamplePagerAdapter = new ExamplePagerAdapter(mDataList);
+	private List<ArticleType> articleTypes ;
+	private GradlePagerAdapter mExamplePagerAdapter ;
 
 	@BindView(R.id.magic_indicator)
 	MagicIndicator magicIndicator;
 	@BindView(R.id.view_pager)
 	ViewPager mViewPager;
-
+	LoadContentCategoryResponse response;
 	public static SafeClassFragment newInstance(String param1, String param2) {
 		SafeClassFragment fragment = new SafeClassFragment();
 		return fragment;
@@ -89,13 +90,15 @@ public class SafeClassFragment extends XszBaseFragment implements OnClickListene
 
 	@Override
 	public void initView() {
-		mViewPager.setAdapter(mExamplePagerAdapter);
-		initMagicIndicator1();
 	}
 
 	@Override
 	public void initData() {
-
+		response=DemoApplication.getInstance().getContentSeClassCategoryResponse();
+		articleTypes=response.getCategoryResps();
+		mExamplePagerAdapter= new GradlePagerAdapter(context,articleTypes);
+		mViewPager.setAdapter(mExamplePagerAdapter);
+		initMagicIndicator1();
 	}
 
 	@Override
@@ -104,8 +107,8 @@ public class SafeClassFragment extends XszBaseFragment implements OnClickListene
 	}
 	private void initMagicIndicator1() {
 		CircleNavigator circleNavigator = new CircleNavigator(context);
-		circleNavigator.setCircleCount(CHANNELS.length);
-		circleNavigator.setCircleColor(Color.RED);
+		circleNavigator.setCircleCount(articleTypes.size());
+		circleNavigator.setCircleColor(getResources().getColor(R.color.colorPrimary));
 		circleNavigator.setCircleClickListener(new CircleNavigator.OnCircleClickListener() {
 			@Override
 			public void onClick(int index) {
