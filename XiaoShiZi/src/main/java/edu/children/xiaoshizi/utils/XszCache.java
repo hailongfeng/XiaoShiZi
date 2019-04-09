@@ -2,19 +2,16 @@ package edu.children.xiaoshizi.utils;
 
 import android.os.Environment;
 import android.os.StatFs;
-import android.text.TextUtils;
+
+import com.blankj.utilcode.util.FileUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import edu.children.xiaoshizi.DemoApplication;
-import zuo.biao.library.util.Log;
 
-public class FileUtil {
-    private static String TAG="FileUtil";
-    private FileUtil() {
+public class XszCache {
+    private static String TAG="XszCache";
+    private XszCache() {
     }
 
     public static File getCacheDir(String dirName) {
@@ -72,6 +69,10 @@ public class FileUtil {
         long fileSize=getFileOrDirSize(getCacheDir(Constant.CACHE_DIR_FILE));
         return imageSize+fileSize;
     }
+    public static void clearCacheSize() {
+        FileUtils.deleteFilesInDir(getCacheDir(Constant.CACHE_DIR_IMAGE));
+        FileUtils.deleteFilesInDir(getCacheDir(Constant.CACHE_DIR_FILE));
+    }
 
     public static long getFileOrDirSize(File file) {
         if (!file.exists()) return 0;
@@ -87,41 +88,4 @@ public class FileUtil {
 
         return length;
     }
-
-    /**
-     * 复制文件到指定文件
-     *
-     * @param fromPath 源文件
-     * @param toPath   复制到的文件
-     * @return true 成功，false 失败
-     */
-    public static boolean copy(String fromPath, String toPath) {
-        boolean result = false;
-        File from = new File(fromPath);
-        if (!from.exists()) {
-            return result;
-        }
-
-        File toFile = new File(toPath);
-        IOUtil.deleteFileOrDir(toFile);
-        File toDir = toFile.getParentFile();
-        if (toDir.exists() || toDir.mkdirs()) {
-            FileInputStream in = null;
-            FileOutputStream out = null;
-            try {
-                in = new FileInputStream(from);
-                out = new FileOutputStream(toFile);
-                IOUtil.copy(in, out);
-                result = true;
-            } catch (Throwable ex) {
-                Log.d(TAG,ex.getMessage(), ex);
-                result = false;
-            } finally {
-                IOUtil.closeQuietly(in);
-                IOUtil.closeQuietly(out);
-            }
-        }
-        return result;
-    }
-
 }

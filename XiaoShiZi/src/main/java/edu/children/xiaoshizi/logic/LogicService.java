@@ -141,6 +141,8 @@ public class LogicService {
             observable=apiService.verifiedSubmit(requestBody);
         }else if (method==APIMethod.studentBinding){
             observable=apiService.studentBinding(requestBody);
+        }else if (method==APIMethod.studentUnBinding){
+            observable=apiService.studentUnBinding(requestBody);
         }else if (method==APIMethod.getMyProfile){
             observable=apiService.getMyProfile(requestBody);
         }else if (method==APIMethod.saveMyProfile){
@@ -149,8 +151,9 @@ public class LogicService {
             observable=apiService.loadContentByCategory(requestBody);
         }else if (method==APIMethod.loadContentById){
             observable=apiService.loadContentById(requestBody);
-        }
-        else if (method==APIMethod.loadSeLabContentCategory){
+        }else if (method==APIMethod.searchContentByTitle){
+            observable=apiService.searchContentByTitle(requestBody);
+        }else if (method==APIMethod.loadSeLabContentCategory){
             observable=apiService.loadSeLabContentCategory(requestBody);
         }else if (method==APIMethod.loadSafeLabContentByCategory){
             observable=apiService.loadSafeLabContentByCategory(requestBody);

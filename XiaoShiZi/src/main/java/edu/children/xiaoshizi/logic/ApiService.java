@@ -52,6 +52,8 @@ public interface ApiService {
 
     @POST("v1/student/studentBinding")
     Observable<Response<LoginRespon>> studentBinding(@Body RequestBody requestBody);
+    @POST("v1/student/studentUnBinding")
+    Observable<Response<List<Student>>> studentUnBinding(@Body RequestBody requestBody);
 
     @POST("v1/sysUser/getStudentsAndParents")
     Observable<Response<LoginRespon>> getStudentsAndParents(@Body RequestBody requestBody);
@@ -80,6 +82,9 @@ public interface ApiService {
     Observable<Response<List<Article>>> loadContentByCategory(@Body RequestBody requestBody);
     @POST("v1/index/loadContentById")
     Observable<Response<Article>> loadContentById(@Body RequestBody requestBody);
+    @POST("v1/index/searchContentByTitle")
+    Observable<Response<List<Article>>> searchContentByTitle(@Body RequestBody requestBody);
+
 
 
     //安全实验室

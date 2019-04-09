@@ -35,7 +35,7 @@ import zuo.biao.library.ui.EditTextInfoActivity;
 import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.TimeUtil;
 
-public class BindingStudentActivity extends XszBaseActivity  implements View.OnClickListener, ItemDialog.OnDialogItemClickListener {
+public class BindingStudentActivity extends XszBaseActivity  implements ItemDialog.OnDialogItemClickListener {
     private static final int REQUEST_TO_DATE_PICKER = 1;
     @BindView(R.id.edt_student_name)
     EditText edt_student_name;

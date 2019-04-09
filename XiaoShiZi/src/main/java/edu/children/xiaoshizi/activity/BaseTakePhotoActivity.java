@@ -18,9 +18,7 @@ import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 
 import java.io.File;
 
-import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.utils.Constant;
-import edu.children.xiaoshizi.utils.FileUtil;
 import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
 

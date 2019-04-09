@@ -15,14 +15,12 @@ limitations under the License.*/
 package edu.children.xiaoshizi.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,13 +30,12 @@ import com.flyco.roundview.RoundTextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
+import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.BindingStudentActivity;
-import edu.children.xiaoshizi.activity.ChangeUserInfoActivity;
 import edu.children.xiaoshizi.activity.ParentInfoActivity;
 import edu.children.xiaoshizi.activity.RealNameAuthActivity;
 import edu.children.xiaoshizi.activity.UserInfoActivity;
@@ -47,9 +44,13 @@ import edu.children.xiaoshizi.adapter.StudentAdapter;
 import edu.children.xiaoshizi.bean.Parent;
 import edu.children.xiaoshizi.bean.Student;
 import edu.children.xiaoshizi.bean.User;
-import edu.children.xiaoshizi.utils.FileUtil;
+import edu.children.xiaoshizi.logic.APIMethod;
+import edu.children.xiaoshizi.logic.LogicService;
+import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
+import edu.children.xiaoshizi.net.rxjava.NetErrorException;
+import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.StringUtils;
-import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
+import zuo.biao.library.base.BaseView;
 import zuo.biao.library.util.Log;
 
 /**设置fragment
@@ -72,13 +73,13 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 
 	@BindView(R.id.rvBaseRecycler)
 	RecyclerView rvStudentsRecycler;
+	private StudentAdapter studentAdapter;
 
 	@BindView(R.id.cv_no_students)
 	CardView cv_no_students;
 	@BindView(R.id.btn_no_student_bind)
 	RoundTextView btn_no_student_bind;
 
-	private StudentAdapter studentAdapter;
 	@BindView(R.id.rvCustodyRecycler)
 	RecyclerView rvParentRecycler;;
 	private ParentAdapter parentAdapter;
@@ -115,7 +116,13 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		rvStudentsRecycler.setLayoutManager(new LinearLayoutManager(context));
 		studentAdapter = new StudentAdapter(context);
 		rvStudentsRecycler.setAdapter(studentAdapter);
-
+		studentAdapter.setOnViewClickListener(new BaseView.OnViewClickListener() {
+			@Override
+			public void onViewClick(@NonNull BaseView bv, @NonNull View v) {
+				Student student=(Student)bv.data;
+				studentUnBinding(student.getStudentId());
+			}
+		});
         //设置布局管理器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -132,18 +139,35 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
         rvParentRecycler.setAdapter(parentAdapter);
 
 	}
-	//UI显示区(操作UI，但不存在数据获取或处理代码，也不存在事件监听代码)>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+	private void studentUnBinding(String studentId){
+		showLoading("正在解绑");
+		TreeMap sm = new TreeMap<String,String>();
+		sm.put("studentId",studentId);
+		LogicService.post(context, APIMethod.studentUnBinding,sm, new ApiSubscriber<Response<List<Student>>>() {
+			@Override
+			public void onSuccess(Response<List<Student>> respon) {
+				hideLoading();
+				List<Student> list= respon.getResult();
+				DemoApplication.getInstance().getLoginRespon().setStudents(list);
+				if (list.size()==0){
+					btn_add_student.setVisibility(View.GONE);
+					rvStudentsRecycler.setVisibility(View.GONE);
+					cv_no_students.setVisibility(View.VISIBLE);
+				}else {
+					cv_no_students.setVisibility(View.GONE);
+					studentAdapter.refresh(list);
+				}
+			}
 
-
-
-
-
-
-
-
-
-	//Data数据区(存在数据获取或处理代码，但不存在事件监听代码)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+			@Override
+			protected void onFail(NetErrorException error) {
+				hideLoading();
+				showShortToast(error.getMessage());
+				error.printStackTrace();
+			}
+		});
+	}
 
 	@Override
 	public void initData() {//必须调用
@@ -200,6 +224,10 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 //				showShortToast("设置");
 				toActivity(new Intent(context, UserInfoActivity.class));
 				break;
+			case R.id.ll_my_shezhi:
+//				showShortToast("设置");
+				toActivity(new Intent(context, UserInfoActivity.class));
+				break;
 			case R.id.btn_no_student_bind:
 			case R.id.btn_add_student:
 				User user=DemoApplication.getInstance().getUser();
@@ -214,29 +242,5 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		}
 	}
 
-
-
-
-	//生命周期、onActivityResult<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-
-	//生命周期、onActivityResult>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-	//Event事件区(只要存在事件监听代码就是)>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
-
-
-
-
-	//内部类,尽量少用<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-
-	//内部类,尽量少用>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 }

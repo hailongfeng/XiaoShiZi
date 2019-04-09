@@ -75,7 +75,6 @@ public class UserView extends BaseView<User> implements OnClickListener {
 		tvUserViewName = findView(R.id.tvUserViewName);
 		tvUserViewId = findView(R.id.tvUserViewId);
 		tvUserViewNumber = findView(R.id.tvUserViewNumber);
-
 		return super.createView();
 	}
 

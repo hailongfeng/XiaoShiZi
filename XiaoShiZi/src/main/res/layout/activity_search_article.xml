@@ -5,6 +5,7 @@
     android:background="@color/white"
     >
     <LinearLayout
+        android:id="@+id/ll_top"
         android:background="@color/gray_slight"
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -12,7 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:layout_height="wrap_content">
             <com.flyco.roundview.RoundLinearLayout
                 android:id="@+id/rll_search"
@@ -29,43 +30,39 @@
                     android:src="@drawable/icon_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-                <TextView
+                <EditText
+                    android:id="@+id/edit_query"
                     android:layout_marginLeft="5dp"
-                    android:text="放大镜"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:hint="请输入关键字"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:imeOptions="actionSearch"
+                    android:background="@drawable/null_drawable"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" />
             </com.flyco.roundview.RoundLinearLayout>
-            <TextView
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/txt_cancle"
                 android:text="取消"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:padding="5dp"
+                android:layout_gravity="center_vertical"
                 android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        style="@style/ll_vertical_match_wrap"
-        >
-        <RelativeLayout
-            android:padding="10dp"
+        <com.walle.multistatuslayout.MultiStatusLayout
+            android:id="@+id/multiStatusLayout"
+            app:emptyLayout="@layout/layout_empty"
+            app:netErrorLayout="@layout/layout_empty"
+            app:errorLayout="@layout/layout_empty"
+            app:loadLayout="@layout/layout_empty"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="历史记录"
-                android:layout_alignParentLeft="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:layout_alignParentRight="true"
-                android:id="@+id/iv_delete_all"
-                android:src="@drawable/icon_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <ListView
-            android:id="@id/lvBaseList"
-            style="@style/lv"
-            />
-    </LinearLayout>
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@id/rvBaseRecycler"
+                style="@style/lv" />
+        </com.walle.multistatuslayout.MultiStatusLayout>
 </LinearLayout>

@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
 import zuo.biao.library.base.BaseActivity;
 
-public abstract class XszBaseActivity extends BaseActivity {
+public abstract class XszBaseActivity extends BaseActivity implements View.OnClickListener {
 
   protected static   RequestOptions glideOptions = new RequestOptions()
             .placeholder(R.drawable.student_face_default)//图片加载出来前，显示的图片
@@ -69,5 +69,10 @@ public abstract class XszBaseActivity extends BaseActivity {
                 .load(url)
                 .apply(glideOptions)
                 .into(imageView);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

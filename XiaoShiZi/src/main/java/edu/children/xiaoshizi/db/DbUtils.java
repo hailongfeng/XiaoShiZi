@@ -1,6 +1,7 @@
 package edu.children.xiaoshizi.db;
 
 import com.raizlabs.android.dbflow.sql.language.Delete;
+import com.raizlabs.android.dbflow.sql.language.SQLOperator;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
@@ -28,6 +29,12 @@ public class DbUtils {
     public static List<SearchWorldHistory> getNewHistoryWord(int num){
         return SQLite.select().from(SearchWorldHistory.class)
                 .where()
+                .queryList();
+    }
+
+    public static  <T extends BaseModel>  List<T> getModelList(Class<T> clazz, SQLOperator... where){
+        return SQLite.select().from(clazz)
+                .where(where)
                 .queryList();
     }
 
