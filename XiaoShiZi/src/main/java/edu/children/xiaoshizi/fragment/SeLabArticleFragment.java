@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 
+import com.walle.multistatuslayout.MultiStatusLayout;
+
 import java.util.List;
 import java.util.TreeMap;
 
@@ -49,12 +51,15 @@ public class SeLabArticleFragment extends XszBaseFragment implements OnClickList
 
     @BindView(R.id.rvBaseRecycler)
     RecyclerView rvBaseRecycler;
+    @BindView(R.id.multiStatusLayout)
+	MultiStatusLayout multiStatusLayout;
+
     private ArticleAdapter articleAdapter;
 	private ArticleType articleType;
     private List<Article> articles;
 	@Override
 	int getLayoutId() {
-		return R.layout.huangjinwu_fragment;
+		return R.layout.fragment_article_layout;
 	}
 
 	@Override
@@ -65,7 +70,7 @@ public class SeLabArticleFragment extends XszBaseFragment implements OnClickList
         DividerItemDecoration divider = new DividerItemDecoration(context,DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(context,R.drawable.list_view_divider));
         rvBaseRecycler.addItemDecoration(divider);
-        articleAdapter = new ArticleAdapter(context);
+        articleAdapter = new ArticleAdapter(context,ArticleAdapter.Type_Lab_Article);
 		rvBaseRecycler.setAdapter(articleAdapter);
 		articleAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -85,11 +90,15 @@ public class SeLabArticleFragment extends XszBaseFragment implements OnClickList
 		if (articleType.equals(firstArticleType)){
             articles =DemoApplication.getInstance().getContentCategoryResponse().getContentResps();
 			articleAdapter.refresh(articles);
+			if (articles.size()!=0){
+				multiStatusLayout.showContent();
+			}else {
+				multiStatusLayout.showEmpty();
+			}
 			Log.d(TAG,"111articles size = "+articles.size());
 		}else {
 			getArticleContentById(articleType.getCategoryId()+"");
 		}
-
 	}
 
 	void getArticleContentById(String categoryId){
@@ -101,6 +110,11 @@ public class SeLabArticleFragment extends XszBaseFragment implements OnClickList
                 articles=response.getResult();
                 Log.d(TAG,"222articles size = "+articles.size());
 				articleAdapter.refresh(articles);
+				if (articles.size()!=0){
+					multiStatusLayout.showContent();
+				}else {
+					multiStatusLayout.showEmpty();
+				}
 			}
 
 			@Override

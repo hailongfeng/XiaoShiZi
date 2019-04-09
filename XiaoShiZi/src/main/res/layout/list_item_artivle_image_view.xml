@@ -20,30 +20,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:padding="5dp"
-            android:id="@+id/txt_article_pinglun"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+        <LinearLayout
+            android:id="@+id/ll_article_pl_and_fx"
             android:layout_alignParentBottom="true"
-            android:drawablePadding="5dp"
-            android:textSize="14sp"
-            android:drawableLeft="@drawable/icon_sex_man"
-            android:text="22" />
-        <TextView
-            android:padding="5dp"
-            android:id="@+id/txt_article_fenxiang"
-            android:layout_toRightOf="@+id/txt_article_pinglun"
-            android:layout_marginLeft="40dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:drawablePadding="5dp"
-            android:textSize="14sp"
-            android:drawableLeft="@drawable/icon_sex_man"
-            android:text="39" />
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/txt_article_pinglun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:textSize="14sp"
+                android:drawableLeft="@drawable/icon_sex_man"
+                android:text="22" />
+            <TextView
+                android:padding="5dp"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/txt_article_fenxiang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:textSize="14sp"
+                android:drawableLeft="@drawable/icon_sex_man"
+                android:text="39" />
+        </LinearLayout>
+
     </RelativeLayout>
     <com.flyco.roundview.RoundFrameLayout
         android:layout_width="150dp"

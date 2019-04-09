@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/activity_page">
+        <com.walle.multistatuslayout.MultiStatusLayout
+            android:id="@+id/multiStatusLayout"
+            app:emptyLayout="@layout/layout_empty"
+            app:netErrorLayout="@layout/layout_empty"
+            app:errorLayout="@layout/layout_empty"
+            app:loadLayout="@layout/layout_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@id/rvBaseRecycler"
+                    style="@style/lv" />
+        </com.walle.multistatuslayout.MultiStatusLayout>
+</LinearLayout>

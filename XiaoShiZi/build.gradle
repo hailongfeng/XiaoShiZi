@@ -80,6 +80,7 @@ dependencies {
     implementation 'com.blankj:utilcode:1.5.1'
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
     implementation 'com.github.linhaojian:Omnipotent:1.2'
+    implementation 'com.github.Walll-E:MultiStatusLayout:v1.0'
 
     implementation 'com.umeng.umsdk:analytics:8.0.0'
     implementation 'com.umeng.umsdk:common:2.0.0'

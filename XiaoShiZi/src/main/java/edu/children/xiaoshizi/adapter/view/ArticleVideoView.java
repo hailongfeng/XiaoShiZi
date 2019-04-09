@@ -50,8 +50,8 @@ public class ArticleVideoView extends ArticleView implements OnClickListener {
 	public TextView txt_video_time;
 
 
-	public ArticleVideoView(Activity context, ViewGroup parent) {
-		super(context, R.layout.list_item_artivle_video_view, parent);
+	public ArticleVideoView(Activity context, ViewGroup parent,int type) {
+		super(context, R.layout.list_item_artivle_video_view, parent,type);
 	}
 
 

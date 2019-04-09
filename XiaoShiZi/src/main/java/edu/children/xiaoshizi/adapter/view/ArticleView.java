@@ -51,7 +51,10 @@ import zuo.biao.library.util.StringUtil;
  * <br> userView.setOnClickListener(onClickListener);//非必需
  */
 public abstract class ArticleView extends XszBaseView<Article> implements OnClickListener {
-	public ArticleView(Activity context, int layoutResId, ViewGroup parent) {
+	protected int type;
+
+	public ArticleView(Activity context, int layoutResId, ViewGroup parent,int type) {
 		super(context, layoutResId, parent);
+		this.type=type;
 	}
 }

@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 
+import com.walle.multistatuslayout.MultiStatusLayout;
+
 import java.util.List;
 import java.util.TreeMap;
 
@@ -52,9 +54,11 @@ public class ArticleFragment extends XszBaseFragment implements OnClickListener,
     private ArticleAdapter articleAdapter;
 	private ArticleType articleType;
     private List<Article> articles;
+	@BindView(R.id.multiStatusLayout)
+	MultiStatusLayout multiStatusLayout;
 	@Override
 	int getLayoutId() {
-		return R.layout.huangjinwu_fragment;
+		return R.layout.fragment_article_layout;
 	}
 
 
@@ -66,7 +70,7 @@ public class ArticleFragment extends XszBaseFragment implements OnClickListener,
         DividerItemDecoration divider = new DividerItemDecoration(context,DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(context,R.drawable.list_view_divider));
         rvBaseRecycler.addItemDecoration(divider);
-        articleAdapter = new ArticleAdapter(context);
+        articleAdapter = new ArticleAdapter(context,ArticleAdapter.Type_Shoye_Article);
 		rvBaseRecycler.setAdapter(articleAdapter);
 		articleAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -86,6 +90,11 @@ public class ArticleFragment extends XszBaseFragment implements OnClickListener,
 		if (articleType.equals(firstArticleType)){
             articles =DemoApplication.getInstance().getContentCategoryResponse().getContentResps();
 			articleAdapter.refresh(articles);
+			if (articles.size()!=0){
+				multiStatusLayout.showContent();
+			}else {
+				multiStatusLayout.showEmpty();
+			}
 		}else {
 			getArticleContentById(articleType.getCategoryId()+"");
 		}
@@ -100,6 +109,11 @@ public class ArticleFragment extends XszBaseFragment implements OnClickListener,
 			public void onSuccess(Response<List<Article>> response) {
                 articles=response.getResult();
 				articleAdapter.refresh(articles);
+				if (articles.size()!=0){
+					multiStatusLayout.showContent();
+				}else {
+					multiStatusLayout.showEmpty();
+				}
 			}
 
 			@Override

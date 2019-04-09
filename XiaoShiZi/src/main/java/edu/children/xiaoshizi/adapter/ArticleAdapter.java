@@ -28,8 +28,14 @@ import zuo.biao.library.base.BaseAdapter;
  */
 public class ArticleAdapter extends BaseAdapter<Article, ArticleView> {
 
-	public ArticleAdapter(Activity context) {
+	private int type;
+	public static final int Type_Shoye_Article=1;
+	public static final int Type_Class_Article=2;
+	public static final int Type_Lab_Article=3;
+
+	public ArticleAdapter(Activity context,int type) {
 		super(context);
+		this.type=type;
 	}
 
 	@Override
@@ -51,9 +57,9 @@ public class ArticleAdapter extends BaseAdapter<Article, ArticleView> {
 	@Override
 	public ArticleView createView(int viewType, ViewGroup parent) {
 		if (viewType==1){
-			return new ArticleImageView(context, parent);
+			return new ArticleImageView(context, parent,this.type);
 		}else {
-			return new ArticleVideoView(context, parent);
+			return new ArticleVideoView(context, parent,this.type);
 		}
 	}
 
@@ -61,6 +67,5 @@ public class ArticleAdapter extends BaseAdapter<Article, ArticleView> {
 	public long getItemId(int position) {
 		return getItem(position).getId();
 	}
-
 
 }

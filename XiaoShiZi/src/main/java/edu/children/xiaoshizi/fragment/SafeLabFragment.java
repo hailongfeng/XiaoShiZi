@@ -51,18 +51,18 @@ public class SafeLabFragment extends XszBaseFragment {
     @Override
     public void initView() {
         List<ArticleType> articleTypes= DemoApplication.getInstance().getContentSeLabCategoryResponse().getCategoryResps();
-        FragmentPagerItems.Creator creator1=FragmentPagerItems.with(context);
+        FragmentPagerItems.Creator creator=FragmentPagerItems.with(context);
         Log.d(TAG,"articleTypes size==="+articleTypes.size());
         for (ArticleType articleType:articleTypes){
             Bundle bundle=new Bundle();
             bundle.putSerializable("articleType",articleType);
-            bundle.putSerializable(DemoFragment.ARG_TITLE,articleType.getTitle());
-            creator1.add(articleType.getTitle(), DemoFragment.class,bundle);
+//            bundle.putString(DemoFragment.ARG_TITLE,articleType.getTitle());
+            creator.add(articleType.getTitle(), SeLabArticleFragment.class,bundle);
         }
 
-        FragmentManager fragmentManager=getFragmentManager();
+        FragmentManager fragmentManager=getChildFragmentManager();
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
-                fragmentManager, creator1.create());
+                fragmentManager, creator.create());
         viewPager.setAdapter(adapter);
         viewPagerTab.setViewPager(viewPager);
     }

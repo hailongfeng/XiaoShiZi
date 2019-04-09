@@ -20,9 +20,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.adapter.ArticleAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import zuo.biao.library.base.BaseModel;
 
@@ -47,18 +49,19 @@ public class ArticleImageView extends ArticleView implements OnClickListener {
 
 	public ImageView iv_article_pic;
 	public TextView txt_article_title;
+	public LinearLayout ll_article_pl_and_fx;
 	public TextView txt_article_pinglun;
 	public TextView txt_article_fenxiang;
 
-	public ArticleImageView(Activity context, ViewGroup parent) {
-		super(context, R.layout.list_item_artivle_image_view, parent);
+	public ArticleImageView(Activity context, ViewGroup parent,int type) {
+		super(context, R.layout.list_item_artivle_image_view, parent,type);
 	}
 
 	@SuppressLint("InflateParams")
 	@Override
 	public View createView() {
-
 		iv_article_pic = findView(R.id.iv_article_pic);
+		ll_article_pl_and_fx = findView(R.id.ll_article_pl_and_fx);
 		txt_article_title = findView(R.id.txt_article_title);
 		txt_article_pinglun = findView(R.id.txt_article_pinglun);
 		txt_article_fenxiang = findView(R.id.txt_article_fenxiang);
@@ -68,9 +71,14 @@ public class ArticleImageView extends ArticleView implements OnClickListener {
 	@Override
 	public void bindView(Article data_){
 		super.bindView(data_ != null ? data_ : new Article());
-
 		loadImage(this.data.getActivityVideoImageUrl(),iv_article_pic);
 		txt_article_title.setText(this.data.getTitle());
+		if (this.type== ArticleAdapter.Type_Lab_Article){
+			ll_article_pl_and_fx.setVisibility(View.GONE);
+		}else {
+			ll_article_pl_and_fx.setVisibility(View.VISIBLE);
+		}
+
 	}
 
 
