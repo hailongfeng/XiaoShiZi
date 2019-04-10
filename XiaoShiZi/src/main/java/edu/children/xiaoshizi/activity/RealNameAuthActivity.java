@@ -1,9 +1,8 @@
 package edu.children.xiaoshizi.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.flyco.roundview.RoundTextView;
-import com.jph.takephoto.model.TResult;
+import com.zhaoshuang.weixinrecorded.RecordedActivity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,10 +19,8 @@ import java.util.List;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.RealNameAuthInfo;
-import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
@@ -32,7 +29,7 @@ import edu.children.xiaoshizi.net.rxjava.Response;
 import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
 
-public class RealNameAuthActivity extends BaseTakePhotoActivity  implements View.OnClickListener, ItemDialog.OnDialogItemClickListener {
+public class RealNameAuthActivity extends XszBaseActivity  implements View.OnClickListener, ItemDialog.OnDialogItemClickListener {
 
 
     @BindView(R.id.edt_user_name)
@@ -43,14 +40,10 @@ public class RealNameAuthActivity extends BaseTakePhotoActivity  implements View
     EditText edt_user_credentials_num;
 
 
-    @BindView(R.id.iv_credentials_zhengmian)
-    ImageView iv_credentials_zhengmian;
-    @BindView(R.id.iv_credentials_fanmian)
-    ImageView iv_credentials_fanmian;
+    @BindView(R.id.iv_credentials_video_pic)
+    ImageView iv_credentials_video_pic;
     @BindView(R.id.rtv_credentials_zhengmian)
     RoundTextView rtv_credentials_zhengmian;
-    @BindView(R.id.rtv_credentials_fanmian)
-    RoundTextView rtv_credentials_fanmian;
 
 
 
@@ -76,7 +69,6 @@ public class RealNameAuthActivity extends BaseTakePhotoActivity  implements View
         findView(R.id.ll_user_credentials_type,this);
 //        findView(R.id.ll_user_credentials_num,this);
         findView(R.id.btn_user_add_credentials_zhengmian,this);
-        findView(R.id.btn_user_add_credentials_fanmian,this);
         findView(R.id.btn_user_bind,this);
     }
     private static String[] TOPBAR_SCHOOL_NAMES={"身份证","护照"} ;
@@ -84,8 +76,8 @@ public class RealNameAuthActivity extends BaseTakePhotoActivity  implements View
     private static int currentCredentialsType = 1;
     private static int currentPic = 1;
 
-    private String pic_zhengmian_url="";
-    private String pic_fanmian_url="";
+    private String video_url ="";
+    private String video_pic_url ="";
 
     @Override
     public void onClick(View v) {
@@ -96,12 +88,8 @@ public class RealNameAuthActivity extends BaseTakePhotoActivity  implements View
             case R.id.btn_user_add_credentials_zhengmian:
                 //正面照
                 currentPic=1;
-                takePicture();
-                break;
-            case R.id.btn_user_add_credentials_fanmian:
-                //反面照
-                currentPic=2;
-                takePicture();
+                Intent intent = new Intent(this, RecordedActivity.class);
+                startActivityForResult(intent, 0);
                 break;
             case R.id.btn_user_bind:
                 authInfo();
@@ -113,10 +101,10 @@ public class RealNameAuthActivity extends BaseTakePhotoActivity  implements View
         sm.put("userName",edt_user_name.getText().toString());
         sm.put("cardType",currentCredentialsType);
         sm.put("cardNum",edt_user_credentials_num.getText().toString());
-        sm.put("cardProsImagesUrl",pic_zhengmian_url);
-        sm.put("cardConsImagesUrl",pic_fanmian_url);
-        sm.put("verifiedVideoUrl","");
-        sm.put("verifiedVideoPosterUrl","");
+        sm.put("cardProsImagesUrl", "");
+        sm.put("cardConsImagesUrl", "");
+        sm.put("verifiedVideoUrl",video_url);
+        sm.put("verifiedVideoPosterUrl",video_pic_url);
         LogicService.post(context, APIMethod.verifiedSubmit, sm, new ApiSubscriber<Response<RealNameAuthInfo>>() {
             @Override
             protected void onSuccess(Response<RealNameAuthInfo> Response) {
@@ -132,45 +120,51 @@ public class RealNameAuthActivity extends BaseTakePhotoActivity  implements View
             }
         });
     }
-    @Override
-    public void takeSuccess(TResult result) {
-        super.takeSuccess(result);
-        if(test.exists()){
-            TreeMap sm = new TreeMap<String,String>();
-            sm.put("width","150");
-            sm.put("height","100");
-            List<File> files =new ArrayList<>();
-            files.add(test);
-            LogicService.uploadPic(context,sm,files, new ApiSubscriber<Response<JSONArray>>() {
-                @Override
-                public void onSuccess(Response<JSONArray> respon) {
-                    JSONArray jsonArray=respon.getResult();
-                    JSONObject jsonObject=jsonArray.getJSONObject(0);
-                    Log.d(TAG,jsonObject.getString("objectUrl"));
-                    Log.d(TAG,jsonObject.getString("objectUrlWithStyle"));
-                    Log.d(TAG,jsonObject.getString("fileName"));
-                    if (currentPic==1){
-                        pic_zhengmian_url=jsonObject.getString("objectUrlWithStyle");
-                        loadImage(pic_zhengmian_url,iv_credentials_zhengmian);
-                        rtv_credentials_zhengmian.setVisibility(View.GONE);
-                        iv_credentials_zhengmian.setVisibility(View.VISIBLE);
-                    }else {
-                        pic_fanmian_url=jsonObject.getString("objectUrlWithStyle");
-                        loadImage(pic_fanmian_url,iv_credentials_fanmian);
-                        rtv_credentials_fanmian.setVisibility(View.GONE);
-                        iv_credentials_fanmian.setVisibility(View.VISIBLE);
-                    }
-                }
 
-                @Override
-                protected void onFail(NetErrorException error) {
-                    error.printStackTrace();
-                    showShortToast(error.getMessage());
-                }
-            });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK) {
+            String imagePath = data.getStringExtra("imagePath");
+            String videoPath = data.getStringExtra("videoPath");
+            if(!TextUtils.isEmpty(videoPath)){
+                File file= new File(videoPath);
+                Log.d(TAG,file.getAbsolutePath());
+                TreeMap sm = new TreeMap<String,String>();
+                sm.put("width","150");
+                sm.put("height","100");
+                sm.put("fileName",file.getName());
+                List<File> files =new ArrayList<>();
+                files.add(file);
+                showLoading("正在上传视频");
+                LogicService.uploadVerifiedVideo(context,sm,files, new ApiSubscriber<Response<JSONArray>>() {
+                    @Override
+                    public void onSuccess(Response<JSONArray> respon) {
+                        hideLoading();
+                        JSONArray jsonArray=respon.getResult();
+                        JSONObject jsonObject=jsonArray.getJSONObject(0);
+                        Log.d(TAG,jsonObject.getString("objectUrl"));
+                        Log.d(TAG,jsonObject.getString("verifiedVideoUrl"));
+                        Log.d(TAG,jsonObject.getString("verifiedVideoPosterUrl"));
+                        Log.d(TAG,jsonObject.getString("fileName"));
+                        video_url =jsonObject.getString("verifiedVideoUrl");
+                        video_pic_url =jsonObject.getString("verifiedVideoPosterUrl");
+                        loadImage(video_url,iv_credentials_video_pic);
+                    }
+
+                    @Override
+                    protected void onFail(NetErrorException error) {
+                        hideLoading();
+                        error.printStackTrace();
+                        showShortToast(error.getMessage());
+                    }
+                });
+            }else {
+                showShortToast("录制失败，请重新录制");
+            }
         }
     }
-
 
     @Override
     public void onDialogItemClick(int requestCode, int position, String item) {

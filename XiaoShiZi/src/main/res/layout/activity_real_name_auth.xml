@@ -88,7 +88,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="证件照片" />
+                    android:text="认证视频" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -96,13 +96,6 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:text="拍照/上传您的二代身份证" />
-
                     <com.flyco.roundview.RoundLinearLayout
                         android:id="@+id/btn_user_add_credentials_zhengmian"
                         android:layout_width="150dp"
@@ -112,7 +105,7 @@
                         app:rv_backgroundColor="@color/gray_slight"
                         app:rv_cornerRadius="10dp">
                         <ImageView
-                            android:id="@+id/iv_credentials_zhengmian"
+                            android:id="@+id/iv_credentials_video_pic"
                             android:scaleType="fitXY"
                             android:visibility="gone"
                             android:src="@drawable/student_face_default"
@@ -123,35 +116,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawableTop="@drawable/icon_add"
-                            android:text="反面"
+                            android:text="点击录制"
                             android:textColor="@color/black_slight" />
                     </com.flyco.roundview.RoundLinearLayout>
-
-                    <com.flyco.roundview.RoundLinearLayout
-                        android:id="@+id/btn_user_add_credentials_fanmian"
-                        android:layout_width="150dp"
-                        android:layout_height="100dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        app:rv_backgroundColor="@color/gray_slight"
-                        app:rv_cornerRadius="10dp">
-                        <ImageView
-                            android:id="@+id/iv_credentials_fanmian"
-                            android:scaleType="fitXY"
-                            android:visibility="gone"
-                            android:src="@drawable/student_face_default"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-                        <com.flyco.roundview.RoundTextView
-                            android:id="@+id/rtv_credentials_fanmian"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableTop="@drawable/icon_add"
-                            android:text="反面"
-                            android:textColor="@color/black_slight" />
-                    </com.flyco.roundview.RoundLinearLayout>
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -81,6 +81,26 @@ public class LogicService {
         RetrofitClient.execute(apiService.uploadFile(params,parts),subscriber);
     }
 
+    public static void uploadVerifiedVideo(Context context, TreeMap<String,String> param, List<File> files,  Observer subscriber) {
+        SortedMap<String,String> sm = param;
+        appendCommonParam(sm,true);
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);//表单类型
+        for (File file:files){
+//            RequestBody body=RequestBody.create(MediaType.parse("multipart/form-data"),file);
+            RequestBody body=RequestBody.create(MediaType.parse("video/mp4"),file);
+            builder.addFormDataPart("video_file",file.getName(),body);
+        }
+        Set<String>  keys=sm.keySet();
+        Map<String, RequestBody> params=new HashMap<>();
+        for (String key:keys){
+            params.put(key,convertToRequestBody(sm.get(key)));
+        }
+
+        List<MultipartBody.Part> parts=builder.build().parts();
+        ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
+        RetrofitClient.execute(apiService.uploadVerifiedVideo(params,parts),subscriber);
+    }
     public static Response post(Context context, final APIMethod method, TreeMap<String,String> param) throws IOException {
         if (param==null){
             param=new TreeMap<String,String>();

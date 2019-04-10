@@ -73,8 +73,9 @@ public class RetrofitClient {
 
 
             mOkHttpClient = new OkHttpClient.Builder()
-                    .connectTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(10, TimeUnit.SECONDS)
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
                     .addInterceptor(httpLoggingInterceptor)  //日志
                     .addInterceptor(addQueryParameterInterceptor)  //公共参数的封装
                     .cookieJar(new CookieJarImpl(mContext)) //cookie 保存方案

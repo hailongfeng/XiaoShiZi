@@ -38,6 +38,7 @@ import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.BindingStudentActivity;
 import edu.children.xiaoshizi.activity.ParentInfoActivity;
 import edu.children.xiaoshizi.activity.RealNameAuthActivity;
+import edu.children.xiaoshizi.activity.SettingActivity;
 import edu.children.xiaoshizi.activity.UserInfoActivity;
 import edu.children.xiaoshizi.adapter.ParentAdapter;
 import edu.children.xiaoshizi.adapter.StudentAdapter;
@@ -50,6 +51,7 @@ import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.StringUtils;
+import edu.children.xiaoshizi.utils.XszCache;
 import zuo.biao.library.base.BaseView;
 import zuo.biao.library.util.Log;
 
@@ -194,7 +196,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 
 		List<Parent> list1= DemoApplication.getInstance().getLoginRespon().getParents();
 		parentAdapter.refresh(list1);
-		long size=FileUtil.getCacheSize();
+		long size= XszCache.getCacheSize();
 		Log.d(TAG,"cache size="+size);
 	}
 
@@ -226,16 +228,17 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 				break;
 			case R.id.ll_my_shezhi:
 //				showShortToast("设置");
-				toActivity(new Intent(context, UserInfoActivity.class));
+				toActivity(new Intent(context, SettingActivity.class));
 				break;
 			case R.id.btn_no_student_bind:
 			case R.id.btn_add_student:
 				User user=DemoApplication.getInstance().getUser();
-				if (user.getVerifiedStatus().equals("0")){
-					toActivity(new Intent(context, RealNameAuthActivity.class));
-				}else {
-					toActivity(new Intent(context, BindingStudentActivity.class));
-				}
+				toActivity(new Intent(context, RealNameAuthActivity.class));
+//				if (user.getVerifiedStatus().equals("0")){
+//					toActivity(new Intent(context, RealNameAuthActivity.class));
+//				}else {
+//					toActivity(new Intent(context, BindingStudentActivity.class));
+//				}
 				break;
 			default:
 				break;

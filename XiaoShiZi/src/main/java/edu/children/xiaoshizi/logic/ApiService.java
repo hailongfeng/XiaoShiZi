@@ -40,6 +40,9 @@ public interface ApiService {
     @Multipart
     @POST("v1/upload/uploadPic")
     Observable<Response<JSONArray>> uploadFile(@PartMap Map<String, RequestBody> params, @Part List<MultipartBody.Part> parts);
+    @Multipart
+    @POST("v1/upload/uploadVerifiedVideo")
+    Observable<Response<JSONArray>> uploadVerifiedVideo(@PartMap Map<String, RequestBody> params, @Part List<MultipartBody.Part> parts);
 
     @POST("v1/sendSms")
     Observable<Response> getVerifyCode(@Body RequestBody requestBody);
