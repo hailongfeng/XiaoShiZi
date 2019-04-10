@@ -15,7 +15,7 @@
         <TextView
             style="@style/topbar_title"
             android:layout_centerHorizontal="true"
-            android:text="第一联系人/本人" />
+            android:text="标题" />
     </RelativeLayout>
     <LinearLayout
         android:layout_weight="1"

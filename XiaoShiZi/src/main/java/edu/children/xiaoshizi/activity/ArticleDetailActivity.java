@@ -16,6 +16,7 @@ import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
+import zuo.biao.library.util.StringUtil;
 
 public class ArticleDetailActivity extends XszBaseActivity {
     private ArticleType articleType;
@@ -35,7 +36,7 @@ public class ArticleDetailActivity extends XszBaseActivity {
     public void initView() {
         article=(Article) getIntent().getSerializableExtra("article");
         articleType=(ArticleType) getIntent().getSerializableExtra("articleType");
-        preAgentWeb= AgentWeb.with(context)
+        preAgentWeb= AgentWeb.with(this)
                 .setAgentWebParent((LinearLayout) linWeb, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator()
                 .createAgentWeb()
@@ -55,8 +56,12 @@ public class ArticleDetailActivity extends XszBaseActivity {
         LogicService.post(context, APIMethod.loadContentById,sm, new ApiSubscriber<Response<Article>>() {
             @Override
             public void onSuccess(Response<Article> respon) {
-                String introduce=respon.getResult().getIntroduce();
-                agentWeb.getUrlLoader().loadData(introduce,"text/html","UTF-8");
+                if (respon.getResult()!=null&&StringUtil.isNotEmpty(respon.getResult().getIntroduce(),true)){
+                    String introduce=respon.getResult().getIntroduce();
+                    agentWeb.getUrlLoader().loadData(introduce,"text/html","UTF-8");
+                }else {
+                    agentWeb.getUrlLoader().loadData("内容为空","text/html","UTF-8");
+                }
             }
 
             @Override

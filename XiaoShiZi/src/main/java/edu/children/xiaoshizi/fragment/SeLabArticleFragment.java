@@ -88,7 +88,7 @@ public class SeLabArticleFragment extends XszBaseFragment implements OnClickList
 
 		ArticleType firstArticleType=DemoApplication.getInstance().getContentSeLabCategoryResponse().getCategoryResps().get(0);
 		if (articleType.equals(firstArticleType)){
-            articles =DemoApplication.getInstance().getContentCategoryResponse().getContentResps();
+            articles =DemoApplication.getInstance().getContentSeLabCategoryResponse().getContentResps();
 			articleAdapter.refresh(articles);
 			if (articles.size()!=0){
 				multiStatusLayout.showContent();

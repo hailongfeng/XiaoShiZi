@@ -1,11 +1,14 @@
 package edu.children.xiaoshizi.net.rxjava;
 
 import android.content.Context;
+import android.os.Build;
 import android.text.TextUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import edu.children.xiaoshizi.logic.ApiService;
@@ -17,6 +20,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -24,6 +28,7 @@ import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import zuo.biao.library.util.Log;
 
 public class RetrofitClient {
 
@@ -54,20 +59,25 @@ public class RetrofitClient {
             Interceptor addQueryParameterInterceptor = new Interceptor() {
                 @Override
                 public okhttp3.Response intercept(Chain chain) throws IOException {
-                    Request originalRequest = chain.request();
-                    String method = originalRequest.method();
-                    HttpUrl.Builder builderQueryParameter = originalRequest.url().newBuilder();
+                    Request oldRequest = chain.request();
+                    String method = oldRequest.method();
+                    HttpUrl.Builder newQueryParameter = oldRequest.url().newBuilder();
                     Map<String, String> commonQueryParameter = new HashMap<>();
                     for (Map.Entry<String, String> entry : commonQueryParameter.entrySet()) {
-                        builderQueryParameter.addQueryParameter(entry.getKey(), entry.getValue());
+                        newQueryParameter.addQueryParameter(entry.getKey(), entry.getValue());
                     }
-                    String contentType = originalRequest.header("Content-Type");
-                    Request.Builder bu = originalRequest.newBuilder();
+                    String contentType = oldRequest.header("Content-Type");
+                    Request.Builder newBuilder = oldRequest.newBuilder();
+                    if (Build.VERSION.SDK_INT > 13) {
+                        newBuilder.addHeader("Connection", "close");
+                    }
                     if (contentType == null) {
-                        bu.addHeader("Content-Type", "application/json;charset=UTF-8");
+                        newBuilder.addHeader("Content-Type", "application/json;charset=UTF-8");
                     }
-                    bu.url(builderQueryParameter.build());
-                    return chain.proceed(bu.build());
+                    newBuilder.url(newQueryParameter.build());
+                    Request newRequest=newBuilder.build();
+                    printHead(newRequest.headers());
+                    return chain.proceed(newRequest);
                 }
             };
 
@@ -83,6 +93,13 @@ public class RetrofitClient {
         }
 
         return mOkHttpClient;
+    }
+
+    private void printHead(Headers headers){
+        Set<String> names=headers.names();
+        for (String n:names){
+          Log.d("head",n+"="+Arrays.toString(headers.values(n).toArray()));
+        }
     }
 
     private Retrofit provideRetrofit() {

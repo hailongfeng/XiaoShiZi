@@ -63,6 +63,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                 "申请权限",
                 0,
                 Manifest.permission.INTERNET,
+                Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA);
