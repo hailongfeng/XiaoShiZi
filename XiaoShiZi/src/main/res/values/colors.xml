@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#51ACFE</color>
-    <color name="colorPrimaryDark">#509CEE</color>
+    <color name="colorPrimaryDark">#4B90DB</color>
+    <color name="colorPrimaryDark2">#509CEE</color>
     <color name="colorAccent">#D81B60</color>
     <color name="main_bottom_tab_text_color">@color/colorPrimary</color>
     <color name="xsz_topbar_bg">@color/colorPrimary</color>

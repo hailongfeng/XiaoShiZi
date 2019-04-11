@@ -1,10 +1,14 @@
 package edu.children.xiaoshizi.activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.FileUtils;
+import com.dou361.dialogui.DialogUIUtils;
+import com.dou361.dialogui.bean.BuildBean;
+import com.dou361.dialogui.listener.DialogUIListener;
 
 import butterknife.BindView;
 import edu.children.xiaoshizi.R;
@@ -37,13 +41,26 @@ public class SettingActivity extends XszBaseActivity{
         ll_setting_clear_cache.setOnClickListener(this);
         ll_setting_about_us.setOnClickListener(this);
     }
-
+    Dialog dialog;
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_setting_clear_cache:
                 XszCache.getCacheSize();
                 XszCache.clearCacheSize();
+                dialog=DialogUIUtils.showAlert(context,"清除成功","清除30M","","","确定","",false,true,true,new DialogUIListener(){
+
+                    @Override
+                    public void onPositive() {
+                        DialogUIUtils.dismiss(dialog);
+                    }
+
+                    @Override
+                    public void onNegative() {
+
+                    }
+                }).show();
+
                 showShortToast("清除完成");
                 break;
             case R.id.ll_setting_about_us:

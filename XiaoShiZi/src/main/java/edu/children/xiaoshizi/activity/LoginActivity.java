@@ -1,11 +1,14 @@
 package edu.children.xiaoshizi.activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.dou361.dialogui.DialogUIUtils;
+import com.dou361.dialogui.listener.DialogUIListener;
 import com.gyf.barlibrary.ImmersionBar;
 
 import java.io.IOException;
@@ -68,7 +71,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA);
     }
-
+    Dialog dialog;
     @Override
     public void initEvent() {
         findView(R.id.btn_get_verify_code, new View.OnClickListener() {
@@ -80,6 +83,25 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         findView(R.id.btn_login, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog= DialogUIUtils.showAlert(context,"清除成功","清除30M","aaa","bbb","确定","取消",true,true,true,new DialogUIListener(){
+
+                    @Override
+                    public void onPositive() {
+                        DialogUIUtils.dismiss(dialog);
+                    }
+
+                    @Override
+                    public void onGetInput(CharSequence input1, CharSequence input2) {
+                        super.onGetInput(input1, input2);
+                        showShortToast(input1+","+input2);
+                    }
+
+                    @Override
+                    public void onNegative() {
+
+                    }
+                }).show();
+
                 if (StringUtil.isEmpty(edit_user_phone,true)){
                     showShortToast("手机号不能为空");
                     return;
@@ -92,6 +114,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
             }
         });
     }
+
 
 
     private void getVeryCode() {

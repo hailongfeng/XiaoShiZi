@@ -9,7 +9,7 @@ android {
     }
     defaultConfig {
         applicationId "edu.children.xiaoshizi"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -80,6 +80,7 @@ dependencies {
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
     implementation 'com.github.linhaojian:Omnipotent:1.2'
     implementation 'com.github.Walll-E:MultiStatusLayout:v1.0'
+    implementation 'com.github.lzjin:AlipayPassDialog:1.1'
 
     implementation 'com.umeng.umsdk:analytics:8.0.0'
     implementation 'com.umeng.umsdk:common:2.0.0'

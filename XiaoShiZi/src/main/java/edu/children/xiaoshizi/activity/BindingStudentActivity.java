@@ -2,13 +2,18 @@ package edu.children.xiaoshizi.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.dou361.dialogui.DialogUIUtils;
 import com.gyf.barlibrary.ImmersionBar;
+import com.lzj.pass.dialog.PayPassDialog;
+import com.lzj.pass.dialog.PayPassView;
 
 import org.json.JSONObject;
 
@@ -150,54 +155,79 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
 
                 break;
             case R.id.btn_bind_student:
-                showShortToast("绑定");
-                TreeMap sm = new TreeMap<String,String>();
-//            {
-//                "timestamp": "1558423511000",
-//                    "noncestr": "noncestr",
-//                    "sign": "ECA78F26B61B69E70522D3C329B64A67",
-//                    "token": "e462a2cf-099f-4992-9493-42300aaf86b6",
-//                    "parentId": "1",
-//                    "userName": "张三",
-//                    "sex": "M",
-//                    "schoolId": "suA38j1AxGBjWcUJP4h",
-//                    "schoolGradeId": "5eaZmroMMgYZu0kX1nB",
-//                    "schoolClassId": "uQ8jhJZCPEP1vqA9lQZ",
-//                    "birthday": "2019-03-20",
-//                    "parentCustody": "爸爸",
-//                    "bindingPassword": "1"
-//            }
-                sm.put("parentId", DemoApplication.getInstance().getUser().getUserId());
-                sm.put("userName", edt_student_name.getText().toString());
-                boolean isMan=((RadioButton)rg_student_sex.getChildAt(0)).isChecked();
-                sm.put("sex", isMan?"M":"F");
-                sm.put("schoolId", schools.get(currentSchoolIndex).id);
-                sm.put("schoolGradeId", gradles.get(currentGradlelIndex).id);
-                sm.put("schoolClassId", banjis.get(currentBanJiIndex).id);
-                sm.put("birthday", txt_student_birthday.getText().toString());
-                sm.put("parentCustody",STUDENT_GUARDIAN_GUANXI[currentGuanXi] );
-                sm.put("bindingPassword", edt_bindingPassword.getText().toString());
-                LogicService.post(context, APIMethod.studentBinding, sm, new ApiSubscriber<Response<LoginRespon>>() {
-                    @Override
-                    public void onSuccess(Response<LoginRespon> response) {
-                        if (response.getCode()==Response.SUCCESS){
-                            showShortToast("绑定成功");
-                           LoginRespon loginRespon=response.getResult();
-                           DemoApplication.getInstance().getLoginRespon().setParents(loginRespon.getParents());
-                           DemoApplication.getInstance().getLoginRespon().setStudents(loginRespon.getStudents());
-                           context.finish();
-                        }else {
-                            showShortToast(response.getMessage());
-                        }
-                    }
-
-                    @Override
-                    protected void onFail(NetErrorException error) {
-                        showShortToast("绑定失败");
-                    }
-                });
+//                payDia();
+                bindingStudent();
                 break;
         }
+    }
+
+    private void bindingStudent(){
+        TreeMap sm = new TreeMap<String,String>();
+        sm.put("parentId", DemoApplication.getInstance().getUser().getUserId());
+        sm.put("userName", edt_student_name.getText().toString());
+        boolean isMan=((RadioButton)rg_student_sex.getChildAt(0)).isChecked();
+        sm.put("sex", isMan?"M":"F");
+        sm.put("schoolId", schools.get(currentSchoolIndex).id);
+        sm.put("schoolGradeId", gradles.get(currentGradlelIndex).id);
+        sm.put("schoolClassId", banjis.get(currentBanJiIndex).id);
+        sm.put("birthday", txt_student_birthday.getText().toString());
+        sm.put("parentCustody",STUDENT_GUARDIAN_GUANXI[currentGuanXi] );
+        sm.put("bindingPassword", edt_bindingPassword.getText().toString());
+        LogicService.post(context, APIMethod.studentBinding, sm, new ApiSubscriber<Response<LoginRespon>>() {
+            @Override
+            public void onSuccess(Response<LoginRespon> response) {
+                if (response.getCode()==Response.SUCCESS){
+                    showShortToast("绑定成功");
+                    LoginRespon loginRespon=response.getResult();
+                    DemoApplication.getInstance().getLoginRespon().setParents(loginRespon.getParents());
+                    DemoApplication.getInstance().getLoginRespon().setStudents(loginRespon.getStudents());
+                    context.finish();
+                }else {
+                    showShortToast(response.getMessage());
+                }
+            }
+
+            @Override
+            protected void onFail(NetErrorException error) {
+                showShortToast("绑定失败");
+            }
+        });
+    }
+
+    private void verifyPassword(){
+        //TODO:验证绑定密码
+        bindingStudent();
+    }
+
+    private void payDia() {
+        final PayPassDialog dialog=new PayPassDialog(this,R.style.dialog_pay_theme);
+        //弹框自定义配置
+        dialog.setAlertDialog(false)
+                .setWindowSize(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,0.4f)
+                .setOutColse(false)
+                .setGravity(R.style.dialogOpenAnimation, Gravity.BOTTOM);
+        //组合控件自定义配置
+        PayPassView payView=dialog.getPayViewPass();
+        payView.setForgetText("输入绑定密码");
+        payView.setForgetColor(getResources().getColor(R.color.colorPrimary));
+        payView.setForgetSize(16);
+        payView.setPayClickListener(new PayPassView.OnPayClickListener() {
+            @Override
+            public void onPassFinish(String passContent) {
+                //6位输入完成回调
+                showShortToast(passContent);
+            }
+            @Override
+            public void onPayClose() {
+                dialog.dismiss();
+                //关闭回调
+            }
+            @Override
+            public void onPayForget() {
+                dialog.dismiss();
+                //忘记密码回调
+            }
+        });
     }
 
     @Override
