@@ -190,7 +190,9 @@ public class RecordedActivity extends BaseActivity {
                     rb_start.setDeleteMode(false);
                     Intent intent = new Intent(RecordedActivity.this, EditVideoActivity.class);
                     intent.putExtra("path", SDKUtil.VIDEO_PATH + "/finish.mp4");
-                    startActivityForResult(intent, REQUEST_KEY);
+                    intent.putExtra("videoPath", SDKUtil.VIDEO_PATH + "/finish.mp4");
+                    setResult(RESULT_OK, intent);
+//                    startActivityForResult(intent, REQUEST_KEY);
                 } else {
                     Intent intent = new Intent();
                     intent.putExtra("imagePath", imagePath);

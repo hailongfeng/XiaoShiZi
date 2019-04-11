@@ -5,6 +5,7 @@ import android.widget.LinearLayout;
 
 import com.just.agentweb.AgentWeb;
 
+import java.lang.reflect.Field;
 import java.util.TreeMap;
 
 import butterknife.BindView;
@@ -16,6 +17,7 @@ import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
+import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
 
 public class ArticleDetailActivity extends XszBaseActivity {
@@ -41,7 +43,20 @@ public class ArticleDetailActivity extends XszBaseActivity {
                 .useDefaultIndicator()
                 .createAgentWeb()
                 .ready();
-        agentWeb= preAgentWeb.go("");
+//        agentWeb= preAgentWeb.go("");
+        getAgentWebField();
+    }
+
+    private void getAgentWebField(){
+        Field  field = null;
+        try {
+            field = preAgentWeb.getClass().getDeclaredField("mAgentWeb");
+            field.setAccessible(true);
+            agentWeb= (AgentWeb) field.get(preAgentWeb);
+            Log.d(TAG,(agentWeb==null)+",,,agentWeb==null");
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

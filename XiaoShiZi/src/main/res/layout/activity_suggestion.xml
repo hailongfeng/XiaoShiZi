@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+   style="@style/activity_page"
+    tools:context=".activity.SuggestionActivity">
+    <RelativeLayout
+        style="@style/topbar_bg"
+        android:background="@color/transparent">
+
+        <ImageButton style="@style/xsz_topbar_return_img" />
+
+        <TextView
+            style="@style/topbar_title"
+            android:layout_centerHorizontal="true"
+            android:text="意见反馈" />
+        <Button
+            android:id="@+id/btn_sure"
+            style="@style/topbar_right_btn"
+            android:textColor="@color/colorPrimary"
+            android:text="保存" />
+    </RelativeLayout>
+    <View
+        style="@style/divider_horizontal_1px" />
+    <LinearLayout
+        android:orientation="vertical"
+        style="@style/match_match">
+        <EditText
+            android:textSize="@dimen/text_size_middle"
+            android:id="@+id/edt_suggestion_title"
+            android:layout_width="match_parent"
+            android:lines="1"
+            android:singleLine="true"
+            android:padding="10dp"
+            android:hint="请输入标题"
+            android:background="@drawable/null_drawable"
+            android:layout_height="wrap_content" />
+        <View
+            style="@style/divider_horizontal_1px" />
+        <EditText
+            android:id="@+id/edt_suggestion_content"
+            android:layout_width="match_parent"
+            android:lines="20"
+            android:padding="10dp"
+            android:hint="请输入投稿内容"
+            android:background="@drawable/null_drawable"
+            android:gravity="left|top"
+            android:layout_height="wrap_content" />
+        <View
+            style="@style/divider_horizontal_1px" />
+    </LinearLayout>
+</LinearLayout>

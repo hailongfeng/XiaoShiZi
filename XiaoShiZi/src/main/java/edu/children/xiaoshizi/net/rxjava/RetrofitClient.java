@@ -86,6 +86,7 @@ public class RetrofitClient {
                     .connectTimeout(60, TimeUnit.SECONDS)
                     .readTimeout(60, TimeUnit.SECONDS)
                     .writeTimeout(60, TimeUnit.SECONDS)
+                    .retryOnConnectionFailure(false)
                     .addInterceptor(httpLoggingInterceptor)  //日志
                     .addInterceptor(addQueryParameterInterceptor)  //公共参数的封装
                     .cookieJar(new CookieJarImpl(mContext)) //cookie 保存方案

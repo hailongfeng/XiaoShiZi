@@ -16,7 +16,6 @@ import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.Banner;
-import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.logic.APIMethod;
@@ -33,6 +32,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.EasyPermissions;
 import zuo.biao.library.util.Log;
+import zuo.biao.library.util.StringUtil;
 
 public class LoginActivity extends XszBaseActivity implements View.OnClickListener {
 
@@ -80,8 +80,15 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         findView(R.id.btn_login, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                login();
-                t1();
+                if (StringUtil.isEmpty(edit_user_phone,true)){
+                    showShortToast("手机号不能为空");
+                    return;
+                }
+                if (StringUtil.isEmpty(edit_verifyCode,true)){
+                    showShortToast("验证码不能为空");
+                    return;
+                }
+                login3();
             }
         });
     }
@@ -90,8 +97,12 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
     private void getVeryCode() {
         TreeMap sm = new TreeMap<String,String>();
         String phone=edit_user_phone.getText().toString();
-        if (StringUtils.isEmpty(phone))
-            sm.put("phoneNumber","18697386272");
+
+        if (StringUtils.isEmpty(phone)) {
+            showShortToast("手机号不能为空");
+            return;
+        }
+        sm.put("phoneNumber",phone);
         LogicService.post(context, APIMethod.getVerifyCode,sm,new ApiSubscriber<Response>(){
             @Override
             public void onSuccess(Response response) {
@@ -115,7 +126,6 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         String phoneNumber=edit_user_phone.getText().toString();
         sm.put("phoneNumber",phoneNumber);
         sm.put("verifyCode",verifyCode);
-        sm.put("deviceToken","");
         sm.put("mobileType", "Android");
         sm.put("deviceToken", DemoApplication.getInstance().getDeviceToken());
         LogicService.post(context, APIMethod.login,sm, new ApiSubscriber<Response<LoginRespon>>() {
@@ -128,7 +138,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                 DemoApplication.getInstance().setUser(respon.getResult().getLoginResp());
 //                DemoApplication.getInstance().getUser().setToken(Constant.TEST_TOKEN);
 
-                t1();
+                login3();
 //                toActivity(new Intent(context,MainActivity.class),false);
 //                finish();
             }
@@ -143,13 +153,11 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
     }
 
     private boolean login2() {
-//        showLoading("正在登陆");
         String verifyCode=edit_verifyCode.getText().toString();
         TreeMap sm = new TreeMap<String,String>();
         String phoneNumber=edit_user_phone.getText().toString();
         sm.put("phoneNumber",phoneNumber);
         sm.put("verifyCode",verifyCode);
-        sm.put("deviceToken","");
         sm.put("mobileType", "Android");
         sm.put("deviceToken", DemoApplication.getInstance().getDeviceToken());
         try {
@@ -204,7 +212,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
 
 
 
-    void t1(){
+    void login3(){
         Observable.create(
                 new ObservableOnSubscribe<Integer>(){
                     @Override
@@ -218,7 +226,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                             if(loginResult&&loadSysBannerListResult&&loadContentCategoryResult) {
                                 emitter.onNext(2);
                             }else {
-                                emitter.onError(new RuntimeException("同步数据失败"));
+                                emitter.onError(new RuntimeException("登录失败，原因：同步数据失败"));
                             }
                         }else {
                             emitter.onError(new RuntimeException("登录失败"));

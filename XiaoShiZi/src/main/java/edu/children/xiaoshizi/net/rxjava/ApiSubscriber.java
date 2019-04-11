@@ -27,7 +27,7 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
         if (t.getCode().equals(Response.SUCCESS)){
             onSuccess(t);
         }else {
-            onError(new RuntimeException(t.getMessage()));
+            onError(new NetErrorException(t.getMessage(),NetErrorException.OTHER));
         }
     }
 
@@ -45,9 +45,7 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
                     error = new NetErrorException(e, NetErrorException.SocketTimeoutError);
                 } else if (e instanceof ConnectException) {
                     error = new NetErrorException(e, NetErrorException.ConnectExceptionError);
-                } else if (e instanceof RuntimeException) {
-                    error = new NetErrorException(e.getMessage(), NetErrorException.OTHER);
-                } else {
+                }else {
                     error = new NetErrorException(e, NetErrorException.OTHER);
                 }
             } else {
@@ -56,7 +54,7 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
         }
         // 回调抽象方法
         onFail(error);
-        MobclickAgent.reportError(DemoApplication.getInstance(),error);
+//        MobclickAgent.reportError(DemoApplication.getInstance(),error);
     }
 
     /**

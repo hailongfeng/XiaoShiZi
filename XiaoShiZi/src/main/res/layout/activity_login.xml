@@ -26,7 +26,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/student_face_default"
+                android:src="@mipmap/logo"
                 app:riv_border_color="@color/white"
                 app:riv_border_width="1dp"
                 app:riv_oval="true" />
@@ -58,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <EditText
-                        android:drawableLeft="@drawable/icon_phone"
+                        android:drawableLeft="@drawable/icon_phone2"
                         android:drawablePadding="5dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
@@ -71,7 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <EditText
-                        android:drawableLeft="@drawable/icon_key"
+                        android:drawableLeft="@drawable/icon_key2"
                         android:drawablePadding="5dp"
                         android:padding="15dp"
                         android:layout_marginLeft="10dp"

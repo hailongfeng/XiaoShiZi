@@ -39,6 +39,7 @@ import edu.children.xiaoshizi.activity.BindingStudentActivity;
 import edu.children.xiaoshizi.activity.ParentInfoActivity;
 import edu.children.xiaoshizi.activity.RealNameAuthActivity;
 import edu.children.xiaoshizi.activity.SettingActivity;
+import edu.children.xiaoshizi.activity.SuggestionActivity;
 import edu.children.xiaoshizi.activity.UserInfoActivity;
 import edu.children.xiaoshizi.adapter.ParentAdapter;
 import edu.children.xiaoshizi.adapter.StudentAdapter;
@@ -223,22 +224,23 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	public void onClick(View v) {//直接调用不会显示v被点击效果
 		switch (v.getId()) {
 			case R.id.iv_user_setting:
-//				showShortToast("设置");
 				toActivity(new Intent(context, UserInfoActivity.class));
 				break;
 			case R.id.ll_my_shezhi:
-//				showShortToast("设置");
 				toActivity(new Intent(context, SettingActivity.class));
+				break;
+			case R.id.ll_my_jiazhangjianyi:
+				toActivity(new Intent(context, SuggestionActivity.class));
 				break;
 			case R.id.btn_no_student_bind:
 			case R.id.btn_add_student:
 				User user=DemoApplication.getInstance().getUser();
-				toActivity(new Intent(context, RealNameAuthActivity.class));
-//				if (user.getVerifiedStatus().equals("0")){
-//					toActivity(new Intent(context, RealNameAuthActivity.class));
-//				}else {
-//					toActivity(new Intent(context, BindingStudentActivity.class));
-//				}
+//				toActivity(new Intent(context, RealNameAuthActivity.class));
+				if (user.getVerifiedStatus().equals("0")){
+					toActivity(new Intent(context, RealNameAuthActivity.class));
+				}else {
+					toActivity(new Intent(context, BindingStudentActivity.class));
+				}
 				break;
 			default:
 				break;
