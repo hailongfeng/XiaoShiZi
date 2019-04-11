@@ -12,6 +12,14 @@ public class Response<T> {
     String message;
     T result;
 
+    public Response() {
+    }
+
+    public Response(String code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
     public String getCode() {
         return code;
     }

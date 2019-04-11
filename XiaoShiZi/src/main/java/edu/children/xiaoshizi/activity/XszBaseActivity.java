@@ -23,7 +23,6 @@ import zuo.biao.library.base.BaseActivity;
 public abstract class XszBaseActivity extends BaseActivity implements View.OnClickListener {
 
   protected static   RequestOptions glideOptions = new RequestOptions()
-            .placeholder(R.drawable.student_face_default)//图片加载出来前，显示的图片
             .fallback( R.drawable.student_face_default) //url为空的时候,显示的图片
             .error(R.drawable.student_face_default);//图片加载失败后，显示的图片
 

@@ -1,1 +1,1 @@
-include ':app', ':ZBLibrary', ':QRCodeLibrary', ':XiaoShiZi', ':WeiXinRecorded'
+include  ':ZBLibrary', ':QRCodeLibrary', ':XiaoShiZi'

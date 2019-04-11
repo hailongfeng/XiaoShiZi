@@ -185,22 +185,6 @@
                 </LinearLayout>
                 <View style="@style/divider_horizontal_1px" />
 
-                <LinearLayout
-                    android:id="@+id/ll_user_id_cardno"
-                    style="@style/content_item_white">
-
-                    <TextView
-                        style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
-                        android:text="身份证号" />
-
-                    <EditText
-                        android:id="@+id/edt_user_id_cardno"
-                        style="@style/content_item_lf_tv"
-                        android:layout_weight="1" />
-                </LinearLayout>
-                <View style="@style/divider_horizontal_1px" />
-
                 <com.flyco.roundview.RoundTextView
                     android:id="@+id/btn_change_user"
                     android:layout_width="match_parent"

@@ -100,7 +100,6 @@ public class StudentView extends XszBaseView<Student> implements OnClickListener
 		switch (v.getId()) {
 		case R.id.btn_student_jiebang:
 			if (this.data!=null){
-				showShortToast("解绑:"+data.getStudentName());
 				onViewClickListener.onViewClick(this,btn_student_jiebang);
 			}
 			break;

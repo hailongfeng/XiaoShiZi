@@ -9,6 +9,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.walle.multistatuslayout.MultiStatusLayout;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -53,7 +55,8 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     @BindView(R.id.txt_student_Guardian)
     TextView txt_student_Guardian;
 
-
+    @BindView(R.id.multiStatusLayout)
+    MultiStatusLayout multiStatusLayout;
 
     @BindView(R.id.lvBaseList)
     ListView lvBaseList;
@@ -125,13 +128,15 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
                 }
                 Log.d(TAG,"InAndOutSchoolRecode size="+response.getResult().size());
                 if (response.getResult().size()==0){
-                    showShortToast("暂无记录");
+                    multiStatusLayout.showEmpty();
+                }else {
+                    multiStatusLayout.showContent();
+                    inOutSchoolRecodeAdapter.refresh(response.getResult());
                 }
-                inOutSchoolRecodeAdapter.refresh(response.getResult());
             }
 
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
                 error.printStackTrace();
                 showShortToast("记录获取失败");
             }

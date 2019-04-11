@@ -130,18 +130,17 @@ public class UserInfoActivity extends XszBaseActivity implements View.OnClickLis
     private void getVeryCode() {
         TreeMap sm = new TreeMap<String, String>();
         String phone = user.getPhone();
-        if (StringUtils.isEmpty(phone))
-            sm.put("phoneNumber", "18697386272");
+        sm.put("phoneNumber", phone);
         LogicService.post(context, APIMethod.getVerifyCode, sm, new ApiSubscriber<Response>() {
             @Override
             public void onSuccess(Response response) {
                 Log.d(TAG, "response code:" + response.getCode());
                 Log.d(TAG, "onNext  , " + Thread.currentThread().getName());
-                showShortToast("验证码发送成功");
+                showShortToast(response.getMessage());
             }
 
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
                 error.printStackTrace();
                 showShortToast(error.getMessage());
             }

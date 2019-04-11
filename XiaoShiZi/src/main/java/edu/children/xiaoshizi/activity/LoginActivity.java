@@ -83,24 +83,24 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         findView(R.id.btn_login, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog= DialogUIUtils.showAlert(context,"清除成功","清除30M","aaa","bbb","确定","取消",true,true,true,new DialogUIListener(){
-
-                    @Override
-                    public void onPositive() {
-                        DialogUIUtils.dismiss(dialog);
-                    }
-
-                    @Override
-                    public void onGetInput(CharSequence input1, CharSequence input2) {
-                        super.onGetInput(input1, input2);
-                        showShortToast(input1+","+input2);
-                    }
-
-                    @Override
-                    public void onNegative() {
-
-                    }
-                }).show();
+//                dialog= DialogUIUtils.showAlert(context,"清除成功","清除30M","aaa","bbb","确定","取消",true,true,true,new DialogUIListener(){
+//
+//                    @Override
+//                    public void onPositive() {
+//                        DialogUIUtils.dismiss(dialog);
+//                    }
+//
+//                    @Override
+//                    public void onGetInput(CharSequence input1, CharSequence input2) {
+//                        super.onGetInput(input1, input2);
+//                        showShortToast(input1+","+input2);
+//                    }
+//
+//                    @Override
+//                    public void onNegative() {
+//
+//                    }
+//                }).show();
 
                 if (StringUtil.isEmpty(edit_user_phone,true)){
                     showShortToast("手机号不能为空");
@@ -131,13 +131,13 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
             public void onSuccess(Response response) {
                 Log.d(TAG,"response code:"+response.getCode());
                 Log.d(TAG,"onNext  , "+Thread.currentThread().getName());
-                showShortToast("验证码发送成功");
+                showShortToast(response.getMessage());
             }
 
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
                 error.printStackTrace();
-                showShortToast("验证码发送失败，请重试");
+                showShortToast(error.getMessage());
             }
         });
     }
@@ -167,7 +167,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
             }
 
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
                 hideLoading();
                 showShortToast(error.getMessage());
                 error.printStackTrace();
@@ -175,7 +175,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         });
     }
 
-    private boolean login2() {
+    private Response<LoginRespon> login2() throws IOException {
         String verifyCode=edit_verifyCode.getText().toString();
         TreeMap sm = new TreeMap<String,String>();
         String phoneNumber=edit_user_phone.getText().toString();
@@ -183,90 +183,65 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         sm.put("verifyCode",verifyCode);
         sm.put("mobileType", "Android");
         sm.put("deviceToken", DemoApplication.getInstance().getDeviceToken());
-        try {
-            Response<LoginRespon> response =LogicService.post(context, APIMethod.login,sm);
-            if (response.getCode().equals(Response.SUCCESS)) {
-                response.getResult().getLoginResp().setPhone(phoneNumber);
-                DemoApplication.getInstance().setLoginRespon(response.getResult());
-                DemoApplication.getInstance().setUser(response.getResult().getLoginResp());
-                return true;
-            }else {
-                return false;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        Response<LoginRespon> response =LogicService.post(context, APIMethod.login,sm);
+        return response;
     }
 
-    private boolean loadSysBannerList() {
+    private Response<List<Banner>> loadSysBannerList() throws IOException {
         TreeMap sm = new TreeMap<String,String>();
-        try {
             Response<List<Banner>> response=LogicService.post(context,APIMethod.loadSysBannerList,sm);
-            if (response.getCode().equals(Response.SUCCESS)) {
-                DemoApplication.getInstance().setBanners(response.getResult());
-                return true;
-            }else {
-                return false;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+            return response;
     }
-    private boolean loadContentCategory() {
+    private Response<LoadContentCategoryResponse> loadContentCategory() throws IOException {
         TreeMap sm = new TreeMap<String,String>();
-        try {
             Response<LoadContentCategoryResponse> response=LogicService.post(context,APIMethod.loadContentCategory,sm);
-            if (response.getCode().equals(Response.SUCCESS)) {
-                DemoApplication.getInstance().setContentCategoryResponse(response.getResult());
-                return true;
-            }else {
-                return false;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+            return  response;
     }
 
 
 
     void login3(){
         Observable.create(
-                new ObservableOnSubscribe<Integer>(){
+                new ObservableOnSubscribe<Response>(){
                     @Override
-                    public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
-                        emitter.onNext(0);
-                        boolean loginResult=login2();
-                        if (loginResult){
-                            emitter.onNext(1);
-                            boolean loadSysBannerListResult=loadSysBannerList();
-                            boolean loadContentCategoryResult=loadContentCategory();
-                            if(loginResult&&loadSysBannerListResult&&loadContentCategoryResult) {
-                                emitter.onNext(2);
+                    public void subscribe(ObservableEmitter<Response> emitter) throws Exception {
+                        emitter.onNext(new Response("1",""));
+                        Response<LoginRespon> loginRespon=login2();
+                        if (loginRespon.getCode().equals(Response.SUCCESS)) {
+                            String phoneNumber=edit_user_phone.getText().toString();
+                            loginRespon.getResult().getLoginResp().setPhone(phoneNumber);
+                            DemoApplication.getInstance().setLoginRespon(loginRespon.getResult());
+                            DemoApplication.getInstance().setUser(loginRespon.getResult().getLoginResp());
+                            Response<List<Banner>> loadSysBannerListResult=loadSysBannerList();
+                            if (loadSysBannerListResult.getCode().equals(Response.SUCCESS)) {
+                                DemoApplication.getInstance().setBanners(loadSysBannerListResult.getResult());
+                                Response<LoadContentCategoryResponse> loadContentCategoryResult=loadContentCategory();
+                                if (loadContentCategoryResult.getCode().equals(Response.SUCCESS)){
+                                    DemoApplication.getInstance().setContentCategoryResponse(loadContentCategoryResult.getResult());
+                                    emitter.onNext(new Response("3",loginRespon.getMessage()));
+                                }else {
+                                    emitter.onNext(new Response("2",loadContentCategoryResult.getMessage()));
+                                }
                             }else {
-                                emitter.onError(new RuntimeException("登录失败，原因：同步数据失败"));
+                                emitter.onNext(new Response("2",loadSysBannerListResult.getMessage()));
                             }
                         }else {
-                            emitter.onError(new RuntimeException("登录失败"));
+                            emitter.onNext(new Response("2",loginRespon.getMessage()));
                         }
                     }
                 }).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Integer>() {
+                .subscribe(new Consumer<Response>() {
                     @Override
-                    public void accept(Integer r) throws Exception {
-                        if (r==0){
+                    public void accept(Response r) throws Exception {
+                        if (r.getCode().equals("1")){
                             showLoading("正在登陆");
-                        }else if (r==1){
+                        }else if (r.getCode().equals("2")){
                             hideLoading();
-                            showLoading("正在同步数据");
-                        }else if (r==2){
+                            showLoading(r.getMessage());
+                        }else if (r.getCode().equals("3")){
                             hideLoading();
+                            showShortToast(r.getMessage());
                             toActivity(new Intent(context,MainActivity.class),false);
                             finish();
                         }

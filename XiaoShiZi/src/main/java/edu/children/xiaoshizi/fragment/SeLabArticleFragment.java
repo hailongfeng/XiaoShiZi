@@ -118,7 +118,7 @@ public class SeLabArticleFragment extends XszBaseFragment implements OnClickList
 			}
 
 			@Override
-			protected void onFail(NetErrorException error) {
+			protected void onFail(Throwable  error) {
 				error.printStackTrace();
 			}
 		});

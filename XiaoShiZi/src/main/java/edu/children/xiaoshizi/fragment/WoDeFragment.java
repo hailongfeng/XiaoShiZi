@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.flyco.roundview.RoundTextView;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.walle.multistatuslayout.MultiStatusLayout;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -82,6 +83,9 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	CardView cv_no_students;
 	@BindView(R.id.btn_no_student_bind)
 	RoundTextView btn_no_student_bind;
+
+	@BindView(R.id.multiStatusLayout)
+	MultiStatusLayout multiStatusLayout;
 
 	@BindView(R.id.rvCustodyRecycler)
 	RecyclerView rvParentRecycler;;
@@ -164,7 +168,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 			}
 
 			@Override
-			protected void onFail(NetErrorException error) {
+			protected void onFail(Throwable  error) {
 				hideLoading();
 				showShortToast(error.getMessage());
 				error.printStackTrace();
@@ -185,7 +189,6 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		txt_user_telphone.setText(DemoApplication.getInstance().getUser().getLoginName());
 
 		List<Student> list= DemoApplication.getInstance().getLoginRespon().getStudents();
-//		list.clear();
 		if (list.size()==0){
 			btn_add_student.setVisibility(View.GONE);
 			rvStudentsRecycler.setVisibility(View.GONE);
@@ -196,7 +199,12 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		}
 
 		List<Parent> list1= DemoApplication.getInstance().getLoginRespon().getParents();
-		parentAdapter.refresh(list1);
+		if (list1.size() != 0) {
+			multiStatusLayout.showContent();
+			parentAdapter.refresh(list1);
+		} else {
+			multiStatusLayout.showEmpty();
+		}
 		long size= XszCache.getCacheSize();
 		Log.d(TAG,"cache size="+size);
 	}

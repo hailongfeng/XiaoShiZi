@@ -64,7 +64,7 @@ public class MainActivity extends XszBaseActivity {
                 }
             }
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
                 Log.d(TAG, error.getMessage());
             }
 
@@ -87,7 +87,7 @@ public class MainActivity extends XszBaseActivity {
             }
 
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
                 Log.d(TAG, error.getMessage());
             }
 
@@ -156,7 +156,7 @@ public class MainActivity extends XszBaseActivity {
             }
 
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
 
             }
         });
@@ -171,7 +171,7 @@ public class MainActivity extends XszBaseActivity {
             }
 
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
                 error.printStackTrace();
             }
         });

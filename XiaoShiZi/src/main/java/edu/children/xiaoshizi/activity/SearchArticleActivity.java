@@ -210,7 +210,7 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
             }
 
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
                 hideLoading();
                 showShortToast(error.getMessage());
                 error.printStackTrace();

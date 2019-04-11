@@ -188,7 +188,7 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
             }
 
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
                 showShortToast("绑定失败");
             }
         });

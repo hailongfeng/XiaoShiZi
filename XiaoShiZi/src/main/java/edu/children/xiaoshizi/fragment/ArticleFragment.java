@@ -117,7 +117,7 @@ public class ArticleFragment extends XszBaseFragment implements OnClickListener,
 			}
 
 			@Override
-			protected void onFail(NetErrorException error) {
+			protected void onFail(Throwable  error) {
 				error.printStackTrace();
 			}
 		});

@@ -131,9 +131,18 @@
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="16dp">
+                <com.walle.multistatuslayout.MultiStatusLayout
+                    android:id="@+id/multiStatusLayout"
+                    app:emptyLayout="@layout/layout_empty"
+                    app:netErrorLayout="@layout/layout_empty"
+                    app:errorLayout="@layout/layout_empty"
+                    app:loadLayout="@layout/layout_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvCustodyRecycler"
                     style="@style/lv" />
+                </com.walle.multistatuslayout.MultiStatusLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView

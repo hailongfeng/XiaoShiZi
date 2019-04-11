@@ -50,9 +50,7 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
     EditText edt_user_work_adddress;
     @BindView(R.id.edt_user_home_adddress)
     EditText edt_user_home_adddress;
-    @BindView(R.id.edt_user_id_cardno)
-    EditText edt_user_id_cardno;
-    private String headPortrait="https://single-obs.obs.cn-east-2.myhuaweicloud.com:443/app_pic/head_portrait/5gcnrqBYVl1Qngok8uH/2019033111033725425.jpg";
+    private String headPortrait="";
     private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +75,6 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
         edt_user_dizhi.setText(user.getHomeAddress());
         edt_user_work_adddress.setText(user.getWorkingAddress());
         edt_user_email.setText(user.getEmail());
-        edt_user_id_cardno.setText(user.getCardNum());
         boolean isMan=user.getSex()==null?true:user.getSex().equals("M")?true:false;
         if (isMan){
             ((RadioButton)rg_user_sex.getChildAt(0)).setChecked(true);
@@ -126,12 +123,12 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
                user.setHomeAddress(newUser.getHomeAddress());
                user.setEmail(newUser.getEmail());
                user.setHeadPortrait(newUser.getHeadPortrait());
-               showShortToast("修改成功");
+               showShortToast(respon.getMessage());
                finish();
             }
 
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
                 error.printStackTrace();
             }
         });
@@ -141,9 +138,6 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
     public void takeSuccess(TResult result) {
         super.takeSuccess(result);
         if(test.exists()){
-//            Bitmap bitmap = BitmapFactory.decodeFile(result.getImage().getOriginalPath());
-//            iv_user_face.setImageBitmap(bitmap);
-
             TreeMap sm = new TreeMap<String,String>();
             sm.put("width","80");
             sm.put("height","80");
@@ -162,7 +156,8 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
                 }
 
                 @Override
-                protected void onFail(NetErrorException error) {
+                protected void onFail(Throwable  error) {
+                    showShortToast(error.getMessage());
                     error.printStackTrace();
                 }
             });

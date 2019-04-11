@@ -65,6 +65,12 @@ public class ArticleDetailActivity extends XszBaseActivity {
 //        String title=articleType.getTitle()+"|"+article.getTitle();
         autoSetTitle();
     }
+
+    private String getHtml(String body){
+        StringBuilder sb=new StringBuilder();
+        sb.append("<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /></head><body>").append(body).append("</body></html>");
+        return sb.toString();
+    }
     private void getArticleById(String id) {
         TreeMap sm = new TreeMap<String,String>();
         sm.put("contentId",id);
@@ -73,14 +79,14 @@ public class ArticleDetailActivity extends XszBaseActivity {
             public void onSuccess(Response<Article> respon) {
                 if (respon.getResult()!=null&&StringUtil.isNotEmpty(respon.getResult().getIntroduce(),true)){
                     String introduce=respon.getResult().getIntroduce();
-                    agentWeb.getUrlLoader().loadData(introduce,"text/html","UTF-8");
+                    agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml(introduce), "text/html", "UTF-8", null);
                 }else {
-                    agentWeb.getUrlLoader().loadData("内容为空","text/html","UTF-8");
+                    agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml("内容为空"), "text/html", "UTF-8", null);
                 }
             }
 
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
                 error.printStackTrace();
             }
         });

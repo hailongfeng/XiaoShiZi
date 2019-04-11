@@ -15,7 +15,8 @@ import zuo.biao.library.util.Log;
 
 public abstract class ApiSubscriber<T extends Response> extends DisposableObserver<T> {
 
-    private static final String TAG="ApiSubscriber";
+    private static final String TAG = "ApiSubscriber";
+
     @Override
     public void onComplete() {
 
@@ -23,36 +24,32 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
 
     @Override
     public final void onNext(T t) {
-        Log.d(TAG,"code:"+t.getCode()+"，message ："+t.getMessage());
-        if (t.getCode().equals(Response.SUCCESS)){
+        Log.d(TAG, "code:" + t.getCode() + "，message ：" + t.getMessage());
+        if (t.getCode().equals(Response.SUCCESS)) {
             onSuccess(t);
-        }else {
-            onError(new NetErrorException(t.getMessage(),NetErrorException.OTHER));
+        } else {
+            onError(new Exception(t.getMessage()));
         }
     }
 
     @Override
     public final void onError(Throwable e) {
-        NetErrorException error = null;
+        Exception error = null;
         if (e != null) {
-            // 对不是自定义抛出的错误进行解析
-            if (!(e instanceof NetErrorException)) {
-                if (e instanceof UnknownHostException) {
-                    error = new NetErrorException(e, NetErrorException.NoConnectError);
-                } else if (e instanceof JSONException || e instanceof JsonParseException) {
-                    error = new NetErrorException(e, NetErrorException.PARSE_ERROR);
-                } else if (e instanceof SocketTimeoutException) {
-                    error = new NetErrorException(e, NetErrorException.SocketTimeoutError);
-                } else if (e instanceof ConnectException) {
-                    error = new NetErrorException(e, NetErrorException.ConnectExceptionError);
-                }else {
-                    error = new NetErrorException(e, NetErrorException.OTHER);
-                }
+            if (e instanceof UnknownHostException) {
+                error = new Exception("网络异常");
+            } else if (e instanceof JSONException || e instanceof JsonParseException) {
+                error = new Exception("数据解析失败");
+            } else if (e instanceof SocketTimeoutException) {
+                error = new Exception("网络异常");
+            } else if (e instanceof ConnectException) {
+                error = new Exception("网络异常");
             } else {
-                error = new NetErrorException(e.getMessage(), NetErrorException.OTHER);
+                error = new Exception(e.getMessage());
             }
+        } else {
+            error = new Exception("未知异常");
         }
-        // 回调抽象方法
         onFail(error);
 //        MobclickAgent.reportError(DemoApplication.getInstance(),error);
     }
@@ -61,5 +58,6 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
      * 回调接口
      */
     protected abstract void onSuccess(T response);
-    protected abstract void onFail(NetErrorException error);
+
+    protected abstract void onFail(Throwable error);
 }

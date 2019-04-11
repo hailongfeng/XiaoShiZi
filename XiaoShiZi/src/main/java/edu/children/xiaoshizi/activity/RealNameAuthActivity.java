@@ -140,7 +140,7 @@ public class RealNameAuthActivity extends XszBaseActivity  implements View.OnCli
             }
 
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
                 showShortToast(error.getMessage());
             }
         });
@@ -155,7 +155,7 @@ public class RealNameAuthActivity extends XszBaseActivity  implements View.OnCli
             e.printStackTrace();
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);  // set the image file name
-        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video image quality to high
+        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0); // set the video image quality to high
         startActivityForResult(intent, 1);
     }
 
@@ -208,7 +208,7 @@ public class RealNameAuthActivity extends XszBaseActivity  implements View.OnCli
                 }
 
                 @Override
-                protected void onFail(NetErrorException error) {
+                protected void onFail(Throwable  error) {
                     hideLoading();
                     showShortToast(error.getMessage());
                 }

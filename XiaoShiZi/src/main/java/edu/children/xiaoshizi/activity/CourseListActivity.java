@@ -98,7 +98,7 @@ public class CourseListActivity extends BaseListActivity<Article, GridView, Cour
             }
 
             @Override
-            protected void onFail(NetErrorException error) {
+            protected void onFail(Throwable  error) {
                 showShortToast(error.getMessage());
                 error.printStackTrace();
             }
