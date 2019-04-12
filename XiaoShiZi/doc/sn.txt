@@ -1,0 +1,31 @@
+sn:123456
+
+keyAlias 'fhl'
+keyPassword '123456'
+storeFile file('key/fhl.keystore')
+storePassword '123456'
+
+E:\fhl\ad\keystore>keytool -list -v -keystore fhl.keystore -storepass 123456
+
+Keystore 类型： JKS
+Keystore 提供者： SUN
+
+您的 keystore 包含 1 输入
+
+别名名称： fhl
+创建日期： 2013-7-8
+项类型: PrivateKeyEntry
+认证链长度： 1
+认证 [1]:
+所有者:CN=fhl, OU=德赢, L=无锡, ST=江苏
+签发人:CN=fhl, OU=德赢, L=无锡, ST=江苏
+序列号:51da4c34
+有效期: Mon Jul 08 13:20:52 CST 2013 至Wed Jun 14 13:20:52 CST 2113
+证书指纹:
+         MD5:B2:2B:09:33:C3:B4:51:22:CD:E1:49:6C:99:B6:17:E7
+         SHA1:7C:03:FF:44:47:07:42:C1:16:1A:A5:42:47:65:6E:19:E8:BF:BB:90
+         签名算法名称:SHA1withRSA
+         版本: 3
+
+百度
+E6D1DE8ED5E518E44D331B6054C0CA41BCAA5CC7
