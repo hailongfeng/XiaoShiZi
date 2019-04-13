@@ -15,7 +15,9 @@ limitations under the License.*/
 package edu.children.xiaoshizi.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +31,10 @@ import com.bumptech.glide.Glide;
 import com.flyco.roundview.RoundTextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.walle.multistatuslayout.MultiStatusLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -44,6 +50,7 @@ import edu.children.xiaoshizi.activity.SuggestionActivity;
 import edu.children.xiaoshizi.activity.UserInfoActivity;
 import edu.children.xiaoshizi.adapter.ParentAdapter;
 import edu.children.xiaoshizi.adapter.StudentAdapter;
+import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.Parent;
 import edu.children.xiaoshizi.bean.Student;
 import edu.children.xiaoshizi.bean.User;
@@ -178,15 +185,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 
 	@Override
 	public void initData() {//必须调用
-		User user=DemoApplication.getInstance().getUser();
-		String userName=user.getUserName();
-		if (!StringUtils.isEmpty(userName)){
-			txt_user_name.setText(userName);
-		}else {
-			txt_user_name.setText("");
-		}
-		loadImage(user.getHeadPortrait(),iv_user_face);
-		txt_user_telphone.setText(DemoApplication.getInstance().getUser().getLoginName());
+		updateUserInfo();
 
 		List<Student> list= DemoApplication.getInstance().getLoginRespon().getStudents();
 		if (list.size()==0){
@@ -209,6 +208,18 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		Log.d(TAG,"cache size="+size);
 	}
 
+	private void updateUserInfo() {
+		User user= DemoApplication.getInstance().getUser();
+		String userName=user.getUserName();
+		if (!StringUtils.isEmpty(userName)){
+			txt_user_name.setText(userName);
+		}else {
+			txt_user_name.setText("");
+		}
+		loadImage(user.getHeadPortrait(),iv_user_face);
+		txt_user_telphone.setText(DemoApplication.getInstance().getUser().getLoginName());
+	}
+
 
 	private void logout() {
 		context.finish();
@@ -216,7 +227,6 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 
 	@Override
 	public void initEvent() {//必须调用
-
 		findView(R.id.iv_user_setting, this);
 		findView(R.id.btn_add_student, this);
 		findView(R.id.ll_my_jifen, this);
@@ -227,7 +237,24 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		findView(R.id.btn_no_student_bind, this);
 	}
 
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		EventBus.getDefault().register(this);
+	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void onUserInfoChange(EventBusMessage<String> messageEvent) {
+		if (messageEvent.getType()==EventBusMessage.Type_User_info_change){
+			updateUserInfo();
+		}
+	}
+	/*粘性事件*/
+//	EventBus.getDefault().postSticky(messageEvent);
+//	@Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+//	public void XXX(MessageEvent messageEvent) {
+//    ...
+//	}
 	@Override
 	public void onClick(View v) {//直接调用不会显示v被点击效果
 		switch (v.getId()) {
@@ -255,5 +282,11 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		}
 	}
 
-
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if(EventBus.getDefault().isRegistered(this)) {
+			EventBus.getDefault().unregister(this);
+		}
+	}
 }

@@ -14,27 +14,11 @@ limitations under the License.*/
 
 package edu.children.xiaoshizi.adapter.view;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
-
-import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.Article;
-import edu.children.xiaoshizi.bean.User;
-import zuo.biao.library.base.BaseModel;
-import zuo.biao.library.base.BaseView;
-import zuo.biao.library.ui.WebViewActivity;
-import zuo.biao.library.util.CommonUtil;
-import zuo.biao.library.util.StringUtil;
 
 /**用户View
  * @author Lemon

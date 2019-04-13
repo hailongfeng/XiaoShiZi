@@ -36,6 +36,7 @@ import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.StringUtils;
 import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
+import zuo.biao.library.util.StringUtil;
 
 public class UserInfoActivity extends XszBaseActivity implements View.OnClickListener {
     private static final int REQUEST_TO_DATE_PICKER = 1;
@@ -121,6 +122,10 @@ public class UserInfoActivity extends XszBaseActivity implements View.OnClickLis
                 getVeryCode();
                 break;
             case R.id.btn_sure:
+                if (StringUtil.isEmpty(sendMsgDialogView.edt_dialog_user_input_code,true)){
+                    showShortToast("请填写验证码");
+                    return;
+                }
                 toActivity(new Intent(context, ChangeUserInfoActivity.class));
                 finish();
                 break;
@@ -134,8 +139,6 @@ public class UserInfoActivity extends XszBaseActivity implements View.OnClickLis
         LogicService.post(context, APIMethod.getVerifyCode, sm, new ApiSubscriber<Response>() {
             @Override
             public void onSuccess(Response response) {
-                Log.d(TAG, "response code:" + response.getCode());
-                Log.d(TAG, "onNext  , " + Thread.currentThread().getName());
                 showShortToast(response.getMessage());
             }
 

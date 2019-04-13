@@ -18,6 +18,7 @@ import com.lzj.pass.dialog.PayPassView;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -34,10 +35,13 @@ import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
+import edu.children.xiaoshizi.utils.DateUtil;
 import zuo.biao.library.base.BaseActivity;
 import zuo.biao.library.ui.DatePickerWindow;
 import zuo.biao.library.ui.EditTextInfoActivity;
 import zuo.biao.library.ui.ItemDialog;
+import zuo.biao.library.util.MD5Util;
+import zuo.biao.library.util.StringUtil;
 import zuo.biao.library.util.TimeUtil;
 
 public class BindingStudentActivity extends XszBaseActivity  implements ItemDialog.OnDialogItemClickListener {
@@ -101,7 +105,7 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
     private static final int DIALOG_SET_SCHOOL = 2;
     private static final int DIALOG_SET_GRADLE = 3;
     private static final int DIALOG_SET_BANJI = 4;
-    private static final String[] STUDENT_GUARDIAN_GUANXI = {"爸爸", "妈妈", "爷爷", "奶奶"};
+    private static final String[] STUDENT_GUARDIAN_GUANXI = {"爸爸", "妈妈", "爷爷", "奶奶","姥姥","姥爷"};
     private static String[] TOPBAR_SCHOOL_NAMES ;
     private static String[] TOPBAR_SCHOOL_GRADLE ;
     private static String[] TOPBAR_SCHOOL_BANJI;
@@ -138,7 +142,6 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
                     return;
                 }
                 banjis=  DbUtils.getSchoolByType(3,gradles.get(currentGradlelIndex).id);
-                showShortToast(gradles.get(currentGradlelIndex).schoolName);
                 TOPBAR_SCHOOL_BANJI =new String[banjis.size()];
                 for (int i = 0; i <banjis.size() ; i++) {
                     TOPBAR_SCHOOL_BANJI[i]=banjis.get(i).schoolName;
@@ -162,6 +165,11 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
     }
 
     private void bindingStudent(){
+        if (StringUtil.isEmpty(edt_bindingPassword,true)){
+            showShortToast("请输入绑定密码");
+            return;
+        }
+
         TreeMap sm = new TreeMap<String,String>();
         sm.put("parentId", DemoApplication.getInstance().getUser().getUserId());
         sm.put("userName", edt_student_name.getText().toString());
@@ -170,14 +178,15 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
         sm.put("schoolId", schools.get(currentSchoolIndex).id);
         sm.put("schoolGradeId", gradles.get(currentGradlelIndex).id);
         sm.put("schoolClassId", banjis.get(currentBanJiIndex).id);
-        sm.put("birthday", txt_student_birthday.getText().toString());
+        sm.put("birthday", currentDate);
         sm.put("parentCustody",STUDENT_GUARDIAN_GUANXI[currentGuanXi] );
-        sm.put("bindingPassword", edt_bindingPassword.getText().toString());
+        String pass=MD5Util.MD5(edt_bindingPassword.getText().toString());
+        sm.put("bindingPassword", pass);
         LogicService.post(context, APIMethod.studentBinding, sm, new ApiSubscriber<Response<LoginRespon>>() {
             @Override
             public void onSuccess(Response<LoginRespon> response) {
                 if (response.getCode()==Response.SUCCESS){
-                    showShortToast("绑定成功");
+                    showShortToast(response.getMessage());
                     LoginRespon loginRespon=response.getResult();
                     DemoApplication.getInstance().getLoginRespon().setParents(loginRespon.getParents());
                     DemoApplication.getInstance().getLoginRespon().setStudents(loginRespon.getStudents());
@@ -189,7 +198,7 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
 
             @Override
             protected void onFail(Throwable  error) {
-                showShortToast("绑定失败");
+                showShortToast(error.getMessage());
             }
         });
     }
@@ -239,7 +248,7 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
             case DIALOG_SET_GUANXI:
                 //setTintColor(position);
                 currentGuanXi=position;
-               String guangxi= STUDENT_GUARDIAN_GUANXI[position];
+                String guangxi= STUDENT_GUARDIAN_GUANXI[position];
                 txt_student_guanxi.setText(guangxi);
                 break;
             case DIALOG_SET_SCHOOL:
@@ -267,6 +276,7 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
     }
 
     private int[] selectedDate = new int[]{1971, 0, 1};
+    private String currentDate="";
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -283,10 +293,12 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
                         for (int i = 0; i < list.size(); i++) {
                             selectedDate[i] = list.get(i);
                         }
-
-//                        showShortToast("选择的日期为" + selectedDate[0] + "-" + (selectedDate[1] + 1) + "-" + selectedDate[2]);
-                        String birthday=selectedDate[0] + "-" + (selectedDate[1] + 1) + "-" + selectedDate[2];
-                        txt_student_birthday.setText(birthday);
+                        Calendar calendar=Calendar.getInstance();
+                        calendar.set(Calendar.YEAR,selectedDate[0]);
+                        calendar.set(Calendar.MONTH,(selectedDate[1]));
+                        calendar.set(Calendar.DAY_OF_MONTH,(selectedDate[2]));
+                        currentDate= DateUtil.format(calendar.getTime(),DateUtil.P1);
+                        txt_student_birthday.setText(currentDate);
                     }
                 }
                 break;

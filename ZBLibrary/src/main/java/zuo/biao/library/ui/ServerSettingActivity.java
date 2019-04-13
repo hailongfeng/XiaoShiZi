@@ -251,7 +251,7 @@ public class ServerSettingActivity extends BaseActivity implements OnClickListen
 //			case R.id.tvServerSettingTestOpen:
 //				toActivity(WebViewActivity.createIntent(context, "测试服务器", StringUtil.getNoBlankString(etServerSettingTest)));
 //				break;
-//			default:
+//			default1:
 //				break;
 //		}
 //	}

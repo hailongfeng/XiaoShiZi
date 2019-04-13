@@ -46,13 +46,14 @@
         <activity android:name=".activity.DemoActivity" />
         <activity android:name=".activity.CourseListActivity" />
         <activity android:name=".activity.LoginActivity">
-        </activity>
-        <activity android:name=".activity.ShareBoardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.ShareBoardActivity">
+
         </activity>
         <activity android:name=".activity.MessageListActivity" />
         <activity android:name=".activity.LinkmanActivity" />

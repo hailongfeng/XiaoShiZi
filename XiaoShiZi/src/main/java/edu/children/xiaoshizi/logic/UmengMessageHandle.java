@@ -16,7 +16,9 @@ import java.util.Map;
 
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.activity.MessageDetailActivity;
 import zuo.biao.library.util.Log;
+import zuo.biao.library.util.StringUtil;
 
 public class UmengMessageHandle {
     private static final String TAG = "UmengMessageHandle";
@@ -91,7 +93,12 @@ public class UmengMessageHandle {
         @Override
         public void dealWithCustomAction(Context context, UMessage msg){
             Log.e(TAG,"click");
-
+            String snapMsgId=msg.extra.get("snapMsgId");
+            if (!StringUtil.isEmpty(snapMsgId,true)){
+                context.startActivity(MessageDetailActivity.createIntent(context,snapMsgId));
+            }else {
+                Log.e(TAG,"该消息[ "+msg.msg_id +" ]snapMsgId为空");
+            }
         }
 
     };

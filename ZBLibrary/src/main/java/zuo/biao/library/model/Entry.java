@@ -33,7 +33,7 @@ public class Entry<K, V> extends BaseModel {
 	public V value;
 	
 	public Entry() {
-		//default
+		//default1
 	}
 	public Entry(K key) {
 		this(key, null);

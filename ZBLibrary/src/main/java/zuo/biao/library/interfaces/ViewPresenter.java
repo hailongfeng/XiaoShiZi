@@ -29,13 +29,13 @@ public interface ViewPresenter {
 	public String getTitleName();
 
 	/**获取导航栏返回按钮名
-	 * @return null - default; "" - default; "xxx" - "xxx"
+	 * @return null - default1; "" - default1; "xxx" - "xxx"
 	 */
 	@Nullable
 	public String getReturnName();
 	
 	/**获取导航栏前进按钮名
-	 * @return null - default; "" - default; "xxx" - "xxx"
+	 * @return null - default1; "" - default1; "xxx" - "xxx"
 	 */
 	@Nullable
 	public String getForwardName();

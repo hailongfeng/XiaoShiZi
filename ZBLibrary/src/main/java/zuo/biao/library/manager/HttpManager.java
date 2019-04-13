@@ -310,7 +310,7 @@ public class HttpManager {
 								}
 							}
 						}
-						saveCookie(url == null ? null : url.host(), JSON.toJSONString(map));//default constructor not found  cookies));
+						saveCookie(url == null ? null : url.host(), JSON.toJSONString(map));//default1 constructor not found  cookies));
 					}
 
 					@Override

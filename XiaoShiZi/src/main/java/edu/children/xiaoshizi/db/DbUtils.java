@@ -1,10 +1,12 @@
 package edu.children.xiaoshizi.db;
 
 import com.raizlabs.android.dbflow.sql.language.Delete;
+import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.SQLOperator;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.children.xiaoshizi.bean.School;
@@ -17,13 +19,21 @@ public class DbUtils {
         if (type==1){
             return SQLite.select().from(School.class)
                     .where(School_Table.type.eq(type))
+                    .orderBy(School_Table.sortNum, true)
                     .queryList();
-        }else {
+        }else  if (type==2){
             return SQLite.select().from(School.class)
                     .where(School_Table.type.eq(type),School_Table.parentId.eq(pid))
+                    .orderBy(School_Table.sortNum, true)
                     .queryList();
+        }else if (type==3){
+            return SQLite.select().from(School.class)
+                    .where(School_Table.type.eq(type),School_Table.gradeId.eq(pid))
+                    .orderBy(School_Table.sortNum, true)
+                    .queryList();
+        }else {
+            return new ArrayList<>();
         }
-
     }
 
     public static List<SearchWorldHistory> getNewHistoryWord(int num){

@@ -37,7 +37,7 @@ public class User extends BaseModel {
 	/**默认构造方法，JSON等解析时必须要有
 	 */
 	public User() {
-		//default
+		//default1
 	}
 	public User(long id) {
 		this();

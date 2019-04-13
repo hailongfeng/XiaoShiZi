@@ -63,7 +63,7 @@ public class SystemBarTintManager {
 
 
     /**
-     * The default system bar tint color value.
+     * The default1 system bar tint color value.
      */
     public static final int DEFAULT_TINT_COLOR = 0x99000000;
 
@@ -136,7 +136,7 @@ public class SystemBarTintManager {
      * UI modes have not been enabled in either the theme or via window flags,
      * then this method does nothing.
      *
-     * @param enabled True to enable tinting, false to disable it (default).
+     * @param enabled True to enable tinting, false to disable it (default1).
      */
     public void setStatusBarTintEnabled(boolean enabled) {
         mStatusBarTintEnabled = enabled;
@@ -152,7 +152,7 @@ public class SystemBarTintManager {
      * or earlier, or translucent system UI modes have not been enabled in either
      * the theme or via window flags, then this method does nothing.
      *
-     * @param enabled True to enable tinting, false to disable it (default).
+     * @param enabled True to enable tinting, false to disable it (default1).
      */
     public void setNavigationBarTintEnabled(boolean enabled) {
         mNavBarTintEnabled = enabled;

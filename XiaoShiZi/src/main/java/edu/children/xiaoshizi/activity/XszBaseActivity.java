@@ -2,6 +2,7 @@ package edu.children.xiaoshizi.activity;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +24,8 @@ import zuo.biao.library.base.BaseActivity;
 public abstract class XszBaseActivity extends BaseActivity implements View.OnClickListener {
 
   protected static   RequestOptions glideOptions = new RequestOptions()
-            .fallback( R.drawable.student_face_default) //url为空的时候,显示的图片
-            .error(R.drawable.student_face_default);//图片加载失败后，显示的图片
+            .fallback( R.drawable.user_default) //url为空的时候,显示的图片
+            .error(R.drawable.user_default);//图片加载失败后，显示的图片
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,10 @@ public abstract class XszBaseActivity extends BaseActivity implements View.OnCli
 
     private Dialog loadingDialog=null;
     protected  void showLoading(String msg){
+        loadingDialog=DialogUIUtils.showLoading(context, msg,true,false,false,true).show();
+    }
+    protected  void showLoading(@StringRes int rid){
+        String msg= context.getResources().getString(rid);
         loadingDialog=DialogUIUtils.showLoading(context, msg,true,false,false,true).show();
     }
     protected  void hideLoading(){

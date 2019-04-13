@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:text="Scan result：" />
+        android:text="Scan data：" />
         
         <TextView 
         android:id="@+id/tv_scan_result"

@@ -1,10 +1,7 @@
 package edu.children.xiaoshizi.fragment;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +14,7 @@ import com.dou361.dialogui.DialogUIUtils;
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
 import zuo.biao.library.base.BaseFragment;
+import zuo.biao.library.util.Log;
 
 
 public abstract class XszBaseFragment extends BaseFragment {
@@ -24,9 +22,9 @@ public abstract class XszBaseFragment extends BaseFragment {
     protected String TAG=this.getClass().getSimpleName();
 
     protected  static RequestOptions glideOptions = new RequestOptions()
-            .placeholder(R.drawable.student_face_default)//图片加载出来前，显示的图片
-            .fallback( R.drawable.student_face_default) //url为空的时候,显示的图片
-            .error(R.drawable.student_face_default);//图片加载失败后，显示的图片
+//            .placeholder(R.drawable.student_face_default)//图片加载出来前，显示的图片
+            .fallback( R.drawable.user_default) //url为空的时候,显示的图片
+            .error(R.drawable.user_default);//图片加载失败后，显示的图片
 
     protected void loadImage(String url, ImageView imageView){
         Glide.with(context)
@@ -54,4 +52,8 @@ public abstract class XszBaseFragment extends BaseFragment {
     }
 
     abstract int getLayoutId();
+
+    protected void print(String msg){
+        Log.d(TAG,msg);
+    }
 }

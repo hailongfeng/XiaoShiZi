@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSONException;
 import com.google.gson.JsonParseException;
 import com.umeng.analytics.MobclickAgent;
 
+import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.net.UnknownServiceException;
 
 import edu.children.xiaoshizi.DemoApplication;
 import io.reactivex.observers.DisposableObserver;
@@ -42,13 +44,15 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
                 error = new Exception("数据解析失败");
             } else if (e instanceof SocketTimeoutException) {
                 error = new Exception("网络异常");
+            } else if (e instanceof UnknownServiceException) {
+                error = new Exception("网络异常");
             } else if (e instanceof ConnectException) {
                 error = new Exception("网络异常");
-            } else {
+            } else if (e instanceof IOException) {
+                error = new Exception("网络异常");
+            }else{
                 error = new Exception(e.getMessage());
             }
-        } else {
-            error = new Exception("未知异常");
         }
         onFail(error);
 //        MobclickAgent.reportError(DemoApplication.getInstance(),error);

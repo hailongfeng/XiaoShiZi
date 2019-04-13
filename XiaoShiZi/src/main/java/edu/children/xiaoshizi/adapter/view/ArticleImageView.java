@@ -71,7 +71,7 @@ public class ArticleImageView extends ArticleView implements OnClickListener {
 	@Override
 	public void bindView(Article data_){
 		super.bindView(data_ != null ? data_ : new Article());
-		loadImage(this.data.getActivityVideoImageUrl(),iv_article_pic);
+		loadImage(this.data.getBannerImage(),iv_article_pic);
 		txt_article_title.setText(this.data.getTitle());
 		if (this.type== ArticleAdapter.Type_Lab_Article){
 			ll_article_pl_and_fx.setVisibility(View.GONE);

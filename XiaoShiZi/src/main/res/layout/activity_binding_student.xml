@@ -70,12 +70,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
                         <RadioButton
+                            android:id="@+id/rb_m"
                             android:text="男"
                             android:tag="M"
                             android:checked="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <RadioButton
+                            android:id="@+id/rb_f"
                             android:text="女"
                             android:tag="F"
                             android:layout_width="wrap_content"
@@ -93,7 +95,7 @@
                     <TextView
                         style="@style/content_item_lf_tv"
                         android:layout_width="80dp"
-                        android:text="出声年月" />
+                        android:text="出生年月" />
 
                     <TextView
                         android:id="@+id/txt_student_birthday"

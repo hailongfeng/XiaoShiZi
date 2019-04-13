@@ -78,16 +78,14 @@ android {
         implementation 'com.jph.takephoto:takephoto_library:4.0.3'
         implementation 'com.roughike:bottom-bar:2.0.2'
         implementation 'com.just.agentweb:agentweb:4.0.2'
-        // (必选)
         implementation 'com.just.agentweb:download:4.0.2'
-        // (可选)
         implementation 'com.just.agentweb:filechooser:4.0.2'
-        // (可选)
         implementation 'com.blankj:utilcode:1.5.1'
         implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
         implementation 'com.github.linhaojian:Omnipotent:1.2'
         implementation 'com.github.Walll-E:MultiStatusLayout:v1.0'
         implementation 'com.github.lzjin:AlipayPassDialog:1.1'
+        implementation 'org.greenrobot:eventbus:3.1.1'
 
         implementation 'com.umeng.umsdk:analytics:8.0.0'
         implementation 'com.umeng.umsdk:common:2.0.0'

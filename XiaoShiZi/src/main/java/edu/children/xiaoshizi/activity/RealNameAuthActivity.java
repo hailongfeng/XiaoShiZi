@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,7 +28,6 @@ import edu.children.xiaoshizi.bean.RealNameAuthInfo;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
-import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.Constant;
 import edu.children.xiaoshizi.utils.DateUtil;
@@ -51,8 +49,8 @@ public class RealNameAuthActivity extends XszBaseActivity  implements View.OnCli
 
     @BindView(R.id.iv_credentials_video_pic)
     ImageView iv_credentials_video_pic;
-    @BindView(R.id.rtv_credentials_zhengmian)
-    RoundTextView rtv_credentials_zhengmian;
+    @BindView(R.id.rtv_credentials_video_add)
+    RoundTextView rtv_credentials_video_add;
 
 
 
@@ -74,16 +72,13 @@ public class RealNameAuthActivity extends XszBaseActivity  implements View.OnCli
 
     @Override
     public void initEvent() {
-//        findView(R.id.ll_user_name,this);
         findView(R.id.ll_user_credentials_type,this);
-//        findView(R.id.ll_user_credentials_num,this);
         findView(R.id.btn_user_add_credentials_zhengmian,this);
         findView(R.id.btn_user_bind,this);
     }
     private static String[] TOPBAR_SCHOOL_NAMES={"身份证","护照"} ;
     private static final int DIALOG_SET_CREDENTIAL = 1;
     private static int currentCredentialsType = -1;
-    private static int currentPic = 1;
 
     private String video_url ="";
     private String video_pic_url ="";
@@ -96,8 +91,7 @@ public class RealNameAuthActivity extends XszBaseActivity  implements View.OnCli
                 break;
             case R.id.iv_credentials_video_pic:
             case R.id.btn_user_add_credentials_zhengmian:
-                //正面照
-                currentPic=1;
+                //视频拍摄
                 takeVideo2();
                 break;
             case R.id.btn_user_bind:
@@ -134,7 +128,7 @@ public class RealNameAuthActivity extends XszBaseActivity  implements View.OnCli
         LogicService.post(context, APIMethod.verifiedSubmit, sm, new ApiSubscriber<Response<RealNameAuthInfo>>() {
             @Override
             protected void onSuccess(Response<RealNameAuthInfo> Response) {
-                showShortToast("认证成功");
+                showShortToast(Response.getMessage());
                 toActivity(new Intent(context,BindingStudentActivity.class));
                 finish();
             }
@@ -203,8 +197,9 @@ public class RealNameAuthActivity extends XszBaseActivity  implements View.OnCli
                     JSONObject jsonObject1 = jsonArray.getJSONObject(1);
                     video_pic_url = jsonObject1.getString("objectUrl");
                     iv_credentials_video_pic.setVisibility(View.VISIBLE);
-                    rtv_credentials_zhengmian.setVisibility(View.GONE);
+                    rtv_credentials_video_add.setVisibility(View.GONE);
                     loadImage(video_pic_url, iv_credentials_video_pic);
+                    showShortToast(respon.getMessage());
                 }
 
                 @Override

@@ -12,6 +12,10 @@ import edu.children.xiaoshizi.db.XSZDatabase;
 @Table(database = XSZDatabase.class)
 public class School extends BaseModel {
 
+    public static final int Type_School=1;
+    public static final int Type_grade=2;
+    public static final int Type_Banji=3;
+
     @PrimaryKey
     public String id;
     @Column
@@ -23,7 +27,7 @@ public class School extends BaseModel {
     @Column
     public int sortNum;
     @Column
-    public int type;
+    public int type; //1学校，2年级，3班级
 
     public String getId() {
         return id;

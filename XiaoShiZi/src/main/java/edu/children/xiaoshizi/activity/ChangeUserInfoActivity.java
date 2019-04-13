@@ -15,6 +15,8 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.jph.takephoto.model.TResult;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +25,17 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
+import edu.children.xiaoshizi.utils.StringUtils;
 import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
+import zuo.biao.library.util.StringUtil;
 
 public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements View.OnClickListener, ItemDialog.OnDialogItemClickListener {
     private static final int REQUEST_TO_DATE_PICKER = 1;
@@ -42,8 +47,6 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
     RadioGroup rg_user_sex;
     @BindView(R.id.edt_user_dizhi)
     EditText edt_user_dizhi;
-    @BindView(R.id.edt_user_phone)
-    EditText edt_user_phone;
     @BindView(R.id.edt_user_email)
     EditText edt_user_email;
     @BindView(R.id.edt_user_work_adddress)
@@ -68,8 +71,8 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
 
     @Override
     public void initData() {
+        headPortrait=user.getHeadPortrait();
         edt_user_name.setText(user.getUserName());
-        edt_user_phone.setText(user.getPhone());
         loadImage(user.getHeadPortrait(),iv_user_face);
         edt_user_home_adddress.setText(user.getHomeAddress());
         edt_user_dizhi.setText(user.getHomeAddress());
@@ -108,14 +111,22 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
 
     private void saveMyProfile() {
         TreeMap sm = new TreeMap<String,String>();
+        if (StringUtil.isEmpty(edt_user_name,true)) {
+            showShortToast("姓名不能为空");
+            return;
+        }
         sm.put("userName",edt_user_name.getText().toString());
         sm.put("email",edt_user_email.getText().toString());
+        boolean isMan=((RadioButton)rg_user_sex.getChildAt(0)).isChecked();
+        sm.put("sex", isMan?"M":"F");
         sm.put("workingAddress",edt_user_work_adddress.getText().toString());
         sm.put("homeAddress",edt_user_home_adddress.getText().toString());
         sm.put("headPortrait",headPortrait);
+        showLoading(R.string.msg_handing);
         LogicService.post(context, APIMethod.saveMyProfile, sm, new ApiSubscriber<Response<User>>() {
             @Override
             public void onSuccess(Response<User> respon) {
+                hideLoading();
                User newUser=  respon.getResult();
                User user= DemoApplication.getInstance().getUser();
                user.setUserName(newUser.getUserName());
@@ -123,12 +134,16 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements Vi
                user.setHomeAddress(newUser.getHomeAddress());
                user.setEmail(newUser.getEmail());
                user.setHeadPortrait(newUser.getHeadPortrait());
+               DemoApplication.getInstance().getLoginRespon().setLoginResp(user);
+                EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_User_info_change,"用户信息更改",""));
                showShortToast(respon.getMessage());
                finish();
             }
 
             @Override
             protected void onFail(Throwable  error) {
+                hideLoading();
+                showShortToast(error.getMessage());
                 error.printStackTrace();
             }
         });

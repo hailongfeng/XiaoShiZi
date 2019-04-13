@@ -69,7 +69,6 @@ public class ArticleVideoView extends ArticleView implements OnClickListener {
 	@Override
 	public void bindView(Article data_){
 		super.bindView(data_ != null ? data_ : new Article());
-
 		loadImage(this.data.getActivityVideoImageUrl(),iv_video_pic);
 		txt_video_title.setText(this.data.getTitle());
 	}

@@ -57,6 +57,8 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
 
     @BindView(R.id.multiStatusLayout)
     MultiStatusLayout multiStatusLayout;
+    @BindView(R.id.multiStatusLayout_all)
+    MultiStatusLayout multiStatusLayout_all;
 
     @BindView(R.id.lvBaseList)
     ListView lvBaseList;
@@ -105,15 +107,22 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
 
     @Override
     public void initView() {
-        txt_date.setText(currentDate);
-        inOutSchoolRecodeAdapter= new InOutSchoolRecodeAdapter(context,student);
-        lvBaseList.setAdapter(inOutSchoolRecodeAdapter);
+
     }
 
     @Override
     public void initData() {
-        changeCurrentStudent(0);
-        getRecodeByDate(student.getStudentId(),currentDate);
+        if (DemoApplication.getInstance().getLoginRespon().getStudents().size()==0){
+            print("没有学生");
+            multiStatusLayout_all.showEmpty();
+        }else {
+            multiStatusLayout_all.showContent();
+            txt_date.setText(currentDate);
+            inOutSchoolRecodeAdapter= new InOutSchoolRecodeAdapter(context,student);
+            lvBaseList.setAdapter(inOutSchoolRecodeAdapter);
+            changeCurrentStudent(0);
+            getRecodeByDate(student.getStudentId(),currentDate);
+        }
     }
 
     private void getRecodeByDate(String studentId,String snapMsgDate) {
