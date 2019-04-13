@@ -144,4 +144,45 @@ public class StringUtils {
         return numbersAndLetters[index % numbersAndLetters.length];
     }
 
+
+    public static String subStringCN(final String str, final int maxLength) {
+        if (str == null) {
+            return str;
+        }
+        String suffix = "...";
+        int suffixLen = suffix.length();
+        final StringBuffer sbuffer = new StringBuffer();
+        final char[] chr = str.trim().toCharArray();
+        int len = 0;
+        for (int i = 0; i < chr.length; i++) {
+            if (chr[i] >= 0xa1) {
+                len += 2;
+            } else {
+                len++;
+            }
+        }
+        if(len<=maxLength){
+            return str;
+        }
+        len = 0;
+        for (int i = 0; i < chr.length; i++) {
+            if (chr[i] >= 0xa1) {
+                len += 2;
+                if (len + suffixLen > maxLength) {
+                    break;
+                }else {
+                    sbuffer.append(chr[i]);
+                }
+            } else {
+                len++;
+                if (len + suffixLen > maxLength) {
+                    break;
+                }else {
+                    sbuffer.append(chr[i]);
+                }
+            }
+        }
+        sbuffer.append(suffix);
+        return sbuffer.toString();
+    }
 }

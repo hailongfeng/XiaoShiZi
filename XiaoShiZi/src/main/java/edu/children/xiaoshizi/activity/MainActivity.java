@@ -26,6 +26,7 @@ import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.db.DbUtils;
+import edu.children.xiaoshizi.fragment.DemoFragment;
 import edu.children.xiaoshizi.fragment.SafeClassRoomFragment;
 import edu.children.xiaoshizi.fragment.SafeToolFragment;
 import edu.children.xiaoshizi.fragment.ShouYeFragment;
@@ -36,6 +37,7 @@ import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import zuo.biao.library.util.Log;
+import zuo.biao.library.util.StringUtil;
 
 public class MainActivity extends XszBaseActivity {
     private static final String TAG = "MainActivity";
@@ -103,7 +105,8 @@ public class MainActivity extends XszBaseActivity {
 
     private Fragment fragments[] = {
             ShouYeFragment.createInstance(),
-            new SafeClassRoomFragment(),
+//            new SafeClassRoomFragment(),
+            DemoFragment.newInstance("开发中...",""),
             SafeToolFragment.createInstance(0),
             WoDeFragment.createInstance()
     };
@@ -119,6 +122,7 @@ public class MainActivity extends XszBaseActivity {
 
     @Override
     public void initView() {
+
         ImmersionBar.with(this)
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
