@@ -12,7 +12,7 @@ public class ArticleType extends BaseModel {
 
     private int categoryId;
     private int sortNum;
-    private String type;
+    private String type;//分类类型。IT图文列表展示 VT 视频列表展示
     private String title;
     private String bannerImage;
 

@@ -31,6 +31,7 @@ public abstract class XszBaseActivity extends BaseActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PushAgent.getInstance(context).onAppStart();
+        DialogUIUtils.init(context);
     }
 
     @Override

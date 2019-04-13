@@ -46,8 +46,8 @@ public class UmengMessageHandle {
                 Log.i(TAG, s+","+s1+"");
             }
         });
-        mPushAgent.setMessageHandler(messageHandler);
-        mPushAgent.setNotificationClickHandler(notificationClickHandler);
+//        mPushAgent.setMessageHandler(messageHandler);
+//        mPushAgent.setNotificationClickHandler(notificationClickHandler);
         PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
     }
@@ -63,9 +63,10 @@ public class UmengMessageHandle {
                 Object value = entry.getValue();
                 Log.d(TAG,key.toString()+"="+value);
             }
-
+            Log.e(TAG,"msg.builder_id ="+msg.builder_id+"getNotification after_open=" +msg.after_open);
             switch (msg.builder_id) {
                 case 1:
+                    Log.d(TAG,"创建通知...");
                     Notification.Builder builder = new Notification.Builder(context);
                     RemoteViews myNotificationView = new RemoteViews(context.getPackageName(),
                             R.layout.notification_view);
@@ -78,7 +79,6 @@ public class UmengMessageHandle {
                             .setSmallIcon(getSmallIconId(context, msg))
                             .setTicker(msg.ticker)
                             .setAutoCancel(true);
-
                     Notification notification1 = builder.build();
                     return notification1;
                 default:
@@ -95,11 +95,11 @@ public class UmengMessageHandle {
             Log.e(TAG,"click");
             String snapMsgId=msg.extra.get("snapMsgId");
             if (!StringUtil.isEmpty(snapMsgId,true)){
-                context.startActivity(MessageDetailActivity.createIntent(context,snapMsgId));
+                DemoApplication.getInstance().startActivity(MessageDetailActivity.createIntent(context,snapMsgId));
+//                context.startActivity();
             }else {
                 Log.e(TAG,"该消息[ "+msg.msg_id +" ]snapMsgId为空");
             }
         }
-
     };
 }

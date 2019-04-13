@@ -12,10 +12,12 @@ import com.dou361.dialogui.listener.DialogUIListener;
 import com.flyco.roundview.RoundTextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.util.Set;
 import java.util.TreeMap;
 
 import butterknife.BindView;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import edu.children.xiaoshizi.bean.Message;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
@@ -42,8 +44,8 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
     RoundTextView rtv_recognite_right;
 
 
-    private Message message;
-    private String snapMsgId;
+    private InAndOutSchoolRecode message;
+    private String snapMsgId="";
     private static final String EXTRA_MESSAGE="snapMsgId";
     private static final String EXTRA_TYPE="type";
     public static Intent createIntent(Context context, String messageId) {
@@ -54,11 +56,17 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        snapMsgId = getIntent().getStringExtra(MessageDetailActivity.EXTRA_MESSAGE);
+        Bundle bun = getIntent().getExtras();
+        if (bun != null) {
+            snapMsgId = bun.getString("snapMsgId");
+        }
         setContentView(R.layout.activity_message_detail);
-
     }
-
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
     @Override
     public void initView() {
 
@@ -67,9 +75,9 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
     private void getMessageById(String messageId){
         TreeMap sm = new TreeMap<String,String>();
         sm.put("snapMsgId", snapMsgId);
-        LogicService.post(context, APIMethod.findSnapMsgById, sm, new ApiSubscriber<Response<Message>>() {
+        LogicService.post(context, APIMethod.findSnapMsgById, sm, new ApiSubscriber<Response<InAndOutSchoolRecode>>() {
             @Override
-            public void onSuccess(Response<Message> response) {
+            public void onSuccess(Response<InAndOutSchoolRecode> response) {
                 if (response.getResult()!=null) {
                     message = response.getResult();
                     initMessage();

@@ -15,6 +15,7 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.lzj.pass.dialog.PayPassDialog;
 import com.lzj.pass.dialog.PayPassView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.db.DbUtils;
@@ -172,28 +174,39 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
 
         TreeMap sm = new TreeMap<String,String>();
         sm.put("parentId", DemoApplication.getInstance().getUser().getUserId());
-        sm.put("userName", edt_student_name.getText().toString());
+        if (StringUtil.isNotEmpty(edt_student_name,true)){
+            sm.put("userName", edt_student_name.getText().toString());
+        }
         boolean isMan=((RadioButton)rg_student_sex.getChildAt(0)).isChecked();
         sm.put("sex", isMan?"M":"F");
-        sm.put("schoolId", schools.get(currentSchoolIndex).id);
-        sm.put("schoolGradeId", gradles.get(currentGradlelIndex).id);
-        sm.put("schoolClassId", banjis.get(currentBanJiIndex).id);
+        if (currentSchoolIndex>=0){
+            sm.put("schoolId", schools.get(currentSchoolIndex).id);
+        }
+        if (currentGradlelIndex>=0){
+            sm.put("schoolGradeId", gradles.get(currentGradlelIndex).id);
+        }
+        if (currentBanJiIndex>=0){
+            sm.put("schoolClassId", banjis.get(currentBanJiIndex).id);
+        }
+
         sm.put("birthday", currentDate);
-        sm.put("parentCustody",STUDENT_GUARDIAN_GUANXI[currentGuanXi] );
-        String pass=MD5Util.MD5(edt_bindingPassword.getText().toString());
-        sm.put("bindingPassword", pass);
+        if (currentGuanXi>=0){
+            sm.put("parentCustody",STUDENT_GUARDIAN_GUANXI[currentGuanXi] );
+        }
+        if (StringUtil.isNotEmpty(edt_bindingPassword,true)){
+            String pass=MD5Util.MD5(edt_bindingPassword.getText().toString());
+            sm.put("bindingPassword", pass);
+        }
+
         LogicService.post(context, APIMethod.studentBinding, sm, new ApiSubscriber<Response<LoginRespon>>() {
             @Override
             public void onSuccess(Response<LoginRespon> response) {
-                if (response.getCode()==Response.SUCCESS){
                     showShortToast(response.getMessage());
                     LoginRespon loginRespon=response.getResult();
                     DemoApplication.getInstance().getLoginRespon().setParents(loginRespon.getParents());
                     DemoApplication.getInstance().getLoginRespon().setStudents(loginRespon.getStudents());
+                    EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_binding_user,"绑定学生",""));
                     context.finish();
-                }else {
-                    showShortToast(response.getMessage());
-                }
             }
 
             @Override

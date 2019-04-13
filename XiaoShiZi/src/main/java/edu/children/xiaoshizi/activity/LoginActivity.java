@@ -123,7 +123,9 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                     showShortToast("验证码不能为空");
                     return;
                 }
+//                DialogUIUtils.showToastCenter("更新成功");
                 login3();
+
             }
         });
     }

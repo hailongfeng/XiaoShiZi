@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/activity_page"
     android:background="@color/white"
-    tools:context=".activity.ChangeUserInfoActivity">
+    tools:context=".activity.ArticleDetailActivity">
 
     <RelativeLayout
         style="@style/topbar_bg"
@@ -16,7 +16,17 @@
             style="@style/topbar_title"
             android:layout_centerHorizontal="true"
             android:text="标题" />
+        <ImageButton
+            android:id="@+id/ib_share"
+            style="@style/topbar_right_btn"
+            android:src="@drawable/icon_fenxiang"
+            />
     </RelativeLayout>
+    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+        android:id="@+id/player_list_video"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="220dp" />
     <LinearLayout
         android:layout_weight="1"
         android:id="@+id/lin_web"

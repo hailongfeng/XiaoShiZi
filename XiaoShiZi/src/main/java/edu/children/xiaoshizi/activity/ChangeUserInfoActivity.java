@@ -37,7 +37,7 @@ import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
 
-public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements View.OnClickListener, ItemDialog.OnDialogItemClickListener {
+public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements ItemDialog.OnDialogItemClickListener {
     private static final int REQUEST_TO_DATE_PICKER = 1;
     @BindView(R.id.iv_user_face)
     RoundedImageView iv_user_face;

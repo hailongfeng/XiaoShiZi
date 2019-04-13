@@ -16,7 +16,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="6dp"
-                android:src="@drawable/wode_shengridangao" />
+                android:src="@drawable/icon_school" />
             <TextView
                 android:layout_marginLeft="10dp"
                 android:id="@+id/txt_student_in_out_school_recode_time"

@@ -5,109 +5,120 @@
 
     <android.support.v4.widget.NestedScrollView
         style="@style/ll_vertical_match_match"
-        android:layout_weight="1" >
-        <LinearLayout style="@style/ll_vertical_match_match" >
+        android:layout_weight="1">
 
-           <FrameLayout
-               android:background="@color/white"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <RelativeLayout
-                   android:background="@color/colorPrimary"
-                   android:gravity="center_vertical"
-                   android:layout_width="match_parent"
-                   android:paddingTop="10dp"
-                   android:paddingBottom="10dp"
-                   android:layout_height="wrap_content">
-                   <com.makeramen.roundedimageview.RoundedImageView
-                       android:id="@+id/iv_user_face"
-                       android:layout_width="80dp"
-                       android:layout_height="80dp"
-                       android:layout_margin="10dp"
-                       android:scaleType="fitXY"
-                       android:src="@mipmap/ic_launcher"
-                       app:riv_border_color="@color/white"
-                       app:riv_border_width="1dp"
-                       app:riv_oval="true" />
+        <LinearLayout style="@style/ll_vertical_match_match">
 
-                   <TextView
-                       android:layout_marginTop="10dp"
-                       android:id="@+id/txt_user_name"
-                       android:layout_width="wrap_content"
-                       android:layout_height="40dp"
-                       android:layout_toRightOf="@id/iv_user_face"
-                       android:gravity="center_vertical"
-                       android:textColor="@color/white"
-                       android:textSize="16sp"
-                       android:text="李大鹏" />
-                   <TextView
-                       android:id="@+id/txt_user_telphone"
-                       android:text="18697386272"
-                       android:layout_toRightOf="@id/iv_user_face"
-                       android:layout_below="@id/txt_user_name"
-                       android:gravity="center_vertical"
-                       android:textColor="@color/white"
-                       android:textSize="16sp"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content" />
-                   <ImageView
-                       android:layout_marginTop="10dp"
-                       android:layout_marginRight="10dp"
-                       android:id="@+id/iv_user_setting"
-                       android:scaleType="fitXY"
-                       android:src="@drawable/icon_setting"
-                       android:layout_alignParentRight="true"
-                       android:layout_alignParentTop="true"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content" />
-               </RelativeLayout>
-               <TextView
-                   android:layout_width="match_parent"
-                   android:layout_marginTop="100dp"
-                   android:background="@color/colorPrimary"
-                   android:layout_height="100dp" />
-               <android.support.v7.widget.RecyclerView
-                   android:layout_marginTop="110dp"
-                   android:id="@id/rvBaseRecycler"
-                   style="@style/lv" />
-               <android.support.v7.widget.CardView
-                   android:id="@+id/cv_no_students"
-                   android:layout_marginTop="110dp"
-                   android:layout_width="match_parent"
-                   android:layout_height="180dp"
-                   android:layout_marginLeft="10dp"
-                   android:layout_marginRight="10dp"
-                   android:layout_marginBottom="20dp"
-                   android:visibility="gone"
-                   app:cardBackgroundColor="@color/white"
-                   app:cardCornerRadius="8dp"
-                   app:cardElevation="8dp">
-                   <LinearLayout
-                       android:orientation="vertical"
-                       android:gravity="center"
-                       android:layout_width="match_parent"
-                       android:layout_height="match_parent">
-                       <TextView
-                           android:text="您当前还未绑定您的孩子噢"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content" />
-                       <com.flyco.roundview.RoundTextView
-                           android:layout_marginTop="5dp"
-                           android:id="@+id/btn_no_student_bind"
-                           android:layout_width="150dp"
-                           android:layout_height="40dp"
-                           android:layout_centerInParent="true"
-                           android:gravity="center"
-                           android:text="立即绑定"
-                           android:padding="10dp"
-                           android:textColor="@android:color/white"
-                           app:rv_backgroundColor="@color/colorPrimary"
-                           app:rv_backgroundPressColor="@color/colorPrimaryDark"
-                           app:rv_cornerRadius="15dp" />
-                   </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
-               </android.support.v7.widget.CardView>
-           </FrameLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center_vertical"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/iv_user_face"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_margin="10dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/ic_launcher"
+                        app:riv_border_color="@color/white"
+                        app:riv_border_width="1dp"
+                        app:riv_oval="true" />
+
+                    <TextView
+                        android:id="@+id/txt_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@id/iv_user_face"
+                        android:gravity="center_vertical"
+                        android:text="李大鹏"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/txt_user_telphone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txt_user_name"
+                        android:layout_toRightOf="@id/iv_user_face"
+                        android:gravity="center_vertical"
+                        android:text="18697386272"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_user_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/icon_setting" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="100dp"
+                    android:background="@color/colorPrimary" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@id/rvBaseRecycler"
+                    style="@style/lv"
+                    android:layout_marginTop="110dp" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_no_students"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="110dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="您当前还未绑定您的孩子噢" />
+
+                        <com.flyco.roundview.RoundTextView
+                            android:id="@+id/btn_no_student_bind"
+                            android:layout_width="150dp"
+                            android:layout_height="40dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="立即绑定"
+                            android:textColor="@android:color/white"
+                            app:rv_backgroundColor="@color/colorPrimary"
+                            app:rv_backgroundPressColor="@color/colorPrimaryDark"
+                            app:rv_cornerRadius="15dp" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+            </FrameLayout>
 
             <com.flyco.roundview.RoundTextView
                 android:id="@+id/btn_add_student"
@@ -115,12 +126,12 @@
                 android:layout_height="40dp"
                 android:layout_centerInParent="true"
                 android:layout_margin="20dp"
-                android:textSize="14sp"
-                android:gravity="center"
-                android:text="添加学生"
                 android:drawableLeft="@drawable/icon_add_student"
                 android:drawablePadding="5dp"
+                android:gravity="center"
+                android:text="添加学生"
                 android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
                 app:rv_cornerRadius="5dp" />
 
             <android.support.v7.widget.CardView
@@ -131,59 +142,67 @@
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="16dp">
+
                 <com.walle.multistatuslayout.MultiStatusLayout
                     android:id="@+id/multiStatusLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     app:emptyLayout="@layout/layout_empty"
-                    app:netErrorLayout="@layout/layout_empty"
                     app:errorLayout="@layout/layout_empty"
                     app:loadLayout="@layout/layout_empty"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvCustodyRecycler"
-                    style="@style/lv" />
+                    app:netErrorLayout="@layout/layout_empty">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvCustodyRecycler"
+                        style="@style/lv" />
                 </com.walle.multistatuslayout.MultiStatusLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="20dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp">
-                <LinearLayout
-                    style="@style/ll_vertical_match_wrap">
-                <LinearLayout
-                    android:id="@+id/ll_my_jifen"
-                    style="@style/content_item_white" >
-                    <ImageView
-                        android:src="@drawable/icon_jifen"
-                        android:layout_marginRight="10dp"
-                        style="@style/content_item_lf_img"
-                        android:padding="0dp" />
-                    <TextView
-                        style="@style/content_item_lf_tv"
-                        android:layout_weight="1"
-                        android:text="我的积分" />
 
-                    <ImageView
-                        style="@style/content_item_rt_img"
-                        android:padding="0dp" />
-                </LinearLayout>
-                <View
-                    style="@style/divider_horizontal_1px" />
+                <LinearLayout style="@style/ll_vertical_match_wrap">
+
+                    <LinearLayout
+                        android:id="@+id/ll_my_jifen"
+                        style="@style/content_item_white">
+
+                        <ImageView
+                            style="@style/content_item_lf_img"
+                            android:layout_marginRight="10dp"
+                            android:padding="0dp"
+                            android:src="@drawable/icon_jifen" />
+
+                        <TextView
+                            style="@style/content_item_lf_tv"
+                            android:layout_weight="1"
+                            android:text="我的积分" />
+
+                        <ImageView
+                            style="@style/content_item_rt_img"
+                            android:padding="0dp" />
+                    </LinearLayout>
+
+                    <View style="@style/divider_horizontal_1px" />
+
                     <LinearLayout
                         android:id="@+id/ll_my_huancun"
-                        style="@style/content_item_white" >
+                        style="@style/content_item_white">
+
                         <ImageView
-                            android:src="@drawable/icon_cache"
-                            android:layout_marginRight="10dp"
                             style="@style/content_item_lf_img"
-                            android:padding="0dp" />
+                            android:layout_marginRight="10dp"
+                            android:padding="0dp"
+                            android:src="@drawable/icon_cache" />
+
                         <TextView
                             style="@style/content_item_lf_tv"
                             android:layout_weight="1"
@@ -193,16 +212,19 @@
                             style="@style/content_item_rt_img"
                             android:padding="0dp" />
                     </LinearLayout>
-                    <View
-                        style="@style/divider_horizontal_1px" />
+
+                    <View style="@style/divider_horizontal_1px" />
+
                     <LinearLayout
                         android:id="@+id/ll_my_jiazhangjianyi"
-                        style="@style/content_item_white" >
+                        style="@style/content_item_white">
+
                         <ImageView
-                            android:src="@drawable/icon_edit_gray"
-                            android:layout_marginRight="10dp"
                             style="@style/content_item_lf_img"
-                            android:padding="0dp" />
+                            android:layout_marginRight="10dp"
+                            android:padding="0dp"
+                            android:src="@drawable/icon_edit_gray" />
+
                         <TextView
                             style="@style/content_item_lf_tv"
                             android:layout_weight="1"
@@ -212,16 +234,19 @@
                             style="@style/content_item_rt_img"
                             android:padding="0dp" />
                     </LinearLayout>
-                    <View
-                        style="@style/divider_horizontal_1px" />
+
+                    <View style="@style/divider_horizontal_1px" />
+
                     <LinearLayout
                         android:id="@+id/ll_my_shezhi"
-                        style="@style/content_item_white" >
+                        style="@style/content_item_white">
+
                         <ImageView
-                            android:src="@drawable/icon_setting_gray"
                             style="@style/content_item_lf_img"
                             android:layout_marginRight="10dp"
-                            android:padding="0dp" />
+                            android:padding="0dp"
+                            android:src="@drawable/icon_setting_gray" />
+
                         <TextView
                             style="@style/content_item_lf_tv"
                             android:layout_weight="1"
@@ -231,16 +256,19 @@
                             style="@style/content_item_rt_img"
                             android:padding="0dp" />
                     </LinearLayout>
-                    <View
-                        style="@style/divider_horizontal_1px" />
+
+                    <View style="@style/divider_horizontal_1px" />
+
                     <LinearLayout
                         android:id="@+id/ll_my_fenxiang"
-                        style="@style/content_item_white" >
+                        style="@style/content_item_white">
+
                         <ImageView
-                            android:src="@drawable/icon_share_gray"
-                            android:layout_marginRight="10dp"
                             style="@style/content_item_lf_img"
-                            android:padding="0dp" />
+                            android:layout_marginRight="10dp"
+                            android:padding="0dp"
+                            android:src="@drawable/icon_share_gray" />
+
                         <TextView
                             style="@style/content_item_lf_tv"
                             android:layout_weight="1"
@@ -250,8 +278,8 @@
                             style="@style/content_item_rt_img"
                             android:padding="0dp" />
                     </LinearLayout>
-                    <View
-                        style="@style/divider_horizontal_1px" />
+
+                    <View style="@style/divider_horizontal_1px" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>

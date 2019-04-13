@@ -36,7 +36,7 @@ import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
 
-public class RealNameAuthActivity extends XszBaseActivity  implements View.OnClickListener, ItemDialog.OnDialogItemClickListener {
+public class RealNameAuthActivity extends XszBaseActivity  implements ItemDialog.OnDialogItemClickListener {
 
 
     @BindView(R.id.edt_user_name)

@@ -109,20 +109,10 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		return new WoDeFragment();
 	}
 
-	//与Activity通信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	@Override
 	int getLayoutId() {
 		return R.layout.wode_fragment;
 	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		String headPortrait= DemoApplication.getInstance().getUser().getHeadPortrait();
-		Glide.with(context).load(headPortrait ).into(iv_user_face);
-	}
-
-	//UI显示区(操作UI，但不存在数据获取或处理代码，也不存在事件监听代码)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	@Override
 	public void initView() {//必须调用
@@ -187,25 +177,36 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	public void initData() {//必须调用
 		updateUserInfo();
 
-		List<Student> list= DemoApplication.getInstance().getLoginRespon().getStudents();
-		if (list.size()==0){
-			btn_add_student.setVisibility(View.GONE);
-			rvStudentsRecycler.setVisibility(View.GONE);
-			cv_no_students.setVisibility(View.VISIBLE);
-		}else {
-			cv_no_students.setVisibility(View.GONE);
-			studentAdapter.refresh(list);
-		}
+		updateStrudent();
 
+		updateParent();
+		long size= XszCache.getCacheSize();
+		Log.d(TAG,"cache size="+size);
+	}
+
+	private void updateParent() {
 		List<Parent> list1= DemoApplication.getInstance().getLoginRespon().getParents();
-		if (list1.size() != 0) {
+		if (list1!=null&&list1.size() != 0) {
 			multiStatusLayout.showContent();
 			parentAdapter.refresh(list1);
 		} else {
 			multiStatusLayout.showEmpty();
 		}
-		long size= XszCache.getCacheSize();
-		Log.d(TAG,"cache size="+size);
+	}
+
+	private void updateStrudent() {
+		List<Student> list=DemoApplication.getInstance().getLoginRespon().getStudents();
+		if (list!=null){
+			if (list.size()==0){
+				btn_add_student.setVisibility(View.GONE);
+				rvStudentsRecycler.setVisibility(View.GONE);
+				cv_no_students.setVisibility(View.VISIBLE);
+			}else {
+				cv_no_students.setVisibility(View.GONE);
+				studentAdapter.refresh(list);
+			}
+		}
+
 	}
 
 	private void updateUserInfo() {
@@ -247,8 +248,11 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	public void onUserInfoChange(EventBusMessage<String> messageEvent) {
 		if (messageEvent.getType()==EventBusMessage.Type_User_info_change){
 			updateUserInfo();
+		}else if (messageEvent.getType()==EventBusMessage.Type_binding_user){
+			updateStrudent();
 		}
 	}
+
 	/*粘性事件*/
 //	EventBus.getDefault().postSticky(messageEvent);
 //	@Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
@@ -260,6 +264,10 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		switch (v.getId()) {
 			case R.id.iv_user_setting:
 				toActivity(new Intent(context, UserInfoActivity.class));
+				break;
+			case R.id.ll_my_jifen:
+//				integration;
+//				toActivity(new Intent(context, SettingActivity.class));
 				break;
 			case R.id.ll_my_shezhi:
 				toActivity(new Intent(context, SettingActivity.class));

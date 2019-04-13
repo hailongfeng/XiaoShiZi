@@ -68,6 +68,7 @@ public class InAndOutSchoolRecodeView extends BaseView<InAndOutSchoolRecode> imp
 	public View createView() {
 		txt_student_in_out_school_recode_time = findView(R.id.txt_student_in_out_school_recode_time);
 		txt_student_in_out_school_recode_icon = findView(R.id.txt_student_in_out_school_recode_icon);
+
 		txt_student_in_out_school_recode_miaoshu = findView(R.id.txt_student_in_out_school_recode_miaoshu);
 		rtv_view_detail = findView(R.id.rtv_view_detail, this);
 		return super.createView();

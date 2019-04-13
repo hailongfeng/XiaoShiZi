@@ -27,6 +27,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
@@ -67,7 +68,7 @@ import zuo.biao.library.util.StringUtil;
  * @see #onDestroy
  * @use extends BaseActivity, 具体参考 .DemoActivity 和 .DemoFragmentActivity
  */
-public abstract class BaseActivity extends FragmentActivity implements ActivityPresenter, OnGestureListener {
+public abstract class BaseActivity extends AppCompatActivity implements ActivityPresenter, OnGestureListener {
 	protected String TAG=this.getClass().getSimpleName();
 
 	@Override
