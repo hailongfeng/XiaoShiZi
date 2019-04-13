@@ -6,10 +6,12 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.adapter.MessageAdapter;
@@ -22,37 +24,28 @@ import zuo.biao.library.base.BaseListActivity;
 import zuo.biao.library.interfaces.AdapterCallBack;
 import zuo.biao.library.util.JSON;
 
-public class MessageListActivity extends BaseListActivity<Message, ListView, MessageAdapter> {
+public class MessageListActivity extends XszBaseActivity {
 
+
+    @BindView(R.id.lvBaseList)
+    ListView lvBaseList;
+    MessageAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-        //绑定初始化ButterKnife
-        ButterKnife.bind(this);
-        initView();
-        initData();
-        initEvent();
-        onRefresh();
+        adapter= new MessageAdapter(context);
+        lvBaseList.setAdapter(adapter);
+    }
+
+
+    @Override
+    public void initView() {
+
     }
 
     @Override
-    public void setList(List<Message> list) {
-        setList(new AdapterCallBack<MessageAdapter>() {
-            @Override
-            public MessageAdapter createAdapter() {
-                return new MessageAdapter(context);
-            }
-
-            @Override
-            public void refreshAdapter() {
-                adapter.refresh(list);
-            }
-        });
-    }
-
-    @Override
-    public void getListAsync(int page) {
+    public void initData() {
         List<Message> data=new ArrayList<>();
         new Handler().postDelayed(new Runnable() {
 
@@ -61,8 +54,13 @@ public class MessageListActivity extends BaseListActivity<Message, ListView, Mes
                 for (int i = 0; i <10 ; i++) {
                     data.add(new Message(i+"","消息："+i));
                 }
-                onLoadSucceed(page, data);
+                adapter.refresh(data);
             }
         }, 1000);
+    }
+
+    @Override
+    public void initEvent() {
+
     }
 }

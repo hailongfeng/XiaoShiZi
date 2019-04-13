@@ -77,7 +77,7 @@ public class UserInfoActivity extends XszBaseActivity implements View.OnClickLis
     @Override
     public void initData() {
         txt_user_name.setText(user.getUserName());
-        txt_user_phone.setText(user.getPhone());
+        txt_user_phone.setText(user.getLoginName());
         loadImage(user.getHeadPortrait(), iv_user_face);
         txt_user_home_adddress.setText(user.getHomeAddress());
         txt_user_dizhi.setText(user.getHomeAddress());

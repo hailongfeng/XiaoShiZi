@@ -26,9 +26,9 @@ import edu.children.xiaoshizi.bean.ArticleType;
 
 public class GradlePagerAdapter extends PagerAdapter {
     protected static RequestOptions glideOptions = new RequestOptions()
-            .placeholder(R.drawable.student_face_default)//图片加载出来前，显示的图片
-            .fallback( R.drawable.student_face_default) //url为空的时候,显示的图片
-            .error(R.drawable.student_face_default);//图片加载失败后，显示的图片
+            .placeholder(R.drawable.user_default)//图片加载出来前，显示的图片
+            .fallback( R.drawable.user_default) //url为空的时候,显示的图片
+            .error(R.drawable.user_default);//图片加载失败后，显示的图片
 
     private List<ArticleType> mDataList;
     private Context context;

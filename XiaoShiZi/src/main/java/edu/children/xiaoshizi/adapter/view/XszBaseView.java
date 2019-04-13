@@ -13,9 +13,9 @@ import zuo.biao.library.base.BaseView;
 
 public abstract class XszBaseView<T> extends BaseView<T> {
     protected static RequestOptions glideOptions = new RequestOptions()
-            .placeholder(R.drawable.student_face_default)//图片加载出来前，显示的图片
-            .fallback( R.drawable.student_face_default) //url为空的时候,显示的图片
-            .error(R.drawable.student_face_default);//图片加载失败后，显示的图片
+            .placeholder(R.drawable.user_default)//图片加载出来前，显示的图片
+            .fallback( R.drawable.user_default) //url为空的时候,显示的图片
+            .error(R.drawable.user_default);//图片加载失败后，显示的图片
 
     public XszBaseView(Activity context, int layoutResId) {
         super(context, layoutResId);

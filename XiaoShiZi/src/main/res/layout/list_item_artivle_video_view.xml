@@ -21,7 +21,7 @@
                 style="@style/img_fitXY"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/student_face_default" />
+                android:src="@drawable/user_default" />
             <TextView
                 android:padding="5dp"
                 android:id="@+id/txt_video_play_count"

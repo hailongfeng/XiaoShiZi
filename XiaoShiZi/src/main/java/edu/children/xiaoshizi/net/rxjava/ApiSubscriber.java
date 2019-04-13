@@ -14,6 +14,7 @@ import edu.children.xiaoshizi.DemoApplication;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.subscribers.ResourceSubscriber;
 import zuo.biao.library.util.Log;
+import zuo.biao.library.util.StringUtil;
 
 public abstract class ApiSubscriber<T extends Response> extends DisposableObserver<T> {
 
@@ -27,11 +28,12 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
     @Override
     public final void onNext(T t) {
         Log.d(TAG, "code:" + t.getCode() + "，message ：" + t.getMessage());
-        if (t.getCode().equals(Response.SUCCESS)) {
-            onSuccess(t);
-        } else {
-            onError(new Exception(t.getMessage()));
-        }
+            if (t!=null&&t.getCode().equals(Response.SUCCESS)) {
+                onSuccess(t);
+            } else {
+                String msg=(t!=null&&StringUtil.isNotEmpty(t.getMessage(),true)?t.getMessage():"服务器异常");
+                onError(new Exception(msg));
+            }
     }
 
     @Override

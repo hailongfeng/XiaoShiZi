@@ -16,7 +16,7 @@
             style="@style/img_fitXY"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/student_face_default" />
+            android:src="@drawable/user_default" />
     </com.flyco.roundview.RoundFrameLayout>
         <TextView
             android:id="@+id/txt_course_name"

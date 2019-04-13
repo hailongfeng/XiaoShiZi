@@ -6,6 +6,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="msg_handing">处理中...</string>
+    <string name="msg_Loading">加载中...</string>
 
     <string name="in_out_school_recode_compare">\u003C \u003E</string>
 </resources>

@@ -108,7 +108,7 @@
                             android:id="@+id/iv_credentials_video_pic"
                             android:scaleType="fitXY"
                             android:visibility="gone"
-                            android:src="@drawable/student_face_default"
+                            android:src="@drawable/user_default"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
                         <com.flyco.roundview.RoundTextView

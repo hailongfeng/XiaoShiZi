@@ -7,7 +7,7 @@ import android.os.Bundle;
 import edu.children.xiaoshizi.DemoApplication;
 
 public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks {
-    private static final String TAG = "ActivityLife";
+    private static final String TAG = "ActivityLifecycle";
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         android.util.Log.d(TAG,activity.getClass().getSimpleName()+"...onCreate");

@@ -73,10 +73,13 @@ public class MainActivity extends XszBaseActivity {
         });
     }
 
-    private void getMyprofile() {
-        LogicService.post(context, APIMethod.getMyProfile, null, new ApiSubscriber<Response<User>>() {
+    private void getMyprofile(String id)  {
+        TreeMap sm = new TreeMap<String,String>();
+        sm.put("userId",id);
+        LogicService.post(context, APIMethod.getMyProfile, sm, new ApiSubscriber<Response<User>>() {
             @Override
             public void onSuccess(Response<User> listResponse) {
+                hideLoading();
                 User newUser= listResponse.getResult();
                 User oldUser=DemoApplication.getInstance().getUser();
                 oldUser.setLoginName(newUser.getLoginName());
@@ -90,6 +93,7 @@ public class MainActivity extends XszBaseActivity {
 
             @Override
             protected void onFail(Throwable  error) {
+                hideLoading();
                 Log.d(TAG, error.getMessage());
             }
 
@@ -98,7 +102,8 @@ public class MainActivity extends XszBaseActivity {
     @Override
     public void initData() {
         getSchools();
-        getMyprofile();
+        String userId=DemoApplication.getInstance().getUser().getUserId();
+        getMyprofile(userId);
         loadSeClassRoomContentCategory();
         loadSeLabContentCategory();
     }

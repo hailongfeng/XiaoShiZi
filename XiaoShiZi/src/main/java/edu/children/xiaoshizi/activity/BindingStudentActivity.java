@@ -68,9 +68,6 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_binding_student);
-        initView();
-        initData();
-        initEvent();
     }
 
     @Override
