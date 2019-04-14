@@ -1,1 +1,2 @@
 include  ':ZBLibrary', ':QRCodeLibrary', ':XiaoShiZi'
+include  ':SmallVideoLib2','sample'
