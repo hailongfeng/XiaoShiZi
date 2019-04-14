@@ -101,6 +101,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         findView(R.id.btn_login, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                DialogUIUtils.showToastCenter("发送成功");
 //                dialog= DialogUIUtils.showAlert(context,"清除成功","清除30M","aaa","bbb","确定","取消",true,true,true,new DialogUIListener(){
 //
 //                    @Override
@@ -258,7 +259,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                             showLoading("正在登陆");
                         }else if (r.getCode().equals("2")){
                             hideLoading();
-                            showLoading(r.getMessage());
+                            showShortToast(r.getMessage());
                         }else if (r.getCode().equals("3")){
                             hideLoading();
                             showShortToast(r.getMessage());

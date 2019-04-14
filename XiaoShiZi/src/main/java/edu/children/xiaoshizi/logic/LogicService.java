@@ -1,6 +1,7 @@
 package edu.children.xiaoshizi.logic;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -25,7 +26,9 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.HttpException;
 import retrofit2.Retrofit;
+import retrofit2.http.HTTP;
 import zuo.biao.library.util.Log;
 
 public class LogicService {
@@ -101,7 +104,7 @@ public class LogicService {
         ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
         RetrofitClient.execute(apiService.uploadVerifiedVideo(params,parts),subscriber);
     }
-    public static Response post(Context context, final APIMethod method, TreeMap<String,String> param) throws IOException {
+    public static <T> Response<T> post(Context context, final APIMethod method, TreeMap<String,String> param) {
         if (param==null){
             param=new TreeMap<String,String>();
         }
@@ -122,9 +125,30 @@ public class LogicService {
             observable=apiService.loadSysBannerList(requestBody);
         }else if (method==APIMethod.loadContentCategory){
             observable=apiService.loadContentCategory(requestBody);
+        }else {
+            return new Response<T>("500","不支持该方法");
         }
-        retrofit2.Response r=observable.execute();
-        return (Response) r.body();
+        try {
+            retrofit2.Response<Response> r = observable.execute();
+            Response<T> myResponse = r.body();
+            String errMessage=r.message();
+            int code=r.code();
+            Log.d(TAG,"code="+code+"message="+errMessage);
+            if (r.isSuccessful()&&myResponse!=null){
+                return myResponse;
+            }else {
+                if (TextUtils.isEmpty(errMessage)){
+                    errMessage="服务器返回异常";
+                }
+                return new Response<T>(r.code()+"",errMessage);
+            }
+        }catch (IOException e){
+            return new Response<T>("500","网络异常");
+        }catch (HttpException e){
+            return new Response<T>("500","网络异常");
+        }catch (Exception e){
+            return new Response<T>("500","网络异常");
+        }
 
     }
 

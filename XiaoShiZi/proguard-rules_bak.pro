@@ -30,7 +30,6 @@
 -keepattributes *Annotation*,InnerClasses
 -keepattributes Signature
 -keepattributes SourceFile,LineNumberTable
--ignorewarnings
 #----------------------------------------------------------------------------
 
 #---------------------------------默认保留区---------------------------------
@@ -44,6 +43,7 @@
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
 -keep public class * extends android.view.View
+-keep public class com.android.vending.licensing.ILicensingService
 -keep class android.support.** {*;}
 
 -keep public class * extends android.view.View{
@@ -98,6 +98,9 @@
 #----------------------------------------------------------------------------
 
 #---------------------------------webview------------------------------------
+-keepclassmembers class fqcn.of.javascript.interface.for.Webview {
+   public *;
+}
 -keepclassmembers class * extends android.webkit.WebViewClient {
     public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);
     public boolean *(android.webkit.WebView, java.lang.String);
@@ -120,10 +123,66 @@
 ####################zxing#####################
 -keep class com.google.zxing.** {*;}
 -dontwarn com.google.zxing.**
+##百度定位
+-keep class com.baidu.** {*;}
+-keep class vi.com.** {*;}
+-dontwarn com.baidu.**
+
+## okhttp
+-dontwarn com.squareup.okhttp.**
+-keep class com.squareup.okhttp.{*;}
+#retrofit
+-dontwarn retrofit.**
+-keep class retrofit.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+-dontwarn okio.**
+
+#recyclerview-animators
+-keep class jp.wasabeef.** {*;}
+-dontwarn jp.wasabeef.*
 
 #multistateview
 -keep class com.kennyc.view.** { *; }
 -dontwarn com.kennyc.view.*
+
+#umeng
+# ========= 友盟 =================
+-dontshrink
+-dontoptimize
+-dontwarn com.google.android.maps.**
+-dontwarn android.webkit.WebView
+-dontwarn com.umeng.**
+-dontwarn com.tencent.weibo.sdk.**
+-dontwarn com.facebook.**
+
+
+-keep enum com.facebook.**
+-keepattributes Exceptions,InnerClasses,Signature
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+
+-keep public interface com.facebook.**
+-keep public interface com.tencent.**
+-keep public interface com.umeng.socialize.**
+-keep public interface com.umeng.socialize.sensor.**
+-keep public interface com.umeng.scrshot.**
+
+-keep public class com.umeng.socialize.* {*;}
+-keep public class javax.**
+-keep public class android.webkit.**
+
+-keep class com.facebook.**
+-keep class com.umeng.scrshot.**
+-keep public class com.tencent.** {*;}
+-keep class com.umeng.socialize.sensor.**
+
+-keep class com.tencent.mm.sdk.modelmsg.WXMediaMessage {*;}
+
+-keep class com.tencent.mm.sdk.modelmsg.** implements com.tencent.mm.sdk.modelmsg.WXMediaMessage$IMediaObject {*;}
+
+-keep class im.yixin.sdk.api.YXMessage {*;}
+-keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
 
 
 #下面中括号的地方需要要填你的包名
@@ -137,6 +196,14 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
+
+#友盟自动更新
+-keep public class com.umeng.fb.ui.ThreadView {
+}
+-keep public class * extends com.umeng.**
+# 以下包不进行过滤
+-keep class com.umeng.** { *; }
+
 
 #-ButterKnife 7.0
  -keep class butterknife.** { *; }
@@ -175,6 +242,8 @@
 #ImmersionBar 混淆
 -keep class com.gyf.barlibrary.* {*;}
 
+
+
 ################gson##################
 -keep class com.google.gson.** {*;}
 -keep class com.google.**{*;}
@@ -200,6 +269,13 @@
 -keep interface android.support.v4.app.** { *; }
 -keep class android.support.v4.** { *; }
 
+
+# support-v7
+-dontwarn android.support.v7.**
+-keep class android.support.v7.internal.** { *; }
+-keep interface android.support.v7.internal.** { *; }
+-keep class android.support.v7.** { *; }
+
 # support design
 #@link http://stackoverflow.com/a/31028536
 -dontwarn android.support.design.**
@@ -207,6 +283,10 @@
 -keep interface android.support.design.** { *; }
 -keep public class android.support.design.R$* { *; }
 #-------------------------------------------------------------------------
+
+# picasso
+-keep class com.squareup.picasso.** {*; }
+-dontwarn com.squareup.picasso.**
 
 #glide 4.x
 #由*	chenyongta*贡献混淆代码
@@ -239,14 +319,18 @@
 -keepattributes Exceptions
 
 #Rxjava RxAndroid
+-dontwarn rx.*
 -dontwarn sun.misc.**
+
 -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
    long producerIndex;
    long consumerIndex;
 }
+
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode producerNode;
 }
+
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }

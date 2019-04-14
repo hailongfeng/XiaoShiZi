@@ -1,5 +1,7 @@
 package edu.children.xiaoshizi.net.rxjava;
 
+import android.text.TextUtils;
+
 import com.alibaba.fastjson.JSONException;
 import com.google.gson.JsonParseException;
 import com.umeng.analytics.MobclickAgent;
@@ -13,6 +15,8 @@ import java.net.UnknownServiceException;
 import edu.children.xiaoshizi.DemoApplication;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.subscribers.ResourceSubscriber;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
 
@@ -28,19 +32,37 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
     @Override
     public final void onNext(T t) {
         Log.d(TAG, "code:" + t.getCode() + "，message ：" + t.getMessage());
-            if (t!=null&&t.getCode().equals(Response.SUCCESS)) {
-                onSuccess(t);
-            } else {
-                String msg=(t!=null&&StringUtil.isNotEmpty(t.getMessage(),true)?t.getMessage():"服务器异常");
-                onError(new Exception(msg));
-            }
+        if (t!=null&&t.getCode().equals(Response.SUCCESS)) {
+            onSuccess(t);
+        } else {
+            String msg=(t!=null&&StringUtil.isNotEmpty(t.getMessage(),true)?t.getMessage():"服务器异常");
+            onFail(new Exception(msg));
+        }
     }
 
     @Override
     public final void onError(Throwable e) {
-        Exception error = null;
+        e.printStackTrace();
+        Exception error =new Exception("服务器异常");;
         if (e != null) {
-            if (e instanceof UnknownHostException) {
+            if (e instanceof HttpException) {
+                ResponseBody responseBody = ((HttpException) e).response().errorBody();
+                if (responseBody!=null){
+                    try {
+                        String bodyString=responseBody.string();
+                        if (TextUtils.isEmpty(bodyString)) {
+                            error = new Exception(bodyString);
+                        }else {
+                            error = new Exception("服务器异常");
+                        }
+                    } catch (IOException e1) {
+                        error = new Exception("服务器异常");
+                        e1.printStackTrace();
+                    }
+                }else {
+                    error = new Exception("服务器异常");
+                }
+            }else  if (e instanceof UnknownHostException) {
                 error = new Exception("网络异常");
             } else if (e instanceof JSONException || e instanceof JsonParseException) {
                 error = new Exception("数据解析失败");
@@ -57,7 +79,6 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
             }
         }
         onFail(error);
-//        MobclickAgent.reportError(DemoApplication.getInstance(),error);
     }
 
     /**
