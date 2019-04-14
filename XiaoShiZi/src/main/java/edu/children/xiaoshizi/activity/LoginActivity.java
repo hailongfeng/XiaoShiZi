@@ -6,13 +6,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.listener.DialogUIListener;
 import com.gyf.barlibrary.ImmersionBar;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
@@ -23,6 +30,7 @@ import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
+import edu.children.xiaoshizi.logic.UmengThirdLoginHandle;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
@@ -43,6 +51,10 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
     EditText edit_user_phone;
     @BindView(R.id.edit_verifyCode)
     EditText edit_verifyCode;
+    @BindView(R.id.ib_login_by_wexin)
+    ImageButton ib_login_by_wexin;
+    @BindView(R.id.ib_login_by_qq)
+    ImageButton ib_login_by_qq;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,35 +104,26 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
     Dialog dialog;
     @Override
     public void initEvent() {
-        findView(R.id.btn_get_verify_code, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getVeryCode();
-            }
-        });
-        findView(R.id.btn_login, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                DialogUIUtils.showToastCenter("发送成功");
-//                dialog= DialogUIUtils.showAlert(context,"清除成功","清除30M","aaa","bbb","确定","取消",true,true,true,new DialogUIListener(){
-//
-//                    @Override
-//                    public void onPositive() {
-//                        DialogUIUtils.dismiss(dialog);
-//                    }
-//
-//                    @Override
-//                    public void onGetInput(CharSequence input1, CharSequence input2) {
-//                        super.onGetInput(input1, input2);
-//                        showShortToast(input1+","+input2);
-//                    }
-//
-//                    @Override
-//                    public void onNegative() {
-//
-//                    }
-//                }).show();
+        findView(R.id.btn_get_verify_code, this);
+        findView(R.id.btn_login, this);
+        findView(R.id.ib_login_by_wexin, this);
+        findView(R.id.ib_login_by_qq, this);
+    }
 
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_get_verify_code:
+                getVeryCode();
+                break;
+            case R.id.ib_login_by_wexin:
+                loginByThird(1);
+                break;
+            case R.id.ib_login_by_qq:
+                loginByThird(2);
+                break;
+            case R.id.btn_login:
                 if (StringUtil.isEmpty(edit_user_phone,true)){
                     showShortToast("手机号不能为空");
                     return;
@@ -131,11 +134,9 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                 }
 //                DialogUIUtils.showToastCenter("更新成功");
                 login3();
-
-            }
-        });
+                break;
+        }
     }
-
 
 
     private void getVeryCode() {
@@ -276,8 +277,58 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                 });
     }
 
-    @Override
-    public void onClick(View v) {
 
+
+
+    private void loginByThird(int type){
+        UmengThirdLoginHandle umengThirdLoginHandle= new UmengThirdLoginHandle(context,authListener);
+        if (type==1) {
+            umengThirdLoginHandle.auther(SHARE_MEDIA.WEIXIN);
+        }else {
+            umengThirdLoginHandle.auther(SHARE_MEDIA.QQ);
+        }
+    }
+
+    UMAuthListener authListener = new UMAuthListener() {
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+
+        }
+
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            Toast.makeText(context, "成功了", Toast.LENGTH_LONG).show();
+           Log.d(TAG,"result==="+JSONObject.toJSONString(data));
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText(context, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            Toast.makeText(context, "取消了", Toast.LENGTH_LONG).show();
+        }
+    };
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UMShareAPI.get(this).release();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        UMShareAPI.get(this).onSaveInstanceState(outState);
     }
 }

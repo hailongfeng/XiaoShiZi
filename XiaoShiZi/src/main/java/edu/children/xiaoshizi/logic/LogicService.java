@@ -157,7 +157,6 @@ public class LogicService {
             param=new TreeMap<String,String>();
         }
         if (method==APIMethod.getVerifyCode||method==APIMethod.login){
-            //no case
             appendCommonParam(param,false);
         }else {
             appendCommonParam(param,true);

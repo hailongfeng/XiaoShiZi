@@ -183,7 +183,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ib_share:
-
+//                mShareAction.open();
                 break;
         }
     }
@@ -224,7 +224,6 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                         && platform != SHARE_MEDIA.EVERNOTE) {
                     Toast.makeText(mActivity.get(), platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
                 }
-
             }
         }
 

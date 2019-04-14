@@ -27,5 +27,13 @@ Keystore 提供者： SUN
          签名算法名称:SHA1withRSA
          版本: 3
 
+QQ：MD5不要冒号
+b22b0933c3b45122cde1496c99b617e7
+
+
 百度
 E6D1DE8ED5E518E44D331B6054C0CA41BCAA5CC7
+
+微信：
+AppID: wxa41c3e0c840a841a
+AppSecret: fa491522a0411a83437a90d57b252e0b

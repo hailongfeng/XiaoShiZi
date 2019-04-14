@@ -1,0 +1,18 @@
+QQ登录返回结果：
+{
+	"ret": "0",
+	"unionid": "",
+	"pay_token": "D97B38C059EAC793D3587395459C6A3B",
+	"page_type": "",
+	"openid": "57759440BE73DBE58F8961B23EF35F3D",
+	"access_token": "88185ECFE50399975C3D0DC996904EF6",
+	"uid": "57759440BE73DBE58F8961B23EF35F3D",
+	"sendinstall": "",
+	"as": "369a35990daa3f5185eb2dfc02ef5ac7",
+	"pfkey": "3311460ff1f344ff8b0fa00e5375cb62",
+	"pf": "desktop_m_qq-10000144-android-2002-",
+	"appid": "",
+	"auth_time": "",
+	"expires_in": "7776000",
+	"aid": "101571206"
+}

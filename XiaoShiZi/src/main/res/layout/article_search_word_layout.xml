@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/activity_page">
+    style="@style/activity_page"
+    android:background="@color/white">
     <LinearLayout
         android:id="@+id/ll_search_history"
         style="@style/ll_vertical_match_wrap"
@@ -25,6 +26,5 @@
             android:id="@id/lvBaseList"
             style="@style/lv"
             />
-
     </LinearLayout>
 </LinearLayout>

@@ -140,13 +140,16 @@
              android:layout_width="match_parent"
              android:gravity="center"
              android:layout_height="wrap_content">
-             <ImageButton android:layout_height="50dp"
+             <ImageButton
+                 android:id="@+id/ib_login_by_wexin"
+                 android:layout_height="50dp"
                  android:layout_width="50dp"
                  android:src="@drawable/icon_wechat"
                  android:background="@null"
                  android:layout_marginRight="50dp"
                  />
              <ImageButton
+                 android:id="@+id/ib_login_by_qq"
                  android:layout_height="50dp"
                  android:layout_width="50dp"
                  android:src="@drawable/icon_qq"

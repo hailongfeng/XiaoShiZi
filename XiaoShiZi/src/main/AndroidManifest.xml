@@ -40,10 +40,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".activity.MyIntegrationActivity"></activity>
+        <activity android:name=".activity.MyIntegrationActivity" />
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -62,16 +63,15 @@
         <activity android:name=".activity.BindingStudentActivity" />
         <activity android:name=".activity.ParentInfoActivity" />
         <activity android:name=".activity.UserInfoActivity" />
-        <activity android:name=".activity.MainActivity"
-            android:launchMode="singleTask"
-            />
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".activity.ChangeUserInfoActivity" />
         <activity android:name=".activity.SearchArticleActivity" />
         <activity android:name=".activity.InOutSchoolRecodeDetailActivity" />
-        <activity android:name=".activity.ReconiceFeedBackActivity" />
-        <activity android:name=".activity.ArticleDetailActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            /> <!-- 微信分享配置 -->
+        <activity
+            android:name=".activity.ArticleDetailActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 微信分享配置 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -101,6 +101,8 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="豌豆荚" />
+
+        <activity android:name=".activity.ContributeArticleActivity"></activity>
     </application>
 
 </manifest>
