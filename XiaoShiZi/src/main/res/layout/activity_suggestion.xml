@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:lines="20"
             android:padding="10dp"
-            android:hint="请输入投稿内容"
+            android:hint="请输入建议"
             android:background="@drawable/null_drawable"
             android:gravity="left|top"
             android:layout_height="wrap_content" />

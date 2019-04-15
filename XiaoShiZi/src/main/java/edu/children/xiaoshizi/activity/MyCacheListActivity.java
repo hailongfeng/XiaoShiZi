@@ -24,6 +24,9 @@ import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.utils.XszCache;
 import zuo.biao.library.base.BaseAdapter;
 
+/**
+ * 我的缓存
+ */
 public class MyCacheListActivity extends XszBaseActivity {
 
 

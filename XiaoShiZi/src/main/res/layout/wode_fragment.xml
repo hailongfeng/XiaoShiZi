@@ -228,7 +228,7 @@
                         <TextView
                             style="@style/content_item_lf_tv"
                             android:layout_weight="1"
-                            android:text="家长建议反馈" />
+                            android:text="建议反馈" />
 
                         <ImageView
                             style="@style/content_item_rt_img"
