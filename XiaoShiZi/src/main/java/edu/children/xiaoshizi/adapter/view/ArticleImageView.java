@@ -84,9 +84,6 @@ public class ArticleImageView extends ArticleView implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		if (BaseModel.isCorrect(data) == false) {
-			return;
-		}
 		switch (v.getId()) {
 		case R.id.ivUserViewHead:
 //			toActivity(WebViewActivity.createIntent(context, data.getName(), data.getHead()));

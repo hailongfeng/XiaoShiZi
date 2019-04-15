@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/activity_page"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        style="@style/topbar_bg"
+        android:background="@color/gray_slight">
+
+        <ImageButton style="@style/xsz_topbar_return_img" />
+
+        <TextView
+            style="@style/topbar_title"
+            android:layout_centerHorizontal="true"
+            android:text="我的缓存" />
+        <Button
+            android:id="@+id/btn_edit"
+            style="@style/topbar_right_btn"
+            android:background="@drawable/null_drawable"
+            android:textColor="@color/colorPrimary"
+            android:text="编辑"
+            />
+    </RelativeLayout>
+    <ListView
+        android:layout_below="@id/rl_title"
+        android:id="@id/lvBaseList"
+        style="@style/lv"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <RelativeLayout
+        android:id="@+id/rl_bottom_op"
+        android:padding="5dp"
+        android:visibility="gone"
+        style="@style/ll_vertical_match_wrap"
+
+        >
+        <CheckBox
+            android:id="@+id/cb_select_all"
+            android:text="全选"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="删除"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

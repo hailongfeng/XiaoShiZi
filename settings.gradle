@@ -1,2 +1,2 @@
 include  ':ZBLibrary', ':QRCodeLibrary', ':XiaoShiZi'
-include  ':SmallVideoLib2','sample'
+//include  ':SmallVideoLib2','sample'

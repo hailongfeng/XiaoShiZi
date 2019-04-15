@@ -182,7 +182,7 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
         student =DemoApplication.getInstance().getLoginRespon().getStudents().get(mParamCurrentStudentIndex);
         loadImage(student.getHeadPortrait(),iv_student_face);
         txt_student_name.setText(student.getStudentName());
-        txt_student_birthday.setText(student.getStudentName());
+        txt_student_birthday.setText(student.getBirthday());
         txt_student_school.setText(student.getSchoolName());
         txt_student_gradle.setText(student.getSchoolGradeName()+","+student.getSchoolClassName());
         txt_student_Guardian.setText(student.getCustody());

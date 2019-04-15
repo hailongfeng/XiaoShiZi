@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ListView中的ItemView里不要用Button等默认hasFocus的控件，以免onItemClick事件无响应 -->
+<!-- 如果一定要用，则必须在根布局加上 android:descendantFocusability="blocksDescendants" -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/ll_horizontal_match_wrap"
+    android:background="@drawable/list_item_white_to_alpha"
+    android:padding="4dp">
+    <CheckBox
+        android:id="@+id/cb_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="4dp" >
+        <TextView
+            android:id="@+id/txt_article_title"
+            android:layout_centerVertical="true"
+            android:text="调用ModelLoader的getResourceFetcher()方法会调用ModelLoader的getResourceFetcher()方法会"
+            android:textSize="@dimen/text_size_small"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <com.flyco.roundview.RoundFrameLayout
+            android:layout_toRightOf="@+id/txt_article_title"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_alignParentRight="true"
+            app:rv_cornerRadius="5dp"
+            >
+            <ImageView
+                android:id="@+id/iv_article_pic"
+                style="@style/img_fitXY"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/user_default" />
+        </com.flyco.roundview.RoundFrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

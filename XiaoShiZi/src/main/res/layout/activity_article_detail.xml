@@ -25,13 +25,34 @@
     <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
         android:id="@+id/player_list_video"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="220dp" />
-    <LinearLayout
-        android:layout_weight="1"
-        android:id="@+id/lin_web"
-        android:orientation="vertical"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp">
-    </LinearLayout>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/lin_web"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </LinearLayout>
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/btn_down_cache"
+            android:layout_width="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_height="36dp"
+            android:drawablePadding="5dp"
+            android:layout_marginBottom="5dp"
+            android:visibility="gone"
+            android:layout_gravity="bottom|center_horizontal"
+            android:drawableLeft="@drawable/icon_download"
+            android:gravity="center"
+            android:text="缓存本地"
+            android:textColor="@android:color/white"
+            app:rv_backgroundColor="@color/colorPrimary"
+            app:rv_backgroundPressColor="@color/colorPrimaryDark"
+            app:rv_cornerRadius="5dp" />
+    </FrameLayout>
+
 </LinearLayout>

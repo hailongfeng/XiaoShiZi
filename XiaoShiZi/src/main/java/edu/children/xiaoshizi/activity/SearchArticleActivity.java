@@ -196,7 +196,7 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
     private void searchArticleByKeyWorld(String searchkeyWord) {
         showLoading("正在搜索");
         TreeMap sm = new TreeMap<String, String>();
-        sm.put("SearchkeyWord", searchkeyWord);
+        sm.put("searchkeyWord", searchkeyWord);
         LogicService.post(context, APIMethod.searchContentByTitle, sm, new ApiSubscriber<Response<List<Article>>>() {
             @Override
             public void onSuccess(Response<List<Article>> respon) {

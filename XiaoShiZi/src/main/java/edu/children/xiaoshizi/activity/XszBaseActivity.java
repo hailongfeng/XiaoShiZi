@@ -21,6 +21,7 @@ import com.umeng.message.PushAgent;
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
 import zuo.biao.library.base.BaseActivity;
+import zuo.biao.library.util.Log;
 
 public abstract class XszBaseActivity extends BaseActivity implements View.OnClickListener {
 
@@ -80,5 +81,9 @@ public abstract class XszBaseActivity extends BaseActivity implements View.OnCli
     @Override
     public void onClick(View v) {
 
+    }
+
+    protected void print(String msg){
+        Log.d(TAG,msg);
     }
 }

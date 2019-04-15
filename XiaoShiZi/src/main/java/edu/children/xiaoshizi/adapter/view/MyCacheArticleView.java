@@ -19,58 +19,57 @@ import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.adapter.ArticleAdapter;
 import edu.children.xiaoshizi.bean.Article;
-import zuo.biao.library.base.BaseModel;
+import zuo.biao.library.util.Log;
 
-/**用户View
- * @author Lemon
- * @use
- * <br> UserView userView = new UserView(context, resources);
- * <br> adapter中使用:[具体参考.BaseViewAdapter(getView使用自定义View的写法)]
- * <br> convertView = userView.createView(inflater);
- * <br> userView.bindView(position, data);
- * <br> 或  其它类中使用:
- * <br> containerView.addView(userView.createView(inflater));
- * <br> userView.bindView(data);
- * <br> 然后
- * <br> userView.setOnDataChangedListener(onDataChangedListener);data = userView.getData();//非必需
- * <br> userView.setOnClickListener(onClickListener);//非必需
- */
-public class ArticleVideoView extends ArticleView implements OnClickListener {
-	private static final String TAG = "UserView";
+public class MyCacheArticleView extends XszBaseView<Article> implements OnClickListener {
+	private static final String TAG = "MyCacheArticleView";
 
 
-	public ImageView iv_video_pic;
-	public TextView txt_video_title;
-	public TextView txt_video_play_count;
-	public TextView txt_video_time;
 
+	public CheckBox cb_select;
+	public ImageView iv_article_pic;
+	public TextView txt_article_title;
 
-	public ArticleVideoView(Activity context, ViewGroup parent,int type) {
-		super(context, R.layout.list_item_artivle_video_view, parent,type);
+	public MyCacheArticleView(Activity context, ViewGroup parent) {
+		super(context, R.layout.list_item_my_cache_article_view, parent);
 	}
-
 
 	@SuppressLint("InflateParams")
 	@Override
 	public View createView() {
-
-		iv_video_pic = findView(R.id.iv_video_pic);
-		txt_video_title = findView(R.id.txt_video_title);
-		txt_video_play_count = findView(R.id.txt_video_play_count);
-		txt_video_time = findView(R.id.txt_video_time);
+		cb_select = findView(R.id.cb_select);
+		iv_article_pic = findView(R.id.iv_article_pic);
+		txt_article_title = findView(R.id.txt_article_title);
 		return super.createView();
 	}
 
 	@Override
 	public void bindView(Article data_){
 		super.bindView(data_ != null ? data_ : new Article());
-		loadImage(this.data.getActivityVideoImageUrl(),iv_video_pic);
-		txt_video_title.setText(this.data.getTitle());
+		Log.d(TAG,this.data.toString());
+		loadImage(this.data.getActivityVideoImageUrl(),iv_article_pic);
+		txt_article_title.setText(this.data.getTitle());
+		if (this.data.isShow()){
+			cb_select.setVisibility(View.VISIBLE);
+			cb_select.setChecked(this.data.isSelected());
+		}else{
+			cb_select.setVisibility(View.GONE);
+		}
+		cb_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				data.setSelected(isChecked);
+			}
+		});
 	}
 
 

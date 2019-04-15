@@ -110,6 +110,11 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
         findView(R.id.ib_login_by_qq, this);
     }
 
+    @Override
+    public void onReturnClick(View v) {
+//        super.onReturnClick(v);
+        DemoApplication.getInstance().exit();
+    }
 
     @Override
     public void onClick(View v) {

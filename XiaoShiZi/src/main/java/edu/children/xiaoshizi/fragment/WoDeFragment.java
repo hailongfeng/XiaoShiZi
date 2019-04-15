@@ -43,6 +43,7 @@ import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.BindingStudentActivity;
+import edu.children.xiaoshizi.activity.MyCacheListActivity;
 import edu.children.xiaoshizi.activity.ParentInfoActivity;
 import edu.children.xiaoshizi.activity.RealNameAuthActivity;
 import edu.children.xiaoshizi.activity.SettingActivity;
@@ -264,6 +265,9 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		switch (v.getId()) {
 			case R.id.iv_user_setting:
 				toActivity(new Intent(context, UserInfoActivity.class));
+				break;
+			case R.id.ll_my_huancun:
+				toActivity(new Intent(context, MyCacheListActivity.class));
 				break;
 			case R.id.ll_my_jifen:
 //				integration;

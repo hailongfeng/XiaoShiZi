@@ -8,6 +8,8 @@ import com.blankj.utilcode.util.FileUtils;
 import java.io.File;
 
 import edu.children.xiaoshizi.DemoApplication;
+import zuo.biao.library.util.Log;
+import zuo.biao.library.util.MD5Util;
 
 public class XszCache {
     private static String TAG="XszCache";
@@ -87,5 +89,14 @@ public class XszCache {
         }
 
         return length;
+    }
+
+    public static File getCachedVideoFile(String url) {
+        File file=null;
+        String urlName=MD5Util.MD5(url);
+        String filePath=XszCache.getCacheDir(Constant.CACHE_DIR_FILE).getAbsolutePath()+File.separator+urlName+".mp4";
+        Log.d(TAG,"缓存视频的名称："+filePath);
+        file=new File(filePath);
+        return file;
     }
 }

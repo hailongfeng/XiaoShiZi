@@ -4,21 +4,29 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.SDCardUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.flyco.roundview.RoundTextView;
 import com.gyf.barlibrary.ImmersionBar;
 import com.just.agentweb.AgentWeb;
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadListener;
+import com.liulishuo.filedownloader.FileDownloader;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -28,6 +36,7 @@ import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.TreeMap;
@@ -42,10 +51,13 @@ import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
+import edu.children.xiaoshizi.utils.Constant;
+import edu.children.xiaoshizi.utils.XszCache;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
+import zuo.biao.library.util.MD5Util;
 import zuo.biao.library.util.StringUtil;
 
 import static zuo.biao.library.interfaces.Presenter.INTENT_TITLE;
@@ -64,6 +76,8 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     LinearLayout linWeb;
     @BindView(R.id.tvBaseTitle)
     TextView tvBaseTitle;
+    @BindView(R.id.btn_down_cache)
+    RoundTextView btn_down_cache;
 
     private UMShareListener mShareListener;
     private ShareAction mShareAction;
@@ -104,11 +118,12 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 .createAgentWeb()
                 .ready();
             article=(Article) getIntent().getSerializableExtra("article");
-//        agentWeb= preAgentWeb.go("");
         if (articleType.getType().equalsIgnoreCase("VT")){
             player.setVisibility(View.VISIBLE);
+            btn_down_cache.setVisibility(View.VISIBLE);
         }else {
             player.setVisibility(View.GONE);
+            btn_down_cache.setVisibility(View.GONE);
         }
         getAgentWebField();
     }
@@ -132,10 +147,50 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     }
 
     private String getHtml(String body){
+
         StringBuilder sb=new StringBuilder();
         sb.append("<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /></head><body>").append(body).append("</body></html>");
         return sb.toString();
     }
+
+    private void downLoadVideToCache(String url,String path){
+        FileDownloader.getImpl().create(url)
+                .setPath(path)
+                .setListener(new FileDownloadListener() {
+                    @Override
+                    protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+
+                    }
+
+                    @Override
+                    protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        int percent=(int) ((double) soFarBytes / (double) totalBytes * 100);
+                        Log.d(TAG,"当前下载进度："+percent);
+                    }
+
+                    @Override
+                    protected void completed(BaseDownloadTask task) {
+                        showShortToast("缓存成功"+task.getTargetFilePath());
+
+                    }
+
+                    @Override
+                    protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+
+                    }
+
+                    @Override
+                    protected void error(BaseDownloadTask task, Throwable e) {
+                        FileUtils.deleteFile(task.getTargetFilePath());
+                    }
+
+                    @Override
+                    protected void warn(BaseDownloadTask task) {
+
+                    }
+                }).start();
+    }
+
     private void getArticleById(String id) {
         TreeMap sm = new TreeMap<String,String>();
         sm.put("contentId",id);
@@ -143,9 +198,18 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
             @Override
             public void onSuccess(Response<Article> respon) {
                 if (respon.getResult()!=null&&StringUtil.isNotEmpty(respon.getResult().getIntroduce(),true)){
+                    article=respon.getResult();
                     if (articleType.getType().equalsIgnoreCase("VT")){
-                        Article article=respon.getResult();
-                        player.setUp(article.getActivityVideoUrl(), JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
+                        String url=article.getActivityVideoUrl();
+                        File file=XszCache.getCachedVideoFile(url);
+                        if (file.exists()){
+                            Log.d(TAG,"已经存在，直接播放");
+                            Uri uri= Uri.fromFile(file);
+                            player.setUp(uri.getPath(), JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
+                        }else {
+                            Log.d(TAG,"网络下载播放");
+                            player.setUp(url, JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
+                        }
                         loadImage(article.getActivityVideoImageUrl(),player.thumbImageView);
                     }
                     String introduce=respon.getResult().getIntroduce();
@@ -153,7 +217,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 }else {
                     agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml("内容为空"), "text/html", "UTF-8", null);
                 }
-            }
+     }
 
             @Override
             protected void onFail(Throwable  error) {
@@ -164,6 +228,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
 
     public void initEvent() {
         ib_share.setOnClickListener(this);
+        btn_down_cache.setOnClickListener(this);
     }
 
     @Override
@@ -182,6 +247,18 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_down_cache:
+                if (!article.exists()){
+                    article.save();
+                }
+                String url=article.getActivityVideoUrl();
+                File file=XszCache.getCachedVideoFile(url);
+                if(file.exists()){
+                    showShortToast("缓存成功");
+                }else {
+                    downLoadVideToCache(url,file.getAbsolutePath());
+                }
+                break;
             case R.id.ib_share:
 //                mShareAction.open();
                 break;

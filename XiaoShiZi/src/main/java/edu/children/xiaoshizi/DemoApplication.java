@@ -19,6 +19,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.blankj.utilcode.util.Utils;
+import com.liulishuo.filedownloader.FileDownloader;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
@@ -64,6 +65,7 @@ public class DemoApplication extends BaseApplication {
 		Utils.init(context);
 		registerActivityLifecycleCallbacks(new ActivityLifecycle());
 		new UmengMessageHandle(this).init();
+		FileDownloader.setup(this);
 	}
 	@Override
 	protected void attachBaseContext(Context base) {

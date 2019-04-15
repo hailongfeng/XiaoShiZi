@@ -49,7 +49,7 @@ public class CourseListAdapter extends BaseAdapter<Article, CourseListItemView> 
 
 	@Override
 	public long getItemId(int position) {
-		return getItem(position).getId();
+		return position;
 	}
 
 

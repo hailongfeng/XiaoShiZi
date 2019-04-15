@@ -64,6 +64,7 @@
                         android:layout_marginRight="10dp"
                         android:id="@+id/edit_user_phone"
                         android:hint="请输入手机号"
+                        android:text="18697386272"
                         android:inputType="phone"
                         android:maxLength="11"
                         android:padding="15dp"
