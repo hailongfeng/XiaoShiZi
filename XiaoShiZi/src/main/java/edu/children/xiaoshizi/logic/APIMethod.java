@@ -24,4 +24,5 @@ public enum  APIMethod {
     loadSeClassRoomContentCategory,
     loadSeClassRoomContentByCategory,
     loadSeClassRoomContentById,
+    submitFeedBack,
 }

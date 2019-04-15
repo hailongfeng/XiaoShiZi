@@ -87,6 +87,8 @@ public interface ApiService {
     Observable<Response<Article>> loadContentById(@Body RequestBody requestBody);
     @POST("v1/index/searchContentByTitle")
     Observable<Response<List<Article>>> searchContentByTitle(@Body RequestBody requestBody);
+    @POST("v1/sys/submitFeedBack")
+    Observable<Response<String>> submitFeedBack(@Body RequestBody requestBody);
 
 
 
