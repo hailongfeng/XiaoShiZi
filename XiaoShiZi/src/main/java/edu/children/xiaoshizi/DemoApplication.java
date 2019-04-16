@@ -77,7 +77,7 @@ public class DemoApplication extends BaseApplication {
 	void initDb(){
 		SPUtils spUtils = new SPUtils(Constant.SP_NAME);
 		int oldVersion=spUtils.getInt("dbVersion",-1);
-		if (oldVersion < XSZDatabase.VERSION) {
+		if (oldVersion != XSZDatabase.VERSION) {
 			Log.d(TAG,"删除数据库");
 			File file1=this.getDatabasePath("xiaoshizi.db");
 			File file2=this.getDatabasePath("xiaoshizi.db-journal");

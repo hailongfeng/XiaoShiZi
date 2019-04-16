@@ -182,35 +182,4 @@ public class MainActivity extends XszBaseActivity {
             DemoApplication.getInstance().exit();
         }
     }
-
-    private void loadSeClassRoomContentCategory() {
-        TreeMap sm = new TreeMap<String,String>();
-        LogicService.post(context,APIMethod.loadSeClassRoomContentCategory,sm,new ApiSubscriber<Response<LoadContentCategoryResponse>>() {
-
-            @Override
-            protected void onSuccess(Response<LoadContentCategoryResponse> response) {
-                DemoApplication.getInstance().setContentSeClassCategoryResponse(response.getResult());
-            }
-
-            @Override
-            protected void onFail(Throwable  error) {
-
-            }
-        });
-    }
-    private void loadSeLabContentCategory() {
-        TreeMap sm = new TreeMap<String,String>();
-        LogicService.post(context,APIMethod.loadSeLabContentCategory,sm,new ApiSubscriber<Response<LoadContentCategoryResponse>>() {
-
-            @Override
-            protected void onSuccess(Response<LoadContentCategoryResponse> response) {
-                DemoApplication.getInstance().setContentSeLabCategoryResponse(response.getResult());
-            }
-
-            @Override
-            protected void onFail(Throwable  error) {
-                error.printStackTrace();
-            }
-        });
-    }
 }

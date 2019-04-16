@@ -30,6 +30,9 @@ public class ArticleType extends BaseModel implements Serializable {
     @Column
     private String bannerImage;
 
+    @Column
+    private int belongTo; //1，首页，2，安全课堂，3，安全实验室
+
 
     public int getCategoryId() {
         return categoryId;
@@ -69,5 +72,13 @@ public class ArticleType extends BaseModel implements Serializable {
 
     public void setBannerImage(String bannerImage) {
         this.bannerImage = bannerImage;
+    }
+
+    public int getBelongTo() {
+        return belongTo;
+    }
+
+    public void setBelongTo(int belongTo) {
+        this.belongTo = belongTo;
     }
 }

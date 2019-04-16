@@ -43,10 +43,16 @@ public class DbUtils {
                 .where()
                 .queryList();
     }
-    public static ArticleType getFirstArticleType(){
-        return SQLite.select().from(ArticleType.class)
+    public static ArticleType getFirstArticleType(int belongTo){
+        List<ArticleType > articleTypes= SQLite.select().from(ArticleType.class)
+                .where(ArticleType_Table.belongTo.eq(belongTo))
                 .orderBy(ArticleType_Table.sortNum, true)
-                .queryList().get(0);
+                .queryList();
+        if (articleTypes.isEmpty()){
+            return null;
+        }else {
+            return articleTypes.get(0);
+        }
     }
 
     public static  <T extends BaseModel>  List<T> getModelList(Class<T> clazz, SQLOperator... where){

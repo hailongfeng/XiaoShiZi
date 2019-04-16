@@ -86,22 +86,22 @@ public class SeLabArticleFragment extends XszBaseFragment implements OnClickList
 			}
 		});
 
-		ArticleType firstArticleType=DemoApplication.getInstance().getContentSeLabCategoryResponse().getCategoryResps().get(0);
-		if (articleType.equals(firstArticleType)){
-            articles =DemoApplication.getInstance().getContentSeLabCategoryResponse().getContentResps();
-			articleAdapter.refresh(articles);
-			if (articles.size()!=0){
-				multiStatusLayout.showContent();
-			}else {
-				multiStatusLayout.showEmpty();
-			}
-			Log.d(TAG,"111articles size = "+articles.size());
-		}else {
-			getArticleContentById(articleType.getCategoryId()+"");
-		}
+//		ArticleType firstArticleType=DemoApplication.getInstance().getContentSeLabCategoryResponse().getCategoryResps().get(0);
+//		if (articleType.equals(firstArticleType)){
+//            articles =DemoApplication.getInstance().getContentSeLabCategoryResponse().getContentResps();
+//			articleAdapter.refresh(articles);
+//			if (articles.size()!=0){
+//				multiStatusLayout.showContent();
+//			}else {
+//				multiStatusLayout.showEmpty();
+//			}
+//			Log.d(TAG,"111articles size = "+articles.size());
+//		}else {
+			getArticleContentById(articleType.getCategoryId());
+//		}
 	}
 
-	void getArticleContentById(String categoryId){
+	void getArticleContentById(int categoryId){
 		TreeMap sm = new TreeMap<String,String>();
 		sm.put("categoryId",categoryId);
 		LogicService.post(context, APIMethod.loadSafeLabContentByCategory,sm, new ApiSubscriber<Response<List<Article>>>() {

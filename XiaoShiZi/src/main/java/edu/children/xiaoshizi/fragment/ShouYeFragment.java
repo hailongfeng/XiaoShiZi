@@ -21,6 +21,8 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.alibaba.fastjson.JSONArray;
+import com.blankj.utilcode.util.CacheUtils;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -37,6 +39,7 @@ import edu.children.xiaoshizi.activity.ContributeArticleActivity;
 import edu.children.xiaoshizi.activity.SearchArticleActivity;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.ArticleType_Table;
 import edu.children.xiaoshizi.bean.Banner;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.db.DbUtils;
@@ -60,7 +63,7 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 	SmartTabLayout viewPagerTab;
 	@BindView(R.id.viewpager)
 	ViewPager viewPager;
-	private List<ArticleType> articleTypes;
+	private List<ArticleType> articleTypes=new ArrayList<>();
 	private List<Banner> banners;
 
 	public static ShouYeFragment createInstance() {
@@ -79,18 +82,28 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 
 	@Override
 	public void initData() {//必须调用
-		articleTypes=DbUtils.getModelList(ArticleType.class);
-		if (articleTypes!=null&&articleTypes.size()>0){
-			initTabs(articleTypes);
-			multiStatusLayout_shouye.showContent();
-		}
+		List<ArticleType> articleTypes2=DbUtils.getModelList(ArticleType.class,ArticleType_Table.belongTo.eq(1));
+		initType(articleTypes2);
 		loadContentCategory();
+
 		banners=DbUtils.getModelList(Banner.class);
 		if (banners!=null&&banners.size()>0){
 			initBanber(banners);
 		}
 		loadSysBannerList();
 	}
+
+	private  void initType(List<ArticleType> types){
+		if (types!=null){
+			this.articleTypes.clear();
+			this.articleTypes.addAll(types);
+			initTabs(this.articleTypes);
+			multiStatusLayout_shouye.showContent();
+		}else {
+			multiStatusLayout_shouye.showEmpty();
+		}
+	}
+
 
 	private void loadSysBannerList() {
 		TreeMap sm = new TreeMap<String,String>();
@@ -116,14 +129,19 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 			@Override
 			public void onSuccess(Response<LoadContentCategoryResponse> response) {
 				DemoApplication.getInstance().setContentCategoryResponse(response.getResult());
-				articleTypes=response.getResult().getCategoryResps();
+				List<ArticleType> articleTypes2=response.getResult().getCategoryResps();
+				for (ArticleType type:articleTypes2){
+					type.setBelongTo(1);
+				}
+				initType(articleTypes2);
 				List<Article> articles=response.getResult().getContentResps();
-				DbUtils.deleteModel(ArticleType.class);
-				DbUtils.deleteModel(Article.class);
-				DbUtils.saveModelList(articleTypes);
-				DbUtils.saveModelList(articles);
-				initTabs(articleTypes);
-				multiStatusLayout_shouye.showContent();
+				DbUtils.deleteModel(ArticleType.class,ArticleType_Table.belongTo.eq(1));
+//				DbUtils.deleteModel(Article.class);
+				DbUtils.saveModelList(articleTypes2);
+//				DbUtils.saveModelList(articles);
+                String type1Articles=JSONArray.toJSONString(articles);
+                print("type1Articles="+type1Articles);
+                CacheUtils.get(context).put("type1Articles",type1Articles);
 			}
 
 			@Override

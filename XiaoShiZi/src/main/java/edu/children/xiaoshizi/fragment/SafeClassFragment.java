@@ -31,6 +31,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import com.walle.multistatuslayout.MultiStatusLayout;
+
 import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -50,7 +52,9 @@ import edu.children.xiaoshizi.adapter.ExamplePagerAdapter;
 import edu.children.xiaoshizi.adapter.GradlePagerAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.ArticleType_Table;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
+import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
@@ -64,9 +68,11 @@ import zuo.biao.library.util.Log;
  */
 public class SafeClassFragment extends XszBaseFragment implements OnClickListener {
 
-	private List<ArticleType> articleTypes ;
+	private List<ArticleType> articleTypes =new ArrayList<>();
 	private GradlePagerAdapter mExamplePagerAdapter ;
 
+	@BindView(R.id.multiStatusLayout_aqkt)
+	MultiStatusLayout multiStatusLayout_aqkt;
 	@BindView(R.id.magic_indicator)
 	MagicIndicator magicIndicator;
 	@BindView(R.id.view_pager)
@@ -90,16 +96,53 @@ public class SafeClassFragment extends XszBaseFragment implements OnClickListene
 
 	@Override
 	public void initView() {
+		mExamplePagerAdapter= new GradlePagerAdapter(context,articleTypes);
+		mViewPager.setAdapter(mExamplePagerAdapter);
 	}
 
 	@Override
 	public void initData() {
-		response=DemoApplication.getInstance().getContentSeClassCategoryResponse();
-		articleTypes=response.getCategoryResps();
-		mExamplePagerAdapter= new GradlePagerAdapter(context,articleTypes);
-		mViewPager.setAdapter(mExamplePagerAdapter);
-		initMagicIndicator1();
+		List<ArticleType>  articleTypes2=DbUtils.getModelList(ArticleType.class,ArticleType_Table.belongTo.eq(2));
+		initData1(articleTypes2);
+		loadSeClassRoomContentCategory();
 	}
+
+
+	private void initData1(List<ArticleType> articleTypes){
+		if (articleTypes!=null){
+			this.articleTypes.clear();
+			this.articleTypes.addAll(articleTypes);
+			mExamplePagerAdapter.notifyDataSetChanged();
+			initMagicIndicator1();
+			multiStatusLayout_aqkt.showContent();
+		}else {
+			multiStatusLayout_aqkt.showLoading();
+		}
+	}
+
+	private void loadSeClassRoomContentCategory() {
+		TreeMap sm = new TreeMap<String,String>();
+		LogicService.post(context,APIMethod.loadSeClassRoomContentCategory,sm,new ApiSubscriber<Response<LoadContentCategoryResponse>>() {
+
+			@Override
+			protected void onSuccess(Response<LoadContentCategoryResponse> response) {
+				List<ArticleType>  articleTypes2=response.getResult().getCategoryResps();
+				for (ArticleType type:articleTypes2){
+					type.setBelongTo(2);
+				}
+				initData1(articleTypes2);
+				DbUtils.deleteModel(ArticleType.class,ArticleType_Table.belongTo.eq(2));
+				DbUtils.saveModelList(articleTypes2);
+			}
+
+			@Override
+			protected void onFail(Throwable  error) {
+				showShortToast(error.getMessage());
+			}
+		});
+	}
+
+
 
 	@Override
 	public void initEvent() {
