@@ -91,7 +91,7 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 		ArticleType firstArticleType= DbUtils.getFirstArticleType();
 		print("firstArticleType="+firstArticleType.getTitle());
 		if (articleType.getCategoryId()==firstArticleType.getCategoryId()){
-            articles =DbUtils.getModelList(Article.class);
+            articles =DbUtils.getModelList(Article.class,Article_Table.categoryId.eq(firstArticleType.getCategoryId()));
             print("articles ="+articles.size());
 			if (articles.size()!=0){
 				multiStatusLayout.showContent();
@@ -113,10 +113,11 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
                 articles=response.getResult();
 				articleAdapter.refresh(articles);
 				if (articles.size()!=0){
-					DbUtils.deleteModel(Article.class, Article_Table.categoryId.eq(categoryId));
-					DbUtils.saveModelList(articles);
 					multiStatusLayout.showContent();
 					articleAdapter.refresh(articles);
+					DbUtils.deleteModel(Article.class, Article_Table.categoryId.eq(categoryId));
+					DbUtils.saveModelList(articles);
+					print("该类型的文章更新="+articleType.getTitle()+",数据量："+articles.size());
 				}else {
 					multiStatusLayout.showEmpty();
 				}

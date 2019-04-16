@@ -46,6 +46,7 @@ import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.GlideImageLoader;
 import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
+import zuo.biao.library.util.Log;
 
 /**设置fragment
  * @author Lemon
@@ -81,12 +82,14 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 	public void initData() {//必须调用
 		articleTypes=DbUtils.getModelList(ArticleType.class);
 		if (articleTypes!=null&&articleTypes.size()>0){
+			print("首页文章类型从本地加载");
 			initTabs(articleTypes);
 			multiStatusLayout_shouye.showContent();
 		}
 		loadContentCategory();
 		banners=DbUtils.getModelList(Banner.class);
 		if (banners!=null&&banners.size()>0){
+			print("首页轮播图从本地加载");
 			initBanber(banners);
 		}
 		loadSysBannerList();
@@ -99,9 +102,10 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 			public void onSuccess(Response<List<Banner>> response) {
 				DemoApplication.getInstance().setBanners(response.getResult());
 				banners=response.getResult();
+				initBanber(banners);
 				DbUtils.deleteModel(Banner.class);
 				DbUtils.saveModelList(banners);
-				initBanber(banners);
+				print("首页轮播图从服务器更新");
 			}
 
 			@Override
@@ -117,13 +121,14 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 			public void onSuccess(Response<LoadContentCategoryResponse> response) {
 				DemoApplication.getInstance().setContentCategoryResponse(response.getResult());
 				articleTypes=response.getResult().getCategoryResps();
+				multiStatusLayout_shouye.showContent();
+				initTabs(articleTypes);
 				List<Article> articles=response.getResult().getContentResps();
 				DbUtils.deleteModel(ArticleType.class);
 				DbUtils.deleteModel(Article.class);
 				DbUtils.saveModelList(articleTypes);
 				DbUtils.saveModelList(articles);
-				initTabs(articleTypes);
-				multiStatusLayout_shouye.showContent();
+				print("首页文章类型从服务器更新");
 			}
 
 			@Override
