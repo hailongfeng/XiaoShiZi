@@ -32,6 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.activity.ContributeArticleActivity;
 import edu.children.xiaoshizi.activity.SearchArticleActivity;
 import edu.children.xiaoshizi.bean.ArticleType;
 import edu.children.xiaoshizi.bean.Banner;
@@ -131,9 +132,9 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 			case R.id.rll_search:
 				toActivity(new Intent(context,SearchArticleActivity.class));
 				break;
-//			case R.id.llSettingAbout:
-////				toActivity(AboutActivity.createIntent(context));
-//				break;
+			case R.id.rtv_contribute:
+				toActivity(new Intent(context, ContributeArticleActivity.class));
+				break;
 //			case R.id.llSettingLogout:
 //				new AlertDialog(context, "退出登录", "确定退出登录？", true, 0, this).show();
 //				break;

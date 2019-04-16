@@ -20,7 +20,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 
 import com.walle.multistatuslayout.MultiStatusLayout;
@@ -38,7 +37,6 @@ import edu.children.xiaoshizi.bean.ArticleType;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
-import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
 import zuo.biao.library.util.Log;
@@ -46,7 +44,7 @@ import zuo.biao.library.util.Log;
 /**
  * 首页文章界面
  */
-public class ArticleFragment extends XszBaseFragment implements OnClickListener, OnDialogButtonClickListener {
+public class ArticleFragment extends XszBaseFragment implements View.OnClickListener,OnDialogButtonClickListener {
 
 
     @BindView(R.id.rvBaseRecycler)
@@ -154,12 +152,6 @@ public class ArticleFragment extends XszBaseFragment implements OnClickListener,
 		switch (v.getId()) {
 //			case R.id.llSettingSetting:
 ////				toActivity(SettingActivity.createIntent(context));
-//				break;
-//			case R.id.llSettingAbout:
-////				toActivity(AboutActivity.createIntent(context));
-//				break;
-//			case R.id.llSettingLogout:
-//				new AlertDialog(context, "退出登录", "确定退出登录？", true, 0, this).show();
 //				break;
 			default:
 				break;

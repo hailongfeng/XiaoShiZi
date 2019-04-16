@@ -7,6 +7,7 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.io.Serializable;
+import java.util.List;
 
 import edu.children.xiaoshizi.db.XSZDatabase;
 
@@ -34,7 +35,12 @@ public class Article extends BaseModel implements Serializable {
     private String activityVideoImageUrl;
     @Column
     private String contentType;
+    @Column
+    private int likedNumber;
+    @Column
+    private int shareNumber;
 
+    private List<ArticleComment> commentResps;
     private boolean isSelected=false;
     private boolean isShow=false;
 
@@ -108,6 +114,30 @@ public class Article extends BaseModel implements Serializable {
 
     public void setShow(boolean show) {
         isShow = show;
+    }
+
+    public List<ArticleComment> getCommentResps() {
+        return commentResps;
+    }
+
+    public void setCommentResps(List<ArticleComment> commentResps) {
+        this.commentResps = commentResps;
+    }
+
+    public int getLikedNumber() {
+        return likedNumber;
+    }
+
+    public void setLikedNumber(int likedNumber) {
+        this.likedNumber = likedNumber;
+    }
+
+    public int getShareNumber() {
+        return shareNumber;
+    }
+
+    public void setShareNumber(int shareNumber) {
+        this.shareNumber = shareNumber;
     }
 
     @Override

@@ -3,8 +3,8 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">  
         <item
         android:state_checked="false"  
-        android:drawable="@drawable/btn_check_off_selected" />  
+        android:drawable="@drawable/icon_rb_nomal" />
         <item
         android:state_checked="true"  
-        android:drawable="@drawable/btn_check_on_selected" />  
+        android:drawable="@drawable/icon_rb_select" />
 </selector>

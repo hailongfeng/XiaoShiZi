@@ -210,6 +210,8 @@ public class LogicService {
             observable=apiService.loadSeClassRoomContentById(requestBody);
         }else if (method==APIMethod.submitFeedBack){
             observable=apiService.submitFeedBack(requestBody);
+        }else if (method==APIMethod.submitDraftContent){
+            observable=apiService.submitDraftContent(requestBody);
         }
 
         if (observable!=null) {

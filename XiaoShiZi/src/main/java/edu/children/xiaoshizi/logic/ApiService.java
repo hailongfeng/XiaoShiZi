@@ -57,24 +57,25 @@ public interface ApiService {
     Observable<Response<LoginRespon>> studentBinding(@Body RequestBody requestBody);
     @POST("v1/student/studentUnBinding")
     Observable<Response<List<Student>>> studentUnBinding(@Body RequestBody requestBody);
-
-    @POST("v1/sysUser/getStudentsAndParents")
-    Observable<Response<LoginRespon>> getStudentsAndParents(@Body RequestBody requestBody);
-    @POST("v1/sysUser/verifiedSubmit")
-    Observable<Response<RealNameAuthInfo>> verifiedSubmit(@Body RequestBody requestBody);
-
-    @POST("v1/sysUser/getMyProfile")
-    Observable<Response<User>> getMyProfile(@Body RequestBody requestBody);
-
-    @POST("v1/sysUser/saveMyProfile")
-    Observable<Response<User>> saveMyProfile(@Body RequestBody requestBody);
-
     @POST("v1/student/findStudentSnapMsg")
     Observable<Response<List<InAndOutSchoolRecode>>> findStudentSnapMsg(@Body RequestBody requestBody);
     @POST("v1/student/findSnapMsgById")
     Observable<Response<InAndOutSchoolRecode>> findSnapMsgById(@Body RequestBody requestBody);
     @POST("v1/student/doSnapMsgFeedBack")
     Observable<Response<User>> doSnapMsgFeedBack(@Body RequestBody requestBody);
+
+
+    @POST("v1/sysUser/getStudentsAndParents")
+    Observable<Response<LoginRespon>> getStudentsAndParents(@Body RequestBody requestBody);
+    @POST("v1/sysUser/verifiedSubmit")
+    Observable<Response<RealNameAuthInfo>> verifiedSubmit(@Body RequestBody requestBody);
+    @POST("v1/sysUser/getMyProfile")
+    Observable<Response<User>> getMyProfile(@Body RequestBody requestBody);
+    @POST("v1/sysUser/saveMyProfile")
+    Observable<Response<User>> saveMyProfile(@Body RequestBody requestBody);
+    @POST("v1/sys/submitFeedBack")
+    Observable<Response<String>> submitFeedBack(@Body RequestBody requestBody);
+
 
     //首页
     @POST("v1/sys/loadSysBannerList")
@@ -87,8 +88,9 @@ public interface ApiService {
     Observable<Response<Article>> loadContentById(@Body RequestBody requestBody);
     @POST("v1/index/searchContentByTitle")
     Observable<Response<List<Article>>> searchContentByTitle(@Body RequestBody requestBody);
-    @POST("v1/sys/submitFeedBack")
-    Observable<Response<String>> submitFeedBack(@Body RequestBody requestBody);
+    @POST("/v1/index/submitDraftContent")
+    Observable<Response<String>> submitDraftContent(@Body RequestBody requestBody);
+
 
 
 

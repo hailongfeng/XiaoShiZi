@@ -71,13 +71,16 @@
                         android:layout_weight="1">
                         <RadioButton
                             android:id="@+id/rb_m"
+                            style="@style/RadioBtnMyIcon"
                             android:text="男"
                             android:tag="M"
                             android:checked="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <RadioButton
+                            android:layout_marginLeft="10dp"
                             android:id="@+id/rb_f"
+                            style="@style/RadioBtnMyIcon"
                             android:text="女"
                             android:tag="F"
                             android:layout_width="wrap_content"

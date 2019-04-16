@@ -91,6 +91,7 @@
                         android:layout_weight="1">
                         <RadioButton
                             android:id="@+id/rb_user_sex_m"
+                            style="@style/RadioBtnMyIcon"
                             android:text="男"
                             android:tag="M"
                             android:checked="true"
@@ -98,6 +99,8 @@
                             android:layout_height="wrap_content" />
                         <RadioButton
                             android:text="女"
+                            android:layout_marginLeft="10dp"
+                            style="@style/RadioBtnMyIcon"
                             android:id="@+id/rb_user_sex_f"
                             android:tag="F"
                             android:layout_width="wrap_content"
