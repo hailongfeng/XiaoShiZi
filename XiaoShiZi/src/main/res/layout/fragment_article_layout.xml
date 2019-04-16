@@ -5,9 +5,9 @@
         <com.walle.multistatuslayout.MultiStatusLayout
             android:id="@+id/multiStatusLayout"
             app:emptyLayout="@layout/layout_empty"
-            app:netErrorLayout="@layout/layout_empty"
-            app:errorLayout="@layout/layout_empty"
-            app:loadLayout="@layout/layout_empty"
+            app:netErrorLayout="@layout/layout_error"
+            app:errorLayout="@layout/layout_error"
+            app:loadLayout="@layout/layout_loading"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
                 <android.support.v7.widget.RecyclerView

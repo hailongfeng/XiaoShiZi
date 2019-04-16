@@ -16,6 +16,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import edu.children.xiaoshizi.DemoApplication;
+import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.net.rxjava.RetrofitClient;
 import edu.children.xiaoshizi.utils.StringUtils;
@@ -170,7 +171,12 @@ public class LogicService {
             observable=apiService.getVerifyCode(requestBody);
         }/*else if (method==APIMethod.login){
             observable=apiService.login(requestBody);
-        }*/else if (method==APIMethod.loadSchoolData){
+        }*/
+        else if (method==APIMethod.loadSysBannerList){
+            observable=apiService.loadSysBannerListAsys(requestBody);
+        }else if (method==APIMethod.loadContentCategory) {
+            observable = apiService.loadContentCategoryAsyc(requestBody);
+        }else if (method==APIMethod.loadSchoolData){
             observable=apiService.loadSchoolData(APIVersion.v2.name(),requestBody);
         }else if (method==APIMethod.findStudentSnapMsg){
             observable=apiService.findStudentSnapMsg(requestBody);
@@ -224,8 +230,11 @@ public class LogicService {
         sm.put("timestamp", System.currentTimeMillis()+"");
         sm.put("noncestr", StringUtils.randomString(10));
         if (isNeedToken) {
-            String token = DemoApplication.getInstance().getUser().getToken();
-            sm.put("token", token);
+            User user=DemoApplication.getInstance().getUser();
+            if (user!=null) {
+                String token = user.getToken();
+                sm.put("token", token);
+            }
         }
         sm.put("sign", Tools.createSign(sm));
     }

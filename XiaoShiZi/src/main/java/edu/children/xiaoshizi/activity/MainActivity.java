@@ -1,5 +1,6 @@
 package edu.children.xiaoshizi.activity;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -36,6 +37,7 @@ import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
+import pub.devrel.easypermissions.EasyPermissions;
 import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
 
@@ -50,6 +52,7 @@ public class MainActivity extends XszBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initPermission();
         setContentView(R.layout.activity_main);
     }
 
@@ -101,11 +104,11 @@ public class MainActivity extends XszBaseActivity {
     }
     @Override
     public void initData() {
-        getSchools();
-        String userId=DemoApplication.getInstance().getUser().getUserId();
-        getMyprofile(userId);
-        loadSeClassRoomContentCategory();
-        loadSeLabContentCategory();
+//        getSchools();
+//        String userId=DemoApplication.getInstance().getUser().getUserId();
+//        getMyprofile(userId);
+//        loadSeClassRoomContentCategory();
+//        loadSeLabContentCategory();
     }
 
     private Fragment fragments[] = {
@@ -115,6 +118,31 @@ public class MainActivity extends XszBaseActivity {
             SafeToolFragment.createInstance(0),
             WoDeFragment.createInstance()
     };
+
+
+    private void initPermission(){
+        String[] mPermissionList = new String[]{
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.CALL_PHONE,
+                Manifest.permission.READ_LOGS,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.SET_DEBUG_APP,
+                Manifest.permission.SYSTEM_ALERT_WINDOW,
+                Manifest.permission.GET_ACCOUNTS,
+                Manifest.permission.WRITE_APN_SETTINGS,
+                Manifest.permission.INTERNET,
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
+        };
+        EasyPermissions.requestPermissions(
+                context,
+                "申请权限",
+                0,mPermissionList
+        );
+    }
 
     @Override
     public void initEvent() {

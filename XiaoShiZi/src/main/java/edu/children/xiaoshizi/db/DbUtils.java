@@ -9,6 +9,8 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.ArticleType_Table;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.bean.School_Table;
 import edu.children.xiaoshizi.bean.SearchWorldHistory;
@@ -41,6 +43,11 @@ public class DbUtils {
                 .where()
                 .queryList();
     }
+    public static ArticleType getFirstArticleType(){
+        return SQLite.select().from(ArticleType.class)
+                .orderBy(ArticleType_Table.sortNum, true)
+                .queryList().get(0);
+    }
 
     public static  <T extends BaseModel>  List<T> getModelList(Class<T> clazz, SQLOperator... where){
         return SQLite.select().from(clazz)
@@ -48,8 +55,8 @@ public class DbUtils {
                 .queryList();
     }
 
-    public static <T extends BaseModel>  void deleteModel(Class<T> clazz){
-        SQLite.delete(clazz);
+    public static <T extends BaseModel>  void deleteModel(Class<T> clazz, SQLOperator... where){
+        SQLite.delete(clazz).where(where);
     }
     public static <T extends BaseModel>  void saveModel(T model){
         model.save();

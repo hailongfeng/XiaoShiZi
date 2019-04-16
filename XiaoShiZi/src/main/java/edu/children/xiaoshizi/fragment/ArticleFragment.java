@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.raizlabs.android.dbflow.sql.language.SQLOperator;
 import com.walle.multistatuslayout.MultiStatusLayout;
 
 import java.util.List;
@@ -34,6 +35,9 @@ import edu.children.xiaoshizi.activity.ArticleDetailActivity;
 import edu.children.xiaoshizi.adapter.ArticleAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.Article_Table;
+import edu.children.xiaoshizi.bean.School_Table;
+import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
@@ -84,22 +88,23 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 			}
 		});
 
-		ArticleType firstArticleType=DemoApplication.getInstance().getContentCategoryResponse().getCategoryResps().get(0);
-		if (articleType.equals(firstArticleType)){
-            articles =DemoApplication.getInstance().getContentCategoryResponse().getContentResps();
-			articleAdapter.refresh(articles);
+		ArticleType firstArticleType= DbUtils.getFirstArticleType();
+		print("firstArticleType="+firstArticleType.getTitle());
+		if (articleType.getCategoryId()==firstArticleType.getCategoryId()){
+            articles =DbUtils.getModelList(Article.class);
+            print("articles ="+articles.size());
 			if (articles.size()!=0){
 				multiStatusLayout.showContent();
+				articleAdapter.refresh(articles);
 			}else {
 				multiStatusLayout.showEmpty();
 			}
-		}else {
-			getArticleContentById(articleType.getCategoryId()+"");
 		}
+		getArticleContentById(articleType.getCategoryId());
 
 	}
 
-	void getArticleContentById(String categoryId){
+	void getArticleContentById(int categoryId){
 		TreeMap sm = new TreeMap<String,String>();
 		sm.put("categoryId",categoryId);
 		LogicService.post(context, APIMethod.loadContentByCategory,sm, new ApiSubscriber<Response<List<Article>>>() {
@@ -108,7 +113,10 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
                 articles=response.getResult();
 				articleAdapter.refresh(articles);
 				if (articles.size()!=0){
+					DbUtils.deleteModel(Article.class, Article_Table.categoryId.eq(categoryId));
+					DbUtils.saveModelList(articles);
 					multiStatusLayout.showContent();
+					articleAdapter.refresh(articles);
 				}else {
 					multiStatusLayout.showEmpty();
 				}

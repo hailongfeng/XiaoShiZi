@@ -1,12 +1,22 @@
 package edu.children.xiaoshizi.bean;
 
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import java.io.Serializable;
 
-import zuo.biao.library.base.BaseModel;
+import edu.children.xiaoshizi.db.XSZDatabase;
 
-public class Banner implements Serializable {
+@Table(database = XSZDatabase.class)
+public class Banner extends BaseModel implements Serializable {
+
+    @PrimaryKey
     private String id	;
+    @Column
     private String sortNum	;
+    @Column
     private String bannerImage	;
 
     public String getId() {

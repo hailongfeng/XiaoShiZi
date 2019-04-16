@@ -80,8 +80,12 @@ public interface ApiService {
     //首页
     @POST("v1/sys/loadSysBannerList")
     Call<Response<List<Banner>>> loadSysBannerList(@Body RequestBody requestBody);
+    @POST("v1/sys/loadSysBannerList")
+    Observable<Response<List<Banner>>>loadSysBannerListAsys(@Body RequestBody requestBody);
     @POST("v1/index/loadContentCategory")
     Call<Response<LoadContentCategoryResponse>> loadContentCategory(@Body RequestBody requestBody);
+    @POST("v1/index/loadContentCategory")
+    Observable<Response<LoadContentCategoryResponse>> loadContentCategoryAsyc(@Body RequestBody requestBody);
     @POST("v1/index/loadContentByCategory")
     Observable<Response<List<Article>>> loadContentByCategory(@Body RequestBody requestBody);
     @POST("v1/index/loadContentById")

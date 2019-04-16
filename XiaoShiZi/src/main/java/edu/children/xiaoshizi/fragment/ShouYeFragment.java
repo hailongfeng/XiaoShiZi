@@ -28,14 +28,22 @@ import com.walle.multistatuslayout.MultiStatusLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.ContributeArticleActivity;
 import edu.children.xiaoshizi.activity.SearchArticleActivity;
+import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
 import edu.children.xiaoshizi.bean.Banner;
+import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
+import edu.children.xiaoshizi.db.DbUtils;
+import edu.children.xiaoshizi.logic.APIMethod;
+import edu.children.xiaoshizi.logic.LogicService;
+import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
+import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.GlideImageLoader;
 import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
 
@@ -44,10 +52,17 @@ import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
  * @use new WoDeFragment(),详细使用见.DemoFragmentActivity(initData方法内)
  */
 public class ShouYeFragment extends XszBaseFragment implements OnClickListener, OnDialogButtonClickListener {
+	@BindView(R.id.multiStatusLayout_shouye)
+	MultiStatusLayout multiStatusLayout_shouye;
 	@BindView(R.id.banner)
 	com.youth.banner.Banner banner;
 	@BindView(R.id.viewpagertab)
 	SmartTabLayout viewPagerTab;
+	@BindView(R.id.viewpager)
+	ViewPager viewPager;
+	private List<ArticleType> articleTypes;
+	private List<Banner> banners;
+
 	public static ShouYeFragment createInstance() {
 		return new ShouYeFragment();
 	}
@@ -57,11 +72,68 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 		return R.layout.shouye_fragment;
 	}
 
-
 	@Override
 	public void initView() {//必须调用
-		List<ArticleType> articleTypes=DemoApplication.getInstance().getContentCategoryResponse().getCategoryResps();
 
+	}
+
+	@Override
+	public void initData() {//必须调用
+		articleTypes=DbUtils.getModelList(ArticleType.class);
+		if (articleTypes!=null&&articleTypes.size()>0){
+			initTabs(articleTypes);
+			multiStatusLayout_shouye.showContent();
+		}
+		loadContentCategory();
+		banners=DbUtils.getModelList(Banner.class);
+		if (banners!=null&&banners.size()>0){
+			initBanber(banners);
+		}
+		loadSysBannerList();
+	}
+
+	private void loadSysBannerList() {
+		TreeMap sm = new TreeMap<String,String>();
+		LogicService.post(context, APIMethod.loadSysBannerList,sm, new ApiSubscriber<Response<List<Banner>>>() {
+			@Override
+			public void onSuccess(Response<List<Banner>> response) {
+				DemoApplication.getInstance().setBanners(response.getResult());
+				banners=response.getResult();
+				DbUtils.deleteModel(Banner.class);
+				DbUtils.saveModelList(banners);
+				initBanber(banners);
+			}
+
+			@Override
+			protected void onFail(Throwable  error) {
+				error.printStackTrace();
+			}
+		});
+	}
+	private void loadContentCategory() {
+		TreeMap sm = new TreeMap<String,String>();
+		LogicService.post(context, APIMethod.loadContentCategory,sm, new ApiSubscriber<Response<LoadContentCategoryResponse>>() {
+			@Override
+			public void onSuccess(Response<LoadContentCategoryResponse> response) {
+				DemoApplication.getInstance().setContentCategoryResponse(response.getResult());
+				articleTypes=response.getResult().getCategoryResps();
+				List<Article> articles=response.getResult().getContentResps();
+				DbUtils.deleteModel(ArticleType.class);
+				DbUtils.deleteModel(Article.class);
+				DbUtils.saveModelList(articleTypes);
+				DbUtils.saveModelList(articles);
+				initTabs(articleTypes);
+				multiStatusLayout_shouye.showContent();
+			}
+
+			@Override
+			protected void onFail(Throwable  error) {
+				error.printStackTrace();
+			}
+		});
+	}
+
+	public void initTabs(List<ArticleType> articleTypes) {//必须调用
 		FragmentPagerItems.Creator creator=FragmentPagerItems.with(context);
 		for (ArticleType articleType:articleTypes){
 			Bundle bundle=new Bundle();
@@ -71,11 +143,11 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 		FragmentManager fragmentManager=context.getSupportFragmentManager();
 		FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
 				fragmentManager, creator.create());
-		ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 		viewPager.setAdapter(adapter);
 		viewPagerTab.setViewPager(viewPager);
+	}
 
-		List<Banner> banners=DemoApplication.getInstance().getBanners();
+	private void initBanber(List<Banner> banners){
 		banner.setImageLoader(new GlideImageLoader());
 		List<String> images=new ArrayList<String>();
 		for (Banner b:banners){
@@ -83,13 +155,9 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 		}
 		banner.setImages(images);
 		banner.start();
-
 	}
 
-	@Override
-	public void initData() {//必须调用
 
-	}
 
 
 	private void logout() {

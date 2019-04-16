@@ -18,11 +18,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +33,12 @@ import edu.children.xiaoshizi.bean.Banner;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.bean.User;
+import edu.children.xiaoshizi.db.XSZDatabase;
 import edu.children.xiaoshizi.logic.UmengMessageHandle;
 import edu.children.xiaoshizi.utils.ActivityLifecycle;
+import edu.children.xiaoshizi.utils.Constant;
 import zuo.biao.library.base.BaseApplication;
+import zuo.biao.library.util.Log;
 
 /**Application
  * @author harlen
@@ -61,11 +67,26 @@ public class DemoApplication extends BaseApplication {
 	public void onCreate() {
 		super.onCreate();
 		context = this;
-		FlowManager.init(new FlowConfig.Builder(this).build());
 		Utils.init(context);
+		initDb();
 		registerActivityLifecycleCallbacks(new ActivityLifecycle());
 		new UmengMessageHandle(this).init();
 		FileDownloader.setup(this);
+	}
+
+	void initDb(){
+		SPUtils spUtils = new SPUtils(Constant.SP_NAME);
+		int oldVersion=spUtils.getInt("dbVersion",-1);
+		if (oldVersion < XSZDatabase.VERSION) {
+			Log.d(TAG,"删除数据库");
+			File file1=this.getDatabasePath("xiaoshizi.db");
+			File file2=this.getDatabasePath("xiaoshizi.db-journal");
+			FileUtils.deleteFile(file1);
+			FileUtils.deleteFile(file2);
+			spUtils.put("dbVersion",XSZDatabase.VERSION);
+		}
+		Log.d(TAG,"FlowManager.init");
+		FlowManager.init(new FlowConfig.Builder(this).build());
 	}
 	@Override
 	protected void attachBaseContext(Context base) {

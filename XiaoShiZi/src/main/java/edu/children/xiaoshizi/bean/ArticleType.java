@@ -1,8 +1,17 @@
 package edu.children.xiaoshizi.bean;
 
-import zuo.biao.library.base.BaseModel;
 
-public class ArticleType extends BaseModel {
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import java.io.Serializable;
+
+import edu.children.xiaoshizi.db.XSZDatabase;
+
+@Table(database = XSZDatabase.class)
+public class ArticleType extends BaseModel implements Serializable {
     /**
      * categoryId : 4
      * sortNum : 1
@@ -10,16 +19,16 @@ public class ArticleType extends BaseModel {
      * title : 视频的文章
      */
 
+    @PrimaryKey
     private int categoryId;
+    @Column
     private int sortNum;
+    @Column
     private String type;//分类类型。IT图文列表展示 VT 视频列表展示
+    @Column
     private String title;
+    @Column
     private String bannerImage;
-
-    @Override
-    protected boolean isCorrect() {
-        return true;
-    }
 
 
     public int getCategoryId() {

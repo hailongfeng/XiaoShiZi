@@ -40,47 +40,111 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.MyIntegrationActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.LoginActivity">
+        <activity
+            android:name=".activity.MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.RecogniteFeedbackActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.SuggestionActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.SettingActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.DemoActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.CourseListActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.ShareBoardActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.MyCacheListActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize"
+
+        <activity
+            android:name=".activity.LoginActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activity.RecogniteFeedbackActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SuggestionActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DemoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CourseListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ShareBoardActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyCacheListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.MessageDetailActivity"
-            android:launchMode="singleTask" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.MessageListActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.LinkmanActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.RealNameAuthActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.BindingStudentActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.ParentInfoActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.UserInfoActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize"
-            android:name=".activity.MainActivity"
-            android:launchMode="singleTask" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.ChangeUserInfoActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.SearchArticleActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.InOutSchoolRecodeDetailActivity" />
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MessageListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LinkmanActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RealNameAuthActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BindingStudentActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ParentInfoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.UserInfoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ChangeUserInfoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SearchArticleActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.InOutSchoolRecodeDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyIntegrationActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.ArticleDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 微信分享配置 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- 微信分享配置 -->
         <!-- QQ分享配置 -->
-        <activity android:configChanges="keyboardHidden|orientation|screenSize"
+        <activity
             android:name="com.tencent.tauth.AuthActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:noHistory="true">
             <intent-filter>
@@ -102,7 +166,10 @@
             android:name="UMENG_CHANNEL"
             android:value="豌豆荚" />
 
-        <activity android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.ContributeArticleActivity"></activity>
+        <activity
+            android:name=".activity.ContributeArticleActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -2,81 +2,99 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/activity_page">
-<LinearLayout
-    android:background="#51ACFE"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="10dp"
-        android:layout_height="wrap_content">
-        <com.flyco.roundview.RoundLinearLayout
-            android:id="@+id/rll_search"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_height="36dp"
-            android:gravity="center"
-            app:rv_backgroundColor="#86C5FE"
-            app:rv_cornerRadius="5dp"
-            >
-            <ImageView
-                android:src="@drawable/icon_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_marginLeft="5dp"
-                android:text="搜索您想要的东西"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </com.flyco.roundview.RoundLinearLayout>
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/rtv_contribute"
-            android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#51ACFE"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="投稿"
-            android:gravity="center_vertical"
-            android:textColor="@color/white"
-            android:drawableLeft="@drawable/icon_edit"
-            android:drawablePadding="2dp"
-            />
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <com.flyco.roundview.RoundLinearLayout
+                android:id="@+id/rll_search"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:rv_backgroundColor="#86C5FE"
+                app:rv_cornerRadius="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_search" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="搜索您想要的东西"
+                    android:textColor="@color/white" />
+            </com.flyco.roundview.RoundLinearLayout>
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/rtv_contribute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_edit"
+                android:drawablePadding="2dp"
+                android:gravity="center_vertical"
+                android:text="投稿"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
     </LinearLayout>
 
-</LinearLayout>
-    <com.ogaclejapan.smarttablayout.SmartTabLayout
-        android:id="@+id/viewpagertab"
+    <com.walle.multistatuslayout.MultiStatusLayout
+        android:id="@+id/multiStatusLayout_shouye"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/colorPrimary"
-        app:stl_indicatorAlwaysInCenter="false"
-        app:stl_indicatorInFront="false"
-        app:stl_indicatorInterpolation="smart"
-        app:stl_indicatorColor="@color/white"
-        app:stl_indicatorThickness="2dp"
-        app:stl_indicatorCornerRadius="2dp"
-        app:stl_underlineColor="#4D000000"
-        app:stl_underlineThickness="0dp"
-        app:stl_dividerColor="#4D000000"
-        app:stl_dividerThickness="0dp"
-        app:stl_defaultTabTextAllCaps="true"
-        app:stl_defaultTabTextColor="@color/white"
-        app:stl_defaultTabTextSize="16sp"
-        app:stl_defaultTabTextHorizontalPadding="16dp"
-        app:stl_defaultTabTextMinWidth="0dp"
-        app:stl_distributeEvenly="false"
-        />
-    <com.youth.banner.Banner
-        android:layout_margin="5dp"
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"/>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:emptyLayout="@layout/layout_empty"
+        app:errorLayout="@layout/layout_empty"
+        app:loadLayout="@layout/layout_loading"
+        app:netErrorLayout="@layout/layout_empty">
 
+        <LinearLayout style="@style/ll_vertical_match_match">
+
+            <com.ogaclejapan.smarttablayout.SmartTabLayout
+                android:id="@+id/viewpagertab"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/colorPrimary"
+                app:stl_defaultTabTextAllCaps="true"
+                app:stl_defaultTabTextColor="@color/white"
+                app:stl_defaultTabTextHorizontalPadding="16dp"
+                app:stl_defaultTabTextMinWidth="0dp"
+                app:stl_defaultTabTextSize="16sp"
+                app:stl_distributeEvenly="false"
+                app:stl_dividerColor="#4D000000"
+                app:stl_dividerThickness="0dp"
+                app:stl_indicatorAlwaysInCenter="false"
+                app:stl_indicatorColor="@color/white"
+                app:stl_indicatorCornerRadius="2dp"
+                app:stl_indicatorInFront="false"
+                app:stl_indicatorInterpolation="smart"
+                app:stl_indicatorThickness="2dp"
+                app:stl_underlineColor="#4D000000"
+                app:stl_underlineThickness="0dp" />
+
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="5dp" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </com.walle.multistatuslayout.MultiStatusLayout>
 </LinearLayout>

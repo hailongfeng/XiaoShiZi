@@ -10,4 +10,5 @@ public class Constant {
     public static final String TEST_USER_ID = "5gcnrqBYVl1Qngok8uH";
     public static final String CACHE_DIR_IMAGE = "image";
     public static final String CACHE_DIR_FILE = "file";
+    public static final String SP_NAME= "xsz";
 }

@@ -24,6 +24,8 @@ public class Article extends BaseModel implements Serializable {
     @PrimaryKey
     private String contentId;
     @Column
+    private int categoryId;
+    @Column
     private String title;
     @Column
     private String bannerImage;
@@ -50,6 +52,14 @@ public class Article extends BaseModel implements Serializable {
 
     public void setContentId(String contentId) {
         this.contentId = contentId;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getTitle() {

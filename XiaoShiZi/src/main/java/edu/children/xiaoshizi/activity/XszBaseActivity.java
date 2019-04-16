@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dou361.dialogui.DialogUIUtils;
@@ -20,11 +21,13 @@ import com.umeng.message.PushAgent;
 
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.utils.Constant;
 import zuo.biao.library.base.BaseActivity;
 import zuo.biao.library.util.Log;
 
 public abstract class XszBaseActivity extends BaseActivity implements View.OnClickListener {
 
+  protected  SPUtils spUtils;
   protected static   RequestOptions glideOptions = new RequestOptions()
             .fallback( R.drawable.user_default) //url为空的时候,显示的图片
             .error(R.drawable.user_default);//图片加载失败后，显示的图片
@@ -34,6 +37,7 @@ public abstract class XszBaseActivity extends BaseActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         PushAgent.getInstance(context).onAppStart();
         DialogUIUtils.init(context);
+        spUtils = new SPUtils(Constant.SP_NAME);
     }
 
     @Override

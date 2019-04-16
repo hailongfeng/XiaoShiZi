@@ -58,14 +58,6 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (!isTaskRoot()) {
-            // Android launched another instance of the root activity into an existing task
-            //  so just quietly finish and go away, dropping the user back into the activity
-            //  at the top of the stack (ie: the last state of this task)
-            finish();
-            return;
-        }
         setContentView(R.layout.activity_login);
     }
 
@@ -79,27 +71,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
     @Override
     public void initData() {
 
-        String[] mPermissionList = new String[]{
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.CALL_PHONE,
-                Manifest.permission.READ_LOGS,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.SET_DEBUG_APP,
-                Manifest.permission.SYSTEM_ALERT_WINDOW,
-                Manifest.permission.GET_ACCOUNTS,
-                Manifest.permission.WRITE_APN_SETTINGS,
-                Manifest.permission.INTERNET,
-                Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA
-        };
-        EasyPermissions.requestPermissions(
-                context,
-                "申请权限",
-                0,mPermissionList
-                );
+
     }
     Dialog dialog;
     @Override
@@ -221,8 +193,8 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
     }
     private Response<LoadContentCategoryResponse> loadContentCategory() throws IOException {
         TreeMap sm = new TreeMap<String,String>();
-            Response<LoadContentCategoryResponse> response=LogicService.post(context,APIMethod.loadContentCategory,sm);
-            return  response;
+        Response<LoadContentCategoryResponse> response=LogicService.post(context,APIMethod.loadContentCategory,sm);
+        return  response;
     }
 
 
