@@ -267,7 +267,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 				toActivity(new Intent(context, UserInfoActivity.class));
 				break;
 			case R.id.ll_my_huancun:
-				toActivity(new Intent(context, MyCacheListActivity.class));
+//				toActivity(new Intent(context, MyCacheListActivity.class));
 				break;
 			case R.id.ll_my_jifen:
 //				integration;

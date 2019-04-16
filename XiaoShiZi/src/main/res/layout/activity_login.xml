@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/activity_page"
-    android:background="@color/xsz_login_bg"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".activity.LoginActivity">
 
     <RelativeLayout
         style="@style/topbar_bg"
-        android:background="#FCF5CA">
+        android:background="@color/white">
         <ImageButton style="@style/xsz_topbar_return_img" />
     </RelativeLayout>
     <RelativeLayout

@@ -256,6 +256,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 if(file.exists()){
                     showShortToast("缓存成功");
                 }else {
+                    showShortToast("已加入缓存下载任务");
                     downLoadVideToCache(url,file.getAbsolutePath());
                 }
                 break;

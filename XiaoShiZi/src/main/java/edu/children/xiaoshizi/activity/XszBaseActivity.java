@@ -41,6 +41,9 @@ public abstract class XszBaseActivity extends BaseActivity implements View.OnCli
         super.setContentView(layoutResID);
         //绑定初始化ButterKnife
         ButterKnife.bind(this);
+        ImmersionBar.with(this)
+                .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
+                .init();
         initView();
         initData();
         initEvent();

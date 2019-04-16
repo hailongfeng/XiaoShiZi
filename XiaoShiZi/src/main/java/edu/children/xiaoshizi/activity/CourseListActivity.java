@@ -82,7 +82,6 @@ public class CourseListActivity extends BaseListActivity<Article, GridView, Cour
     public void initData() {//必须在onCreate方法内调用
         super.initData();
         tvBaseTitle.setText(articleType.getTitle());
-        showShortToast("range = " + range);
     }
 
     @Override
