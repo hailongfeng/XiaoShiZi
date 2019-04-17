@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.ImageView;
@@ -17,6 +18,10 @@ import com.heima.tabview.library.TabViewChild;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +30,7 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.bean.User;
@@ -56,8 +62,17 @@ public class MainActivity extends XszBaseActivity {
         super.onCreate(savedInstanceState);
         initPermission();
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserInfoChange(EventBusMessage<String> messageEvent) {
+        if (messageEvent.getType()==EventBusMessage.Type_user_login){
+            Log.d(TAG,"Type_user_login====");
+            getSchools();
+            String userId=DemoApplication.getInstance().getUser().getUserId();
+            getMyprofile(userId);
+        }
+    }
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -65,7 +80,6 @@ public class MainActivity extends XszBaseActivity {
 //        tabView.setTabViewDefaultPosition(0);
         ((LinearLayout)tabView.getChildAt(0)).getChildAt(0).performClick();
     }
-
     private void getSchools() {
         LogicService.post(context, APIMethod.loadSchoolData, null, new ApiSubscriber<Response<List<School>>>() {
             @Override
@@ -112,6 +126,8 @@ public class MainActivity extends XszBaseActivity {
 
         });
     }
+
+
     @Override
     public void initData() {
 //        getSchools();

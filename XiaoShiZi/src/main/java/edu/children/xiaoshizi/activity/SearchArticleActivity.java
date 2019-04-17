@@ -130,7 +130,7 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
         View contentView = LayoutInflater.from(context).inflate(R.layout.article_search_word_layout, null, false);
         ButterKnife.bind(historyHoleder, contentView);
         historyHoleder.bindView();
-        window = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT,  ViewGroup.LayoutParams.MATCH_PARENT, true);
+        window = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT,  1000, true);
         window.setOutsideTouchable(true);
         window.setTouchable(true);
         window.showAsDropDown(ll_top, 0, 0);

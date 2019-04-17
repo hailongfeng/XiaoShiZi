@@ -159,10 +159,10 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
             public void onSuccess(Response<LoginRespon> respon) {
                 hideLoading();
                 Log.d(TAG,"phoneNumber="+phoneNumber);
-                EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_login,"登陆成功",""));
                 respon.getResult().getLoginResp().setPhone(phoneNumber);
                 DemoApplication.getInstance().setLoginRespon(respon.getResult());
                 DemoApplication.getInstance().setUser(respon.getResult().getLoginResp());
+                EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_login,"登陆成功",""));
                 toActivity(new Intent(context,MainActivity.class),false);
                 finish();
             }

@@ -24,6 +24,7 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.activity.LoginActivity;
 import edu.children.xiaoshizi.activity.MessageListActivity;
 import edu.children.xiaoshizi.adapter.InOutSchoolRecodeAdapter;
 import edu.children.xiaoshizi.bean.EventBusMessage;
@@ -112,6 +113,13 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
 
         if (!isLogin()){
             multiStatusLayout_all.showError();
+           View noLogin= multiStatusLayout_all.getErrorView();
+           noLogin.findViewById(R.id.rtv_login).setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   toActivity(new Intent(context, LoginActivity.class));
+               }
+           });
         }else {
             if (getArguments() != null) {
                 mParamCurrentStudentIndex = getArguments().getInt(ARG_PARAM_CURRENT_STUDENT);
@@ -141,6 +149,7 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserInfoChange(EventBusMessage<String> messageEvent) {
         if (messageEvent.getType()==EventBusMessage.Type_user_login){
+            Log.d(TAG,"Type_user_login====");
             initData();
         }
     }
@@ -186,6 +195,11 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
+
+        if (!isLogin()){
+            showShortToast("您还未登陆，请先登陆");
+            return;
+        }
         if (v.getId()==R.id.iv_message){
             toActivity(new Intent(context, MessageListActivity.class));
         }else if (v.getId()==R.id.iv_change_date){

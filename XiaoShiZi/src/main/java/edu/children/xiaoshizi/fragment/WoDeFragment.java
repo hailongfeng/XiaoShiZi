@@ -27,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.flyco.roundview.RoundTextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.walle.multistatuslayout.MultiStatusLayout;
@@ -60,7 +59,6 @@ import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
-import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.StringUtils;
 import edu.children.xiaoshizi.utils.XszCache;
@@ -173,7 +171,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	public void initData() {//必须调用
 		updateUserInfo();
 
-		updateStrudent();
+		updateStudent();
 
 		updateParent();
 		long size= XszCache.getCacheSize();
@@ -194,15 +192,18 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		}
 	}
 
-	private void updateStrudent() {
+	private void updateStudent() {
 		if (isLogin()) {
 			List<Student> list = DemoApplication.getInstance().getLoginRespon().getStudents();
 			if (list != null) {
+				Log.d(TAG,"有学生"+list.size());
 				if (list.size() == 0) {
 					btn_add_student.setVisibility(View.GONE);
 					rvStudentsRecycler.setVisibility(View.GONE);
 					cv_no_students.setVisibility(View.VISIBLE);
 				} else {
+					btn_add_student.setVisibility(View.VISIBLE);
+					rvStudentsRecycler.setVisibility(View.VISIBLE);
 					cv_no_students.setVisibility(View.GONE);
 					studentAdapter.refresh(list);
 				}
@@ -268,9 +269,10 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		if (messageEvent.getType()==EventBusMessage.Type_User_info_change){
 			updateUserInfo();
 		}else if (messageEvent.getType()==EventBusMessage.Type_binding_user){
-			updateStrudent();
+			updateStudent();
 		}else if (messageEvent.getType()==EventBusMessage.Type_user_login){
-			//updateStrudent();
+			//updateStudent();
+			Log.d(TAG,"Type_user_login====");
 			initData();
 		}
 	}
