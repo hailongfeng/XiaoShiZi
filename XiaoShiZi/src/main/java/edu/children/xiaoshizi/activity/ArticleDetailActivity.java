@@ -45,6 +45,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.Article;
+import edu.children.xiaoshizi.bean.ArticleCache;
 import edu.children.xiaoshizi.bean.ArticleType;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
@@ -170,7 +171,8 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
 
                     @Override
                     protected void completed(BaseDownloadTask task) {
-                        showShortToast("缓存成功"+task.getTargetFilePath());
+                        print("缓存地址："+task.getTargetFilePath());
+                        showShortToast("缓存成功");
 
                     }
 
@@ -248,8 +250,9 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_down_cache:
-                if (!article.exists()){
-                    article.save();
+                ArticleCache articleCache=new ArticleCache(article);
+                if (!articleCache.exists()){
+                    articleCache.save();
                 }
                 String url=article.getActivityVideoUrl();
                 File file=XszCache.getCachedVideoFile(url);

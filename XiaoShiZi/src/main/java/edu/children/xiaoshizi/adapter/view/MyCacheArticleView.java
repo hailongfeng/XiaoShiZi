@@ -28,9 +28,10 @@ import android.widget.TextView;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.adapter.ArticleAdapter;
 import edu.children.xiaoshizi.bean.Article;
+import edu.children.xiaoshizi.bean.ArticleCache;
 import zuo.biao.library.util.Log;
 
-public class MyCacheArticleView extends XszBaseView<Article> implements OnClickListener {
+public class MyCacheArticleView extends XszBaseView<ArticleCache> implements OnClickListener {
 	private static final String TAG = "MyCacheArticleView";
 
 
@@ -53,8 +54,8 @@ public class MyCacheArticleView extends XszBaseView<Article> implements OnClickL
 	}
 
 	@Override
-	public void bindView(Article data_){
-		super.bindView(data_ != null ? data_ : new Article());
+	public void bindView(ArticleCache data_){
+		super.bindView(data_ != null ? data_ : new ArticleCache());
 		Log.d(TAG,this.data.toString());
 		loadImage(this.data.getActivityVideoImageUrl(),iv_article_pic);
 		txt_article_title.setText(this.data.getTitle());

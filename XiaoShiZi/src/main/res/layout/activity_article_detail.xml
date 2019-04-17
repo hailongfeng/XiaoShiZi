@@ -15,6 +15,10 @@
         <TextView
             style="@style/topbar_title"
             android:layout_centerHorizontal="true"
+            android:maxLength="20"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="标题" />
         <ImageButton
             android:id="@+id/ib_share"

@@ -48,6 +48,11 @@ public class Article extends BaseModel implements Serializable {
     private boolean isSelected=false;
     private boolean isShow=false;
 
+    public Article() {
+    }
+
+
+
     public long getCid() {
         return cid;
     }
@@ -174,4 +179,6 @@ public class Article extends BaseModel implements Serializable {
                 ", isShow=" + isShow +
                 '}';
     }
+
+
 }

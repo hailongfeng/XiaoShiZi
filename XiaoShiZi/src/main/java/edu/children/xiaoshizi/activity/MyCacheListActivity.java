@@ -1,9 +1,11 @@
 package edu.children.xiaoshizi.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -19,6 +21,7 @@ import butterknife.BindView;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.adapter.view.MyCacheArticleView;
 import edu.children.xiaoshizi.bean.Article;
+import edu.children.xiaoshizi.bean.ArticleCache;
 import edu.children.xiaoshizi.bean.Message;
 import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.utils.XszCache;
@@ -42,8 +45,8 @@ public class MyCacheListActivity extends XszBaseActivity {
 
     @BindView(R.id.btn_delete)
     Button btn_delete;
-    BaseAdapter<Article, MyCacheArticleView> myCacheArticleAdapter;
-    List<Article> data=new ArrayList<>();
+    BaseAdapter<ArticleCache, MyCacheArticleView> myCacheArticleAdapter;
+    List<ArticleCache> data=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +56,7 @@ public class MyCacheListActivity extends XszBaseActivity {
 
     @Override
     public void initView() {
-        myCacheArticleAdapter = new BaseAdapter<Article, MyCacheArticleView>(context){
+        myCacheArticleAdapter = new BaseAdapter<ArticleCache, MyCacheArticleView>(context){
             @Override
             public MyCacheArticleView createView(int viewType, ViewGroup parent) {
                 return new MyCacheArticleView(context,parent);
@@ -65,7 +68,7 @@ public class MyCacheListActivity extends XszBaseActivity {
     @Override
     public void initData() {
         data.clear();
-        data.addAll( DbUtils.getModelList(Article.class));
+        data.addAll( DbUtils.getModelList(ArticleCache.class));
         myCacheArticleAdapter.refresh(data);
     }
 
@@ -81,6 +84,19 @@ public class MyCacheListActivity extends XszBaseActivity {
                     article.setSelected(isChecked);
                 }
                 myCacheArticleAdapter.refresh(data);
+            }
+        });
+        myCacheArticleAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent=new Intent(context,ArticleDetailActivity.class);
+//                Article article= data.get(position);
+//                intent.putExtra("article",article);
+//                article.getCategoryId();
+//                intent.putExtra("articleType",articleType);
+//                String title=articleType.getTitle()+"|"+article.getTitle();
+//                intent.putExtra(INTENT_TITLE,title);
+//                toActivity(intent);
             }
         });
     }
@@ -113,7 +129,7 @@ public class MyCacheListActivity extends XszBaseActivity {
                 break;
             case R.id.btn_delete:
                 String t="";
-                Iterator<Article> it=data.iterator();
+                Iterator<ArticleCache> it=data.iterator();
                 while (it.hasNext()){
                     Article article=it.next();
                     if (article.isSelected()) {
