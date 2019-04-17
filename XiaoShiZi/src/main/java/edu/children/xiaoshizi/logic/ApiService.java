@@ -86,14 +86,17 @@ public interface ApiService {
     Call<Response<LoadContentCategoryResponse>> loadContentCategory(@Body RequestBody requestBody);
     @POST("v1/index/loadContentCategory")
     Observable<Response<LoadContentCategoryResponse>> loadContentCategoryAsyc(@Body RequestBody requestBody);
+
     @POST("v1/index/loadContentByCategory")
     Observable<Response<List<Article>>> loadContentByCategory(@Body RequestBody requestBody);
     @POST("v1/index/loadContentById")
     Observable<Response<Article>> loadContentById(@Body RequestBody requestBody);
     @POST("v1/index/searchContentByTitle")
     Observable<Response<List<Article>>> searchContentByTitle(@Body RequestBody requestBody);
-    @POST("/v1/index/submitDraftContent")
+    @POST("v1/index/submitDraftContent")
     Observable<Response<String>> submitDraftContent(@Body RequestBody requestBody);
+    @POST("v1/comment/submitComment")
+    Observable<Response<String>> submitComment(@Body RequestBody requestBody);
 
 
 
@@ -105,6 +108,7 @@ public interface ApiService {
     Observable<Response<List<Article>>> loadSafeLabContentByCategory(@Body RequestBody requestBody);
     @POST("v1/safeLab/loadContentById")
     Observable<Response<Article>> loadSafeLabContentById(@Body RequestBody requestBody);
+
     //安全课堂
     @POST("v1/safeclassroom/loadSeContentCategory")
     Observable<Response<LoadContentCategoryResponse>> loadSeClassRoomContentCategory(@Body RequestBody requestBody);

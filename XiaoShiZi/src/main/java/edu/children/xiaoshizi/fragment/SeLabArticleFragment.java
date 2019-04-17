@@ -23,8 +23,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.blankj.utilcode.util.CacheUtils;
 import com.walle.multistatuslayout.MultiStatusLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -35,6 +38,7 @@ import edu.children.xiaoshizi.activity.ArticleDetailActivity;
 import edu.children.xiaoshizi.adapter.ArticleAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
@@ -42,6 +46,7 @@ import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
 import zuo.biao.library.util.Log;
+import zuo.biao.library.util.StringUtil;
 
 /**
  * 安全实验室文章列表界面
@@ -56,7 +61,7 @@ public class SeLabArticleFragment extends XszBaseFragment implements OnClickList
 
     private ArticleAdapter articleAdapter;
 	private ArticleType articleType;
-    private List<Article> articles;
+    private List<Article> articles=new ArrayList<>();
 	@Override
 	int getLayoutId() {
 		return R.layout.fragment_article_layout;
@@ -65,7 +70,6 @@ public class SeLabArticleFragment extends XszBaseFragment implements OnClickList
 	@Override
 	public void initView() {
 		articleType=(ArticleType) getArguments().getSerializable("articleType");
-		Log.d(TAG,"articleType==null ,,,"+(articleType.getTitle()));
         rvBaseRecycler.setLayoutManager(new LinearLayoutManager(context));
         DividerItemDecoration divider = new DividerItemDecoration(context,DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(context,R.drawable.list_view_divider));
@@ -85,20 +89,31 @@ public class SeLabArticleFragment extends XszBaseFragment implements OnClickList
                 toActivity(intent);
 			}
 		});
+		ArticleType firstArticleType= DbUtils.getFirstArticleType(3);
+		if (firstArticleType!=null) {
+			print("安全实验室：当前菜单为：" + this.articleType.getTitle() + "," + this.articleType.getCategoryId() + "；；；首页第一个菜单为：" + firstArticleType.getTitle() + "," + firstArticleType.getCategoryId());
+		if (firstArticleType.getCategoryId()==this.articleType.getCategoryId()){
+			String type1Articles= CacheUtils.get(context).getAsString("type3Articles");
+			if (StringUtil.isNotEmpty(type1Articles,true)){
+				List<Article> articles1= JSONArray.parseArray(type1Articles,Article.class);
+				print("走缓存");
+				updateList(articles1);
+			}
+		}
+		}
+		getArticleContentById(articleType.getCategoryId());
+	}
 
-//		ArticleType firstArticleType=DemoApplication.getInstance().getContentSeLabCategoryResponse().getCategoryResps().get(0);
-//		if (articleType.equals(firstArticleType)){
-//            articles =DemoApplication.getInstance().getContentSeLabCategoryResponse().getContentResps();
-//			articleAdapter.refresh(articles);
-//			if (articles.size()!=0){
-//				multiStatusLayout.showContent();
-//			}else {
-//				multiStatusLayout.showEmpty();
-//			}
-//			Log.d(TAG,"111articles size = "+articles.size());
-//		}else {
-			getArticleContentById(articleType.getCategoryId());
-//		}
+	private void updateList(List<Article> articles1){
+		if (articles1!=null){
+			this.articles.clear();
+			this.articles.addAll(articles1);
+			articleAdapter.refresh(this.articles);
+			multiStatusLayout.showContent();
+		}else {
+			multiStatusLayout.showEmpty();
+		}
+
 	}
 
 	void getArticleContentById(int categoryId){
@@ -107,14 +122,9 @@ public class SeLabArticleFragment extends XszBaseFragment implements OnClickList
 		LogicService.post(context, APIMethod.loadSafeLabContentByCategory,sm, new ApiSubscriber<Response<List<Article>>>() {
 			@Override
 			public void onSuccess(Response<List<Article>> response) {
-                articles=response.getResult();
-                Log.d(TAG,"222articles size = "+articles.size());
-				articleAdapter.refresh(articles);
-				if (articles.size()!=0){
-					multiStatusLayout.showContent();
-				}else {
-					multiStatusLayout.showEmpty();
-				}
+				Log.d(TAG,"333articles size = "+articles.size());
+				List<Article> articles1=response.getResult();
+				updateList(articles1);
 			}
 
 			@Override

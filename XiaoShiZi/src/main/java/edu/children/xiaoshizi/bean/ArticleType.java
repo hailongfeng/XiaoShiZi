@@ -18,8 +18,9 @@ public class ArticleType extends BaseModel implements Serializable {
      * type : VT
      * title : 视频的文章
      */
-
-    @PrimaryKey
+    @PrimaryKey(autoincrement = true)
+    private long cid;
+    @Column
     private int categoryId;
     @Column
     private int sortNum;
@@ -33,6 +34,13 @@ public class ArticleType extends BaseModel implements Serializable {
     @Column
     private int belongTo; //1，首页，2，安全课堂，3，安全实验室
 
+    public long getCid() {
+        return cid;
+    }
+
+    public void setCid(long cid) {
+        this.cid = cid;
+    }
 
     public int getCategoryId() {
         return categoryId;

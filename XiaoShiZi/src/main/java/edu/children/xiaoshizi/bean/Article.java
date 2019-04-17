@@ -21,7 +21,9 @@ public class Article extends BaseModel implements Serializable {
      * activityVideoImageUrl : https://single-obs.obs.cn-east-2.myhuaweicloud.com/app_pic/2019031214364271658.png
      * contentType : VT
      */
-    @PrimaryKey
+    @PrimaryKey(autoincrement = true)
+    private long cid;
+    @Column
     private String contentId;
     @Column
     private int categoryId;
@@ -45,6 +47,14 @@ public class Article extends BaseModel implements Serializable {
     private List<ArticleComment> commentResps;
     private boolean isSelected=false;
     private boolean isShow=false;
+
+    public long getCid() {
+        return cid;
+    }
+
+    public void setCid(long cid) {
+        this.cid = cid;
+    }
 
     public String getContentId() {
         return contentId;

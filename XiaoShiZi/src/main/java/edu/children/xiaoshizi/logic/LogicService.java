@@ -218,6 +218,8 @@ public class LogicService {
             observable=apiService.submitFeedBack(requestBody);
         }else if (method==APIMethod.submitDraftContent){
             observable=apiService.submitDraftContent(requestBody);
+        }else if (method==APIMethod.submitComment){
+            observable=apiService.submitComment(requestBody);
         }
 
         if (observable!=null) {

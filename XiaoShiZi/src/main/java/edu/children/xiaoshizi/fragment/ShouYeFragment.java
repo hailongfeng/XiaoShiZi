@@ -29,6 +29,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.walle.multistatuslayout.MultiStatusLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -49,6 +50,7 @@ import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.GlideImageLoader;
 import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
+import zuo.biao.library.util.Log;
 
 /**设置fragment
  * @author Lemon
@@ -82,7 +84,11 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 
 	@Override
 	public void initData() {//必须调用
-		List<ArticleType> articleTypes2=DbUtils.getModelList(ArticleType.class,ArticleType_Table.belongTo.eq(1));
+		List<ArticleType> articleTypes2=DbUtils.getArticleTypeList(1);
+		print("数据库中的菜单为：");
+		for (ArticleType type:articleTypes2) {
+			print(type.getTitle()+","+type.getCategoryId());
+		}
 		initType(articleTypes2);
 		loadContentCategory();
 
@@ -130,18 +136,20 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 			public void onSuccess(Response<LoadContentCategoryResponse> response) {
 				DemoApplication.getInstance().setContentCategoryResponse(response.getResult());
 				List<ArticleType> articleTypes2=response.getResult().getCategoryResps();
+				print("网络获取的菜单为：");
 				for (ArticleType type:articleTypes2){
 					type.setBelongTo(1);
+					print(type.getTitle()+","+type.getCategoryId());
 				}
-				initType(articleTypes2);
 				List<Article> articles=response.getResult().getContentResps();
-				DbUtils.deleteModel(ArticleType.class,ArticleType_Table.belongTo.eq(1));
-//				DbUtils.deleteModel(Article.class);
+				DbUtils.deleteArticleType(1);
+//				DbUtils.deleteModel(ArticleType.class,ArticleType_Table.belongTo.eq(1));
 				DbUtils.saveModelList(articleTypes2);
-//				DbUtils.saveModelList(articles);
                 String type1Articles=JSONArray.toJSONString(articles);
                 print("type1Articles="+type1Articles);
                 CacheUtils.get(context).put("type1Articles",type1Articles);
+
+                initType(articleTypes2);
 			}
 
 			@Override
@@ -163,6 +171,12 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 				fragmentManager, creator.create());
 		viewPager.setAdapter(adapter);
 		viewPagerTab.setViewPager(viewPager);
+        viewPagerTab.setOnTabClickListener(new SmartTabLayout.OnTabClickListener() {
+            @Override
+            public void onTabClicked(int position) {
+                Log.d(TAG,"当前点击的tab为："+position);
+            }
+        });
 	}
 
 	private void initBanber(List<Banner> banners){

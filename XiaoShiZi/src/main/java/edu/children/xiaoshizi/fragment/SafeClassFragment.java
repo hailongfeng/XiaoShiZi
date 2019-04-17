@@ -14,41 +14,24 @@ limitations under the License.*/
 
 package edu.children.xiaoshizi.fragment;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.blankj.utilcode.util.CacheUtils;
 import com.walle.multistatuslayout.MultiStatusLayout;
 
-import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.circlenavigator.CircleNavigator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
-import edu.children.xiaoshizi.activity.ArticleDetailActivity;
-import edu.children.xiaoshizi.adapter.ArticleAdapter;
-import edu.children.xiaoshizi.adapter.ExamplePagerAdapter;
 import edu.children.xiaoshizi.adapter.GradlePagerAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
@@ -58,10 +41,7 @@ import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
-import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
-import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
-import zuo.biao.library.util.Log;
 
 /**
  * 安全课堂，年级列表
@@ -102,7 +82,7 @@ public class SafeClassFragment extends XszBaseFragment implements OnClickListene
 
 	@Override
 	public void initData() {
-		List<ArticleType>  articleTypes2=DbUtils.getModelList(ArticleType.class,ArticleType_Table.belongTo.eq(2));
+		List<ArticleType>  articleTypes2=DbUtils.getArticleTypeList(2);
 		initData1(articleTypes2);
 		loadSeClassRoomContentCategory();
 	}
@@ -130,9 +110,10 @@ public class SafeClassFragment extends XszBaseFragment implements OnClickListene
 				for (ArticleType type:articleTypes2){
 					type.setBelongTo(2);
 				}
-				initData1(articleTypes2);
-				DbUtils.deleteModel(ArticleType.class,ArticleType_Table.belongTo.eq(2));
+				DbUtils.deleteArticleType(2);
+//				DbUtils.deleteModel(ArticleType.class,ArticleType_Table.belongTo.eq(2));
 				DbUtils.saveModelList(articleTypes2);
+				initData1(articleTypes2);
 			}
 
 			@Override
@@ -161,6 +142,4 @@ public class SafeClassFragment extends XszBaseFragment implements OnClickListene
 		magicIndicator.setNavigator(circleNavigator);
 		ViewPagerHelper.bind(magicIndicator, mViewPager);
 	}
-
-
 }

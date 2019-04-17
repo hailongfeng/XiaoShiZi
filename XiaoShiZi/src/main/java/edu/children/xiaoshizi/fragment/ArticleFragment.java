@@ -24,23 +24,18 @@ import android.widget.AdapterView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.blankj.utilcode.util.CacheUtils;
-import com.raizlabs.android.dbflow.sql.language.SQLOperator;
 import com.walle.multistatuslayout.MultiStatusLayout;
-
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.ArticleDetailActivity;
 import edu.children.xiaoshizi.adapter.ArticleAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
-import edu.children.xiaoshizi.bean.Article_Table;
-import edu.children.xiaoshizi.bean.School_Table;
 import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
@@ -94,14 +89,18 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 		});
 
 		ArticleType firstArticleType=DbUtils.getFirstArticleType(1);
-		if (firstArticleType.getCategoryId()==this.articleType.getCategoryId()){
-			String type1Articles=CacheUtils.get(context).getAsString("type1Articles");
-			if (StringUtil.isNotEmpty(type1Articles,true)){
-				List<Article> articles1=JSONArray.parseArray(type1Articles,Article.class);
-				print("走缓存");
-				updateList(articles1);
+		if (firstArticleType!=null) {
+			print("首页文章：当前菜单为：" + this.articleType.getTitle() + "," + this.articleType.getCategoryId() + "；；；首页第一个菜单为：" + firstArticleType.getTitle() + "," + firstArticleType.getCategoryId());
+			if (firstArticleType.getCategoryId()==this.articleType.getCategoryId()){
+				String type1Articles=CacheUtils.get(context).getAsString("type1Articles");
+				if (StringUtil.isNotEmpty(type1Articles,true)){
+					List<Article> articles1=JSONArray.parseArray(type1Articles,Article.class);
+					print("走缓存");
+					updateList(articles1);
+				}
 			}
 		}
+
 		getArticleContentById(articleType.getCategoryId());
 
 	}

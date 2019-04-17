@@ -114,7 +114,6 @@ public class MainActivity extends XszBaseActivity {
     private Fragment fragments[] = {
             ShouYeFragment.createInstance(),
             new SafeClassRoomFragment(),
-//            DemoFragment.newInstance("开发中...",""),
             SafeToolFragment.createInstance(0),
             WoDeFragment.createInstance()
     };

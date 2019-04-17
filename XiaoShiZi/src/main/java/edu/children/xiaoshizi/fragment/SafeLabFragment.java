@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSONArray;
+import com.blankj.utilcode.util.CacheUtils;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -61,6 +63,7 @@ public class SafeLabFragment extends XszBaseFragment {
     @Override
     public void initView() {
         List<ArticleType> articleTypes2=DbUtils.getModelList(ArticleType.class,ArticleType_Table.belongTo.eq(3));
+
         initType(articleTypes2);
         loadSeLabContentCategory();
 
@@ -107,11 +110,18 @@ public class SafeLabFragment extends XszBaseFragment {
                 DemoApplication.getInstance().setContentSeLabCategoryResponse(response.getResult());
                 List<ArticleType> articleTypes2=response.getResult().getCategoryResps();
                 for (ArticleType type:articleTypes2){
-                    type.setBelongTo(2);
+                    type.setBelongTo(3);
                 }
-                initType(articleTypes2);
-                DbUtils.deleteModel(ArticleType.class,ArticleType_Table.belongTo.eq(3));
+
+                DbUtils.deleteArticleType(3);
+//                DbUtils.deleteModel(ArticleType.class,ArticleType_Table.belongTo.eq(3));
                 DbUtils.saveModelList(articleTypes2);
+
+                List<Article> articles=response.getResult().getContentResps();
+                String type3Articles= JSONArray.toJSONString(articles);
+                print("type3Articles="+type3Articles);
+                CacheUtils.get(context).put("type3Articles",type3Articles);
+                initType(articleTypes2);
 
             }
 

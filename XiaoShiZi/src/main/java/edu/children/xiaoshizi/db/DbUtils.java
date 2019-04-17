@@ -14,9 +14,10 @@ import edu.children.xiaoshizi.bean.ArticleType_Table;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.bean.School_Table;
 import edu.children.xiaoshizi.bean.SearchWorldHistory;
+import zuo.biao.library.util.Log;
 
 public class DbUtils {
-
+    private static final String TAG="DbUtils";
     public static List<School> getSchoolByType(int type,String pid){
         if (type==1){
             return SQLite.select().from(School.class)
@@ -48,6 +49,9 @@ public class DbUtils {
                 .where(ArticleType_Table.belongTo.eq(belongTo))
                 .orderBy(ArticleType_Table.sortNum, true)
                 .queryList();
+        for (ArticleType type:articleTypes) {
+            Log.d(TAG,type.getTitle()+","+type.getCategoryId());
+        }
         if (articleTypes.isEmpty()){
             return null;
         }else {
@@ -55,6 +59,17 @@ public class DbUtils {
         }
     }
 
+    public static  void deleteArticleType(int belongTo){
+        SQLite.delete(ArticleType.class)
+                .where(ArticleType_Table.belongTo.eq(belongTo))
+                .execute();
+    }
+    public static   List<ArticleType> getArticleTypeList(int belongTo){
+        return SQLite.select().from(ArticleType.class)
+                .where(ArticleType_Table.belongTo.eq(belongTo))
+                .orderBy(ArticleType_Table.sortNum, true)
+                .queryList();
+    }
     public static  <T extends BaseModel>  List<T> getModelList(Class<T> clazz, SQLOperator... where){
         return SQLite.select().from(clazz)
                 .where(where)
@@ -62,7 +77,7 @@ public class DbUtils {
     }
 
     public static <T extends BaseModel>  void deleteModel(Class<T> clazz, SQLOperator... where){
-        SQLite.delete(clazz).where(where);
+        SQLite.delete(clazz).where(where).execute();
     }
     public static <T extends BaseModel>  void saveModel(T model){
         model.save();

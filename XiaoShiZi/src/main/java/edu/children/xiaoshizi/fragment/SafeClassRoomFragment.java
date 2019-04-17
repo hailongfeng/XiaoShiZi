@@ -113,9 +113,6 @@ public class SafeClassRoomFragment extends XszBaseFragment implements OnClickLis
 	private void initFragments() {
 		mFragments.add(SafeClassFragment.newInstance("",""));
 		mFragments.add(SafeLabFragment.newInstance("",""));
-//		mFragments.add(DemoFragment.newInstance("安全课堂","安全课堂"));
-//		mFragments.add(DemoFragment.newInstance("安全实验室","安全实验室"));
-//		mFragments.add(new ShouYeFragment());
 	}
 
 	private void initMagicIndicator1() {

@@ -23,6 +23,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowLog;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.io.File;
@@ -77,7 +78,7 @@ public class DemoApplication extends BaseApplication {
 	void initDb(){
 		SPUtils spUtils = new SPUtils(Constant.SP_NAME);
 		int oldVersion=spUtils.getInt("dbVersion",-1);
-		if (oldVersion != XSZDatabase.VERSION) {
+		if (oldVersion < XSZDatabase.VERSION) {
 			Log.d(TAG,"删除数据库");
 			File file1=this.getDatabasePath("xiaoshizi.db");
 			File file2=this.getDatabasePath("xiaoshizi.db-journal");
@@ -86,6 +87,7 @@ public class DemoApplication extends BaseApplication {
 			spUtils.put("dbVersion",XSZDatabase.VERSION);
 		}
 		Log.d(TAG,"FlowManager.init");
+		FlowLog.setMinimumLoggingLevel(FlowLog.Level.V);
 		FlowManager.init(new FlowConfig.Builder(this).build());
 	}
 	@Override
