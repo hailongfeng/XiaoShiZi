@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.walle.multistatuslayout.MultiStatusLayout;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -26,6 +27,8 @@ import zuo.biao.library.base.BaseAdapter;
 
 public class CourseListActivity extends XszBaseActivity {
 
+    @BindView(R.id.multiStatusLayout)
+    MultiStatusLayout multiStatusLayout;
     @BindView(R.id.lvBaseList)
     GridView gridView;
     BaseAdapter adapter;
@@ -74,7 +77,12 @@ public class CourseListActivity extends XszBaseActivity {
             public void onSuccess(Response<List<Article>> respon) {
                 hideLoading();
                 articles=respon.getResult();
-                adapter.refresh(articles);
+                if (articles.size()==0){
+                    multiStatusLayout.showEmpty();
+                }else {
+                    multiStatusLayout.showContent();
+                    adapter.refresh(articles);
+                }
             }
 
             @Override

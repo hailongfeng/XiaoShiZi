@@ -19,6 +19,14 @@
     </RelativeLayout>
     <!-- BaseListXXX的子类布局layout中，AbsListView必须有，且它的id必须按以下写法。padding会导致smoothScrollToPosition失效 -->
     <View style="@style/divider_horizontal_1px" />
+    <com.walle.multistatuslayout.MultiStatusLayout
+        android:id="@+id/multiStatusLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:emptyLayout="@layout/layout_empty"
+        app:errorLayout="@layout/layout_error"
+        app:loadLayout="@layout/layout_loading"
+        app:netErrorLayout="@layout/layout_empty">
     <GridView
         android:id="@id/lvBaseList"
         style="@style/lv"
@@ -27,5 +35,5 @@
         android:horizontalSpacing="18dp"
         android:numColumns="2"
         android:verticalSpacing="18dp" />
-
+    </com.walle.multistatuslayout.MultiStatusLayout>
 </LinearLayout>
