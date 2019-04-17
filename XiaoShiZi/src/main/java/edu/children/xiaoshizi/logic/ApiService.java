@@ -50,6 +50,9 @@ public interface ApiService {
     @POST("v1/login")
     Call<Response<LoginRespon>> login(@Body RequestBody requestBody);
 
+    @POST("v1/login")
+    Observable<Response<LoginRespon>> loginAsyc(@Body RequestBody requestBody);
+
     @POST("{apiVerison}/school/loadSchoolData")
     Observable<Response<List<School>>> loadSchoolData(@Path("apiVerison") String apiVerison, @Body RequestBody requestBody);
 

@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.dou361.dialogui.DialogUIUtils;
 
 import butterknife.ButterKnife;
+import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import zuo.biao.library.base.BaseFragment;
 import zuo.biao.library.util.Log;
@@ -41,6 +42,10 @@ public abstract class XszBaseFragment extends BaseFragment {
         initData();
         initEvent();
         return view;
+    }
+
+    protected boolean isLogin(){
+        return DemoApplication.getInstance().isLogin();
     }
 
     private Dialog loadingDialog=null;

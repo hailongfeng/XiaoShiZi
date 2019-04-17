@@ -18,8 +18,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.alibaba.fastjson.JSONArray;
-import com.blankj.utilcode.util.CacheUtils;
 import com.walle.multistatuslayout.MultiStatusLayout;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -33,9 +31,7 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.adapter.GradlePagerAdapter;
-import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
-import edu.children.xiaoshizi.bean.ArticleType_Table;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;

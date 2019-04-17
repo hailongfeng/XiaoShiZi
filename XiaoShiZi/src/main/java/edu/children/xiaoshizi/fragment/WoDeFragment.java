@@ -43,7 +43,9 @@ import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.BindingStudentActivity;
+import edu.children.xiaoshizi.activity.LoginActivity;
 import edu.children.xiaoshizi.activity.MyCacheListActivity;
+import edu.children.xiaoshizi.activity.MyIntegrationActivity;
 import edu.children.xiaoshizi.activity.ParentInfoActivity;
 import edu.children.xiaoshizi.activity.RealNameAuthActivity;
 import edu.children.xiaoshizi.activity.SettingActivity;
@@ -99,13 +101,6 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	RecyclerView rvParentRecycler;;
 	private ParentAdapter parentAdapter;
 
-
-
-	//与Activity通信<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-	/**创建一个Fragment实例
-	 * @return
-	 */
 	public static WoDeFragment createInstance() {
 		return new WoDeFragment();
 	}
@@ -186,40 +181,54 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	}
 
 	private void updateParent() {
-		List<Parent> list1= DemoApplication.getInstance().getLoginRespon().getParents();
-		if (list1!=null&&list1.size() != 0) {
-			multiStatusLayout.showContent();
-			parentAdapter.refresh(list1);
-		} else {
+		if (isLogin()) {
+			List<Parent> list1 = DemoApplication.getInstance().getLoginRespon().getParents();
+			if (list1 != null && list1.size() != 0) {
+				multiStatusLayout.showContent();
+				parentAdapter.refresh(list1);
+			} else {
+				multiStatusLayout.showEmpty();
+			}
+		}else {
 			multiStatusLayout.showEmpty();
 		}
 	}
 
 	private void updateStrudent() {
-		List<Student> list=DemoApplication.getInstance().getLoginRespon().getStudents();
-		if (list!=null){
-			if (list.size()==0){
-				btn_add_student.setVisibility(View.GONE);
-				rvStudentsRecycler.setVisibility(View.GONE);
-				cv_no_students.setVisibility(View.VISIBLE);
-			}else {
-				cv_no_students.setVisibility(View.GONE);
-				studentAdapter.refresh(list);
+		if (isLogin()) {
+			List<Student> list = DemoApplication.getInstance().getLoginRespon().getStudents();
+			if (list != null) {
+				if (list.size() == 0) {
+					btn_add_student.setVisibility(View.GONE);
+					rvStudentsRecycler.setVisibility(View.GONE);
+					cv_no_students.setVisibility(View.VISIBLE);
+				} else {
+					cv_no_students.setVisibility(View.GONE);
+					studentAdapter.refresh(list);
+				}
 			}
+		}else {
+			btn_add_student.setVisibility(View.GONE);
+			rvStudentsRecycler.setVisibility(View.GONE);
+			cv_no_students.setVisibility(View.VISIBLE);
 		}
 
 	}
 
 	private void updateUserInfo() {
-		User user= DemoApplication.getInstance().getUser();
-		String userName=user.getUserName();
-		if (!StringUtils.isEmpty(userName)){
-			txt_user_name.setText(userName);
+		if (isLogin()){
+			User user= DemoApplication.getInstance().getUser();
+			String userName=user.getUserName();
+			if (!StringUtils.isEmpty(userName)){
+				txt_user_name.setText(userName);
+			}else {
+				txt_user_name.setText("");
+			}
+			loadImage(user.getHeadPortrait(),iv_user_face);
+			txt_user_telphone.setText(DemoApplication.getInstance().getUser().getLoginName());
 		}else {
-			txt_user_name.setText("");
+			txt_user_name.setText("注册/登陆");
 		}
-		loadImage(user.getHeadPortrait(),iv_user_face);
-		txt_user_telphone.setText(DemoApplication.getInstance().getUser().getLoginName());
 	}
 
 
@@ -237,6 +246,15 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		findView(R.id.ll_my_shezhi, this);
 		findView(R.id.ll_my_fenxiang, this);
 		findView(R.id.btn_no_student_bind, this);
+		if (!isLogin()){
+			txt_user_name.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					toActivity(new Intent(context, LoginActivity.class));
+//					context.finish();
+				}
+			});
+		}
 	}
 
 	@Override
@@ -251,6 +269,9 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 			updateUserInfo();
 		}else if (messageEvent.getType()==EventBusMessage.Type_binding_user){
 			updateStrudent();
+		}else if (messageEvent.getType()==EventBusMessage.Type_user_login){
+			//updateStrudent();
+			initData();
 		}
 	}
 
@@ -262,16 +283,20 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 //	}
 	@Override
 	public void onClick(View v) {//直接调用不会显示v被点击效果
+		if (!isLogin()){
+			showShortToast("您还未登陆，请先登陆");
+			return;
+		}
 		switch (v.getId()) {
 			case R.id.iv_user_setting:
 				toActivity(new Intent(context, UserInfoActivity.class));
 				break;
 			case R.id.ll_my_huancun:
-//				toActivity(new Intent(context, MyCacheListActivity.class));
+				toActivity(new Intent(context, MyCacheListActivity.class));
 				break;
 			case R.id.ll_my_jifen:
 //				integration;
-//				toActivity(new Intent(context, SettingActivity.class));
+				toActivity(new Intent(context, MyIntegrationActivity.class));
 				break;
 			case R.id.ll_my_shezhi:
 				toActivity(new Intent(context, SettingActivity.class));

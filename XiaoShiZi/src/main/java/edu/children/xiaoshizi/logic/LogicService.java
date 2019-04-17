@@ -169,10 +169,9 @@ public class LogicService {
         Observable observable=null;
         if (method==APIMethod.getVerifyCode){
             observable=apiService.getVerifyCode(requestBody);
-        }/*else if (method==APIMethod.login){
-            observable=apiService.login(requestBody);
-        }*/
-        else if (method==APIMethod.loadSysBannerList){
+        }else if (method==APIMethod.login){
+            observable=apiService.loginAsyc(requestBody);
+        }else if (method==APIMethod.loadSysBannerList){
             observable=apiService.loadSysBannerListAsys(requestBody);
         }else if (method==APIMethod.loadContentCategory) {
             observable = apiService.loadContentCategoryAsyc(requestBody);
@@ -232,10 +231,12 @@ public class LogicService {
         sm.put("timestamp", System.currentTimeMillis()+"");
         sm.put("noncestr", StringUtils.randomString(10));
         if (isNeedToken) {
-            User user=DemoApplication.getInstance().getUser();
-            if (user!=null) {
-                String token = user.getToken();
-                sm.put("token", token);
+            if(DemoApplication.getInstance().isLogin()) {
+                User user = DemoApplication.getInstance().getUser();
+                if (user != null) {
+                    String token = user.getToken();
+                    sm.put("token", token);
+                }
             }
         }
         sm.put("sign", Tools.createSign(sm));

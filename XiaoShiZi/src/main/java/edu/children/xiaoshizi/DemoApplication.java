@@ -112,6 +112,10 @@ public class DemoApplication extends BaseApplication {
 		this.user = user;
 	}
 
+	public boolean isLogin(){
+		return getUser()!=null;
+	}
+
 	public LoginRespon getLoginRespon() {
 		return loginRespon;
 	}

@@ -3,6 +3,7 @@ package edu.children.xiaoshizi.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -10,6 +11,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.walle.multistatuslayout.MultiStatusLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,6 +26,7 @@ import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.MessageListActivity;
 import edu.children.xiaoshizi.adapter.InOutSchoolRecodeAdapter;
+import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import edu.children.xiaoshizi.bean.Student;
 import edu.children.xiaoshizi.logic.APIMethod;
@@ -84,23 +90,14 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     }
 
     @Override
-    int getLayoutId() {
-        return R.layout.fragment_save_tool;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParamCurrentStudentIndex = getArguments().getInt(ARG_PARAM_CURRENT_STUDENT);
-        }
-        List<Student> students=DemoApplication.getInstance().getLoginRespon().getStudents();
-        BINDING_STUDENT_NAMES =new String[students.size()];
-        for (int i = 0; i < students.size(); i++) {
-            BINDING_STUDENT_NAMES[i]=students.get(i).getStudentName();
-        }
-        Calendar calendar=Calendar.getInstance();
-        currentDate=DateUtil.format(calendar.getTime(),DateUtil.P1);
+    int getLayoutId() {
+        return R.layout.fragment_save_tool;
     }
 
     private String currentDate="";
@@ -112,16 +109,39 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
 
     @Override
     public void initData() {
-        if (DemoApplication.getInstance().getLoginRespon().getStudents().size()==0){
-            print("没有学生");
-            multiStatusLayout_all.showEmpty();
+
+        if (!isLogin()){
+            multiStatusLayout_all.showError();
         }else {
-            multiStatusLayout_all.showContent();
-            txt_date.setText(currentDate);
-            inOutSchoolRecodeAdapter= new InOutSchoolRecodeAdapter(context,student);
-            lvBaseList.setAdapter(inOutSchoolRecodeAdapter);
-            changeCurrentStudent(0);
-            getRecodeByDate(student.getStudentId(),currentDate);
+            if (getArguments() != null) {
+                mParamCurrentStudentIndex = getArguments().getInt(ARG_PARAM_CURRENT_STUDENT);
+            }
+            List<Student> students=DemoApplication.getInstance().getLoginRespon().getStudents();
+            BINDING_STUDENT_NAMES =new String[students.size()];
+            for (int i = 0; i < students.size(); i++) {
+                BINDING_STUDENT_NAMES[i]=students.get(i).getStudentName();
+            }
+            Calendar calendar=Calendar.getInstance();
+            currentDate=DateUtil.format(calendar.getTime(),DateUtil.P1);
+            if (DemoApplication.getInstance().getLoginRespon().getStudents().size()==0){
+                print("没有学生");
+                multiStatusLayout_all.showEmpty();
+            }else {
+                multiStatusLayout_all.showContent();
+                txt_date.setText(currentDate);
+                inOutSchoolRecodeAdapter= new InOutSchoolRecodeAdapter(context,student);
+                lvBaseList.setAdapter(inOutSchoolRecodeAdapter);
+                changeCurrentStudent(0);
+                getRecodeByDate(student.getStudentId(),currentDate);
+            }
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserInfoChange(EventBusMessage<String> messageEvent) {
+        if (messageEvent.getType()==EventBusMessage.Type_user_login){
+            initData();
         }
     }
 
@@ -223,6 +243,14 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
                     }
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
         }
     }
 }

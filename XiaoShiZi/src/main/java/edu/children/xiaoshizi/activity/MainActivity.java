@@ -1,11 +1,13 @@
 package edu.children.xiaoshizi.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +58,15 @@ public class MainActivity extends XszBaseActivity {
         setContentView(R.layout.activity_main);
     }
 
-   private void getSchools() {
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+//        setContentView(R.layout.activity_main);
+//        tabView.setTabViewDefaultPosition(0);
+        ((LinearLayout)tabView.getChildAt(0)).getChildAt(0).performClick();
+    }
+
+    private void getSchools() {
         LogicService.post(context, APIMethod.loadSchoolData, null, new ApiSubscriber<Response<List<School>>>() {
             @Override
             public void onSuccess(Response<List<School>> listResponse) {

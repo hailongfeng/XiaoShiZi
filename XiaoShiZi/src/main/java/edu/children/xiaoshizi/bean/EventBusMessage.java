@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class EventBusMessage<T> implements Serializable {
     public static final int Type_User_info_change=0;
     public static final int Type_binding_user=1;
+    public static final int Type_user_login=2;
     private int type;
     private String message;
     private T data;

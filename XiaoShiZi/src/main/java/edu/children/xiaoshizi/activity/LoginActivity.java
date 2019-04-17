@@ -17,6 +17,8 @@ import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,7 @@ import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.Banner;
+import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.logic.APIMethod;
@@ -84,8 +87,8 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
 
     @Override
     public void onReturnClick(View v) {
-//        super.onReturnClick(v);
-        DemoApplication.getInstance().exit();
+        super.onReturnClick(v);
+        finish();
     }
 
     @Override
@@ -110,7 +113,8 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                     return;
                 }
 //                DialogUIUtils.showToastCenter("更新成功");
-                login3();
+//                login3();
+                login();
                 break;
         }
     }
@@ -155,14 +159,12 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
             public void onSuccess(Response<LoginRespon> respon) {
                 hideLoading();
                 Log.d(TAG,"phoneNumber="+phoneNumber);
+                EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_login,"登陆成功",""));
                 respon.getResult().getLoginResp().setPhone(phoneNumber);
                 DemoApplication.getInstance().setLoginRespon(respon.getResult());
                 DemoApplication.getInstance().setUser(respon.getResult().getLoginResp());
-//                DemoApplication.getInstance().getUser().setToken(Constant.TEST_TOKEN);
-
-                login3();
-//                toActivity(new Intent(context,MainActivity.class),false);
-//                finish();
+                toActivity(new Intent(context,MainActivity.class),false);
+                finish();
             }
 
             @Override
@@ -239,6 +241,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                             hideLoading();
                             showShortToast(r.getMessage());
                         }else if (r.getCode().equals("3")){
+                            EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_login,"登陆成功",""));
                             hideLoading();
                             showShortToast(r.getMessage());
                             toActivity(new Intent(context,MainActivity.class),false);
