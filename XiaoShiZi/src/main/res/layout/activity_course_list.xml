@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/activity_page" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/activity_page"
+    android:background="@color/white"
+    tools:context=".activity.CourseListActivity">
 
-    <RelativeLayout style="@style/topbar_bg" >
+    <RelativeLayout
+        style="@style/topbar_bg"
+        android:background="@color/transparent">
 
-        <ImageButton style="@style/topbar_return_img" />
+        <ImageButton style="@style/xsz_topbar_return_img" />
 
         <TextView
             style="@style/topbar_title"
             android:layout_centerHorizontal="true"
-            android:text="一年级" />
+            android:text="年级" />
     </RelativeLayout>
-
     <!-- BaseListXXX的子类布局layout中，AbsListView必须有，且它的id必须按以下写法。padding会导致smoothScrollToPosition失效 -->
-
+    <View style="@style/divider_horizontal_1px" />
     <GridView
         android:id="@id/lvBaseList"
         style="@style/lv"
