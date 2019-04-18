@@ -286,7 +286,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	@Override
 	public void onClick(View v) {//直接调用不会显示v被点击效果
 		if (!isLogin()){
-			showShortToast("您还未登陆，请先登陆");
+			showShortToast("您还未登录，请先登录");
 			return;
 		}
 		switch (v.getId()) {

@@ -8,5 +8,6 @@
     <color name="xsz_topbar_bg">@color/colorPrimary</color>
     <color name="xsz_login_bg">#FCF5CA</color>
     <color name="xsz_bg_gray">#F6F6F6</color>
+    <color name="xsz_waring_text">#FF6B2F</color>
 
 </resources>

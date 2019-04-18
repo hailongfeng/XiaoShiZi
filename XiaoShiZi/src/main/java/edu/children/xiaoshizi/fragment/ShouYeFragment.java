@@ -233,6 +233,10 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 				toActivity(new Intent(context,SearchArticleActivity.class));
 				break;
 			case R.id.rtv_contribute:
+				if (!isLogin()){
+					showShortToast("请先登录");
+					return;
+				}
 				toActivity(new Intent(context, ContributeArticleActivity.class));
 				break;
 //			case R.id.llSettingLogout:

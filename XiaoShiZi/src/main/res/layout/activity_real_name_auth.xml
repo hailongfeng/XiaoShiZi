@@ -124,7 +124,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="信息仅用于身份验证，本平台保障您的信息安全"
-                        android:textColor="@color/orangered" />
+                        android:textColor="@color/xsz_waring_text" />
                 </LinearLayout>
 
                 <com.flyco.roundview.RoundTextView

@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:text="本页信息将于学校预留信息匹配，请保证本页信息完整！"
-                    android:textColor="@color/yellow" />
+                    android:textColor="@color/xsz_waring_text" />
 
                 <View style="@style/divider_horizontal_1px" />
 
@@ -202,7 +202,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:text="如果不是孩子第一联系人，请填写绑定密码进行绑定"
-                    android:textColor="@color/yellow" />
+                    android:textColor="@color/xsz_waring_text" />
                 <View style="@style/divider_horizontal_1px" />
                 <LinearLayout
                     android:id="@+id/ll_student_bangdingmima"
