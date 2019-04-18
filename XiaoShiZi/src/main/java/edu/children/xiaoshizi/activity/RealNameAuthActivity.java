@@ -13,6 +13,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.flyco.roundview.RoundTextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -24,6 +26,7 @@ import java.util.TreeMap;
 
 import butterknife.BindView;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.RealNameAuthInfo;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
@@ -128,6 +131,7 @@ public class RealNameAuthActivity extends XszBaseActivity  implements ItemDialog
         LogicService.post(context, APIMethod.verifiedSubmit, sm, new ApiSubscriber<Response<RealNameAuthInfo>>() {
             @Override
             protected void onSuccess(Response<RealNameAuthInfo> Response) {
+                EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_real_name_auth,"用户实名认证",""));
                 showShortToast(Response.getMessage());
                 toActivity(new Intent(context,BindingStudentActivity.class));
                 finish();

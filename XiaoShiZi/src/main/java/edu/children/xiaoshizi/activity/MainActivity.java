@@ -32,6 +32,7 @@ import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
+import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.db.DbUtils;
@@ -71,6 +72,9 @@ public class MainActivity extends XszBaseActivity {
             getSchools();
             String userId=DemoApplication.getInstance().getUser().getUserId();
             getMyprofile(userId);
+        }else if (messageEvent.getType()==EventBusMessage.Type_user_real_name_auth){
+            Log.d(TAG,"Type_user_real_name_auth====");
+            getStudentsAndParents();
         }
     }
     @Override
@@ -79,6 +83,22 @@ public class MainActivity extends XszBaseActivity {
 //        setContentView(R.layout.activity_main);
 //        tabView.setTabViewDefaultPosition(0);
         ((LinearLayout)tabView.getChildAt(0)).getChildAt(0).performClick();
+    }
+
+    private void getStudentsAndParents() {
+        TreeMap sm = new TreeMap<String,String>();
+        LogicService.post(context, APIMethod.getStudentsAndParents, null, new ApiSubscriber<Response<LoginRespon>>() {
+            @Override
+            public void onSuccess(Response<LoginRespon> response) {
+                DemoApplication.getInstance().setLoginRespon(response.getResult());
+                DemoApplication.getInstance().setUser(response.getResult().getLoginResp());
+            }
+            @Override
+            protected void onFail(Throwable  error) {
+                Log.d(TAG, error.getMessage());
+            }
+
+        });
     }
     private void getSchools() {
         LogicService.post(context, APIMethod.loadSchoolData, null, new ApiSubscriber<Response<List<School>>>() {
