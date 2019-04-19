@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.CacheUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.heima.tabview.library.TabView;
 import com.heima.tabview.library.TabViewChild;
@@ -32,6 +33,7 @@ import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
+import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.db.DbUtils;
@@ -45,6 +47,7 @@ import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
+import edu.children.xiaoshizi.utils.Constant;
 import pub.devrel.easypermissions.EasyPermissions;
 import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
@@ -63,6 +66,7 @@ public class MainActivity extends XszBaseActivity {
         initPermission();
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
+        autoLogin();
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserInfoChange(EventBusMessage<String> messageEvent) {
@@ -73,6 +77,44 @@ public class MainActivity extends XszBaseActivity {
             getMyprofile(userId);
         }
     }
+
+   private void autoLogin(){
+        Object uo=CacheUtils.get(context).getAsObject(Constant.cache_user);
+        print("uo==null 结果："+(uo==null));
+        if (uo!=null){
+            User userOld= (User) uo;
+            TreeMap sm = new TreeMap<String,String>();
+            sm.put("token",userOld.getToken());
+            LogicService.post(context, APIMethod.getStudentsAndParents,sm, new ApiSubscriber<Response<LoginRespon>>() {
+                @Override
+                public void onSuccess(Response<LoginRespon> respon) {
+                    if (respon.getCode().equals("10012")){
+                        print("登录失效，重新登录");
+                        DemoApplication.getInstance().setLoginRespon(null);
+                        DemoApplication.getInstance().setUser(null);
+                        CacheUtils.get(context).remove(Constant.cache_user);
+                    }else if (respon.getCode().equals(Response.SUCCESS)){
+                        print("自动登录成功！！！");
+                        DemoApplication.getInstance().setLoginRespon(respon.getResult());
+                        User user=respon.getResult().getLoginResp();
+                        user.setPhone(userOld.getPhone());
+                        DemoApplication.getInstance().setUser(user);
+                        EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_login,"登陆成功",""));
+                        CacheUtils.get(context).remove(Constant.cache_user);
+                        CacheUtils.get(context).put(Constant.cache_user,user);
+                    }
+                }
+
+                @Override
+                protected void onFail(Throwable  error) {
+                    error.printStackTrace();
+                }
+            });
+        }else {
+            print("用户没有缓冲");
+        }
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -94,6 +136,7 @@ public class MainActivity extends XszBaseActivity {
             }
             @Override
             protected void onFail(Throwable  error) {
+                //10012
                 Log.d(TAG, error.getMessage());
             }
 

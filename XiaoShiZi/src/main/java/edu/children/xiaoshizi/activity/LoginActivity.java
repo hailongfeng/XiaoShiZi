@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.CacheUtils;
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.listener.DialogUIListener;
 import com.gyf.barlibrary.ImmersionBar;
@@ -31,12 +32,14 @@ import edu.children.xiaoshizi.bean.Banner;
 import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.LoginRespon;
+import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.logic.UmengThirdLoginHandle;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
+import edu.children.xiaoshizi.utils.Constant;
 import edu.children.xiaoshizi.utils.StringUtils;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -161,8 +164,11 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                 Log.d(TAG,"phoneNumber="+phoneNumber);
                 respon.getResult().getLoginResp().setPhone(phoneNumber);
                 DemoApplication.getInstance().setLoginRespon(respon.getResult());
-                DemoApplication.getInstance().setUser(respon.getResult().getLoginResp());
+                User user=respon.getResult().getLoginResp();
+                DemoApplication.getInstance().setUser(user);
                 EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_login,"登陆成功",""));
+                CacheUtils.get(context).remove(Constant.cache_user);
+                CacheUtils.get(context).put(Constant.cache_user,user);
                 toActivity(new Intent(context,MainActivity.class),false);
                 finish();
             }

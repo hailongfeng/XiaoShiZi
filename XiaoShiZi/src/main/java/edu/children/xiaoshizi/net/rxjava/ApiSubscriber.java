@@ -32,7 +32,7 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
     @Override
     public final void onNext(T t) {
         Log.d(TAG, "code:" + t.getCode() + "，message ：" + t.getMessage());
-        if (t!=null&&t.getCode().equals(Response.SUCCESS)) {
+        if (t!=null&&t.getCode().equals(Response.SUCCESS)||t.getCode().equals("10012")) {
             onSuccess(t);
         } else {
             String msg=(t!=null&&StringUtil.isNotEmpty(t.getMessage(),true)?t.getMessage():"服务器异常");
