@@ -11,14 +11,17 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.coolindicator.sdk.CoolIndicator;
 import com.flyco.roundview.RoundTextView;
 import com.gyf.barlibrary.ImmersionBar;
+import com.just.agentweb.AgentWeb;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -51,8 +54,7 @@ import zuo.biao.library.util.StringUtil;
  */
 public class RichDataActivity extends XszBaseActivity {
 
-    @BindView(R.id.web_view)
-    RichWebView webView;
+
     @BindView(R.id.recycler_view)
     RecyclerView rvComments;
     @BindView(R.id.scrollableLayout)
@@ -71,6 +73,12 @@ public class RichDataActivity extends XszBaseActivity {
     @BindView(R.id.btn_down_cache)
     RoundTextView btn_down_cache;
 
+    @BindView(R.id.lin_web)
+    LinearLayout linWeb;
+
+    private AgentWeb agentWeb;
+    private AgentWeb.PreAgentWeb preAgentWeb;
+
     List<ArticleComment> comments=new ArrayList<>();
     private BaseAdapter commentAdapter;
     String title;
@@ -85,31 +93,12 @@ public class RichDataActivity extends XszBaseActivity {
         ImmersionBar.with(this)
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
-        //设置点击图片
-        webView.addJavascriptInterface(new JavaScriptLog(this, new JavaScriptLog.ClickImageCallBack() {
-            @Override
-            public void clickImage(String src) {
-                Toast.makeText(context,"点击:"+src,Toast.LENGTH_SHORT).show();
-            }
-        }), "control");
-        //设置html内容
-        webView.setShow(getHtml(""));
-        //设置图片加载失败回调
-        webView.setLoadImgError();
-        //添加点击图片脚本事件
-        webView.setImageClickListener();
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                indicator.start();
-            }
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                indicator.complete();
-            }
-        });
+        preAgentWeb= AgentWeb.with(this)
+        .setAgentWebParent((LinearLayout) linWeb, new LinearLayout.LayoutParams(-1, -1))
+        .useDefaultIndicator()
+        .createAgentWeb()
+        .ready();
+        getAgentWebField();
         //滚动绑定
         scrollableLayout.setCurrentScrollableContainer(new HeaderScrollHelper.ScrollableContainer(){
             @Override
@@ -119,7 +108,17 @@ public class RichDataActivity extends XszBaseActivity {
         });
         initComments();
     }
-
+    private void getAgentWebField(){
+        Field field = null;
+        try {
+            field = preAgentWeb.getClass().getDeclaredField("mAgentWeb");
+            field.setAccessible(true);
+            agentWeb= (AgentWeb) field.get(preAgentWeb);
+            Log.d(TAG,(agentWeb==null)+",,,agentWeb==null");
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void initData() {
         articleType=(ArticleType) getIntent().getSerializableExtra("articleType");
@@ -163,10 +162,10 @@ public class RichDataActivity extends XszBaseActivity {
                     }
 
                     String introduce=respon.getResult().getIntroduce();
-                    webView.setShow(getHtml(introduce));
                     updateComments(article.getCommentResps());
+                    agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml(introduce), "text/html", "UTF-8", null);
                 }else {
-                    webView.setShow(getHtml("内容为空"));
+                    agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml("内容为空"), "text/html", "UTF-8", null);
                 }
             }
 
@@ -220,15 +219,7 @@ public class RichDataActivity extends XszBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (webView != null) {
-            webView.setWebChromeClient(null);
-            webView.setWebViewClient(null);
-            webView.getSettings().setJavaScriptEnabled(false);
-            webView.clearCache(true);
-            webView.removeAllViews();
-            webView.destroy();
-            webView = null;
-        }
+
     }
 
 }

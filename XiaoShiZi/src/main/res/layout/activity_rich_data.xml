@@ -47,11 +47,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="220dp" />
 
-                <edu.children.xiaoshizi.view.richweb.RichWebView
-                    android:id="@+id/web_view"
+                <LinearLayout
+                    android:id="@+id/lin_web"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible" />
+                    android:layout_height="match_parent">
+                </LinearLayout>
+
             </LinearLayout>
 
             <View
