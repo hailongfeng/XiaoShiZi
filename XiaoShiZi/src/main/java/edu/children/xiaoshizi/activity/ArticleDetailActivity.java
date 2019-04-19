@@ -148,7 +148,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
 
     public void initView() {
 //        linWeb= (LinearLayout) LayoutInflater.from(context).inflate(R.layout.list_head_webview,null);
-//        lvComments.addHeaderView(linWeb);
+//        rvComments.addHeaderView(linWeb);
         ImmersionBar.with(this)
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();

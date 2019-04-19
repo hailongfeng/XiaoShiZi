@@ -33,6 +33,7 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.ArticleDetailActivity;
+import edu.children.xiaoshizi.activity.RichDataActivity;
 import edu.children.xiaoshizi.adapter.ArticleAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
@@ -78,7 +79,7 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				//点击查看某个文章
-                Intent intent=new Intent(context,ArticleDetailActivity.class);
+                Intent intent=new Intent(context, RichDataActivity.class);
                 Article article= articles.get(position);
                 intent.putExtra("article",article);
                 intent.putExtra("articleType",articleType);
