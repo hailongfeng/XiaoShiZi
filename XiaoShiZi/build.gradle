@@ -30,8 +30,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false // 混淆
-            zipAlignEnabled false // Zipalign优化
+            minifyEnabled true // 混淆
+            zipAlignEnabled true // Zipalign优化
             shrinkResources false // 移除无用的resource文件
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
@@ -116,6 +116,7 @@ android {
         implementation 'com.github.lzjin:AlipayPassDialog:1.1'
         implementation 'org.greenrobot:eventbus:3.1.1'
         implementation 'fm.jiecao:jiecaovideoplayer:5.8.1'
+        implementation 'com.coolindicator.sdk:coolindicator:1.0.0-beta'
         implementation 'com.umeng.umsdk:analytics:8.0.0'
         implementation 'com.umeng.umsdk:common:2.0.0'
         implementation 'com.umeng.umsdk:utdid:1.1.5.3'

@@ -79,13 +79,13 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
             showShortToast("投稿标题不能为空");
             return;
         }
-        sm.put("title","");
+        sm.put("title",edt_suggestion_title.getText().toString());
 //        投稿类型。P家长投稿，S学校投稿
         boolean isJiaZhang=((RadioButton)rg_home_or_school.getChildAt(0)).isChecked();
         sm.put("type", isJiaZhang?"P":"S");
         sm.put("introduce",edt_suggestion_content.getText().toString());
         showLoading(R.string.msg_handing);
-        LogicService.post(context, APIMethod.saveMyProfile, sm, new ApiSubscriber<Response<User>>() {
+        LogicService.post(context, APIMethod.submitDraftContent, sm, new ApiSubscriber<Response<User>>() {
             @Override
             public void onSuccess(Response<User> respon) {
                 hideLoading();

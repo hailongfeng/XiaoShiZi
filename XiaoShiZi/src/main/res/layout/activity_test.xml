@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/activity_page"
+    android:background="@color/white"
+    tools:context=".activity.TestActivity">
+
+    <RelativeLayout
+        style="@style/topbar_bg"
+        android:background="@color/gray_slight">
+        <ImageButton style="@style/xsz_topbar_return_img" />
+        <TextView
+            style="@style/topbar_title"
+            android:layout_centerHorizontal="true"
+            android:maxLength="20"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="标题" />
+        <ImageButton
+            android:id="@+id/ib_share"
+            style="@style/topbar_right_btn"
+            android:src="@drawable/icon_fenxiang"
+            />
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:background="@color/yellow"
+        android:layout_height="500dp">
+        <ListView
+            tools:listheader="@layout/list_head_webview"
+            android:id="@id/lvBaseList"
+            style="@style/lv"
+            />
+    </FrameLayout>
+
+</LinearLayout>

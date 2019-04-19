@@ -9,9 +9,7 @@
     <RelativeLayout
         style="@style/topbar_bg"
         android:background="@color/gray_slight">
-
         <ImageButton style="@style/xsz_topbar_return_img" />
-
         <TextView
             style="@style/topbar_title"
             android:layout_centerHorizontal="true"
@@ -26,37 +24,49 @@
             android:src="@drawable/icon_fenxiang"
             />
     </RelativeLayout>
-    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-        android:id="@+id/player_list_video"
-        android:layout_width="match_parent"
-        android:layout_height="220dp" />
-    <FrameLayout
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            android:id="@+id/lin_web"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            style="@style/ll_vertical_match_match">
+            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+                android:id="@+id/player_list_video"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="220dp" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@id/rvBaseRecycler"
+                        style="@style/lv" />
+                </LinearLayout>
+
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/btn_down_cache"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_height="36dp"
+                    android:drawablePadding="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="gone"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:drawableLeft="@drawable/icon_download"
+                    android:gravity="center"
+                    android:text="缓存"
+                    android:textColor="@android:color/white"
+                    app:rv_backgroundColor="@color/colorPrimary"
+                    app:rv_backgroundPressColor="@color/colorPrimaryDark"
+                    app:rv_cornerRadius="5dp" />
+            </FrameLayout>
+
         </LinearLayout>
 
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/btn_down_cache"
-            android:layout_width="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_height="36dp"
-            android:drawablePadding="5dp"
-            android:layout_marginBottom="5dp"
-            android:visibility="gone"
-            android:layout_gravity="bottom|center_horizontal"
-            android:drawableLeft="@drawable/icon_download"
-            android:gravity="center"
-            android:text="缓存本地"
-            android:textColor="@android:color/white"
-            app:rv_backgroundColor="@color/colorPrimary"
-            app:rv_backgroundPressColor="@color/colorPrimaryDark"
-            app:rv_cornerRadius="5dp" />
-    </FrameLayout>
-
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

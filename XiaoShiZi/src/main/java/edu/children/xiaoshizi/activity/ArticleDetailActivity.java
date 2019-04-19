@@ -7,13 +7,21 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,14 +47,26 @@ import com.umeng.socialize.utils.ShareBoardlistener;
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.adapter.ArticleAdapter;
+import edu.children.xiaoshizi.adapter.SearchWordHistoryAdapter;
+import edu.children.xiaoshizi.adapter.view.ArticleCommentView;
+import edu.children.xiaoshizi.adapter.view.ArticleImageView;
+import edu.children.xiaoshizi.adapter.view.ArticleView;
+import edu.children.xiaoshizi.adapter.view.ArticleWebView;
+import edu.children.xiaoshizi.adapter.view.XszBaseView;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleCache;
+import edu.children.xiaoshizi.bean.ArticleComment;
 import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.SearchWorldHistory;
+import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
@@ -54,8 +74,11 @@ import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.Constant;
 import edu.children.xiaoshizi.utils.XszCache;
+import edu.children.xiaoshizi.view.MyLayoutManager;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import zuo.biao.library.base.BaseAdapter;
+import zuo.biao.library.base.BaseView;
 import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
 import zuo.biao.library.util.MD5Util;
@@ -73,12 +96,27 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     ImageButton ib_share;
     @BindView(R.id.player_list_video)
     JCVideoPlayerStandard player;
-    @BindView(R.id.lin_web)
+//    @BindView(R.id.lin_web)
     LinearLayout linWeb;
     @BindView(R.id.tvBaseTitle)
     TextView tvBaseTitle;
     @BindView(R.id.btn_down_cache)
     RoundTextView btn_down_cache;
+
+
+//    @BindView(R.id.lvBaseList)
+    ListView lvComments;
+    List<ArticleComment> comments=new ArrayList<>();
+    BaseAdapter commentAdapter;
+
+
+
+
+    @BindView(R.id.rvBaseRecycler)
+    RecyclerView rvBaseRecycler;
+
+
+
 
     private UMShareListener mShareListener;
     private ShareAction mShareAction;
@@ -109,16 +147,19 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     }
 
     public void initView() {
+//        linWeb= (LinearLayout) LayoutInflater.from(context).inflate(R.layout.list_head_webview,null);
+//        lvComments.addHeaderView(linWeb);
         ImmersionBar.with(this)
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
         articleType=(ArticleType) getIntent().getSerializableExtra("articleType");
-        preAgentWeb= AgentWeb.with(this)
-                .setAgentWebParent((LinearLayout) linWeb, new LinearLayout.LayoutParams(-1, -1))
-                .useDefaultIndicator()
-                .createAgentWeb()
-                .ready();
-            article=(Article) getIntent().getSerializableExtra("article");
+        article=(Article) getIntent().getSerializableExtra("article");
+        print("articleType==="+articleType.getType()+","+articleType.getBelongTo());
+//        preAgentWeb= AgentWeb.with(this)
+//                .setAgentWebParent((LinearLayout) linWeb, new LinearLayout.LayoutParams(-1, -1))
+//                .useDefaultIndicator()
+//                .createAgentWeb()
+//                .ready();
         if (articleType.getType().equalsIgnoreCase("VT")){
             player.setVisibility(View.VISIBLE);
             btn_down_cache.setVisibility(View.VISIBLE);
@@ -126,7 +167,52 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
             player.setVisibility(View.GONE);
             btn_down_cache.setVisibility(View.GONE);
         }
-        getAgentWebField();
+//        getAgentWebField();
+//        initComments();
+        test2();
+    }
+
+
+    void test2(){
+        rvBaseRecycler.setLayoutManager(new MyLayoutManager(context));
+        DividerItemDecoration divider = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(context, R.drawable.list_view_divider));
+        commentAdapter= new BaseAdapter<ArticleComment, ArticleWebView>(context){
+            @Override
+            public ArticleWebView createView(int viewType, ViewGroup parent) {
+               return new ArticleWebView(context,parent);
+            }
+        };
+        rvBaseRecycler.addItemDecoration(divider);
+        rvBaseRecycler.setAdapter(commentAdapter);
+    }
+
+   private void updateComments(List<ArticleComment> comments) {
+//       if (!articleType.getType().equalsIgnoreCase("VT")&&articleType.getBelongTo()==1) {
+           this.comments.clear();
+           if (comments != null) {
+               print("comments.size()=="+comments.size());
+               this.comments.addAll(comments);
+           }
+           commentAdapter.refresh(this.comments);
+//       }
+    }
+    private void initComments(){
+            commentAdapter= new BaseAdapter<ArticleComment, ArticleCommentView>(context){
+                @Override
+                public ArticleCommentView createView(int viewType, ViewGroup parent) {
+                    return new ArticleCommentView(context,parent);
+                }
+            };
+            commentAdapter.setOnViewClickListener(new BaseView.OnViewClickListener() {
+                @Override
+                public void onViewClick(@NonNull BaseView bv, @NonNull View v) {
+//                data.remove(bv.data);
+//                adapter.refresh(data);
+//                adapter.notifyDataSetChanged();
+                }
+            });
+            lvComments.setAdapter(commentAdapter);
     }
 
     private void getAgentWebField(){
@@ -214,10 +300,17 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                         }
                         loadImage(article.getActivityVideoImageUrl(),player.thumbImageView);
                     }
+
                     String introduce=respon.getResult().getIntroduce();
-                    agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml(introduce), "text/html", "UTF-8", null);
+                    List<ArticleComment> comments2= article.getCommentResps();
+                    ArticleComment a=new ArticleComment();
+                    a.setCommentContent(introduce);
+                    comments2.add(0,a);
+                    updateComments(article.getCommentResps());
+//                    String introduce=respon.getResult().getIntroduce();
+//                    agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml(introduce), "text/html", "UTF-8", null);
                 }else {
-                    agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml("内容为空"), "text/html", "UTF-8", null);
+//                    agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml("内容为空"), "text/html", "UTF-8", null);
                 }
      }
 
@@ -257,7 +350,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 String url=article.getActivityVideoUrl();
                 File file=XszCache.getCachedVideoFile(url);
                 if(file.exists()){
-                    showShortToast("缓存成功");
+                    showShortToast("已添加至我的缓存");
                 }else {
                     showShortToast("已加入缓存下载任务");
                     downLoadVideToCache(url,file.getAbsolutePath());

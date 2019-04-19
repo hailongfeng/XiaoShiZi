@@ -73,12 +73,12 @@ public class ArticleImageView extends ArticleView implements OnClickListener {
 		super.bindView(data_ != null ? data_ : new Article());
 		loadImage(this.data.getBannerImage(),iv_article_pic);
 		txt_article_title.setText(this.data.getTitle());
-		txt_article_pinglun.setText(this.data.getLikedNumber()+"");
-		txt_article_fenxiang.setText(this.data.getShareNumber()+"");
 		if (this.type== ArticleAdapter.Type_Lab_Article){
 			ll_article_pl_and_fx.setVisibility(View.GONE);
 		}else {
 			ll_article_pl_and_fx.setVisibility(View.VISIBLE);
+			txt_article_pinglun.setText(this.data.getCommentsNumber()+"");
+			txt_article_fenxiang.setText(this.data.getLikedNumber()+"");
 		}
 
 	}
