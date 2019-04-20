@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -33,7 +32,6 @@ import com.umeng.socialize.utils.ShareBoardlistener;
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
-import java.util.List;
 import java.util.TreeMap;
 
 import butterknife.BindView;
@@ -41,8 +39,6 @@ import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleComment;
 import edu.children.xiaoshizi.bean.ArticleType;
-import edu.children.xiaoshizi.bean.SearchWorldHistory;
-import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
@@ -86,6 +82,11 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         title= getIntent().getStringExtra(INTENT_TITLE);
+        setContentView(R.layout.activity_article_detail);
+    }
+
+
+    void initShare(){
         mShareListener = new ArticleDetailActivity.CustomShareListener(this);
         /*增加自定义按钮的分享面板*/
         mShareAction = new ShareAction(context).setDisplayList(
@@ -94,7 +95,8 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 .setShareboardclickCallback(new ShareBoardlistener() {
                     @Override
                     public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
-                        UMWeb web = new UMWeb("http://www.baidu.com");
+                        print("ShareUrl==="+article.getShareUrl());
+                        UMWeb web = new UMWeb(article.getShareUrl());
                         web.setTitle(title);
                         web.setDescription("来自小狮子的分享");
                         web.setThumb(new UMImage(context, R.mipmap.logo));
@@ -104,7 +106,6 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                                 .share();
                     }
                 });
-        setContentView(R.layout.activity_article_detail);
     }
 
     public void initView() {
@@ -113,6 +114,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 .init();
         articleType=(ArticleType) getIntent().getSerializableExtra("articleType");
         article=(Article) getIntent().getSerializableExtra("article");
+        print(article.toString());
         if (isVideoArticle()){
             player.setVisibility(View.VISIBLE);
             btn_down_cache.setVisibility(View.VISIBLE);
@@ -129,6 +131,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 .createAgentWeb()
                 .ready();
         getAgentWebField();
+        initShare();
     }
 
 
@@ -333,10 +336,8 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 submitComment(article.getContentId(),"0","", ArticleComment.comment_type_Liked);
                 break;
             case R.id.rtv_fenxiang:
-//                mShareAction.open();
-                break;
             case R.id.ib_share:
-//                mShareAction.open();
+                mShareAction.open();
                 break;
         }
     }
@@ -344,10 +345,8 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
             onBackPressed();//会从最外层子类调finish();BaseBottomWindow就是示例
     }
 
-    private static class CustomShareListener implements UMShareListener {
-
+    private  class CustomShareListener implements UMShareListener {
         private WeakReference<ShareBoardActivity> mActivity;
-
         private CustomShareListener(ArticleDetailActivity activity) {
             mActivity = new WeakReference(activity);
         }
@@ -362,6 +361,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
 
             if (platform.name().equals("WEIXIN_FAVORITE")) {
                 Toast.makeText(mActivity.get(), platform + " 收藏成功啦", Toast.LENGTH_SHORT).show();
+                submitComment(article.getContentId(),"0","", ArticleComment.comment_type_Share);
             } else {
                 if (platform != SHARE_MEDIA.MORE && platform != SHARE_MEDIA.SMS
                         && platform != SHARE_MEDIA.EMAIL
@@ -375,7 +375,10 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                         && platform != SHARE_MEDIA.GOOGLEPLUS
                         && platform != SHARE_MEDIA.YNOTE
                         && platform != SHARE_MEDIA.EVERNOTE) {
+                    submitComment(article.getContentId(),"0","", ArticleComment.comment_type_Share);
                     Toast.makeText(mActivity.get(), platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+                }else {
+                    showShortToast("分享失败啦");
                 }
             }
         }
@@ -395,7 +398,6 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                     && platform != SHARE_MEDIA.YNOTE
                     && platform != SHARE_MEDIA.EVERNOTE) {
                 Toast.makeText(mActivity.get(), platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
-
             }
 
         }
@@ -405,6 +407,9 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
             Toast.makeText(mActivity.get(), platform + " 分享取消了", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

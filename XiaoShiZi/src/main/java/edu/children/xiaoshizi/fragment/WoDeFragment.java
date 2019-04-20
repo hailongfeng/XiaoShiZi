@@ -104,6 +104,12 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	}
 
 	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		EventBus.getDefault().register(this);
+	}
+
+	@Override
 	int getLayoutId() {
 		return R.layout.wode_fragment;
 	}
@@ -174,8 +180,6 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		updateStudent();
 
 		updateParent();
-		long size= XszCache.getCacheSize();
-		Log.d(TAG,"cache size="+size);
 	}
 
 	private void updateParent() {
@@ -258,12 +262,9 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		}
 	}
 
-	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		EventBus.getDefault().register(this);
-	}
 
+
+//	@Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void onUserInfoChange(EventBusMessage<String> messageEvent) {
 		if (messageEvent.getType()==EventBusMessage.Type_User_info_change){

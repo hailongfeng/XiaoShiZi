@@ -24,6 +24,13 @@ public class UmengMessageHandle {
     private static final String TAG = "UmengMessageHandle";
     private static final String appKey="5ca1c9ee20365714de0016c7";
     private static final String messageKey="9f02750370dfce2541fcfbe2f9e0803d";
+
+    private static final String wxKey="wx2425baf047ee9bdb";
+    private static final String wxEncryKey="1acb0f130bbb75e2c23249daa0d45cd0";
+    private static final String qqKey="1108806144";
+    private static final String qqEncryKey="nBUEjTV9vNV0yaQt";
+
+
     private PushAgent mPushAgent;
     private Context context;
     public UmengMessageHandle(Context context) {
@@ -49,8 +56,10 @@ public class UmengMessageHandle {
 //        mPushAgent.setMessageHandler(messageHandler);
 //        mPushAgent.setNotificationClickHandler(notificationClickHandler);
         Log.d(TAG,"weixin = "+"wxa41c3e0c840a841a"+" , "+"fa491522a0411a83437a90d57b252e0b");
-        PlatformConfig.setWeixin("wxa41c3e0c840a841a", "fa491522a0411a83437a90d57b252e0b");
-        PlatformConfig.setQQZone("101571206", "369a35990daa3f5185eb2dfc02ef5ac7");
+//        PlatformConfig.setWeixin("wxa41c3e0c840a841a", "fa491522a0411a83437a90d57b252e0b");
+        PlatformConfig.setWeixin(wxKey, wxEncryKey);
+//        PlatformConfig.setQQZone("101571206", "369a35990daa3f5185eb2dfc02ef5ac7");
+        PlatformConfig.setQQZone(qqKey, qqEncryKey);
     }
 
     private UmengMessageHandler messageHandler = new UmengMessageHandler() {

@@ -104,6 +104,7 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements It
                 takePicture();
                 break;
             case R.id.btn_change_user:
+
                 saveMyProfile();
                 break;
         }

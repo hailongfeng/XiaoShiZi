@@ -113,6 +113,7 @@ public class DemoApplication extends BaseApplication {
 	}
 
 	public boolean isLogin(){
+		Log.d(TAG,"isLogin == "+(getUser()!=null));
 		return getUser()!=null;
 	}
 

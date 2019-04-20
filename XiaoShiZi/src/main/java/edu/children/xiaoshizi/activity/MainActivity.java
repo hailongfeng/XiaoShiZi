@@ -75,6 +75,7 @@ public class MainActivity extends XszBaseActivity {
             getSchools();
             String userId=DemoApplication.getInstance().getUser().getUserId();
             getMyprofile(userId);
+
         }else if (messageEvent.getType()==EventBusMessage.Type_user_logout){
 
         }
@@ -101,6 +102,7 @@ public class MainActivity extends XszBaseActivity {
                         User user=respon.getResult().getLoginResp();
                         user.setPhone(userOld.getPhone());
                         DemoApplication.getInstance().setUser(user);
+//                        EventBus.getDefault().postSticky(new EventBusMessage<String>(EventBusMessage.Type_user_login,"登陆成功",""));
                         EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_login,"登陆成功",""));
                         CacheUtils.get(context).remove(Constant.cache_user);
                         CacheUtils.get(context).put(Constant.cache_user,user);

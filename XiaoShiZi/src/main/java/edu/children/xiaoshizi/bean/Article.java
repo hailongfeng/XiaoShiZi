@@ -43,6 +43,8 @@ public class Article extends BaseModel implements Serializable {
     private int likedNumber;
     @Column
     private int shareNumber;
+    @Column
+    private String shareUrl;
 
     private List<ArticleComment> commentResps;
     private boolean isSelected=false;
@@ -160,16 +162,30 @@ public class Article extends BaseModel implements Serializable {
         this.shareNumber = shareNumber;
     }
 
+    public String getShareUrl() {
+        return shareUrl;
+    }
+
+    public void setShareUrl(String shareUrl) {
+        this.shareUrl = shareUrl;
+    }
+
     @Override
     public String toString() {
         return "Article{" +
-                "contentId='" + contentId + '\'' +
+                "cid=" + cid +
+                ", contentId='" + contentId + '\'' +
+                ", categoryId=" + categoryId +
                 ", title='" + title + '\'' +
                 ", bannerImage='" + bannerImage + '\'' +
                 ", introduce='" + introduce + '\'' +
                 ", activityVideoUrl='" + activityVideoUrl + '\'' +
                 ", activityVideoImageUrl='" + activityVideoImageUrl + '\'' +
                 ", contentType='" + contentType + '\'' +
+                ", likedNumber=" + likedNumber +
+                ", shareNumber=" + shareNumber +
+                ", shareUrl='" + shareUrl + '\'' +
+                ", commentResps=" + commentResps +
                 ", isSelected=" + isSelected +
                 ", isShow=" + isShow +
                 '}';

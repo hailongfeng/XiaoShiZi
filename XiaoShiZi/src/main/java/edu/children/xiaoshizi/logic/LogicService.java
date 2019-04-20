@@ -169,8 +169,12 @@ public class LogicService {
         Observable observable=null;
         if (method==APIMethod.getVerifyCode){
             observable=apiService.getVerifyCode(requestBody);
+        }else if (method==APIMethod.validSmsVCode){
+            observable=apiService.validSmsVCode(requestBody);
         }else if (method==APIMethod.login){
             observable=apiService.loginAsyc(requestBody);
+        }else if (method==APIMethod.loginOut){
+            observable=apiService.loginOut(requestBody);
         }else if (method==APIMethod.loadSysBannerList){
             observable=apiService.loadSysBannerListAsys(requestBody);
         }else if (method==APIMethod.loadContentCategory) {

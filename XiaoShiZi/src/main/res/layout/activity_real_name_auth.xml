@@ -134,7 +134,7 @@
                     android:layout_centerInParent="true"
                     android:layout_margin="20dp"
                     android:gravity="center"
-                    android:text="绑定"
+                    android:text="确定"
                     android:textColor="@android:color/white"
                     app:rv_backgroundColor="@color/colorPrimary"
                     app:rv_backgroundPressColor="@color/colorPrimaryDark"

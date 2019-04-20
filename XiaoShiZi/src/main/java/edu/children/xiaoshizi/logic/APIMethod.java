@@ -2,7 +2,9 @@ package edu.children.xiaoshizi.logic;
 
 public enum  APIMethod {
     getVerifyCode,
+    validSmsVCode,
     login,
+    loginOut,
     loadSysBannerList,
     loadContentCategory,
     loadSchoolData,

@@ -126,11 +126,30 @@ public class UserInfoActivity extends XszBaseActivity implements View.OnClickLis
                     showShortToast("请填写验证码");
                     return;
                 }
-                toActivity(new Intent(context, ChangeUserInfoActivity.class));
-                finish();
+                String verifyCode=sendMsgDialogView.edt_dialog_user_input_code.getText().toString();
+                validSmsVCode(verifyCode);
                 break;
         }
     }
+
+    private void validSmsVCode(String verifyCode) {
+        TreeMap sm = new TreeMap<String, String>();
+        sm.put("verifyCode", verifyCode);
+        LogicService.post(context, APIMethod.validSmsVCode, sm, new ApiSubscriber<Response>() {
+            @Override
+            public void onSuccess(Response response) {
+                toActivity(new Intent(context, ChangeUserInfoActivity.class));
+                finish();
+            }
+
+            @Override
+            protected void onFail(Throwable  error) {
+                error.printStackTrace();
+                showShortToast(error.getMessage());
+            }
+        });
+    }
+
 
     private void getVeryCode() {
         TreeMap sm = new TreeMap<String, String>();
