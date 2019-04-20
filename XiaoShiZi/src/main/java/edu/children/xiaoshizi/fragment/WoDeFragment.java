@@ -271,8 +271,11 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		}else if (messageEvent.getType()==EventBusMessage.Type_binding_user){
 			updateStudent();
 		}else if (messageEvent.getType()==EventBusMessage.Type_user_login){
-			//updateStudent();
 			Log.d(TAG,"Type_user_login====");
+			initData();
+		}else if (messageEvent.getType()==EventBusMessage.Type_user_logout){
+			iv_user_face.setImageResource(R.drawable.user_default);
+			txt_user_telphone.setText("");
 			initData();
 		}
 	}

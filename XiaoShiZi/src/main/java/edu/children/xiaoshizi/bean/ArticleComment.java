@@ -14,6 +14,10 @@ public class ArticleComment implements Serializable {
      * commentContent : 评论第一条
      */
 
+    public static final String comment_type_Liked="Liked";//评论类型。Liked 点赞，Comment 内容回复，Share 分享
+    public static final String comment_type_Comment="Comment";
+    public static final String comment_type_Share="Share";
+
     private int commentId;
     private int commentParentId;
     private String contentId;
@@ -21,6 +25,8 @@ public class ArticleComment implements Serializable {
     private String userName;
     private String createTime;
     private String commentContent;
+
+
 
     public int getCommentId() {
         return commentId;

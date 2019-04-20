@@ -20,6 +20,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 
 import butterknife.ButterKnife;
+import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.utils.Constant;
 import zuo.biao.library.base.BaseActivity;
@@ -89,7 +90,9 @@ public abstract class XszBaseActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
 
     }
-
+    protected boolean isLogin(){
+        return DemoApplication.getInstance().isLogin();
+    }
     protected void print(String msg){
         Log.d(TAG,msg);
     }

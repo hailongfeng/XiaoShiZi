@@ -151,6 +151,8 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
         if (messageEvent.getType()==EventBusMessage.Type_user_login){
             Log.d(TAG,"Type_user_login====");
             initData();
+        }else if (messageEvent.getType()==EventBusMessage.Type_user_logout){
+            initData();
         }
     }
 

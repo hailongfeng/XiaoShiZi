@@ -1,26 +1,20 @@
 package edu.children.xiaoshizi.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.os.SystemClock;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.FileUtils;
-import com.blankj.utilcode.util.SDCardUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.flyco.roundview.RoundTextView;
 import com.gyf.barlibrary.ImmersionBar;
 import com.just.agentweb.AgentWeb;
@@ -39,28 +33,25 @@ import com.umeng.socialize.utils.ShareBoardlistener;
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.Article;
+import edu.children.xiaoshizi.bean.ArticleComment;
 import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.SearchWorldHistory;
+import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
-import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
-import edu.children.xiaoshizi.utils.Constant;
 import edu.children.xiaoshizi.utils.XszCache;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
-import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
-import zuo.biao.library.util.MD5Util;
 import zuo.biao.library.util.StringUtil;
-
-import static zuo.biao.library.interfaces.Presenter.INTENT_TITLE;
 
 public class ArticleDetailActivity extends XszBaseActivity implements View.OnClickListener{
 
@@ -78,6 +69,15 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     TextView tvBaseTitle;
     @BindView(R.id.btn_down_cache)
     RoundTextView btn_down_cache;
+
+    @BindView(R.id.ll_xiepinglun)
+    LinearLayout ll_xiepinglun;
+    @BindView(R.id.edit_xiepinglun)
+    EditText edit_xiepinglun;
+    @BindView(R.id.rtv_dianzan)
+    RoundTextView rtv_dianzan;
+    @BindView(R.id.rtv_fenxiang)
+    RoundTextView rtv_fenxiang;
 
     private UMShareListener mShareListener;
     private ShareAction mShareAction;
@@ -112,20 +112,31 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
         articleType=(ArticleType) getIntent().getSerializableExtra("articleType");
+        article=(Article) getIntent().getSerializableExtra("article");
+        if (isVideoArticle()){
+            player.setVisibility(View.VISIBLE);
+            btn_down_cache.setVisibility(View.VISIBLE);
+            ll_xiepinglun.setVisibility(View.GONE);
+        }else {
+            player.setVisibility(View.GONE);
+            btn_down_cache.setVisibility(View.GONE);
+            ll_xiepinglun.setVisibility(View.VISIBLE);
+            edit_xiepinglun.setOnEditorActionListener(new EditorActionListener());
+        }
         preAgentWeb= AgentWeb.with(this)
                 .setAgentWebParent((LinearLayout) linWeb, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator()
                 .createAgentWeb()
                 .ready();
-            article=(Article) getIntent().getSerializableExtra("article");
-        if (articleType.getType().equalsIgnoreCase("VT")){
-            player.setVisibility(View.VISIBLE);
-            btn_down_cache.setVisibility(View.VISIBLE);
-        }else {
-            player.setVisibility(View.GONE);
-            btn_down_cache.setVisibility(View.GONE);
-        }
         getAgentWebField();
+    }
+
+
+    private boolean isImageArticle(){
+       return articleType.getType().equalsIgnoreCase("IT");
+    }
+    private boolean isVideoArticle(){
+        return articleType.getType().equalsIgnoreCase("VT");
     }
 
     private void getAgentWebField(){
@@ -151,6 +162,56 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
         StringBuilder sb=new StringBuilder();
         sb.append("<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /></head><body>").append(body).append("</body></html>");
         return sb.toString();
+    }
+
+
+    private class EditorActionListener implements TextView.OnEditorActionListener {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            switch (v.getId()) {
+                case R.id.edit_xiepinglun://写评论
+                    if (actionId == EditorInfo.IME_ACTION_SEND) {
+                        String content = edit_xiepinglun.getText().toString();
+                        submitComment(article.getContentId(),"0",content, ArticleComment.comment_type_Comment);
+                    }
+                    break;
+            }
+            return false;
+        }
+    }
+
+    void updateCommont(Article article){
+        rtv_dianzan.setText(article.getLikedNumber()+"");
+        rtv_fenxiang.setText(article.getShareNumber()+"");
+    }
+
+    void submitComment(String contentId,String commentParentId,String commentContent,String articleCommentType){
+        showLoading(R.string.msg_handing);
+        TreeMap sm = new TreeMap<String, String>();
+        sm.put("contentId", contentId);
+        sm.put("commentParentId", commentParentId);
+        sm.put("commentContent", commentContent);
+        sm.put("type", articleCommentType);
+        LogicService.post(context, APIMethod.submitComment, sm, new ApiSubscriber<Response<Article>>() {
+            @Override
+            public void onSuccess(Response<Article> respon) {
+                Article newArticle=respon.getResult();
+                updateCommont(newArticle);
+                edit_xiepinglun.setText("");
+                ArticleDetailActivity.this.article.setLikedNumber(newArticle.getLikedNumber());
+                ArticleDetailActivity.this.article.setShareNumber(newArticle.getShareNumber());
+//                getArticleById(ArticleDetailActivity.this.article.getContentId());
+                hideLoading();
+                showShortToast(respon.getMessage());
+            }
+
+            @Override
+            protected void onFail(Throwable  error) {
+                hideLoading();
+                showShortToast(error.getMessage());
+                error.printStackTrace();
+            }
+        });
     }
 
     private void downLoadVideToCache(String url,String path){
@@ -199,7 +260,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
             public void onSuccess(Response<Article> respon) {
                 if (respon.getResult()!=null&&StringUtil.isNotEmpty(respon.getResult().getIntroduce(),true)){
                     article=respon.getResult();
-                    if (articleType.getType().equalsIgnoreCase("VT")){
+                    if (isVideoArticle()){
                         String url=article.getActivityVideoUrl();
                         File file=XszCache.getCachedVideoFile(url);
                         if (file.exists()){
@@ -211,6 +272,8 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                             player.setUp(url, JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
                         }
                         loadImage(article.getActivityVideoImageUrl(),player.thumbImageView);
+                    }else {
+                        updateCommont(article);
                     }
                     String introduce=respon.getResult().getIntroduce();
                     agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml(introduce), "text/html", "UTF-8", null);
@@ -228,7 +291,8 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
 
     public void initEvent() {
         ib_share.setOnClickListener(this);
-        btn_down_cache.setOnClickListener(this);
+        rtv_dianzan.setOnClickListener(this);
+        rtv_fenxiang.setOnClickListener(this);
     }
 
     @Override
@@ -259,6 +323,17 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                     showShortToast("已加入缓存下载任务");
                     downLoadVideToCache(url,file.getAbsolutePath());
                 }
+                break;
+            case R.id.rtv_dianzan:
+                if (!isLogin()){
+                    showShortToast("请先登录");
+                    return;
+                }
+//                mShareAction.open();
+                submitComment(article.getContentId(),"0","", ArticleComment.comment_type_Liked);
+                break;
+            case R.id.rtv_fenxiang:
+//                mShareAction.open();
                 break;
             case R.id.ib_share:
 //                mShareAction.open();

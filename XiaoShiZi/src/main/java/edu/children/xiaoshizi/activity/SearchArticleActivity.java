@@ -139,8 +139,8 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
     @Override
     public void initView() {
 
-        edit_query.setOnEditorActionListener(new mEditorActionListener());
         txt_cancle.setOnClickListener(this);
+        edit_query.setOnEditorActionListener(new mEditorActionListener());
         edit_query.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

@@ -99,7 +99,7 @@ public interface ApiService {
     @POST("v1/index/submitDraftContent")
     Observable<Response<String>> submitDraftContent(@Body RequestBody requestBody);
     @POST("v1/comment/submitComment")
-    Observable<Response<String>> submitComment(@Body RequestBody requestBody);
+    Observable<Response<Article>> submitComment(@Body RequestBody requestBody);
 
 
 

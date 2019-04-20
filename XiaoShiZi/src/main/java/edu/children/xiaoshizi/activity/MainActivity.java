@@ -75,6 +75,8 @@ public class MainActivity extends XszBaseActivity {
             getSchools();
             String userId=DemoApplication.getInstance().getUser().getUserId();
             getMyprofile(userId);
+        }else if (messageEvent.getType()==EventBusMessage.Type_user_logout){
+
         }
     }
 
