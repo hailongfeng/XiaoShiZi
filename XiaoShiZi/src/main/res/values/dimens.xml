@@ -1,4 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="common_navigator_height1">36dp</dimen>
+    <dimen name="dimen_dp_10">10dp</dimen>
+    <dimen name="dimen_dp_16">16dp</dimen>
+    <dimen name="dimen_dp_107">107dp</dimen>
 </resources>

@@ -37,7 +37,7 @@ import zuo.biao.library.util.CommonUtil;
 import zuo.biao.library.util.StringUtil;
 
 
-public class SearchWordHistoryView extends BaseView<SearchWorldHistory> implements OnClickListener {
+public class SearchWordHistoryView extends XszBaseView<SearchWorldHistory> implements OnClickListener {
 	private static final String TAG = "UserView";
 
 	public SearchWordHistoryView(Activity context, ViewGroup parent) {

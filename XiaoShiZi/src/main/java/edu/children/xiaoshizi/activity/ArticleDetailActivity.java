@@ -199,13 +199,19 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
             @Override
             public void onSuccess(Response<Article> respon) {
                 Article newArticle=respon.getResult();
-                updateCommont(newArticle);
                 edit_xiepinglun.setText("");
                 ArticleDetailActivity.this.article.setLikedNumber(newArticle.getLikedNumber());
                 ArticleDetailActivity.this.article.setShareNumber(newArticle.getShareNumber());
-//                getArticleById(ArticleDetailActivity.this.article.getContentId());
+                ArticleDetailActivity.this.article.setIntroduce(newArticle.getIntroduce());
+                ArticleDetailActivity.this.article.setShareUrl(newArticle.getShareUrl());
                 hideLoading();
                 showShortToast(respon.getMessage());
+                if (articleCommentType.equalsIgnoreCase(ArticleComment.comment_type_Comment)){
+                    String introduce=respon.getResult().getIntroduce();
+                    agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml(introduce), "text/html", "UTF-8", null);
+                }else {
+                    updateCommont(newArticle);
+                }
             }
 
             @Override

@@ -45,18 +45,20 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.ninepic.NinePicActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.RecogniteFeedbackActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -169,19 +171,19 @@
         <activity
             android:name=".activity.ContributeArticleActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <provider
-            tools:replace="android:authorities"
-            android:name="android.support.v4.content.FileProvider"
+            android:name=".utils.XszFileProvider"
             android:authorities="edu.children.xiaoshizi.android7.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
-                tools:replace="android:resource"
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/xsz_file_paths" />
         </provider>
+
+
     </application>
 
 </manifest>

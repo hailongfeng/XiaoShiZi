@@ -35,7 +35,7 @@ public abstract class BaseTakePhotoActivity extends XszBaseActivity implements T
     protected void onCreate(Bundle savedInstanceState) {
         getTakePhoto().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
-        initEvents();
+//        initEvents();
     }
     public void initEvents(){
         //各控件初始化
@@ -54,6 +54,7 @@ public abstract class BaseTakePhotoActivity extends XszBaseActivity implements T
             }
             switch (requestCode) {
                 case DIALOG_SET_GRADLE:
+                    initEvents();
                     if (position==0){
                         takePhoto.onPickFromCaptureWithCrop(uri, cropOptions);
                     }else {

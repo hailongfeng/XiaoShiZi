@@ -17,6 +17,8 @@ package edu.children.xiaoshizi.adapter;
 import android.app.Activity;
 import android.view.ViewGroup;
 
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import edu.children.xiaoshizi.adapter.view.ArticleImageView;
 import edu.children.xiaoshizi.adapter.view.ArticleVideoView;
 import edu.children.xiaoshizi.adapter.view.ArticleView;

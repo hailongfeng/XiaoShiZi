@@ -1,2 +1,2 @@
-include  ':ZBLibrary', ':QRCodeLibrary', ':XiaoShiZi'
+include  ':ZBLibrary', ':QRCodeLibrary', ':XiaoShiZi', ':multi-image-selector'
 //include  ':SmallVideoLib2','sample'
