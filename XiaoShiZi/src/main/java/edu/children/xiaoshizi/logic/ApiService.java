@@ -100,8 +100,12 @@ public interface ApiService {
     Observable<Response<Article>> loadContentById(@Body RequestBody requestBody);
     @POST("v1/index/searchContentByTitle")
     Observable<Response<List<Article>>> searchContentByTitle(@Body RequestBody requestBody);
+
+    @Multipart
     @POST("v1/index/submitDraftContent")
-    Observable<Response<String>> submitDraftContent(@Body RequestBody requestBody);
+    Observable<Response<String>> submitDraftContent(@PartMap Map<String, RequestBody> params, @Part List<MultipartBody.Part> parts);
+
+
     @POST("v1/comment/submitComment")
     Observable<Response<Article>> submitComment(@Body RequestBody requestBody);
 

@@ -105,6 +105,45 @@ public class LogicService {
         ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
         RetrofitClient.execute(apiService.uploadVerifiedVideo(params,parts),subscriber);
     }
+
+
+    public static void submitDraftContent(Context context, TreeMap<String,String> param, List<File> imagefiles, List<File> videoFiles, Observer subscriber) {
+        if (param==null){
+            param=new TreeMap<String,String>();
+        }
+        appendCommonParam(param,true);
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);//表单类型
+        int i=0;
+        for (File file:imagefiles){
+            i++;
+            RequestBody body=RequestBody.create(MediaType.parse("image/jpeg"),file);
+            builder.addFormDataPart("contentImage"+i,file.getName(),body);
+        }
+        //视频
+        if (videoFiles.size()>0){
+            RequestBody body1=RequestBody.create(MediaType.parse("video/mp4"),videoFiles.get(0));
+            builder.addFormDataPart("contentVideo",videoFiles.get(0).getName(),body1);
+        }
+        if (videoFiles.size()>1) {
+            RequestBody body2 = RequestBody.create(MediaType.parse("image/jpeg"), videoFiles.get(1));
+            builder.addFormDataPart("contentVideoImage", videoFiles.get(1).getName(), body2);
+        }
+
+
+        Set<String>  keys=param.keySet();
+        Map<String, RequestBody> params=new HashMap<>();
+        for (String key:keys){
+            params.put(key,convertToRequestBody(param.get(key)));
+        }
+
+        List<MultipartBody.Part> parts=builder.build().parts();
+        ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
+        RetrofitClient.execute(apiService.submitDraftContent(params,parts),subscriber);
+    }
+
+
+
     public static <T> Response<T> post(Context context, final APIMethod method, TreeMap<String,String> param) {
         if (param==null){
             param=new TreeMap<String,String>();
@@ -219,8 +258,6 @@ public class LogicService {
             observable=apiService.loadSeClassRoomContentById(requestBody);
         }else if (method==APIMethod.submitFeedBack){
             observable=apiService.submitFeedBack(requestBody);
-        }else if (method==APIMethod.submitDraftContent){
-            observable=apiService.submitDraftContent(requestBody);
         }else if (method==APIMethod.submitComment){
             observable=apiService.submitComment(requestBody);
         }

@@ -179,6 +179,7 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
     }
 
     private void submit(){
+        showLoading(R.string.msg_handing);
         TreeMap sm = new TreeMap<String,String>();
         if (StringUtil.isEmpty(edt_suggestion_title,true)) {
             showShortToast("投稿标题不能为空");
@@ -189,10 +190,26 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
         boolean isJiaZhang=((RadioButton)rg_home_or_school.getChildAt(0)).isChecked();
         sm.put("type", isJiaZhang?"P":"S");
         sm.put("introduce",edt_suggestion_content.getText().toString());
-        showLoading(R.string.msg_handing);
-        LogicService.post(context, APIMethod.submitDraftContent, sm, new ApiSubscriber<Response<User>>() {
+        List<File> imagefiles=new ArrayList<>();
+        for (int i = 0; i < mTakeImgs.size(); i++) {
+           File file= new File(mTakeImgs.get(i));
+           if (file.exists()){
+               print("imageFile:"+file.getAbsolutePath());
+               imagefiles.add(file);
+           }else {
+               print("imageFile不存在:");
+           }
+
+        }
+        List<File> videofiles=new ArrayList<>();
+        print("videoFile:"+videoFile.getAbsolutePath());
+        videofiles.add(videoFile);
+        print("videoImageFile:"+videoImageFile);
+        videofiles.add(new File(videoImageFile));
+
+        LogicService.submitDraftContent(context, sm, imagefiles,videofiles,new ApiSubscriber<Response<String>>() {
             @Override
-            public void onSuccess(Response<User> respon) {
+            public void onSuccess(Response<String> respon) {
                 hideLoading();
                 showShortToast(respon.getMessage());
                 finish();
@@ -222,6 +239,7 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
         }
     }
     private File videoFile;
+    private String videoImageFile;
 
     void takeVideo2(){
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
@@ -257,6 +275,7 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
                 iv_user_tougao.setVisibility(View.VISIBLE);
                 rtv_user_tougao.setVisibility(View.INVISIBLE);
                 String path=saveBitmap(bitmap);
+                videoImageFile=path;
                 print(path);
                 //uploadVideo();
             }else if (requestCode == REQUEST_IMAGE) {
