@@ -35,7 +35,8 @@ public abstract class BaseTakePhotoActivity extends XszBaseActivity implements T
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getTakePhoto().onCreate(savedInstanceState);
+        takePhoto=getTakePhoto();
+        takePhoto.onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
         int size = Math.min(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
         cropOptions = new CropOptions.Builder().setOutputX(size).setOutputX(size).setWithOwnCrop(false).create();
@@ -44,14 +45,14 @@ public abstract class BaseTakePhotoActivity extends XszBaseActivity implements T
     }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        getTakePhoto().onSaveInstanceState(outState);
+        takePhoto.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getTakePhoto().onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+        takePhoto.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

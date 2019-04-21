@@ -21,8 +21,6 @@ import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.listener.DialogUIListener;
 import com.flyco.roundview.RoundLinearLayout;
 import com.flyco.roundview.RoundTextView;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,14 +35,13 @@ import butterknife.BindView;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.ninepic.SpaceItemDecoration;
 import edu.children.xiaoshizi.adapter.view.NinePicAddView;
-import edu.children.xiaoshizi.bean.User;
-import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.Constant;
 import edu.children.xiaoshizi.utils.DateUtil;
 import edu.children.xiaoshizi.utils.FileProvider7;
+import edu.children.xiaoshizi.utils.StringUtils;
 import edu.children.xiaoshizi.utils.XszCache;
 import me.nereo.multi_image_selector.MultiImageSelector;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
@@ -55,7 +52,7 @@ import zuo.biao.library.util.StringUtil;
 /**
  * 投稿界面
  */
-public class ContributeArticleActivity extends BaseTakePhotoActivity {
+public class ContributeArticleActivity extends XszBaseActivity {
     @BindView(R.id.btn_sure)
     Button btn_sure;
     @BindView(R.id.edt_suggestion_title)
@@ -79,6 +76,7 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
     private String add;
     List<String> mTakeImgs = new ArrayList<>();
     private static final int REQUEST_IMAGE = 1001;
+    private static final int REQUEST_VIDEO = 1002;
 
 
     private String headPortrait="";
@@ -118,8 +116,8 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
         @Override
         public void onViewClick(@NonNull BaseView bv, @NonNull View v) {
             if (v.getId() == R.id.ivAdd) {
-//                startCamera();
-                takePicture();
+                startCamera();
+//                takePicture();
             } else if (v.getId() == R.id.ivDel) {
                 DialogUIUtils.showMdAlert(context, "提示", "确认要删除?",new DialogUIListener() {
                     @Override
@@ -185,6 +183,8 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
             showShortToast("投稿标题不能为空");
             return;
         }
+//        sm.put("width","480");
+//        sm.put("height","480");
         sm.put("title",edt_suggestion_title.getText().toString());
 //        投稿类型。P家长投稿，S学校投稿
         boolean isJiaZhang=((RadioButton)rg_home_or_school.getChildAt(0)).isChecked();
@@ -202,10 +202,15 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
 
         }
         List<File> videofiles=new ArrayList<>();
-        print("videoFile:"+videoFile.getAbsolutePath());
-        videofiles.add(videoFile);
-        print("videoImageFile:"+videoImageFile);
-        videofiles.add(new File(videoImageFile));
+        if (videoFile.exists()){
+            print("videoFile:"+videoFile.getAbsolutePath());
+            videofiles.add(videoFile);
+        }
+        if (!StringUtils.isEmpty(videoImagePath)){
+            print("videoImagePath:"+ videoImagePath);
+            videofiles.add(new File(videoImagePath));
+        }
+
 
         LogicService.submitDraftContent(context, sm, imagefiles,videofiles,new ApiSubscriber<Response<String>>() {
             @Override
@@ -228,7 +233,7 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
         switch (v.getId()) {
             case R.id.rll_user_video_tougao:
 //                takePicture();
-                takeVideo2();
+                takeVideo();
                 break;
 //            case R.id.iv_takephoto:
 //                takePicture();
@@ -239,15 +244,15 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
         }
     }
     private File videoFile;
-    private String videoImageFile;
+    private String videoImagePath;
 
-    void takeVideo2(){
+    void takeVideo(){
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         videoFile = createMediaFile(); // create a imageFile to save the video
         Uri fileUri = FileProvider7.getUriForFile(this, videoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);  // set the image imageFile name
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0); // set the video image quality to high
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, REQUEST_VIDEO);
     }
 
     private File createMediaFile(){
@@ -263,7 +268,7 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK) {
-            if (requestCode==1){
+            if (requestCode==REQUEST_VIDEO){
                 if (!videoFile.exists()){
                     showShortToast("视频拍摄失败，请重试");
                     return;
@@ -275,7 +280,7 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
                 iv_user_tougao.setVisibility(View.VISIBLE);
                 rtv_user_tougao.setVisibility(View.INVISIBLE);
                 String path=saveBitmap(bitmap);
-                videoImageFile=path;
+                videoImagePath =path;
                 print(path);
                 //uploadVideo();
             }else if (requestCode == REQUEST_IMAGE) {
@@ -314,14 +319,14 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
     }
 
 
-    @Override
-    public void takeSuccess(TResult result) {
-        super.takeSuccess(result);
-        ArrayList<TImage> images=result.getImages();
-        for (int i = 0; i < images.size(); i++) {
-            addImgs(images.get(i).getOriginalPath());
-        }
-        takeImageAdapter.refresh(mTakeImgs);
+//    @Override
+//    public void takeSuccess(TResult result) {
+//        super.takeSuccess(result);
+//        ArrayList<TImage> images=result.getImages();
+//        for (int i = 0; i < images.size(); i++) {
+//            addImgs(images.get(i).getOriginalPath());
+//        }
+//        takeImageAdapter.refresh(mTakeImgs);
 
 
 //        if(!StringUtils.isEmpty(originalFilePath)){
@@ -350,5 +355,5 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
 //                }
 //            });
 //        }
-    }
+//    }
 }
