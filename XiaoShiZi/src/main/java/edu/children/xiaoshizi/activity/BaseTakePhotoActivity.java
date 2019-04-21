@@ -24,25 +24,46 @@ import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
 
 public abstract class BaseTakePhotoActivity extends XszBaseActivity implements TakePhoto.TakeResultListener, InvokeListener {
-    TakePhoto takePhoto;
-    InvokeParam invokeParam;
-    File file;
-    Uri uri;
-    int size;
-    CropOptions cropOptions;
-    protected File test;
+
+    private TakePhoto takePhoto;
+    private InvokeParam invokeParam;
+    protected File imageFile;
+    private Uri uri;
+    private CropOptions cropOptions;
+    protected String originalFilePath;
+    protected String compressFilePath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getTakePhoto().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
+        int size = Math.min(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
+        cropOptions = new CropOptions.Builder().setOutputX(size).setOutputX(size).setWithOwnCrop(false).create();
+
 //        initEvents();
     }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        getTakePhoto().onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        getTakePhoto().onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //以下代码为处理Android6.0、7.0动态权限所需
+        PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionManager.handlePermissionsResult(this, type, invokeParam, this);
+    }
+
     public void initEvents(){
         //各控件初始化
-        file = new File(XszCache.getCacheDir(Constant.CACHE_DIR_FILE), System.currentTimeMillis() + ".png");
-        uri = Uri.fromFile(file);
-        size = Math.min(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
-        cropOptions = new CropOptions.Builder().setOutputX(size).setOutputX(size).setWithOwnCrop(false).create();
     }
 
     private static final int DIALOG_SET_GRADLE=1;
@@ -54,12 +75,15 @@ public abstract class BaseTakePhotoActivity extends XszBaseActivity implements T
             }
             switch (requestCode) {
                 case DIALOG_SET_GRADLE:
-                    initEvents();
+                    imageFile = new File(XszCache.getCacheDir(Constant.CACHE_DIR_FILE), System.currentTimeMillis() + ".jpeg");
+                    uri = Uri.fromFile(imageFile);
                     if (position==0){
-                        takePhoto.onPickFromCaptureWithCrop(uri, cropOptions);
+                        takePhoto.onPickFromCapture(uri);
+//                        takePhoto.onPickMultiple(3);
                     }else {
                         //从照片选择并裁剪
-                        takePhoto.onPickFromGalleryWithCrop(uri, cropOptions);
+                        takePhoto.onPickFromGallery();
+//                        takePhoto.onPickMultiple(3);
                     }
                     break;
             }
@@ -70,24 +94,30 @@ public abstract class BaseTakePhotoActivity extends XszBaseActivity implements T
         new ItemDialog(context, choices, "请选择", DIALOG_SET_GRADLE, onDialogItemClick).show();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getTakePhoto().onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
+    private TakePhoto getTakePhoto() {
+        //获得TakePhoto实例
+        if (takePhoto == null) {
+            takePhoto = (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
+        }
+        //设置压缩规则，最大2000kb
+        takePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(2000 * 1024).create(), true);
+        return takePhoto;
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        getTakePhoto().onSaveInstanceState(outState);
-        super.onSaveInstanceState(outState);
+    public void takeSuccess(final TResult result) {
+        result.getImage().getCompressPath();
+        originalFilePath = result.getImage().getOriginalPath();
+        compressFilePath = result.getImage().getCompressPath();
+        Log.d(TAG,"originalFilePath="+originalFilePath+",compressFilePath="+compressFilePath);
     }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        //以下代码为处理Android6.0、7.0动态权限所需
-        PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.handlePermissionsResult(this, type, invokeParam, this);
+    public void takeFail(TResult result, String msg) {
+        showShortToast("设置失败:"+msg);
+    }
+    @Override
+    public void takeCancel() {
+        //取消
     }
 
     @Override
@@ -98,38 +128,5 @@ public abstract class BaseTakePhotoActivity extends XszBaseActivity implements T
         }
         return type;
     }
-
-    private TakePhoto getTakePhoto() {
-        //获得TakePhoto实例
-        if (takePhoto == null) {
-            takePhoto = (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
-        }
-        //设置压缩规则，最大500kb
-        takePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(500 * 1024).create(), true);
-        return takePhoto;
-    }
-
-    @Override
-    public void takeSuccess(final TResult result) {
-        //成功取得照片
-        test = new File(result.getImage().getOriginalPath());
-        Log.d(TAG,test.getAbsolutePath());
-    }
-
-
-    @Override
-    public void takeFail(TResult result, String msg) {
-        //取得失败
-//        Toast.makeText(Setting.this,"设置失败",Toast.LENGTH_SHORT).show();
-        showShortToast("设置失败");
-    }
-
-    @Override
-    public void takeCancel() {
-        //取消
-    }
-
-
-
 
 }

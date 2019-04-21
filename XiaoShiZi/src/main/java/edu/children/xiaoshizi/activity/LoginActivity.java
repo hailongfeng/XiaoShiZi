@@ -131,6 +131,10 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
             showShortToast("手机号不能为空");
             return;
         }
+//        if (!StringUtil.isPhone(phone)){
+//            showShortToast("手机号格式不正确");
+//            return;
+//        }
         sm.put("phoneNumber",phone);
         LogicService.post(context, APIMethod.getVerifyCode,sm,new ApiSubscriber<Response>(){
             @Override
@@ -149,7 +153,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
     }
 
     private void login() {
-        showLoading("正在登陆");
+        showLoading("正在登录");
         String verifyCode=edit_verifyCode.getText().toString();
         TreeMap sm = new TreeMap<String,String>();
         String phoneNumber=edit_user_phone.getText().toString();
@@ -242,7 +246,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                     @Override
                     public void accept(Response r) throws Exception {
                         if (r.getCode().equals("1")){
-                            showLoading("正在登陆");
+                            showLoading("正在登录");
                         }else if (r.getCode().equals("2")){
                             hideLoading();
                             showShortToast(r.getMessage());

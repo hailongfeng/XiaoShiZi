@@ -1,7 +1,7 @@
 /*Copyright ©2015 TommyLemon(https://github.com/TommyLemon)
 
 Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
+you may not use this imageFile except in compliance with the License.
 You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
@@ -290,7 +290,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	@Override
 	public void onClick(View v) {//直接调用不会显示v被点击效果
 		if (!isLogin()){
-			showShortToast("您还未登陆，请先登陆");
+			showShortToast("您还未登录，请先登录");
 			return;
 		}
 		switch (v.getId()) {

@@ -40,14 +40,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
+        <activity android:name=".activity.ninepic.NinePicActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.TestActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".activity.ninepic.NinePicActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -172,7 +179,6 @@
             android:name=".activity.ContributeArticleActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
-
         <provider
             android:name=".utils.XszFileProvider"
             android:authorities="edu.children.xiaoshizi.android7.fileprovider"
@@ -182,8 +188,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/xsz_file_paths" />
         </provider>
-
-
     </application>
 
 </manifest>

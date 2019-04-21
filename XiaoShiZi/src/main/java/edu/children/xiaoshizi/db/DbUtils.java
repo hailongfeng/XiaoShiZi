@@ -76,6 +76,12 @@ public class DbUtils {
                 .queryList();
     }
 
+    public static  <T extends BaseModel>  T getModelSingle(Class<T> clazz, SQLOperator... where){
+        return SQLite.select().from(clazz)
+                .where(where)
+                .querySingle();
+    }
+
     public static <T extends BaseModel>  void deleteModel(Class<T> clazz, SQLOperator... where){
         SQLite.delete(clazz).where(where).execute();
     }

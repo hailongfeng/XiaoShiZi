@@ -153,12 +153,13 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements It
     @Override
     public void takeSuccess(TResult result) {
         super.takeSuccess(result);
-        if(test.exists()){
+        if(!StringUtils.isEmpty(originalFilePath)){
             TreeMap sm = new TreeMap<String,String>();
             sm.put("width","80");
             sm.put("height","80");
             List<File> files =new ArrayList<>();
-            files.add(test);
+            files.add(new File(originalFilePath));
+            loadImage(originalFilePath,iv_user_face);
             LogicService.uploadPic(context,sm,files, new ApiSubscriber<Response<JSONArray>>() {
                 @Override
                 public void onSuccess(Response<JSONArray> respon) {
@@ -168,7 +169,7 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements It
                     Log.d(TAG,jsonObject.getString("objectUrlWithStyle"));
                     Log.d(TAG,jsonObject.getString("fileName"));
                     headPortrait=jsonObject.getString("objectUrlWithStyle");
-                    loadImage(headPortrait,iv_user_face);
+//                    loadImage(headPortrait,iv_user_face);
                 }
 
                 @Override

@@ -26,7 +26,7 @@ public class Article extends BaseModel implements Serializable {
     @Column
     private String contentId;
     @Column
-    private int categoryId;
+    private int categoryId;//类别id
     @Column
     private String title;
     @Column
@@ -38,17 +38,24 @@ public class Article extends BaseModel implements Serializable {
     @Column
     private String activityVideoImageUrl;
     @Column
-    private String contentType;
+    private String contentType;//内容类型。IT 图文，VT 视频
     @Column
-    private int likedNumber;
+    private int likedNumber;//点赞数
     @Column
-    private int shareNumber;
+    private int commentsNumber; //评论数
+    @Column
+    private int shareNumber; //分享数
     @Column
     private String shareUrl;
 
     private List<ArticleComment> commentResps;
     private boolean isSelected=false;
     private boolean isShow=false;
+
+    public Article() {
+    }
+
+
 
     public long getCid() {
         return cid;
@@ -154,6 +161,14 @@ public class Article extends BaseModel implements Serializable {
         this.likedNumber = likedNumber;
     }
 
+    public int getCommentsNumber() {
+        return commentsNumber;
+    }
+
+    public void setCommentsNumber(int commentsNumber) {
+        this.commentsNumber = commentsNumber;
+    }
+
     public int getShareNumber() {
         return shareNumber;
     }
@@ -190,4 +205,6 @@ public class Article extends BaseModel implements Serializable {
                 ", isShow=" + isShow +
                 '}';
     }
+
+
 }

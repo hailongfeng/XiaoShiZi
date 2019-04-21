@@ -61,59 +61,59 @@
             android:background="@color/white"
             android:orientation="vertical">
             <View style="@style/divider_horizontal_1px" />
-        <LinearLayout
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <com.flyco.roundview.RoundLinearLayout
-                android:id="@+id/rll_search"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left|center_vertical"
+                android:gravity="center"
                 android:orientation="horizontal"
-                app:rv_backgroundColor="#F4F4F4"
-                app:rv_cornerRadius="5dp">
-                <EditText
-                    android:id="@+id/edit_xiepinglun"
-                    android:drawablePadding="5dp"
-                    android:drawableLeft="@drawable/icon_xiepnglun"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:singleLine="true"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:imeOptions="actionSend"
-                    android:imeActionLabel="提交"
-                    android:background="@color/transparent"
-                    android:layout_marginLeft="5dp"
-                    android:hint="写评论......."/>
-            </com.flyco.roundview.RoundLinearLayout>
+                android:padding="5dp">
 
-            <com.flyco.roundview.RoundTextView
-                android:id="@+id/rtv_dianzan"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_dianzan"
-                android:drawablePadding="2dp"
-                android:gravity="center_vertical"
-                android:text="12"/>
-            <com.flyco.roundview.RoundTextView
-                android:id="@+id/rtv_fenxiang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:drawableLeft="@drawable/icon_share_gray"
-                android:drawablePadding="2dp"
-                android:gravity="center_vertical"
-                android:text="12"/>
-        </LinearLayout>
+                <com.flyco.roundview.RoundLinearLayout
+                    android:id="@+id/rll_search"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left|center_vertical"
+                    android:orientation="horizontal"
+                    app:rv_backgroundColor="#F4F4F4"
+                    app:rv_cornerRadius="5dp">
+                    <EditText
+                        android:id="@+id/edit_xiepinglun"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/icon_xiepnglun"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:imeOptions="actionSend"
+                        android:imeActionLabel="提交"
+                        android:background="@color/transparent"
+                        android:layout_marginLeft="5dp"
+                        android:hint="写评论......."/>
+                </com.flyco.roundview.RoundLinearLayout>
+
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/rtv_dianzan"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icon_dianzan"
+                    android:drawablePadding="2dp"
+                    android:gravity="center_vertical"
+                    android:text="12"/>
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/rtv_fenxiang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:drawableLeft="@drawable/icon_share_gray"
+                    android:drawablePadding="2dp"
+                    android:gravity="center_vertical"
+                    android:text="12"/>
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 

@@ -42,7 +42,7 @@ public class LogicService {
         for (File file : files) {
             // TODO: 16-4-2  这里为了简单起见，没有判断file的类型
             RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
-            MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("imageFile", file.getName(), requestBody);
             parts.add(part);
         }
         return parts;
@@ -52,7 +52,7 @@ public class LogicService {
         for (File file : files) {
             // TODO: 16-4-2  这里为了简单起见，没有判断file的类型
             RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
-            builder.addFormDataPart("file", file.getName(), requestBody);
+            builder.addFormDataPart("imageFile", file.getName(), requestBody);
         }
 
         builder.setType(MultipartBody.FORM);
@@ -70,8 +70,8 @@ public class LogicService {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);//表单类型
         for (File file:files){
-//            RequestBody body=RequestBody.create(MediaType.parse("multipart/form-data"),file);
-            RequestBody body=RequestBody.create(MediaType.parse("image/png"),file);
+//            RequestBody body=RequestBody.create(MediaType.parse("multipart/form-data"),imageFile);
+            RequestBody body=RequestBody.create(MediaType.parse("image/jpeg"),file);
             builder.addFormDataPart("picfile",file.getName(),body);
         }
         Set<String>  keys=sm.keySet();
@@ -91,7 +91,7 @@ public class LogicService {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);//表单类型
         for (File file:files){
-//            RequestBody body=RequestBody.create(MediaType.parse("multipart/form-data"),file);
+//            RequestBody body=RequestBody.create(MediaType.parse("multipart/form-data"),imageFile);
             RequestBody body=RequestBody.create(MediaType.parse("video/mp4"),file);
             builder.addFormDataPart("video_file",file.getName(),body);
         }

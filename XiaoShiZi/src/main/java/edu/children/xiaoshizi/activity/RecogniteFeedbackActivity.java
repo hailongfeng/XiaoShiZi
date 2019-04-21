@@ -24,6 +24,7 @@ import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.Response;
+import edu.children.xiaoshizi.utils.StringUtils;
 import zuo.biao.library.util.Log;
 
 //识别反馈
@@ -80,19 +81,20 @@ public class RecogniteFeedbackActivity extends BaseTakePhotoActivity  {
     @Override
     public void takeSuccess(TResult result) {
         super.takeSuccess(result);
-        if(test.exists()){
+        if(!StringUtils.isEmpty(originalFilePath)){
             TreeMap sm = new TreeMap<String,String>();
             sm.put("width","250");
             sm.put("height","300");
             List<File> files =new ArrayList<>();
-            files.add(test);
+            files.add(new File(originalFilePath));
+            loadImage(originalFilePath,iv_student_pic);
             LogicService.uploadPic(context,sm,files, new ApiSubscriber<Response<JSONArray>>() {
                 @Override
                 public void onSuccess(Response<JSONArray> respon) {
                     JSONArray jsonArray=respon.getResult();
                     JSONObject jsonObject=jsonArray.getJSONObject(0);
                     headPortrait=jsonObject.getString("objectUrlWithStyle");
-                    loadImage(headPortrait,iv_student_pic);
+//                    loadImage(headPortrait,iv_student_pic);
                 }
 
                 @Override

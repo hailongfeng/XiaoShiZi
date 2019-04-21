@@ -41,7 +41,9 @@ import edu.children.xiaoshizi.adapter.ArticleAdapter;
 import edu.children.xiaoshizi.adapter.SearchWordHistoryAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.ArticleType_Table;
 import edu.children.xiaoshizi.bean.SearchWorldHistory;
+import edu.children.xiaoshizi.bean.SearchWorldHistory_Table;
 import edu.children.xiaoshizi.bean.Student;
 import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
@@ -161,17 +163,21 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
                 Intent intent = new Intent(context, ArticleDetailActivity.class);
                 Article article = articles.get(position);
                 intent.putExtra("article", article);
-                List<ArticleType> list = DemoApplication.getInstance().getContentCategoryResponse().getCategoryResps();
+                List<ArticleType> list = DbUtils.getArticleTypeList(1);
                 for (int i = 0; i < list.size(); i++) {
-                    if (article.getContentType().equals(list.get(i))) {
+                    if (article.getCategoryId()==list.get(i).getCategoryId()) {
                         articleType = list.get(i);
                         break;
                     }
                 }
-                intent.putExtra("articleType", articleType);
-                String title = articleType.getTitle() + " | " + article.getTitle();
-                intent.putExtra(INTENT_TITLE, title);
-                toActivity(intent);
+                if (article!=null) {
+                    intent.putExtra("articleType", articleType);
+                    String title = articleType.getTitle() + " | " + article.getTitle();
+                    intent.putExtra(INTENT_TITLE, title);
+                    toActivity(intent);
+                }else {
+                    showShortToast("出错了");
+                }
             }
         });
         updataList(new ArrayList<>());
@@ -200,10 +206,13 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
         LogicService.post(context, APIMethod.searchContentByTitle, sm, new ApiSubscriber<Response<List<Article>>>() {
             @Override
             public void onSuccess(Response<List<Article>> respon) {
-                SearchWorldHistory history = new SearchWorldHistory();
-                history.setName(searchkeyWord);
-                history.setTime(SystemClock.currentThreadTimeMillis());
-                DbUtils.saveModel(history);
+                SearchWorldHistory historyExit= DbUtils.getModelSingle(SearchWorldHistory.class, SearchWorldHistory_Table.name.eq(searchkeyWord));
+                if (historyExit == null) {
+                    SearchWorldHistory history = new SearchWorldHistory();
+                    history.setName(searchkeyWord);
+                    history.setTime(SystemClock.currentThreadTimeMillis());
+                    DbUtils.saveModel(history);
+                }
                 hideLoading();
                 updataList(respon.getResult());
             }

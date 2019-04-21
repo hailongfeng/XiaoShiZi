@@ -55,7 +55,7 @@ import zuo.biao.library.util.StringUtil;
 public class MainActivity extends XszBaseActivity {
     private static final String TAG = "MainActivity";
 
-//    @BindView(R.id.bottomBar)
+    //    @BindView(R.id.bottomBar)
     BottomBar bottomBar;
     @BindView(R.id.tabView)
     TabView tabView;
@@ -68,53 +68,56 @@ public class MainActivity extends XszBaseActivity {
         EventBus.getDefault().register(this);
         autoLogin();
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserInfoChange(EventBusMessage<String> messageEvent) {
-        if (messageEvent.getType()==EventBusMessage.Type_user_login){
-            Log.d(TAG,"Type_user_login====");
+        if (messageEvent.getType() == EventBusMessage.Type_user_login) {
+            Log.d(TAG, "Type_user_login====");
             getSchools();
-            String userId=DemoApplication.getInstance().getUser().getUserId();
+            String userId = DemoApplication.getInstance().getUser().getUserId();
             getMyprofile(userId);
+        } else if (messageEvent.getType() == EventBusMessage.Type_user_logout) {
 
-        }else if (messageEvent.getType()==EventBusMessage.Type_user_logout){
-
+        } else if (messageEvent.getType() == EventBusMessage.Type_user_real_name_auth) {
+            Log.d(TAG, "Type_user_real_name_auth====");
+            getStudentsAndParents();
         }
     }
 
-   private void autoLogin(){
-        Object uo=CacheUtils.get(context).getAsObject(Constant.cache_user);
-        print("uo==null 结果："+(uo==null));
-        if (uo!=null){
-            User userOld= (User) uo;
-            TreeMap sm = new TreeMap<String,String>();
-            sm.put("token",userOld.getToken());
-            LogicService.post(context, APIMethod.getStudentsAndParents,sm, new ApiSubscriber<Response<LoginRespon>>() {
+    private void autoLogin() {
+        Object uo = CacheUtils.get(context).getAsObject(Constant.cache_user);
+        print("uo==null 结果：" + (uo == null));
+        if (uo != null) {
+            User userOld = (User) uo;
+            TreeMap sm = new TreeMap<String, String>();
+            sm.put("token", userOld.getToken());
+            LogicService.post(context, APIMethod.getStudentsAndParents, sm, new ApiSubscriber<Response<LoginRespon>>() {
                 @Override
                 public void onSuccess(Response<LoginRespon> respon) {
-                    if (respon.getCode().equals("10012")){
+                    if (respon.getCode().equals("10012")) {
                         print("登录失效，重新登录");
                         DemoApplication.getInstance().setLoginRespon(null);
                         DemoApplication.getInstance().setUser(null);
                         CacheUtils.get(context).remove(Constant.cache_user);
-                    }else if (respon.getCode().equals(Response.SUCCESS)){
+                    } else if (respon.getCode().equals(Response.SUCCESS)) {
                         print("自动登录成功！！！");
                         DemoApplication.getInstance().setLoginRespon(respon.getResult());
-                        User user=respon.getResult().getLoginResp();
+                        User user = respon.getResult().getLoginResp();
                         user.setPhone(userOld.getPhone());
                         DemoApplication.getInstance().setUser(user);
 //                        EventBus.getDefault().postSticky(new EventBusMessage<String>(EventBusMessage.Type_user_login,"登陆成功",""));
-                        EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_login,"登陆成功",""));
+                        EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_login, "登陆成功", ""));
                         CacheUtils.get(context).remove(Constant.cache_user);
-                        CacheUtils.get(context).put(Constant.cache_user,user);
+                        CacheUtils.get(context).put(Constant.cache_user, user);
                     }
                 }
 
                 @Override
-                protected void onFail(Throwable  error) {
+                protected void onFail(Throwable error) {
                     error.printStackTrace();
                 }
             });
-        }else {
+        } else {
             print("用户没有缓冲");
         }
     }
@@ -124,8 +127,26 @@ public class MainActivity extends XszBaseActivity {
         super.onNewIntent(intent);
 //        setContentView(R.layout.activity_main);
 //        tabView.setTabViewDefaultPosition(0);
-        ((LinearLayout)tabView.getChildAt(0)).getChildAt(0).performClick();
+        ((LinearLayout) tabView.getChildAt(0)).getChildAt(0).performClick();
     }
+
+    private void getStudentsAndParents() {
+        TreeMap sm = new TreeMap<String, String>();
+        LogicService.post(context, APIMethod.getStudentsAndParents, null, new ApiSubscriber<Response<LoginRespon>>() {
+            @Override
+            public void onSuccess(Response<LoginRespon> response) {
+                DemoApplication.getInstance().setLoginRespon(response.getResult());
+                DemoApplication.getInstance().setUser(response.getResult().getLoginResp());
+            }
+
+            @Override
+            protected void onFail(Throwable error) {
+                Log.d(TAG, error.getMessage());
+            }
+
+        });
+    }
+
     private void getSchools() {
         LogicService.post(context, APIMethod.loadSchoolData, null, new ApiSubscriber<Response<List<School>>>() {
             @Override
@@ -138,8 +159,9 @@ public class MainActivity extends XszBaseActivity {
                     Log.w(TAG, "无数据");
                 }
             }
+
             @Override
-            protected void onFail(Throwable  error) {
+            protected void onFail(Throwable error) {
                 //10012
                 Log.d(TAG, error.getMessage());
             }
@@ -147,15 +169,15 @@ public class MainActivity extends XszBaseActivity {
         });
     }
 
-    private void getMyprofile(String id)  {
-        TreeMap sm = new TreeMap<String,String>();
-        sm.put("userId",id);
+    private void getMyprofile(String id) {
+        TreeMap sm = new TreeMap<String, String>();
+        sm.put("userId", id);
         LogicService.post(context, APIMethod.getMyProfile, sm, new ApiSubscriber<Response<User>>() {
             @Override
             public void onSuccess(Response<User> listResponse) {
                 hideLoading();
-                User newUser= listResponse.getResult();
-                User oldUser=DemoApplication.getInstance().getUser();
+                User newUser = listResponse.getResult();
+                User oldUser = DemoApplication.getInstance().getUser();
                 oldUser.setLoginName(newUser.getLoginName());
                 oldUser.setUserName(newUser.getUserName());
                 oldUser.setHeadPortrait(newUser.getHeadPortrait());
@@ -166,7 +188,7 @@ public class MainActivity extends XszBaseActivity {
             }
 
             @Override
-            protected void onFail(Throwable  error) {
+            protected void onFail(Throwable error) {
                 hideLoading();
                 Log.d(TAG, error.getMessage());
             }
@@ -192,7 +214,7 @@ public class MainActivity extends XszBaseActivity {
     };
 
 
-    private void initPermission(){
+    private void initPermission() {
         String[] mPermissionList = new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -212,7 +234,7 @@ public class MainActivity extends XszBaseActivity {
         EasyPermissions.requestPermissions(
                 context,
                 "申请权限",
-                0,mPermissionList
+                0, mPermissionList
         );
     }
 
@@ -220,7 +242,7 @@ public class MainActivity extends XszBaseActivity {
     public void initEvent() {
         tabView.setOnTabChildClickListener(new TabView.OnTabChildClickListener() {
             @Override
-            public void onTabChildClick(int  position, ImageView currentImageIcon, TextView currentTextView) {
+            public void onTabChildClick(int position, ImageView currentImageIcon, TextView currentTextView) {
             }
         });
     }
@@ -231,18 +253,20 @@ public class MainActivity extends XszBaseActivity {
         ImmersionBar.with(this)
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
-        List<TabViewChild> tabViewChildList=new ArrayList<>();
-        TabViewChild tabViewChild01=new TabViewChild(R.drawable.main_tab_shouye_select,R.drawable.main_tab_shouye_normal,"首页",  fragments[0]);
-        TabViewChild tabViewChild02=new TabViewChild(R.drawable.main_tab_aqkt_select,R.drawable.main_tab_aqkt_normal,"安全课堂",  fragments[1]);
-        TabViewChild tabViewChild03=new TabViewChild(R.drawable.main_tab_aqgj_select,R.drawable.main_tab_aqgj_normal,"安全工具",  fragments[2]);
-        TabViewChild tabViewChild04=new TabViewChild(R.drawable.main_tab_wo_select,R.drawable.main_tab_wo_normal,"我的",fragments[3]);
+        List<TabViewChild> tabViewChildList = new ArrayList<>();
+        TabViewChild tabViewChild01 = new TabViewChild(R.drawable.main_tab_shouye_select, R.drawable.main_tab_shouye_normal, "首页", fragments[0]);
+        TabViewChild tabViewChild02 = new TabViewChild(R.drawable.main_tab_aqkt_select, R.drawable.main_tab_aqkt_normal, "安全课堂", fragments[1]);
+        TabViewChild tabViewChild03 = new TabViewChild(R.drawable.main_tab_aqgj_select, R.drawable.main_tab_aqgj_normal, "安全工具", fragments[2]);
+        TabViewChild tabViewChild04 = new TabViewChild(R.drawable.main_tab_wo_select, R.drawable.main_tab_wo_normal, "我的", fragments[3]);
         tabViewChildList.add(tabViewChild01);
         tabViewChildList.add(tabViewChild02);
         tabViewChildList.add(tabViewChild03);
         tabViewChildList.add(tabViewChild04);
-        tabView.setTabViewChild(tabViewChildList,fragmentManager);
+        tabView.setTabViewChild(tabViewChildList, fragmentManager);
     }
+
     private long mPressedTime = 0;
+
     @Override
     public void onBackPressed() {
         long mNowTime = System.currentTimeMillis();//获取第一次按键时间

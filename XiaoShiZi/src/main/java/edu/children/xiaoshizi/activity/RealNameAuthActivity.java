@@ -14,6 +14,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.FileUtils;
 import com.flyco.roundview.RoundTextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -26,6 +28,7 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.RealNameAuthInfo;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
@@ -131,6 +134,7 @@ public class RealNameAuthActivity extends XszBaseActivity  implements ItemDialog
         LogicService.post(context, APIMethod.verifiedSubmit, sm, new ApiSubscriber<Response<RealNameAuthInfo>>() {
             @Override
             protected void onSuccess(Response<RealNameAuthInfo> Response) {
+                EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_real_name_auth,"用户实名认证",""));
                 showShortToast(Response.getMessage());
                 DemoApplication.getInstance().getUser().setVerifiedStatus(Response.getResult().getVerifiedStatus());
                 toActivity(new Intent(context,BindingStudentActivity.class));
@@ -148,9 +152,9 @@ public class RealNameAuthActivity extends XszBaseActivity  implements ItemDialog
 
     void takeVideo2(){
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        videoFile = createMediaFile(); // create a file to save the video
+        videoFile = createMediaFile(); // create a imageFile to save the video
         Uri fileUri = FileProvider7.getUriForFile(this, videoFile);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);  // set the image file name
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);  // set the image imageFile name
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0); // set the video image quality to high
         startActivityForResult(intent, 1);
     }
