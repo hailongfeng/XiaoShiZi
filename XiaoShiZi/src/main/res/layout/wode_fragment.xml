@@ -100,21 +100,24 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="您当前还未绑定您的孩子噢" />
+                            android:textSize="@dimen/text_size_middle"
+                            android:textColor="@color/colorPrimary"
+                            android:text="您当前还未绑定您的孩子噢^_^" />
 
                         <com.flyco.roundview.RoundTextView
                             android:id="@+id/btn_no_student_bind"
                             android:layout_width="150dp"
                             android:layout_height="40dp"
+                            android:textSize="@dimen/text_size_middle"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="10dp"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="立即绑定"
                             android:textColor="@android:color/white"
                             app:rv_backgroundColor="@color/colorPrimary"
                             app:rv_backgroundPressColor="@color/colorPrimaryDark"
-                            app:rv_cornerRadius="15dp" />
+                            app:rv_cornerRadius="25dp" />
                     </LinearLayout>
 
                 </android.support.v7.widget.CardView>
@@ -142,20 +145,31 @@
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="16dp">
-
-                <com.walle.multistatuslayout.MultiStatusLayout
-                    android:id="@+id/multiStatusLayout"
+                <LinearLayout
+                    android:id="@+id/ll_have_no_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:emptyLayout="@layout/layout_empty"
-                    app:errorLayout="@layout/layout_empty"
-                    app:loadLayout="@layout/layout_empty"
-                    app:netErrorLayout="@layout/layout_empty">
-
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="重要联系人"
+                        android:textSize="@dimen/text_size_big"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:text="暂无已绑定学生联系人噢^_^"
+                        android:textSize="@dimen/text_size_middle"
+                        android:textColor="@color/colorPrimary"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rvCustodyRecycler"
                         style="@style/lv" />
-                </com.walle.multistatuslayout.MultiStatusLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView

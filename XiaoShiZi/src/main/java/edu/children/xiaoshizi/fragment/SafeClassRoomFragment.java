@@ -149,8 +149,8 @@ public class SafeClassRoomFragment extends XszBaseFragment implements OnClickLis
 		print("islogin : "+isLogin());
 		mFragments.clear();
 		if (!isLogin()){
-//			mFragments.add(NoLoginFragment.newInstance());
-//			mFragments.add(NoLoginFragment.newInstance());
+			mFragments.add(NoLoginFragment.newInstance());
+			mFragments.add(NoLoginFragment.newInstance());
 		}else {
 			mFragments.add(SafeClassFragment.newInstance("",""));
 			mFragments.add(SafeLabFragment.newInstance("",""));

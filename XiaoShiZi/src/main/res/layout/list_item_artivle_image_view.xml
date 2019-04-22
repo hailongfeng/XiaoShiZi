@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
                 android:textSize="14sp"
-                android:drawableLeft="@drawable/icon_sex_man"
+                android:drawableLeft="@drawable/icon_dianzan"
                 android:text="39" />
         </LinearLayout>
 

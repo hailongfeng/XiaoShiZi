@@ -32,15 +32,19 @@
             android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/edt_user_input_code"
+                android:hint="请输入验证码"
+                android:background="@drawable/round_white_solid_gray_boder_bg"
                 android:layout_width="160dp"
+                android:height="40dp"
                 android:layout_height="wrap_content" />
             <com.flyco.roundview.RoundTextView
                 android:id="@+id/btn_resend"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="重新发送"
+                android:text="重新获取"
                 android:textColor="@android:color/white"
                 app:rv_backgroundColor="@color/colorPrimary"
                 app:rv_backgroundPressColor="@color/colorPrimaryDark"

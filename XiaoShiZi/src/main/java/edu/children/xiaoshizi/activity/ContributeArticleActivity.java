@@ -177,7 +177,6 @@ public class ContributeArticleActivity extends XszBaseActivity {
     }
 
     private void submit(){
-        showLoading(R.string.msg_handing);
         TreeMap sm = new TreeMap<String,String>();
         if (StringUtil.isEmpty(edt_suggestion_title,true)) {
             showShortToast("投稿标题不能为空");
@@ -211,7 +210,7 @@ public class ContributeArticleActivity extends XszBaseActivity {
             videofiles.add(new File(videoImagePath));
         }
 
-
+        showLoading(R.string.msg_handing);
         LogicService.submitDraftContent(context, sm, imagefiles,videofiles,new ApiSubscriber<Response<String>>() {
             @Override
             public void onSuccess(Response<String> respon) {

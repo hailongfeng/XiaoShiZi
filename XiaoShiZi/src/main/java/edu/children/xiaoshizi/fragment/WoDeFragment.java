@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.flyco.roundview.RoundTextView;
@@ -61,7 +62,6 @@ import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.StringUtils;
-import edu.children.xiaoshizi.utils.XszCache;
 import zuo.biao.library.base.BaseView;
 import zuo.biao.library.util.Log;
 
@@ -92,9 +92,8 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	@BindView(R.id.btn_no_student_bind)
 	RoundTextView btn_no_student_bind;
 
-	@BindView(R.id.multiStatusLayout)
-	MultiStatusLayout multiStatusLayout;
-
+	@BindView(R.id.ll_have_no_parent)
+	LinearLayout ll_have_no_parent;
 	@BindView(R.id.rvCustodyRecycler)
 	RecyclerView rvParentRecycler;;
 	private ParentAdapter parentAdapter;
@@ -141,7 +140,6 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 			}
 		});
         rvParentRecycler.setAdapter(parentAdapter);
-
 	}
 
 	private void studentUnBinding(String studentId){
@@ -186,13 +184,16 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		if (isLogin()) {
 			List<Parent> list1 = DemoApplication.getInstance().getLoginRespon().getParents();
 			if (list1 != null && list1.size() != 0) {
-				multiStatusLayout.showContent();
+				ll_have_no_parent.setVisibility(View.GONE);
+				rvParentRecycler.setVisibility(View.VISIBLE);
 				parentAdapter.refresh(list1);
 			} else {
-				multiStatusLayout.showEmpty();
+				ll_have_no_parent.setVisibility(View.VISIBLE);
+				rvParentRecycler.setVisibility(View.GONE);
 			}
 		}else {
-			multiStatusLayout.showEmpty();
+			ll_have_no_parent.setVisibility(View.VISIBLE);
+			rvParentRecycler.setVisibility(View.GONE);
 		}
 	}
 
@@ -278,6 +279,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 			iv_user_face.setImageResource(R.drawable.user_default);
 			txt_user_telphone.setText("");
 			initData();
+			initEvent();
 		}
 	}
 

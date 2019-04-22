@@ -18,7 +18,7 @@
             android:id="@+id/btn_sure"
             style="@style/topbar_right_btn"
             android:textColor="@color/colorPrimary"
-            android:text="保存" />
+            android:text="发送" />
     </RelativeLayout>
     <View
         style="@style/divider_horizontal_1px" />

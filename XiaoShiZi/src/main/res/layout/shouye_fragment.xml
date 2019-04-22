@@ -24,7 +24,7 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:rv_backgroundColor="#86C5FE"
-                app:rv_cornerRadius="5dp">
+                app:rv_cornerRadius="25dp">
 
                 <ImageView
                     android:layout_width="wrap_content"

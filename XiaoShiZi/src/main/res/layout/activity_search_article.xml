@@ -6,7 +6,7 @@
     >
     <LinearLayout
         android:id="@+id/ll_top"
-        android:background="@color/gray_slight"
+        android:background="@color/xsz_bg_gray"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="50dp">
@@ -24,16 +24,15 @@
                 android:gravity="center_vertical"
                 android:layout_margin="5dp"
                 app:rv_backgroundColor="@color/white"
-                app:rv_cornerRadius="10dp"
+                app:rv_cornerRadius="25dp"
                 >
-                <ImageView
-                    android:src="@drawable/icon_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/edit_query"
                     android:layout_marginLeft="5dp"
-                    android:hint="请输入关键字"
+                    android:drawableLeft="@drawable/icon_search"
+                    android:drawablePadding="5dp"
+                    android:hint="放大镜"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:lines="1"
