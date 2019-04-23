@@ -64,7 +64,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/icon_setting" />
+                        android:src="@drawable/icon_setting2" />
                 </RelativeLayout>
 
                 <TextView
@@ -110,7 +110,7 @@
                             android:layout_height="40dp"
                             android:textSize="@dimen/text_size_middle"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="20dp"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="立即绑定"

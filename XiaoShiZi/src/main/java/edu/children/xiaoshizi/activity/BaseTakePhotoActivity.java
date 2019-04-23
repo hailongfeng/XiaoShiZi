@@ -84,8 +84,8 @@ public abstract class BaseTakePhotoActivity extends XszBaseActivity implements T
 //                        takePhoto.onPickMultiple(3);
                     }else {
                         //从照片选择并裁剪
-//                        takePhoto.onPickFromGallery();
-                        takePhoto.onPickMultipleWithCrop(2,cropOptions);
+                        takePhoto.onPickFromGallery();
+//                        takePhoto.onPickMultipleWithCrop(2,cropOptions);
                     }
                     break;
             }

@@ -62,8 +62,7 @@ public class SafeLabFragment extends XszBaseFragment {
 
     @Override
     public void initView() {
-        List<ArticleType> articleTypes2=DbUtils.getModelList(ArticleType.class,ArticleType_Table.belongTo.eq(3));
-
+        List<ArticleType> articleTypes2=DbUtils.getArticleTypeList(3);
         initType(articleTypes2);
         loadSeLabContentCategory();
 

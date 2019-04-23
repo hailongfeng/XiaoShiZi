@@ -69,9 +69,9 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
 
     @Override
     public void initView() {
-//        ImmersionBar.with(this)
-//                .statusBarColor(R.color.xsz_login_bg)     //状态栏颜色，不写默认透明色
-//                .init();
+        ImmersionBar.with(this)
+                .statusBarColor(R.color.white)     //状态栏颜色，不写默认透明色
+                .init();
     }
 
     @Override

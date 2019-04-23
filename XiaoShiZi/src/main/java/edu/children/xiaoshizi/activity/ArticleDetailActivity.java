@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,12 +61,14 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     ImageButton ib_share;
     @BindView(R.id.player_list_video)
     JCVideoPlayerStandard player;
+    @BindView(R.id.cv_video_wrap)
+    CardView cv_video_wrap;
     @BindView(R.id.lin_web)
     LinearLayout linWeb;
     @BindView(R.id.tvBaseTitle)
     TextView tvBaseTitle;
     @BindView(R.id.btn_down_cache)
-    RoundTextView btn_down_cache;
+    ImageView btn_down_cache;
 
     @BindView(R.id.ll_xiepinglun)
     LinearLayout ll_xiepinglun;
@@ -114,18 +118,21 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 .init();
         articleType=(ArticleType) getIntent().getSerializableExtra("articleType");
         article=(Article) getIntent().getSerializableExtra("article");
+        print("typeTitle="+articleType.getTitle()+",belongTo"+articleType.getBelongTo());
         print(article.toString());
         if (isVideoArticle()){
-            player.setVisibility(View.VISIBLE);
+            cv_video_wrap.setVisibility(View.VISIBLE);
             btn_down_cache.setVisibility(View.VISIBLE);
             ll_xiepinglun.setVisibility(View.GONE);
             ib_share.setVisibility(View.VISIBLE);
         }else {
-            if (articleType.getBelongTo()==1){
+            if (articleType.getBelongTo()==1&&isLogin()){
                 ll_xiepinglun.setVisibility(View.VISIBLE);
                 edit_xiepinglun.setOnEditorActionListener(new EditorActionListener());
+            }else {
+                ll_xiepinglun.setVisibility(View.GONE);
             }
-            player.setVisibility(View.GONE);
+            cv_video_wrap.setVisibility(View.GONE);
             btn_down_cache.setVisibility(View.GONE);
             ib_share.setVisibility(View.GONE);
         }
@@ -317,6 +324,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
         ib_share.setOnClickListener(this);
         rtv_dianzan.setOnClickListener(this);
         rtv_fenxiang.setOnClickListener(this);
+        btn_down_cache.setOnClickListener(this);
     }
 
     @Override

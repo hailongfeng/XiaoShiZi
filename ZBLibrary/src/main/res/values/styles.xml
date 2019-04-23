@@ -111,7 +111,7 @@
 
     <style name="text" parent="wrap_wrap">
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/gray_3</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="text_huge" parent="text">

@@ -9,7 +9,11 @@
         <item name="android:textSize">@dimen/text_size_middle</item>
         <item name="android:textColor">@color/xsz_text_black</item>
     </style>
-
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 闪屏背景，可用图片 -->
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
     <style name="bottom_tab_ll" parent="ll_vertical_match_match">
         <item name="android:layout_width">0dp</item>
     </style>
@@ -25,7 +29,6 @@
     </style>
     <style name="xsz_main_tab_text_appearance" parent="@style/TextAppearance.AppCompat.Medium">
         <item name="android:textSize">@dimen/text_size_small</item>
-
     </style>
      <style name="RadioBtnMyIcon" parent="@android:style/Widget.CompoundButton.RadioButton">
         <item name="android:background">@drawable/null_drawable</item> 
@@ -43,7 +46,7 @@
     </declare-styleable>
 
     <style name="MyEditText" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">@color/xsz_bg_gray</item>
-        <item name="colorControlActivated">@color/xsz_bg_gray</item>
+        <item name="colorControlNormal">@color/alpha_3</item>
+        <item name="colorControlActivated">@color/alpha_6</item>
     </style>
 </resources>

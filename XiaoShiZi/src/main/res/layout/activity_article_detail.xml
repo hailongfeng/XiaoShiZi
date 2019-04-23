@@ -46,23 +46,13 @@
             android:layout_height="match_parent">
         </LinearLayout>
 
-        <com.flyco.roundview.RoundTextView
+        <ImageView
             android:id="@+id/btn_down_cache"
-            android:layout_width="100dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_height="36dp"
-            android:drawablePadding="5dp"
             android:layout_marginBottom="5dp"
-            android:visibility="gone"
+            android:src="@drawable/img_huancun"
             android:layout_gravity="bottom|center_horizontal"
-            android:drawableLeft="@drawable/icon_download"
-            android:gravity="center"
-            android:text="缓存"
-            android:textColor="@android:color/white"
-            app:rv_backgroundColor="@color/colorPrimary"
-            app:rv_backgroundPressColor="@color/colorPrimaryDark"
-            app:rv_cornerRadius="25dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <LinearLayout
             android:id="@+id/ll_xiepinglun"
             android:layout_gravity="bottom"
@@ -110,7 +100,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/icon_dianzan"
+                    android:drawableLeft="@drawable/icon_dianzan_big"
                     android:drawablePadding="2dp"
                     android:gravity="center_vertical"
                     android:text="12"/>

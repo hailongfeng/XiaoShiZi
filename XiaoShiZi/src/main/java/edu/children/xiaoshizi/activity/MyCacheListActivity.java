@@ -12,6 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.flyco.roundview.RoundTextView;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,7 +46,7 @@ public class MyCacheListActivity extends XszBaseActivity {
     CheckBox cb_select_all;
 
     @BindView(R.id.btn_delete)
-    Button btn_delete;
+    RoundTextView btn_delete;
     BaseAdapter<ArticleCache, MyCacheArticleView> myCacheArticleAdapter;
     List<ArticleCache> data=new ArrayList<>();
     @Override

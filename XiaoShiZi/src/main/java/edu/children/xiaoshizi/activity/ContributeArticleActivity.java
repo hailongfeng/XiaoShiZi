@@ -62,10 +62,10 @@ public class ContributeArticleActivity extends XszBaseActivity {
     @BindView(R.id.rg_home_or_school)
     RadioGroup rg_home_or_school;
 
-    @BindView(R.id.rll_user_video_tougao)
-    RoundLinearLayout rll_user_tougao;
-    @BindView(R.id.rtv_user_tougao)
-    RoundTextView rtv_user_tougao;
+//    @BindView(R.id.rll_user_video_tougao)
+//    RoundLinearLayout rll_user_tougao;
+    @BindView(R.id.iv_user_add_video)
+    ImageView iv_user_add_video;
     @BindView(R.id.iv_user_tougao)
     ImageView iv_user_tougao;
 
@@ -173,7 +173,8 @@ public class ContributeArticleActivity extends XszBaseActivity {
     @Override
     public void initEvent() {
         btn_sure.setOnClickListener(this);
-        rll_user_tougao.setOnClickListener(this);
+        iv_user_tougao.setOnClickListener(this);
+        iv_user_add_video.setOnClickListener(this);
     }
 
     private void submit(){
@@ -230,7 +231,8 @@ public class ContributeArticleActivity extends XszBaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rll_user_video_tougao:
+            case R.id.iv_user_tougao:
+            case R.id.iv_user_add_video:
 //                takePicture();
                 takeVideo();
                 break;
@@ -277,7 +279,7 @@ public class ContributeArticleActivity extends XszBaseActivity {
                 Bitmap bitmap=mmr.getFrameAtTime();//获得视频第一帧的Bitmap对象
                 iv_user_tougao.setImageBitmap(bitmap);
                 iv_user_tougao.setVisibility(View.VISIBLE);
-                rtv_user_tougao.setVisibility(View.INVISIBLE);
+                iv_user_add_video.setVisibility(View.INVISIBLE);
                 String path=saveBitmap(bitmap);
                 videoImagePath =path;
                 print(path);

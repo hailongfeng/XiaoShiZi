@@ -122,7 +122,7 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
                                 android:text="2018.08.16"
-                                android:textSize="14sp" />
+                                 />
                         </LinearLayout>
 
                         <LinearLayout
@@ -143,7 +143,7 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
                                 android:text="上海市外国语小学"
-                                android:textSize="14sp" />
+                                 />
                         </LinearLayout>
 
                         <LinearLayout
@@ -165,7 +165,7 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
                                 android:text="二年级，三班"
-                                android:textSize="14sp" />
+                                 />
                         </LinearLayout>
 
                         <LinearLayout
@@ -187,7 +187,7 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
                                 android:text="小明妈妈"
-                                android:textSize="14sp" />
+                                 />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -212,7 +212,7 @@
                             android:background="@color/transparent"
                             android:text="正常入校"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="14sp" />
+                             />
                     </LinearLayout>
 
                 </RelativeLayout>

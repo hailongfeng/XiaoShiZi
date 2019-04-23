@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/activity_page"
     android:background="@color/white"
     tools:context=".activity.ContributeArticleActivity">
+
     <RelativeLayout
         style="@style/topbar_bg"
         android:background="@color/transparent">
@@ -15,110 +15,124 @@
             style="@style/topbar_title"
             android:layout_centerHorizontal="true"
             android:text="投稿" />
+
         <Button
             android:id="@+id/btn_sure"
             style="@style/topbar_right_btn"
-            android:textColor="@color/colorPrimary"
-            android:text="提交" />
+            android:text="提交"
+            android:textColor="@color/colorPrimary" />
     </RelativeLayout>
-    <View
-        style="@style/divider_horizontal_1px" />
-    <LinearLayout
-        android:orientation="vertical"
-        style="@style/match_match">
-        <EditText
-            android:textSize="@dimen/text_size_middle"
-            android:id="@+id/edt_suggestion_title"
-            android:layout_width="match_parent"
-            android:lines="1"
-            android:singleLine="true"
-            android:padding="10dp"
-            android:hint="请输入投稿标题"
-            android:background="@drawable/null_drawable"
-            android:layout_height="wrap_content" />
-        <View
-            style="@style/divider_horizontal_1px" />
-        <EditText
-            android:id="@+id/edt_suggestion_content"
-            android:layout_width="match_parent"
-            android:lines="10"
-            android:padding="10dp"
-            android:hint="请输入投稿内容"
-            android:background="@drawable/null_drawable"
-            android:gravity="left|top"
-            android:layout_height="wrap_content" />
-        <View
-            style="@style/divider_horizontal_1px" />
-        <TextView
-            android:layout_margin="10dp"
-            android:text="上传图片"
-            android:textSize="@dimen/text_size_middle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <View style="@style/divider_horizontal_1px" />
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <android.support.v7.widget.RecyclerView
+            style="@style/match_match"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edt_suggestion_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/null_drawable"
+                android:hint="请输入投稿标题"
+                android:lines="1"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_middle" />
+
+            <View style="@style/divider_horizontal_1px" />
+
+            <EditText
+                android:id="@+id/edt_suggestion_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/null_drawable"
+                android:gravity="left|top"
+                android:hint="请输入投稿内容"
+                android:lines="10"
+                android:padding="10dp" />
+
+            <View style="@style/divider_horizontal_1px" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="上传图片"
+                android:textSize="@dimen/text_size_middle" />
+
+            <LinearLayout
                 android:layout_marginTop="@dimen/dimen_dp_16"
                 android:paddingLeft="@dimen/dimen_dp_16"
                 android:paddingRight="@dimen/dimen_dp_16"
-                android:id="@+id/recycleView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-<TextView
-    android:layout_margin="10dp"
-    android:text="上传视频"
-    android:textSize="@dimen/text_size_middle"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-        <com.flyco.roundview.RoundLinearLayout
-            android:id="@+id/rll_user_video_tougao"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:rv_backgroundColor="@color/gray_slight"
-            app:rv_cornerRadius="10dp">
-            <ImageView
-                android:id="@+id/iv_user_tougao"
-                android:scaleType="fitXY"
-                android:visibility="gone"
-                android:src="@drawable/user_default"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycleView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <com.flyco.roundview.RoundTextView
-                android:id="@+id/rtv_user_tougao"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="上传视频"
+                android:textSize="@dimen/text_size_middle" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen_dp_16"
+                android:paddingLeft="@dimen/dimen_dp_16"
+                android:paddingRight="@dimen/dimen_dp_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_user_tougao"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/user_default"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/iv_user_add_video"
+                    android:layout_width="@dimen/dimen_dp_107"
+                    android:layout_height="@dimen/dimen_dp_107"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_tianjia" />
+            </LinearLayout>
+            <RadioGroup
+                android:id="@+id/rg_home_or_school"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/icon_add"
-                android:text="点击录制"
-                android:textColor="@color/black_slight" />
-        </com.flyco.roundview.RoundLinearLayout>
-        <RadioGroup
-            android:id="@+id/rg_home_or_school"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <RadioButton
-                style="@style/RadioBtnMyIcon"
-                android:id="@+id/rb_h"
-                android:text="家长投稿"
-                android:tag="home"
-                android:checked="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <RadioButton
-                style="@style/RadioBtnMyIcon"
-                android:id="@+id/rb_x"
-                android:text="学校投稿"
-                android:layout_marginLeft="20dp"
-                android:tag="school"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RadioGroup>
-    </LinearLayout>
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
+
+                <RadioButton
+                    android:id="@+id/rb_h"
+                    style="@style/RadioBtnMyIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:tag="home"
+                    android:text="家长投稿" />
+
+                <RadioButton
+                    android:id="@+id/rb_x"
+                    style="@style/RadioBtnMyIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:tag="school"
+                    android:text="学校投稿" />
+            </RadioGroup>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
 </LinearLayout>

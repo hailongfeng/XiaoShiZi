@@ -12,8 +12,8 @@
     <color name="xsz_text_gray">#9A9A9A</color>
     <color name="xsz_waring_text">#FF6B2F</color>
 
-    <color name="multiple_image_select_primary">#673AB7</color>
-    <color name="multiple_image_select_primaryDark">#512DA8</color>
+    <color name="multiple_image_select_primary">@color/colorPrimary</color>
+    <color name="multiple_image_select_primaryDark">@color/colorPrimaryDark</color>
     <color name="multiple_image_select_primaryLight">#D1C4E9</color>
     <color name="multiple_image_select_accent">#536DFE</color>
     <color name="multiple_image_select_primaryText">#212121</color>

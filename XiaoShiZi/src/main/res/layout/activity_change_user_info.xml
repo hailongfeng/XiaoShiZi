@@ -68,6 +68,7 @@
                     <EditText
                         android:id="@+id/edt_user_name"
                         style="@style/content_item_lf_tv"
+                        android:theme="@style/MyEditText"
                         android:layout_weight="1"
                         android:text="姓名" />
                 </LinearLayout>
@@ -120,6 +121,7 @@
                         android:text="所在地" />
 
                     <EditText
+                        android:theme="@style/MyEditText"
                         android:id="@+id/edt_user_dizhi"
                         style="@style/content_item_lf_tv"
                         android:layout_weight="1" />
@@ -136,6 +138,7 @@
                         android:text="电子邮箱" />
 
                     <EditText
+                        android:theme="@style/MyEditText"
                         android:id="@+id/edt_user_email"
                         style="@style/content_item_lf_tv"
                         android:layout_weight="1" />
@@ -152,6 +155,7 @@
                         android:text="工作地址" />
 
                     <EditText
+                        android:theme="@style/MyEditText"
                         android:id="@+id/edt_user_work_adddress"
                         style="@style/content_item_lf_tv"
                         android:layout_weight="1" />
@@ -168,6 +172,7 @@
                         android:text="家庭地址" />
 
                     <EditText
+                        android:theme="@style/MyEditText"
                         android:id="@+id/edt_user_home_adddress"
                         style="@style/content_item_lf_tv"
                         android:layout_weight="1" />
