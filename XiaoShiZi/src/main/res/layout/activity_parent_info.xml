@@ -64,7 +64,8 @@
                     <TextView
                         android:id="@+id/txt_parent_address"
                         style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
+                        android:layout_width="match_parent"
+                        android:gravity="right"
                         android:text="" />
                 </LinearLayout>
                 <View style="@style/divider_horizontal_1px" />
@@ -80,7 +81,8 @@
                     <TextView
                         android:id="@+id/txt_work_address"
                         style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
+                        android:layout_width="match_parent"
+                        android:gravity="right"
                         android:text="" />
                 </LinearLayout>
                 <View style="@style/divider_horizontal_1px" />
@@ -96,7 +98,8 @@
                     <TextView
                         android:id="@+id/txt_parent_home_address"
                         style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
+                        android:layout_width="match_parent"
+                        android:gravity="right"
                         android:text="" />
                 </LinearLayout>
                 <View style="@style/divider_horizontal_1px" />
@@ -112,7 +115,8 @@
                     <TextView
                         android:id="@+id/txt_parent_email"
                         style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
+                        android:layout_width="match_parent"
+                        android:gravity="right"
                         android:text="" />
                 </LinearLayout>
                 <View style="@style/divider_horizontal_1px" />
@@ -128,7 +132,8 @@
                     <TextView
                         android:id="@+id/txt_parent_id_cardno"
                         style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
+                        android:layout_width="match_parent"
+                        android:gravity="right"
                         android:text="" />
                 </LinearLayout><View style="@style/divider_horizontal_1px" />
                 <LinearLayout
@@ -143,7 +148,8 @@
                     <TextView
                         android:id="@+id/txt_parent_guanxi"
                         style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
+                        android:layout_width="match_parent"
+                        android:gravity="right"
                         android:text="" />
                 </LinearLayout>
             </LinearLayout>

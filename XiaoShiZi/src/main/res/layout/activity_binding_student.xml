@@ -61,7 +61,7 @@
                     <TextView
                         style="@style/content_item_lf_tv"
                         android:layout_width="80dp"
-                        android:text="姓别" />
+                        android:text="性别" />
 
                     <RadioGroup
                         android:id="@+id/rg_student_sex"

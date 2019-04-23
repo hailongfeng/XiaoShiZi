@@ -8,6 +8,8 @@
     android:padding="4dp">
     <CheckBox
         android:id="@+id/cb_select"
+        style="@style/CustomCheckBoxTheme"
+        android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <LinearLayout

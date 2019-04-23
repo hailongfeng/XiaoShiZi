@@ -103,7 +103,7 @@ public class CourseListActivity extends XszBaseActivity {
                 Article article= articles.get(position);
                 intent.putExtra("article",article);
                 intent.putExtra("articleType",articleType);
-                String title=article.getTitle();
+                String title=articleType.getTitle()+"|"+article.getTitle();
                 intent.putExtra(INTENT_TITLE,title);
                 toActivity(intent);
             }

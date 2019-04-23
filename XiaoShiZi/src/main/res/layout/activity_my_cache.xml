@@ -43,12 +43,20 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <Button
+        <com.flyco.roundview.RoundTextView
             android:id="@+id/btn_delete"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textSize="@dimen/text_size_middle"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:padding="10dp"
             android:text="删除"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="#D74F6A"
+            app:rv_backgroundColor="@color/transparent"
+            app:rv_strokeWidth="2dp"
+            app:rv_strokeColor="#D74F6A"
+            app:rv_cornerRadius="25dp" />
     </RelativeLayout>
 </LinearLayout>

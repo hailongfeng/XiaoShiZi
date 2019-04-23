@@ -119,11 +119,15 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
             player.setVisibility(View.VISIBLE);
             btn_down_cache.setVisibility(View.VISIBLE);
             ll_xiepinglun.setVisibility(View.GONE);
+            ib_share.setVisibility(View.VISIBLE);
         }else {
+            if (articleType.getBelongTo()==1){
+                ll_xiepinglun.setVisibility(View.VISIBLE);
+                edit_xiepinglun.setOnEditorActionListener(new EditorActionListener());
+            }
             player.setVisibility(View.GONE);
             btn_down_cache.setVisibility(View.GONE);
-            ll_xiepinglun.setVisibility(View.VISIBLE);
-            edit_xiepinglun.setOnEditorActionListener(new EditorActionListener());
+            ib_share.setVisibility(View.GONE);
         }
         preAgentWeb= AgentWeb.with(this)
                 .setAgentWebParent((LinearLayout) linWeb, new LinearLayout.LayoutParams(-1, -1))
@@ -157,7 +161,11 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     public void initData() {
         getArticleById(article.getContentId());
 //        String title=articleType.getTitle()+"|"+article.getTitle();
-        tvBaseTitle.setText(title);
+        if (isVideoArticle()){
+            tvBaseTitle.setText("视频详情");
+        }else {
+            tvBaseTitle.setText(title);
+        }
     }
 
     private String getHtml(String body){
@@ -264,7 +272,14 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     private void getArticleById(String id) {
         TreeMap sm = new TreeMap<String,String>();
         sm.put("contentId",id);
-        LogicService.post(context, APIMethod.loadContentById,sm, new ApiSubscriber<Response<Article>>() {
+
+        APIMethod method=APIMethod.loadContentById;
+        if (articleType.getBelongTo()==2){
+            method=APIMethod.loadSeClassRoomContentById;
+        }else if (articleType.getBelongTo()==3){
+            method=APIMethod.loadSafeLabContentById;
+        }
+        LogicService.post(context, method,sm, new ApiSubscriber<Response<Article>>() {
             @Override
             public void onSuccess(Response<Article> respon) {
                 if (respon.getResult()!=null&&StringUtil.isNotEmpty(respon.getResult().getIntroduce(),true)){

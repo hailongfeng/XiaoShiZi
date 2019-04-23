@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#51ACFE</color>
+    <color name="colorPrimary">#53ADFE</color>
     <color name="colorPrimaryDark">#4B90DB</color>
     <color name="colorPrimaryDark2">#509CEE</color>
     <color name="colorAccent">#D81B60</color>
     <color name="main_bottom_tab_text_color">@color/colorPrimary</color>
     <color name="xsz_topbar_bg">@color/colorPrimary</color>
     <color name="xsz_login_bg">#FCF5CA</color>
+    <color name="xsz_text_black">#202123</color>
     <color name="xsz_bg_gray">#F6F6F6</color>
+    <color name="xsz_text_gray">#9A9A9A</color>
     <color name="xsz_waring_text">#FF6B2F</color>
 
 </resources>

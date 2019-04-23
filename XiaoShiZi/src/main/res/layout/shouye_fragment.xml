@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="搜索您想要的东西"
+                    android:text="搜索你想要的内容"
                     android:textColor="@color/white" />
             </com.flyco.roundview.RoundLinearLayout>
 
@@ -43,7 +43,7 @@
                 android:id="@+id/rtv_contribute"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_edit"
+                android:drawableLeft="@drawable/icon_edit2"
                 android:drawablePadding="2dp"
                 android:gravity="center_vertical"
                 android:text="投稿"

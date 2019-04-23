@@ -68,7 +68,7 @@ public class SettingActivity extends XszBaseActivity{
             case R.id.ll_setting_clear_cache:
                 XszCache.getCacheSize();
                 XszCache.clearCacheSize();
-                dialog=DialogUIUtils.showAlert(context,"清除成功","清除30M","","","确定","",false,true,true,new DialogUIListener(){
+                dialog=DialogUIUtils.showAlert(context,"清除成功","本次为您清除缓存30MB！！","","","OK","",false,true,true,new DialogUIListener(){
 
                     @Override
                     public void onPositive() {

@@ -59,6 +59,8 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
     LinearLayout ll_top;
     @BindView(R.id.edit_query)
     EditText edit_query;
+    @BindView(R.id.iv_delete_input_text)
+    ImageView iv_delete_input_text;
     @BindView(R.id.txt_cancle)
     RoundTextView txt_cancle;
 
@@ -254,7 +256,7 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
 
     @Override
     public void initEvent() {
-
+        iv_delete_input_text.setOnClickListener(this);
     }
 
     @Override
@@ -263,6 +265,9 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
             case R.id.iv_delete_all:
                 DbUtils.deleteModel(SearchWorldHistory.class);
                 initData();
+                break;
+            case R.id.iv_delete_input_text:
+                edit_query.setText("");
                 break;
             case R.id.txt_cancle:
                 finish();
