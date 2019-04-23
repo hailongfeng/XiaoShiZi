@@ -1,26 +1,16 @@
 package edu.children.xiaoshizi.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.bumptech.glide.Glide;
 import com.dou361.dialogui.DialogUIUtils;
 import com.flyco.roundview.RoundTextView;
 import com.gyf.barlibrary.ImmersionBar;
-import com.jph.takephoto.model.TResult;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.TreeMap;
 
 import butterknife.BindView;
@@ -31,11 +21,7 @@ import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
-import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
-import edu.children.xiaoshizi.utils.StringUtils;
-import zuo.biao.library.ui.ItemDialog;
-import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
 
 public class UserInfoActivity extends XszBaseActivity implements View.OnClickListener {

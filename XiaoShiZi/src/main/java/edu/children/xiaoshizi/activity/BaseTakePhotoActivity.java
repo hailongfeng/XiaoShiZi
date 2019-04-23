@@ -5,16 +5,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.jph.takephoto.app.TakePhoto;
-import com.jph.takephoto.app.TakePhotoImpl;
-import com.jph.takephoto.compress.CompressConfig;
-import com.jph.takephoto.model.CropOptions;
-import com.jph.takephoto.model.InvokeParam;
-import com.jph.takephoto.model.TContextWrap;
-import com.jph.takephoto.model.TResult;
-import com.jph.takephoto.permission.InvokeListener;
-import com.jph.takephoto.permission.PermissionManager;
-import com.jph.takephoto.permission.TakePhotoInvocationHandler;
+
+import org.devio.takephoto.app.TakePhoto;
+import org.devio.takephoto.app.TakePhotoImpl;
+import org.devio.takephoto.compress.CompressConfig;
+import org.devio.takephoto.model.CropOptions;
+import org.devio.takephoto.model.InvokeParam;
+import org.devio.takephoto.model.TContextWrap;
+import org.devio.takephoto.model.TResult;
+import org.devio.takephoto.permission.InvokeListener;
+import org.devio.takephoto.permission.PermissionManager;
+import org.devio.takephoto.permission.TakePhotoInvocationHandler;
 
 import java.io.File;
 
@@ -83,8 +84,8 @@ public abstract class BaseTakePhotoActivity extends XszBaseActivity implements T
 //                        takePhoto.onPickMultiple(3);
                     }else {
                         //从照片选择并裁剪
-                        takePhoto.onPickFromGallery();
-//                        takePhoto.onPickMultiple(3);
+//                        takePhoto.onPickFromGallery();
+                        takePhoto.onPickMultipleWithCrop(2,cropOptions);
                     }
                     break;
             }

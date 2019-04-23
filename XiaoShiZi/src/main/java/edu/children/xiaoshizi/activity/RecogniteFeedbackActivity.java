@@ -11,8 +11,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.dou361.dialogui.DialogUIUtils;
 import com.flyco.roundview.RoundTextView;
-import com.jph.takephoto.app.TakePhotoActivity;
-import com.jph.takephoto.model.TResult;
+
+import org.devio.takephoto.model.TResult;
 
 import java.io.File;
 import java.util.ArrayList;

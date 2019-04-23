@@ -24,15 +24,9 @@
             android:src="@drawable/icon_fenxiang"
             />
     </RelativeLayout>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:background="@color/yellow"
-        android:layout_height="500dp">
-        <ListView
-            tools:listheader="@layout/list_head_webview"
-            android:id="@id/lvBaseList"
-            style="@style/lv"
-            />
-    </FrameLayout>
+    <Button
+        android:id="@+id/btn_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

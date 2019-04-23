@@ -12,9 +12,9 @@ import android.widget.RadioGroup;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.gyf.barlibrary.ImmersionBar;
-import com.jph.takephoto.model.TResult;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import org.devio.takephoto.model.TResult;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
