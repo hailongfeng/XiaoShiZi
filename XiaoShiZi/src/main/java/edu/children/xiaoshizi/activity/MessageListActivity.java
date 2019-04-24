@@ -1,66 +1,92 @@
 package edu.children.xiaoshizi.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.adapter.MessageAdapter;
 import edu.children.xiaoshizi.adapter.UserAdapter;
+import edu.children.xiaoshizi.adapter.view.MessageView;
+import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import edu.children.xiaoshizi.bean.Message;
 import edu.children.xiaoshizi.bean.User;
+import edu.children.xiaoshizi.fragment.SafeToolFragment;
+import edu.children.xiaoshizi.logic.APIMethod;
+import edu.children.xiaoshizi.logic.LogicService;
+import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
+import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.TestUtil;
+import zuo.biao.library.base.BaseAdapter;
 import zuo.biao.library.base.BaseHttpListActivity;
 import zuo.biao.library.base.BaseListActivity;
 import zuo.biao.library.interfaces.AdapterCallBack;
 import zuo.biao.library.util.JSON;
+import zuo.biao.library.util.Log;
 
 public class MessageListActivity extends XszBaseActivity {
 
 
     @BindView(R.id.lvBaseList)
     ListView lvBaseList;
-    MessageAdapter adapter;
+    BaseAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-        adapter= new MessageAdapter(context);
-        lvBaseList.setAdapter(adapter);
+
     }
-
-
     @Override
     public void initView() {
+        adapter= new BaseAdapter<Message, MessageView>(context) {
+            @Override
+            public MessageView createView(int position, ViewGroup parent) {
+                return new MessageView(context, parent);
+            }
 
+        };
+        lvBaseList.setAdapter(adapter);
     }
 
     @Override
     public void initData() {
-        List<Message> data=new ArrayList<>();
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                for (int i = 0; i <10 ; i++) {
-                    data.add(new Message(i+"","消息："+i));
-                }
-                adapter.refresh(data);
-            }
-        }, 1000);
+        getMessage();
     }
 
     @Override
     public void initEvent() {
 
+    }
+
+    private void getMessage() {
+        TreeMap sm = new TreeMap<String,String>();
+        LogicService.post(context, APIMethod.findPushAppSnapMsgList,sm,new ApiSubscriber<Response<List<Message>>>(){
+            @Override
+            public void onSuccess(Response<List<Message>> response) {
+                List<Message> data=response.getResult();
+                if (data!=null){
+                    adapter.refresh(data);
+                }
+            }
+
+            @Override
+            protected void onFail(Throwable  error) {
+                error.printStackTrace();
+                showShortToast(error.getMessage());
+            }
+        });
     }
 }

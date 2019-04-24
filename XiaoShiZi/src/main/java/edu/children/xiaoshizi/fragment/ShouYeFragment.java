@@ -143,10 +143,10 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 				}
 				List<Article> articles=response.getResult().getContentResps();
 				DbUtils.deleteArticleType(1);
-//				DbUtils.deleteModel(ArticleType.class,ArticleType_Table.belongTo.eq(1));
 				DbUtils.saveModelList(articleTypes2);
                 String type1Articles=JSONArray.toJSONString(articles);
                 print("type1Articles="+type1Articles);
+				CacheUtils.get(context).remove("type1Articles");
                 CacheUtils.get(context).put("type1Articles",type1Articles);
 
                 initType(articleTypes2);

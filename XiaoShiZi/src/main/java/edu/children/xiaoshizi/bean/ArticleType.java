@@ -16,7 +16,7 @@ public class ArticleType extends BaseModel implements Serializable {
      * categoryId : 4
      * sortNum : 1
      * type : VT
-     * title : 视频的文章
+     * pushAppTitle : 视频的文章
      */
     @PrimaryKey(autoincrement = true)
     private long cid;

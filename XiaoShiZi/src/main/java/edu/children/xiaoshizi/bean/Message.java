@@ -1,20 +1,29 @@
 package edu.children.xiaoshizi.bean;
 
 public class Message extends InAndOutSchoolRecode {
-    public String title;
+    public String pushAppTitle;
+    public String pushAppTime;
 
     public Message() {
     }
-    public Message(String id, String title) {
+    public Message(String id, String pushAppTitle) {
         this.id = id;
-        this.title = title;
+        this.pushAppTitle = pushAppTitle;
     }
 
-    public String getTitle() {
-        return title;
+    public String getPushAppTitle() {
+        return pushAppTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setPushAppTitle(String pushAppTitle) {
+        this.pushAppTitle = pushAppTitle;
+    }
+
+    public String getPushAppTime() {
+        return pushAppTime;
+    }
+
+    public void setPushAppTime(String pushAppTime) {
+        this.pushAppTime = pushAppTime;
     }
 }

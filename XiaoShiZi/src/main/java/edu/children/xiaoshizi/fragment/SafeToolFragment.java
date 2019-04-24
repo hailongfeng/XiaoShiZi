@@ -61,6 +61,8 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     TextView txt_student_gradle;
     @BindView(R.id.txt_student_Guardian)
     TextView txt_student_Guardian;
+    @BindView(R.id.txt_student_inout_status)
+    TextView txt_student_inout_status;
 
     @BindView(R.id.multiStatusLayout)
     MultiStatusLayout multiStatusLayout;
@@ -102,6 +104,7 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     }
 
     private String currentDate="";
+    private String todayDate="";
 
     @Override
     public void initView() {
@@ -131,6 +134,7 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
             }
             Calendar calendar=Calendar.getInstance();
             currentDate=DateUtil.format(calendar.getTime(),DateUtil.P1);
+            todayDate=currentDate;
             if (DemoApplication.getInstance().getLoginRespon().getStudents().size()==0){
                 print("没有学生");
                 multiStatusLayout_all.showEmpty();
@@ -172,7 +176,12 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
                 }else {
                     multiStatusLayout.showContent();
                     inOutSchoolRecodeAdapter.refresh(response.getResult());
+                    InAndOutSchoolRecode first=response.getResult().get(0);
+                    if (todayDate.equalsIgnoreCase(currentDate)){
+                        txt_student_inout_status.setText(first.getSnapRemark());
+                    }
                 }
+
             }
 
             @Override
@@ -222,6 +231,7 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
         txt_student_school.setText(student.getSchoolName());
         txt_student_gradle.setText(student.getSchoolGradeName()+","+student.getSchoolClassName());
         txt_student_Guardian.setText(student.getCustody());
+
     }
 
     @Override
@@ -255,6 +265,9 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
                     if (position >= 0) {
                         mParamCurrentStudentIndex=position;
                         changeCurrentStudent(position);
+                        inOutSchoolRecodeAdapter.refresh(new ArrayList<>());
+                        Calendar calendar=Calendar.getInstance();
+                        currentDate=DateUtil.format(calendar.getTime(),DateUtil.P1);
                         getRecodeByDate(student.getStudentId(),currentDate);
                     }
                 }

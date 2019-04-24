@@ -185,7 +185,7 @@ public class ContributeArticleActivity extends XszBaseActivity {
         }
 //        sm.put("width","480");
 //        sm.put("height","480");
-        sm.put("title",edt_suggestion_title.getText().toString());
+        sm.put("pushAppTitle",edt_suggestion_title.getText().toString());
 //        投稿类型。P家长投稿，S学校投稿
         boolean isJiaZhang=((RadioButton)rg_home_or_school.getChildAt(0)).isChecked();
         sm.put("type", isJiaZhang?"P":"S");

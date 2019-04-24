@@ -16,22 +16,25 @@ package edu.children.xiaoshizi.adapter.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import edu.children.xiaoshizi.R;
-import edu.children.xiaoshizi.activity.MessageDetailActivity;
-import edu.children.xiaoshizi.bean.Message;
-import edu.children.xiaoshizi.bean.Parent;
+import edu.children.xiaoshizi.bean.QianDao;
+import edu.children.xiaoshizi.bean.User;
 import zuo.biao.library.base.BaseModel;
 import zuo.biao.library.base.BaseView;
 import zuo.biao.library.ui.WebViewActivity;
+import zuo.biao.library.util.CommonUtil;
+import zuo.biao.library.util.StringUtil;
 
 /**用户View
  * @author Lemon
@@ -47,39 +50,48 @@ import zuo.biao.library.ui.WebViewActivity;
  * <br> userView.setOnDataChangedListener(onDataChangedListener);data = userView.getData();//非必需
  * <br> userView.setOnClickListener(onClickListener);//非必需
  */
-public class MessageView extends BaseView<Message>  implements View.OnClickListener {
+public class QianDaoView extends BaseView<QianDao> implements OnClickListener {
 	private static final String TAG = "UserView";
 
-	public MessageView(Activity context, ViewGroup parent) {
-		super(context, R.layout.list_item_message_view, parent);
+	public QianDaoView(Activity context, ViewGroup parent) {
+		super(context, R.layout.layout_qiandao, parent);
 	}
 
-	public ImageView iv_message_icon;
-	public TextView txt_message_content;
-	public Button btn_message_detail;
+	public TextView txt_day;
+	public TextView txt_jifen;
 	@SuppressLint("InflateParams")
 	@Override
 	public View createView() {
-		iv_message_icon = findView(R.id.iv_message_icon);
-		txt_message_content = findView(R.id.txt_message_content);
-		btn_message_detail = findView(R.id.btn_message_detail,this);
+		txt_day = findView(R.id.txt_day);
+		txt_jifen = findView(R.id.txt_jifen);
 		return super.createView();
 	}
 
 	@Override
-	public void bindView(Message data_){
-		super.bindView(data_ != null ? data_ : new Message());
-//		String headPortrait=data.getHeadPortrait();
-//		Glide.with(context).load(headPortrait ).into(iv_custody_face);
-		txt_message_content.setText(data.getPushAppTitle());
+	public void bindView(QianDao data_){
+		super.bindView(data_ != null ? data_ : new QianDao());
+		txt_day.setText(this.data.day+"天");
+		txt_jifen.setText("+"+this.data.jiFen);
+
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.btn_message_detail:
-				toActivity(MessageDetailActivity.createIntent(context, data.getId()));
-				break;
+//		case R.id.ivUserViewHead:
+//			toActivity(WebViewActivity.createIntent(context, data.getName(), data.getHead()));
+//			break;
+//		default:
+//			switch (v.getId()) {
+//			case R.id.ivUserViewStar:
+//				data.setStarred(! data.getStarred());
+//				break;
+//			case R.id.tvUserViewSex:
+////				data.setSex(data.getSex() == User.SEX_FEMALE ? User.SEX_MAIL : User.SEX_FEMALE);
+//				break;
+//			}
+////			bindView(data);
+//			break;
 		}
 	}
 }

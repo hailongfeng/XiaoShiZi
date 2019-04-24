@@ -100,7 +100,6 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@id/tmp_1"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -135,7 +134,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="6dp"
-                                android:src="@drawable/icon_school" />
+                                android:src="@drawable/icon_inout_school_right" />
 
                             <TextView
                                 android:id="@+id/txt_student_school"
@@ -206,11 +205,11 @@
                             android:text="状态：" />
 
                         <TextView
-                            android:id="@+id/btn_student_jiebang"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/txt_student_inout_status"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
-                            android:text="正常入校"
+                            android:text=""
                             android:textColor="@color/colorPrimary"
                              />
                     </LinearLayout>

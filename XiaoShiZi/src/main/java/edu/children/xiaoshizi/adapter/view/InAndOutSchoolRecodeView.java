@@ -39,22 +39,8 @@ import zuo.biao.library.ui.WebViewActivity;
 import zuo.biao.library.util.CommonUtil;
 import zuo.biao.library.util.StringUtil;
 
-/**用户View
- * @author Lemon
- * @use
- * <br> UserView userView = new UserView(context, resources);
- * <br> adapter中使用:[具体参考.BaseViewAdapter(getView使用自定义View的写法)]
- * <br> convertView = userView.createView(inflater);
- * <br> userView.bindView(position, data);
- * <br> 或  其它类中使用:
- * <br> containerView.addView(userView.createView(inflater));
- * <br> userView.bindView(data);
- * <br> 然后
- * <br> userView.setOnDataChangedListener(onDataChangedListener);data = userView.getData();//非必需
- * <br> userView.setOnClickListener(onClickListener);//非必需
- */
-public class InAndOutSchoolRecodeView extends BaseView<InAndOutSchoolRecode> implements OnClickListener {
-	private static final String TAG = "UserView";
+
+public class InAndOutSchoolRecodeView extends XszBaseView<InAndOutSchoolRecode> implements OnClickListener {
 	public InAndOutSchoolRecodeView(Activity context, ViewGroup parent) {
 		super(context, R.layout.list_item_in_out_school_recode_view, parent);
 	}
@@ -68,7 +54,6 @@ public class InAndOutSchoolRecodeView extends BaseView<InAndOutSchoolRecode> imp
 	public View createView() {
 		txt_student_in_out_school_recode_time = findView(R.id.txt_student_in_out_school_recode_time);
 		txt_student_in_out_school_recode_icon = findView(R.id.txt_student_in_out_school_recode_icon);
-
 		txt_student_in_out_school_recode_miaoshu = findView(R.id.txt_student_in_out_school_recode_miaoshu);
 		rtv_view_detail = findView(R.id.rtv_view_detail, this);
 		return super.createView();
@@ -78,16 +63,14 @@ public class InAndOutSchoolRecodeView extends BaseView<InAndOutSchoolRecode> imp
 	public void bindView(InAndOutSchoolRecode data_){
 		super.bindView(data_ != null ? data_ : new InAndOutSchoolRecode());
 
+		if (this.data.snapStatus.equalsIgnoreCase("normal")){
+			txt_student_in_out_school_recode_icon.setImageResource(R.drawable.icon_inout_school_right);
+		}else {
+			txt_student_in_out_school_recode_icon.setImageResource(R.drawable.icon_inout_school_error);
+		}
 
-//		Glide.with(context).asBitmap().load(data.getHead()).into(new SimpleTarget<Bitmap>() {
-//
-//			@Override
-//			public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
-//				ivUserViewHead.setImageBitmap(CommonUtil.toRoundCorner(bitmap, bitmap.getWidth()/2));
-//			}
-//		});
 		txt_student_in_out_school_recode_time.setText(data.triggerTime);
-		txt_student_in_out_school_recode_miaoshu.setText(data.lastTime+"");
+		txt_student_in_out_school_recode_miaoshu.setText(data.snapRemark);
 	}
 
 	@Override

@@ -29,4 +29,5 @@ public enum  APIMethod {
     submitFeedBack,
     submitDraftContent,
     submitComment,
+    findPushAppSnapMsgList,
 }

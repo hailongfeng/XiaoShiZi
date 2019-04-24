@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?><!-- ListView中的ItemView里不要用Button等默认hasFocus的控件，以免onItemClick事件无响应 --><!-- 如果一定要用，则必须在根布局加上 android:descendantFocusability="blocksDescendants" -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ll_horizontal_match_wrap"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/txt_remark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:text="签到获取"
+        android:textSize="@dimen/text_size_middle" />
+
+    <TextView
+        android:id="@+id/txt_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/txt_remark"
+        android:padding="@dimen/dp_10"
+        android:text="2019-03-18" />
+
+    <TextView
+        android:id="@+id/txt_jifen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/dp_10"
+        android:text="+20" />
+</RelativeLayout>

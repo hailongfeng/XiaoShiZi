@@ -99,7 +99,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cv_no_students"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:padding="20dp"
         app:cardBackgroundColor="@color/white"
@@ -108,8 +108,8 @@
         <LinearLayout
             style="@style/ll_vertical_match_wrap">
             <LinearLayout
-                android:padding="5dp"
                 style="@style/ll_horizontal_match_wrap"
+                android:layout_height="40dp"
                 >
                 <TextView
                     android:text="出入时间"
@@ -123,8 +123,10 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
-                android:padding="5dp"
-                style="@style/ll_horizontal_match_wrap">
+                style="@style/ll_horizontal_match_wrap"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                >
                 <TextView
                     android:text="出入理由"
                     android:layout_width="wrap_content"

@@ -63,7 +63,7 @@ public class MainActivity extends XszBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initPermission();
+//        initPermission();
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
         autoLogin();

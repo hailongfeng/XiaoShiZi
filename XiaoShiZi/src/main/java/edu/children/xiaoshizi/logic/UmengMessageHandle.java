@@ -54,7 +54,7 @@ public class UmengMessageHandle {
             }
         });
 //        mPushAgent.setMessageHandler(messageHandler);
-//        mPushAgent.setNotificationClickHandler(notificationClickHandler);
+        mPushAgent.setNotificationClickHandler(notificationClickHandler);
         Log.d(TAG,"weixin = "+"wxa41c3e0c840a841a"+" , "+"fa491522a0411a83437a90d57b252e0b");
 //        PlatformConfig.setWeixin("wxa41c3e0c840a841a", "fa491522a0411a83437a90d57b252e0b");
         PlatformConfig.setWeixin(wxKey, wxEncryKey);

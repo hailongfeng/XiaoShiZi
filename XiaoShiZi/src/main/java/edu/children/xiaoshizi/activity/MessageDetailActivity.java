@@ -66,6 +66,10 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        Bundle bun = getIntent().getExtras();
+        if (bun != null) {
+            snapMsgId = bun.getString("snapMsgId");
+        }
     }
     @Override
     public void initView() {
@@ -103,7 +107,7 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
         loadImage(message.snapPicUrl,iv_student_recognite_face);
         txt_pic_xsd.setText(message.similarity+"");
         txt_in_out_time.setText(message.triggerTime);
-        txt_in_out_reason.setText(message.triggerTime);
+        txt_in_out_reason.setText(message.snapRemark);
     }
 
     @Override

@@ -1,12 +1,9 @@
 package edu.children.xiaoshizi.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,32 +21,26 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.dou361.dialogui.DialogUIUtils;
 import com.flyco.roundview.RoundTextView;
 import com.walle.multistatuslayout.MultiStatusLayout;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.adapter.ArticleAdapter;
 import edu.children.xiaoshizi.adapter.SearchWordHistoryAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
-import edu.children.xiaoshizi.bean.ArticleType_Table;
 import edu.children.xiaoshizi.bean.SearchWorldHistory;
 import edu.children.xiaoshizi.bean.SearchWorldHistory_Table;
-import edu.children.xiaoshizi.bean.Student;
 import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
-import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import zuo.biao.library.base.BaseView;
 
@@ -89,8 +80,11 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
         @BindView(R.id.ll_search_history)
         LinearLayout ll_search_history;
 
+        public HistoryHoleder(List<SearchWorldHistory> data) {
+            this.data = data;
+        }
+
         public void bindView() {
-            data = DbUtils.getModelList(SearchWorldHistory.class);
             adapter = new SearchWordHistoryAdapter(context);
 
             adapter.setOnViewClickListener(new BaseView.OnViewClickListener() {
@@ -108,14 +102,14 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
             iv_delete_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    window.dismiss();
+                    historyPopupWindow.dismiss();
                     DbUtils.deleteModel(SearchWorldHistory.class);
                 }
             });
             adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    window.dismiss();
+                    historyPopupWindow.dismiss();
                     String searchkeyWord = data.get(position).getName();
                     edit_query.setText(searchkeyWord);
                     searchArticleByKeyWorld(searchkeyWord);
@@ -126,18 +120,22 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
         }
     }
 
-    private PopupWindow window;
+    private PopupWindow historyPopupWindow;
     private HistoryHoleder historyHoleder;
 
     void showHistoryList() {
-        historyHoleder = new HistoryHoleder();
-        View contentView = LayoutInflater.from(context).inflate(R.layout.article_search_word_layout, null, false);
-        ButterKnife.bind(historyHoleder, contentView);
-        historyHoleder.bindView();
-        window = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT,  1000, true);
-        window.setOutsideTouchable(true);
-        window.setTouchable(true);
-        window.showAsDropDown(ll_top, 0, 0);
+        List<SearchWorldHistory> data=DbUtils.getModelList(SearchWorldHistory.class);
+        if (data!=null&&data.size()>0){
+            historyHoleder = new HistoryHoleder(data);
+            View contentView = LayoutInflater.from(context).inflate(R.layout.article_search_word_layout, null, false);
+            ButterKnife.bind(historyHoleder, contentView);
+            historyHoleder.bindView();
+            historyPopupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT,  1000, true);
+            historyPopupWindow.setOutsideTouchable(true);
+            historyPopupWindow.setTouchable(true);
+            historyPopupWindow.showAsDropDown(ll_top, 0, 0);
+        }
+
     }
 
     @Override
@@ -265,6 +263,7 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
             case R.id.iv_delete_all:
                 DbUtils.deleteModel(SearchWorldHistory.class);
                 initData();
+                historyPopupWindow.dismiss();
                 break;
             case R.id.iv_delete_input_text:
                 edit_query.setText("");

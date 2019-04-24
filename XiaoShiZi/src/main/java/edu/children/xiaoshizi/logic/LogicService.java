@@ -260,6 +260,8 @@ public class LogicService {
             observable=apiService.submitFeedBack(requestBody);
         }else if (method==APIMethod.submitComment){
             observable=apiService.submitComment(requestBody);
+        }else if (method==APIMethod.findPushAppSnapMsgList){
+            observable=apiService.findPushAppSnapMsgList(requestBody);
         }
 
         if (observable!=null) {

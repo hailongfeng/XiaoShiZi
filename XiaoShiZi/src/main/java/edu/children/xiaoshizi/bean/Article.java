@@ -16,7 +16,7 @@ public class Article extends BaseModel implements Serializable {
 
     /**
      * contentId : AuLrL81CQQ6aiDIqVIr
-     * title : 安全课件测试
+     * pushAppTitle : 安全课件测试
      * activityVideoUrl : https://single-obs.obs.cn-east-2.myhuaweicloud.com/app_media/2019031214193256206.mp4
      * activityVideoImageUrl : https://single-obs.obs.cn-east-2.myhuaweicloud.com/app_pic/2019031214364271658.png
      * contentType : VT
@@ -191,7 +191,7 @@ public class Article extends BaseModel implements Serializable {
                 "cid=" + cid +
                 ", contentId='" + contentId + '\'' +
                 ", categoryId=" + categoryId +
-                ", title='" + title + '\'' +
+                ", pushAppTitle='" + title + '\'' +
                 ", bannerImage='" + bannerImage + '\'' +
                 ", introduce='" + introduce + '\'' +
                 ", activityVideoUrl='" + activityVideoUrl + '\'' +

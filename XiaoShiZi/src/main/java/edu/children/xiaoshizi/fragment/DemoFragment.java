@@ -17,7 +17,7 @@ import zuo.biao.library.util.Log;
 public class DemoFragment extends XszBaseFragment {
     @BindView(R.id.txt_title)
     TextView txt_title;
-    public static final String ARG_TITLE = "title";
+    public static final String ARG_TITLE = "pushAppTitle";
 
     private String mTitle;
 

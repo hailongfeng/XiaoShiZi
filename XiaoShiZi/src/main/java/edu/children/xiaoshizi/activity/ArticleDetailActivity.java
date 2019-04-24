@@ -39,6 +39,7 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.Article;
+import edu.children.xiaoshizi.bean.ArticleCache;
 import edu.children.xiaoshizi.bean.ArticleComment;
 import edu.children.xiaoshizi.bean.ArticleType;
 import edu.children.xiaoshizi.logic.APIMethod;
@@ -167,7 +168,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
 
     public void initData() {
         getArticleById(article.getContentId());
-//        String title=articleType.getTitle()+"|"+article.getTitle();
+//        String pushAppTitle=articleType.getPushAppTitle()+"|"+article.getPushAppTitle();
         if (isVideoArticle()){
             tvBaseTitle.setText("视频详情");
         }else {
@@ -255,7 +256,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
 
                     @Override
                     protected void completed(BaseDownloadTask task) {
-                        showShortToast("缓存成功"+task.getTargetFilePath());
+                        showShortToast("缓存成功");
 
                     }
 
@@ -344,8 +345,9 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_down_cache:
-                if (!article.exists()){
-                    article.save();
+                ArticleCache articleCache=new ArticleCache(article);
+                if (!articleCache.exists()){
+                    articleCache.save();
                 }
                 String url=article.getActivityVideoUrl();
                 File file=XszCache.getCachedVideoFile(url);

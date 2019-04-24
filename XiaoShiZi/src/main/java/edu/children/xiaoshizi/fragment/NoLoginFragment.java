@@ -16,7 +16,7 @@ public class NoLoginFragment extends XszBaseFragment {
     @BindView(R.id.rtv_login)
     RoundTextView rtv_login;
 
-    public static final String ARG_TITLE = "title";
+    public static final String ARG_TITLE = "pushAppTitle";
 
     private String mTitle;
 
@@ -26,7 +26,7 @@ public class NoLoginFragment extends XszBaseFragment {
     public static NoLoginFragment newInstance() {
         NoLoginFragment fragment = new NoLoginFragment();
 //        Bundle args = new Bundle();
-//        args.putString(ARG_TITLE, title);
+//        args.putString(ARG_TITLE, pushAppTitle);
 //        fragment.setArguments(args);
         return fragment;
     }

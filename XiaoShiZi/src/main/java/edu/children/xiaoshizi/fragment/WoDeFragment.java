@@ -256,8 +256,9 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 			txt_user_name.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					toActivity(new Intent(context, LoginActivity.class));
-//					context.finish();
+					if (!isLogin()) {
+						toActivity(new Intent(context, LoginActivity.class));
+					}
 				}
 			});
 		}

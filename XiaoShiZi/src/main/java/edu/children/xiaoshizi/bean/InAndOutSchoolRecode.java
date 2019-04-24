@@ -13,6 +13,10 @@ public class InAndOutSchoolRecode  implements Serializable {
     public long similarity;
     public long lastTime;
     public String triggerTime;
+    public String studentId;
+    public String studentName;
+    public String snapRemark;//消息描述
+    public String snapStatus;//消息状态。normal 正常，error 异常
 
     public Student student;
 
@@ -70,5 +74,37 @@ public class InAndOutSchoolRecode  implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getSnapRemark() {
+        return snapRemark;
+    }
+
+    public void setSnapRemark(String snapRemark) {
+        this.snapRemark = snapRemark;
+    }
+
+    public String getSnapStatus() {
+        return snapStatus;
+    }
+
+    public void setSnapStatus(String snapStatus) {
+        this.snapStatus = snapStatus;
     }
 }

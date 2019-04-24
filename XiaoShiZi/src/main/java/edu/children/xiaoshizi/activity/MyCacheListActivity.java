@@ -96,8 +96,8 @@ public class MyCacheListActivity extends XszBaseActivity {
 //                intent.putExtra("article",article);
 //                article.getCategoryId();
 //                intent.putExtra("articleType",articleType);
-//                String title=articleType.getTitle()+"|"+article.getTitle();
-//                intent.putExtra(INTENT_TITLE,title);
+//                String pushAppTitle=articleType.getPushAppTitle()+"|"+article.getPushAppTitle();
+//                intent.putExtra(INTENT_TITLE,pushAppTitle);
 //                toActivity(intent);
             }
         });
@@ -151,7 +151,7 @@ public class MyCacheListActivity extends XszBaseActivity {
                 }
                 btn_edit.setText("编辑");
                 myCacheArticleAdapter.refresh(data);
-                showShortToast("删除完成");
+                showShortToast("删除成功");
                 break;
         }
     }

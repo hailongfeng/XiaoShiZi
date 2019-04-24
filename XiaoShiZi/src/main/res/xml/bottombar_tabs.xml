@@ -3,17 +3,17 @@
     <tab
         id="@+id/tab_shouye"
         icon="@drawable/ic_favorites"
-        title="首页"/>
+        pushAppTitle="首页"/>
     <tab
         id="@+id/tab_aqkt"
         icon="@drawable/ic_favorites"
-        title="安全课堂"/>
+        pushAppTitle="安全课堂"/>
     <tab
         id="@+id/tab_aqgj"
         icon="@drawable/ic_favorites"
-        title="安全工具" />
+        pushAppTitle="安全工具" />
     <tab
         id="@+id/tab_wo"
         icon="@drawable/ic_favorites"
-        title="我的"/>
+        pushAppTitle="我的"/>
 </tabs>

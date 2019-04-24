@@ -14,6 +14,7 @@ import edu.children.xiaoshizi.bean.Banner;
 import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.LoginRespon;
+import edu.children.xiaoshizi.bean.Message;
 import edu.children.xiaoshizi.bean.RealNameAuthInfo;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.bean.Student;
@@ -70,6 +71,8 @@ public interface ApiService {
     Observable<Response<InAndOutSchoolRecode>> findSnapMsgById(@Body RequestBody requestBody);
     @POST("v1/student/doSnapMsgFeedBack")
     Observable<Response<User>> doSnapMsgFeedBack(@Body RequestBody requestBody);
+    @POST("v1/student/findPushAppSnapMsgList")
+    Observable<Response<List<Message>>> findPushAppSnapMsgList(@Body RequestBody requestBody);
 
 
     @POST("v1/sysUser/getStudentsAndParents")

@@ -56,6 +56,7 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
     private ArticleAdapter articleAdapter;
 	private ArticleType articleType;
     private List<Article> articles=new ArrayList<>();
+	private ArticleType firstArticleType;
 	@BindView(R.id.multiStatusLayout)
 	MultiStatusLayout multiStatusLayout;
 	@Override
@@ -88,7 +89,7 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 			}
 		});
 
-		ArticleType firstArticleType=DbUtils.getFirstArticleType(1);
+		firstArticleType=DbUtils.getFirstArticleType(1);
 		if (firstArticleType!=null) {
 			print("首页文章：当前菜单为：" + this.articleType.getTitle() + "," + this.articleType.getCategoryId() + "；；；首页第一个菜单为：" + firstArticleType.getTitle() + "," + firstArticleType.getCategoryId());
 			if (firstArticleType.getCategoryId()==this.articleType.getCategoryId()){
@@ -125,6 +126,12 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 			public void onSuccess(Response<List<Article>> response) {
 				List<Article> articles1=response.getResult();
 				updateList(articles1);
+				if (firstArticleType.getCategoryId()==ArticleFragment.this.articleType.getCategoryId()){
+					print("当前为首页文章，更新本地缓存。。。"+firstArticleType.getTitle());
+					String type1Articles=JSONArray.toJSONString(articles);
+					CacheUtils.get(context).remove("type1Articles");
+					CacheUtils.get(context).put("type1Articles",type1Articles);
+				}
 			}
 
 			@Override
