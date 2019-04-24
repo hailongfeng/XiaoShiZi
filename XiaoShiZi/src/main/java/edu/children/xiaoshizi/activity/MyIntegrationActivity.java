@@ -83,13 +83,14 @@ public class MyIntegrationActivity extends XszBaseActivity {
 
     @Override
     public void initData() {
-        qianDaoDatas.add(new QianDao(1,1));
-        qianDaoDatas.add(new QianDao(2,5));
-        qianDaoDatas.add(new QianDao(3,10));
-        qianDaoDatas.add(new QianDao(4,15));
-        qianDaoDatas.add(new QianDao(5,20));
-        qianDaoDatas.add(new QianDao(6,25));
-        qianDaoDatas.add(new QianDao(7,30));
+        int count=3;
+        qianDaoDatas.add(new QianDao(1,1,count));
+        qianDaoDatas.add(new QianDao(2,5,count));
+        qianDaoDatas.add(new QianDao(3,10,count));
+        qianDaoDatas.add(new QianDao(4,15,count));
+        qianDaoDatas.add(new QianDao(5,20,count));
+        qianDaoDatas.add(new QianDao(6,25,count));
+        qianDaoDatas.add(new QianDao(7,30,count));
         qianDaoAdapter.refresh(qianDaoDatas);
         for (int i = 0; i < 15; i++) {
             integrationDatas.add(new Integration("签到"+i,"2019-04-18",5+i*2));
