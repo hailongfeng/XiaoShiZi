@@ -30,6 +30,7 @@ import com.flyco.roundview.RoundTextView;
 
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.InOutSchoolRecodeDetailActivity;
+import edu.children.xiaoshizi.activity.MessageDetailActivity;
 import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import edu.children.xiaoshizi.bean.Student;
 import edu.children.xiaoshizi.bean.User;
@@ -77,7 +78,8 @@ public class InAndOutSchoolRecodeView extends XszBaseView<InAndOutSchoolRecode> 
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.rtv_view_detail:
-			toActivity(InOutSchoolRecodeDetailActivity.createIntent(context, data));
+//			toActivity(InOutSchoolRecodeDetailActivity.createIntent(context, data));
+			toActivity(MessageDetailActivity.createIntent(context, data.getId()));
 			break;
 		default:
 			break;

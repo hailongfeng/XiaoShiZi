@@ -74,6 +74,10 @@ public interface ApiService {
     @POST("v1/student/findPushAppSnapMsgList")
     Observable<Response<List<Message>>> findPushAppSnapMsgList(@Body RequestBody requestBody);
 
+    @Multipart
+    @POST("v1/student/uploadStudentHeadPortrait")
+    Observable<Response<List<Student>>> uploadStudentHeadPortrait(@PartMap Map<String, RequestBody> params, @Part List<MultipartBody.Part> parts);
+
 
     @POST("v1/sysUser/getStudentsAndParents")
     Observable<Response<LoginRespon>> getStudentsAndParents(@Body RequestBody requestBody);

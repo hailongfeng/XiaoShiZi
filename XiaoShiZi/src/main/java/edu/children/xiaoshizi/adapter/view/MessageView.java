@@ -78,7 +78,7 @@ public class MessageView extends BaseView<Message>  implements View.OnClickListe
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_message_detail:
-				toActivity(MessageDetailActivity.createIntent(context, data.getId()));
+				this.onViewClickListener.onViewClick(this,v);
 				break;
 		}
 	}

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,6 +33,7 @@ import edu.children.xiaoshizi.utils.TestUtil;
 import zuo.biao.library.base.BaseAdapter;
 import zuo.biao.library.base.BaseHttpListActivity;
 import zuo.biao.library.base.BaseListActivity;
+import zuo.biao.library.base.BaseView;
 import zuo.biao.library.interfaces.AdapterCallBack;
 import zuo.biao.library.util.JSON;
 import zuo.biao.library.util.Log;
@@ -68,7 +70,12 @@ public class MessageListActivity extends XszBaseActivity {
 
     @Override
     public void initEvent() {
-
+        adapter.setOnViewClickListener(new BaseView.OnViewClickListener() {
+            @Override
+            public void onViewClick(@NonNull BaseView bv, @NonNull View v) {
+                toActivity(MessageDetailActivity.createIntent(context, ((Message)bv.data).getId()));
+            }
+        });
     }
 
     private void getMessage() {

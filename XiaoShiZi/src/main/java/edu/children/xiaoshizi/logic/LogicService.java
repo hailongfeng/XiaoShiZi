@@ -143,6 +143,51 @@ public class LogicService {
     }
 
 
+    public static void post(Context context,final APIMethod method, TreeMap<String,String> param, Map<String,File> imagefiles, Map<String,File> videoFiles, Observer subscriber) {
+        if (param==null){
+            param=new TreeMap<String,String>();
+        }
+        appendCommonParam(param,true);
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);//表单类型
+        //普通文本参数
+        Set<String>  keys=param.keySet();
+        Map<String, RequestBody> params=new HashMap<>();
+        for (String key:keys){
+            params.put(key,convertToRequestBody(param.get(key)));
+        }
+        //图片参数
+        Set<Map.Entry<String,File>> setImage= imagefiles.entrySet();
+        for (Map.Entry<String,File> entry:setImage){
+            String key=entry.getKey();
+            File file=entry.getValue();
+            RequestBody body=RequestBody.create(MediaType.parse("image/jpeg"),file);
+            builder.addFormDataPart(key,file.getName(),body);
+        }
+        //视频参数
+        Set<Map.Entry<String,File>> setVideo= videoFiles.entrySet();
+        for (Map.Entry<String,File> entry:setVideo){
+            String key=entry.getKey();
+            File file=entry.getValue();
+            RequestBody body1=RequestBody.create(MediaType.parse("video/mp4"),videoFiles.get(0));
+            builder.addFormDataPart(key,file.getName(),body1);
+
+        }
+        ApiService apiService= RetrofitClient.getInstance(context).provideApiService();
+        List<MultipartBody.Part> parts=builder.build().parts();
+        Observable observable=null;
+        if (method==APIMethod.uploadStudentHeadPortrait){
+            observable=apiService.uploadStudentHeadPortrait(params,parts);
+        }
+        if (observable!=null) {
+            RetrofitClient.execute(observable, subscriber);
+        }else {
+            Log.e(TAG,"参数错误");
+//            subscriber.onError(new );
+        }
+    }
+
+
 
     public static <T> Response<T> post(Context context, final APIMethod method, TreeMap<String,String> param) {
         if (param==null){

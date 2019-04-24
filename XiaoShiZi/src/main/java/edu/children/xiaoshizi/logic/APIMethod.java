@@ -30,4 +30,5 @@ public enum  APIMethod {
     submitDraftContent,
     submitComment,
     findPushAppSnapMsgList,
+    uploadStudentHeadPortrait,
 }
