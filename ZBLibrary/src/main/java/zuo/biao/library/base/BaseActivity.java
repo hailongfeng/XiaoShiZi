@@ -140,9 +140,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Activity
 		// 状态栏沉浸，4.4+生效 >>>>>>>>>>>>>>>>>
 
         // 所有子类都将继承这些相同的属性,请在设置界面之后设置
-//        ImmersionBar.with(this)
-//                .statusBarColor(R.color.topbar_bg)     //状态栏颜色，不写默认透明色
-//                .init();
+        ImmersionBar.with(this)
+                .statusBarColor(R.color.topbar_bg)     //状态栏颜色，不写默认透明色
+                .init();
         tvBaseTitle = findView(R.id.tvBaseTitle);//绑定默认标题TextView
 	}
 

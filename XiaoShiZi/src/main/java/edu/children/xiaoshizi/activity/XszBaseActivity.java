@@ -47,7 +47,7 @@ public abstract class XszBaseActivity extends BaseActivity implements View.OnCli
         //绑定初始化ButterKnife
         ButterKnife.bind(this);
         ImmersionBar.with(this)
-                .statusBarColor(R.color.transparent)     //状态栏颜色，不写默认透明色
+                .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
         initView();
         initData();

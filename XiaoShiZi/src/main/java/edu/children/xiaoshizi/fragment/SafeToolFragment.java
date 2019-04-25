@@ -262,7 +262,7 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
             case REQUEST_TO_SELECT_STUDENT:
                 if (data != null) {
                     int position = data.getIntExtra(BottomMenuWindow.RESULT_ITEM_ID, -1);
-                    if (position >= 0) {
+                    if (position >= 0&&mParamCurrentStudentIndex!=position) {
                         mParamCurrentStudentIndex=position;
                         changeCurrentStudent(position);
                         inOutSchoolRecodeAdapter.refresh(new ArrayList<>());
