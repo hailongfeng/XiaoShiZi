@@ -34,4 +34,5 @@ public enum  APIMethod {
     uploadFile,
     uploadVerifiedVideo,
     loadIntegralDetailList,
+    signedDaily,
 }

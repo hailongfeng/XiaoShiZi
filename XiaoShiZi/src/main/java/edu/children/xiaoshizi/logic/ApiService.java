@@ -15,6 +15,7 @@ import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.bean.Message;
+import edu.children.xiaoshizi.bean.MyIntegrationResponse;
 import edu.children.xiaoshizi.bean.RealNameAuthInfo;
 import edu.children.xiaoshizi.bean.School;
 import edu.children.xiaoshizi.bean.Student;
@@ -90,7 +91,9 @@ public interface ApiService {
     @POST("v1/sys/submitFeedBack")
     Observable<Response<String>> submitFeedBack(@Body RequestBody requestBody);
     @POST("v1/sysUser/loadIntegralDetailList")
-    Observable<Response<String>> loadIntegralDetailList(@Body RequestBody requestBody);
+    Observable<Response<MyIntegrationResponse>> loadIntegralDetailList(@Body RequestBody requestBody);
+    @POST("v1/sysUser/signedDaily")
+    Observable<Response<String>> signedDaily(@Body RequestBody requestBody);
 
 
     //首页

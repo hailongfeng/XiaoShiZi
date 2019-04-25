@@ -6,6 +6,7 @@ public class QianDao extends BaseModel {
     public int day;
     public int jiFen;
     public int count;
+    public int signedDayNum;//签到天数
 
     public QianDao() {
     }

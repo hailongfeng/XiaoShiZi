@@ -22,11 +22,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import edu.children.xiaoshizi.R;
-import edu.children.xiaoshizi.bean.Integration;
-import edu.children.xiaoshizi.bean.QianDao;
+import edu.children.xiaoshizi.bean.IntegrationRecode;
 import zuo.biao.library.base.BaseView;
 
-public class IntegrationView extends BaseView<Integration> implements OnClickListener {
+public class IntegrationView extends BaseView<IntegrationRecode> implements OnClickListener {
 	private static final String TAG = "UserView";
 
 	public IntegrationView(Activity context, ViewGroup parent) {
@@ -46,11 +45,11 @@ public class IntegrationView extends BaseView<Integration> implements OnClickLis
 	}
 
 	@Override
-	public void bindView(Integration data_){
-		super.bindView(data_ != null ? data_ : new Integration());
-		txt_remark.setText(this.data.getRemark());
-		txt_time.setText("+"+this.data.getTime());
-		txt_jifen.setText("+"+this.data.getJifen());
+	public void bindView(IntegrationRecode data_){
+		super.bindView(data_ != null ? data_ : new IntegrationRecode());
+		txt_remark.setText(this.data.getTranMsg());
+		txt_time.setText(this.data.getTranTime());
+		txt_jifen.setText("+"+this.data.getTranPoints());
 
 	}
 
