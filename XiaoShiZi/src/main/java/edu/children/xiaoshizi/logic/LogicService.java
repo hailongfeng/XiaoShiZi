@@ -223,7 +223,7 @@ public class LogicService {
             observable = apiService.findPushAppSnapMsgList(requestBody);
         }else if (method == APIMethod.loadIntegralDetailList) {
             observable = apiService.loadIntegralDetailList(requestBody);
-        }else if (method == APIMethod.loadIntegralDetailList) {
+        }else if (method == APIMethod.signedDaily) {
             observable = apiService.signedDaily(requestBody);
         }
 

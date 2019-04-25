@@ -39,8 +39,8 @@
 
                         <com.makeramen.roundedimageview.RoundedImageView
                             android:id="@+id/iv_user_face"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_margin="10dp"
                             android:scaleType="fitXY"
                             android:src="@drawable/user_default"
@@ -107,6 +107,8 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
                         <LinearLayout
+                            android:clickable="true"
+                            android:descendantFocusability="blocksDescendants"
                             android:id="@+id/ll_qiandao"
                             android:gravity="center_horizontal"
                             android:orientation="vertical"
@@ -115,17 +117,27 @@
                             <TextView
                                 android:id="@+id/txt_tmp1"
                                 android:text="已连续签到"
+                                android:clickable="false"
+                                android:focusable="false"
+                                android:duplicateParentState="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                             <TextView
+                                android:clickable="false"
+                                android:focusable="false"
+                                android:duplicateParentState="true"
                                 android:text="15"
                                 android:id="@+id/txt_qiandao_tianshu"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
                             <GridView
+
                                 android:id="@+id/rvQianDaoRecycler"
                                 style="@style/lv"
+                                android:padding="0dp"
+                                android:gravity="center_vertical"
+                                android:layout_margin="0dp"
                                 android:numColumns="7"
                                 />
                     </LinearLayout>

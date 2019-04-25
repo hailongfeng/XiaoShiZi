@@ -83,14 +83,6 @@ public class MyIntegrationActivity extends XszBaseActivity {
                 return new QianDaoView(context,parent);
             }
         };
-//        qianDaoAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-////                Intent intent=new Intent(context,ParentInfoActivity.class);
-////                intent.putExtra("index",position);
-////                toActivity(intent);
-//            }
-//        });
         rvQianDaoRecycler.setAdapter(qianDaoAdapter);
     }
 
@@ -121,16 +113,41 @@ public class MyIntegrationActivity extends XszBaseActivity {
         loadIntegralDetailList();
     }
 
+    void updataView(MyIntegrationResponse respon){
+        if (respon!=null&&respon.getIntegralDetailList()!=null) {
+            integrationRecodeData.clear();
+            integrationRecodeData.addAll(respon.getIntegralDetailList());
+            qianDaoAdapterJiLu.refresh(integrationRecodeData);
+        }
+
+        txt_user_name.setText(respon.getUserName());
+        loadImage(respon.getHeadPortrait(),iv_user_face);
+//                已连续签到\n2天
+        int signedDayNum=respon.getSignedDayNum();
+        SpannableString spannableString = new SpannableString(signedDayNum+"天");
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#53ADFE")), 0,String.valueOf(signedDayNum).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        txt_qiandao_tianshu.setText(spannableString);
+        txt_jifen_all.setText(respon.getPoints());
+        for (QianDao qianDao:qianDaoDatas){
+            qianDao.signedDayNum=signedDayNum;
+        }
+        qianDaoAdapter.refresh(qianDaoDatas);
+    }
+
     //加载积分
     void signedDaily(){
-        LogicService.post(context, APIMethod.signedDaily,null,new ApiSubscriber<Response<String>>() {
+        showLoading(R.string.msg_handing);
+        LogicService.post(context, APIMethod.signedDaily,null,new ApiSubscriber<Response<MyIntegrationResponse>>() {
             @Override
-            public void onSuccess(Response<String> respon) {
+            public void onSuccess(Response<MyIntegrationResponse> respon) {
+                hideLoading();
                 showShortToast(respon.getMessage());
+                updataView(respon.getResult());
             }
 
             @Override
             protected void onFail(Throwable  error) {
+                hideLoading();
                 showShortToast(error.getMessage());
                 error.printStackTrace();
             }
@@ -141,20 +158,7 @@ public class MyIntegrationActivity extends XszBaseActivity {
         LogicService.post(context, APIMethod.loadIntegralDetailList,null,new ApiSubscriber<Response<MyIntegrationResponse>>() {
             @Override
             public void onSuccess(Response<MyIntegrationResponse> respon) {
-                if (respon.getResult()!=null&&respon.getResult().getIntegralDetailList()!=null) {
-                    integrationRecodeData.clear();
-                    integrationRecodeData.addAll(respon.getResult().getIntegralDetailList());
-                    qianDaoAdapterJiLu.refresh(integrationRecodeData);
-                }
-
-                txt_user_name.setText(respon.getResult().getUserName());
-                loadImage(respon.getResult().getHeadPortrait(),iv_user_face);
-//                已连续签到\n2天
-                String points=respon.getResult().getSignedDayNum()+"";
-                SpannableString spannableString = new SpannableString(points+"天");
-                spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#53ADFE")), 0,points.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                txt_qiandao_tianshu.setText(spannableString);
-                txt_jifen_all.setText(respon.getResult().getPoints());
+                updataView(respon.getResult());
             }
 
             @Override
@@ -173,7 +177,7 @@ public class MyIntegrationActivity extends XszBaseActivity {
 
     @Override
     public void onClick(View v) {
-        super.onClick(v);
+//        super.onClick(v);
         if (v.getId()==R.id.ll_qiandao){
             signedDaily();
         }else  if (v.getId()==R.id.iv_jifen_guize){

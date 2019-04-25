@@ -93,7 +93,7 @@ public interface ApiService {
     @POST("v1/sysUser/loadIntegralDetailList")
     Observable<Response<MyIntegrationResponse>> loadIntegralDetailList(@Body RequestBody requestBody);
     @POST("v1/sysUser/signedDaily")
-    Observable<Response<String>> signedDaily(@Body RequestBody requestBody);
+    Observable<Response<MyIntegrationResponse>> signedDaily(@Body RequestBody requestBody);
 
 
     //首页

@@ -17,6 +17,8 @@ package edu.children.xiaoshizi.adapter.view;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -72,7 +74,12 @@ public class QianDaoView extends BaseView<QianDao> implements OnClickListener {
 		super.bindView(data_ != null ? data_ : new QianDao());
 		txt_day.setText(this.data.day+"天");
 		txt_jifen.setText("+"+this.data.jiFen);
-
+		Drawable drawable=context.getResources().getDrawable(R.drawable.icon_xingxing_gray);
+		if (this.data.day<=this.data.signedDayNum){
+			drawable=context.getResources().getDrawable(R.drawable.icon_xingxing);
+			txt_jifen.setCompoundDrawablesWithIntrinsicBounds(null,drawable,null,null);
+		}
+		txt_jifen.setCompoundDrawablesWithIntrinsicBounds(null,drawable,null,null);
 	}
 
 	@Override
