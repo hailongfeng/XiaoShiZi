@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.walle.multistatuslayout.MultiStatusLayout;
 
 import java.util.ArrayList;
@@ -20,7 +22,12 @@ import edu.children.xiaoshizi.adapter.view.IntegrationView;
 import edu.children.xiaoshizi.adapter.view.QianDaoView;
 import edu.children.xiaoshizi.bean.Integration;
 import edu.children.xiaoshizi.bean.QianDao;
+import edu.children.xiaoshizi.logic.APIMethod;
+import edu.children.xiaoshizi.logic.LogicService;
+import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
+import edu.children.xiaoshizi.net.rxjava.Response;
 import zuo.biao.library.base.BaseAdapter;
+import zuo.biao.library.util.Log;
 
 //我的积分
 public class MyIntegrationActivity extends XszBaseActivity {
@@ -96,6 +103,22 @@ public class MyIntegrationActivity extends XszBaseActivity {
             integrationDatas.add(new Integration("签到"+i,"2019-04-18",5+i*2));
         }
         qianDaoAdapterJiLu.refresh(integrationDatas);
+    }
+
+    //加载积分
+    void loadIntegralDetailList(){
+        LogicService.post(context, APIMethod.loadIntegralDetailList,null,new ApiSubscriber<Response<JSONArray>>() {
+            @Override
+            public void onSuccess(Response<JSONArray> respon) {
+
+            }
+
+            @Override
+            protected void onFail(Throwable  error) {
+                showShortToast(error.getMessage());
+                error.printStackTrace();
+            }
+        });
     }
 
     @Override

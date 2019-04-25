@@ -19,7 +19,9 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
@@ -157,10 +159,10 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements It
             TreeMap sm = new TreeMap<String,String>();
             sm.put("width","80");
             sm.put("height","80");
-            List<File> files =new ArrayList<>();
-            files.add(new File(originalFilePath));
+            Map<String,File> files =new HashMap<>();
+            files.put("picfile",new File(originalFilePath));
             loadImage(originalFilePath,iv_user_face);
-            LogicService.uploadPic(context,sm,files, new ApiSubscriber<Response<JSONArray>>() {
+            LogicService.post(context,APIMethod.uploadFile,sm,files,null, new ApiSubscriber<Response<JSONArray>>() {
                 @Override
                 public void onSuccess(Response<JSONArray> respon) {
                     JSONArray jsonArray=respon.getResult();
@@ -169,7 +171,6 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements It
                     Log.d(TAG,jsonObject.getString("objectUrlWithStyle"));
                     Log.d(TAG,jsonObject.getString("fileName"));
                     headPortrait=jsonObject.getString("objectUrlWithStyle");
-//                    loadImage(headPortrait,iv_user_face);
                 }
 
                 @Override

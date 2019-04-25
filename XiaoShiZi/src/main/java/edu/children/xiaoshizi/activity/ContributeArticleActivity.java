@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.listener.DialogUIListener;
 import com.flyco.roundview.RoundLinearLayout;
@@ -28,20 +29,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.ninepic.SpaceItemDecoration;
 import edu.children.xiaoshizi.adapter.view.NinePicAddView;
+import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.Constant;
 import edu.children.xiaoshizi.utils.DateUtil;
 import edu.children.xiaoshizi.utils.FileProvider7;
-import edu.children.xiaoshizi.utils.StringUtils;
 import edu.children.xiaoshizi.utils.XszCache;
 import me.nereo.multi_image_selector.MultiImageSelector;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
@@ -183,36 +186,41 @@ public class ContributeArticleActivity extends XszBaseActivity {
             showShortToast("投稿标题不能为空");
             return;
         }
-//        sm.put("width","480");
-//        sm.put("height","480");
-        sm.put("pushAppTitle",edt_suggestion_title.getText().toString());
+        if (StringUtil.isEmpty(edt_suggestion_content,true)) {
+            showShortToast("投稿内容不能为空");
+            return;
+        }
+        sm.put("title",edt_suggestion_title.getText().toString());
 //        投稿类型。P家长投稿，S学校投稿
         boolean isJiaZhang=((RadioButton)rg_home_or_school.getChildAt(0)).isChecked();
         sm.put("type", isJiaZhang?"P":"S");
         sm.put("introduce",edt_suggestion_content.getText().toString());
-        List<File> imagefiles=new ArrayList<>();
-        for (int i = 0; i < mTakeImgs.size(); i++) {
-           File file= new File(mTakeImgs.get(i));
-           if (file.exists()){
-               print("imageFile:"+file.getAbsolutePath());
-               imagefiles.add(file);
-           }else {
-               print("imageFile不存在:");
-           }
 
+        Map<String,File> imagefiles=new HashMap<>();
+        int index=0;
+        for (int i = 0; i < mTakeImgs.size(); i++) {
+            File file= new File(mTakeImgs.get(i));
+            if (file.exists()){
+                index++;
+                print("imageFile:"+file.getAbsolutePath());
+                imagefiles.put("contentImage"+index,file);
+            }else {
+                print("imageFile不存在:");
+            }
         }
-        List<File> videofiles=new ArrayList<>();
+        if (!StringUtils.isTrimEmpty(videoImagePath)) {
+            imagefiles.put("contentVideoImage", new File(videoImagePath));
+        }
+
+
+        Map<String,File> videofiles=new HashMap<>();
         if (videoFile.exists()){
             print("videoFile:"+videoFile.getAbsolutePath());
-            videofiles.add(videoFile);
-        }
-        if (!StringUtils.isEmpty(videoImagePath)){
-            print("videoImagePath:"+ videoImagePath);
-            videofiles.add(new File(videoImagePath));
+            videofiles.put("contentVideo",videoFile);
         }
 
         showLoading(R.string.msg_handing);
-        LogicService.submitDraftContent(context, sm, imagefiles,videofiles,new ApiSubscriber<Response<String>>() {
+        LogicService.post(context, APIMethod.submitDraftContent, sm, imagefiles,videofiles,new ApiSubscriber<Response<String>>() {
             @Override
             public void onSuccess(Response<String> respon) {
                 hideLoading();

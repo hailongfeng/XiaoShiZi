@@ -105,6 +105,7 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
     private void initMessage(){
         loadImage(message.imgPicUrl,iv_student_face);
         loadImage(message.snapPicUrl,iv_student_recognite_face);
+        txt_student_name.setText(message.getStudentName());
         txt_pic_xsd.setText(message.similarity+"");
         txt_in_out_time.setText(message.triggerTime);
         txt_in_out_reason.setText(message.snapRemark);

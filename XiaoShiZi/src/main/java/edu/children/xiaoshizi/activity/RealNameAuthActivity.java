@@ -22,7 +22,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
@@ -185,10 +187,10 @@ public class RealNameAuthActivity extends XszBaseActivity  implements ItemDialog
 
     private void uploadVideo() {
         TreeMap sm = new TreeMap<String, String>();
-        List<File> files = new ArrayList<>();
-        files.add(videoFile);
         showLoading("正在上传视频");
-        LogicService.uploadVerifiedVideo(context, sm, files, new ApiSubscriber<Response<JSONArray>>() {
+        Map<String,File> files =new HashMap<>();
+        files.put("video_file",videoFile);
+        LogicService.post(context,APIMethod.uploadVerifiedVideo, sm,null, files, new ApiSubscriber<Response<JSONArray>>() {
             @Override
             public void onSuccess(Response<JSONArray> respon) {
                 hideLoading();

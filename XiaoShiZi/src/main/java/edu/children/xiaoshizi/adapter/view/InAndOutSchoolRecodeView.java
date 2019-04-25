@@ -65,7 +65,7 @@ public class InAndOutSchoolRecodeView extends XszBaseView<InAndOutSchoolRecode> 
 		super.bindView(data_ != null ? data_ : new InAndOutSchoolRecode());
 
 		if (this.data.snapStatus.equalsIgnoreCase("normal")){
-			txt_student_in_out_school_recode_icon.setImageResource(R.drawable.icon_inout_school_right);
+			txt_student_in_out_school_recode_icon.setImageResource(R.drawable.icon_inout_school_right_blue);
 		}else {
 			txt_student_in_out_school_recode_icon.setImageResource(R.drawable.icon_inout_school_error);
 		}

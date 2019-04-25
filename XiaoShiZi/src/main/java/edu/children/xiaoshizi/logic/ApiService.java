@@ -89,6 +89,8 @@ public interface ApiService {
     Observable<Response<User>> saveMyProfile(@Body RequestBody requestBody);
     @POST("v1/sys/submitFeedBack")
     Observable<Response<String>> submitFeedBack(@Body RequestBody requestBody);
+    @POST("v1/sysUser/loadIntegralDetailList")
+    Observable<Response<String>> loadIntegralDetailList(@Body RequestBody requestBody);
 
 
     //首页

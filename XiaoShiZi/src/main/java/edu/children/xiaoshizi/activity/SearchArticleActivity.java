@@ -90,11 +90,11 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
             adapter.setOnViewClickListener(new BaseView.OnViewClickListener() {
                 @Override
                 public void onViewClick(@NonNull BaseView bv, @NonNull View v) {
-                    showShortToast(((SearchWorldHistory) bv.data).getName());
+//                    showShortToast(((SearchWorldHistory) bv.data).getName());
                     ((SearchWorldHistory) bv.data).delete();
                     data.remove(bv.data);
                     adapter.refresh(data);
-                    adapter.notifyDataSetChanged();
+//                    adapter.notifyDataSetChanged();
                 }
             });
 

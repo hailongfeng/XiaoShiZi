@@ -33,20 +33,7 @@ import zuo.biao.library.base.BaseModel;
 import zuo.biao.library.base.BaseView;
 import zuo.biao.library.ui.WebViewActivity;
 
-/**用户View
- * @author Lemon
- * @use
- * <br> UserView userView = new UserView(context, resources);
- * <br> adapter中使用:[具体参考.BaseViewAdapter(getView使用自定义View的写法)]
- * <br> convertView = userView.createView(inflater);
- * <br> userView.bindView(position, data);
- * <br> 或  其它类中使用:
- * <br> containerView.addView(userView.createView(inflater));
- * <br> userView.bindView(data);
- * <br> 然后
- * <br> userView.setOnDataChangedListener(onDataChangedListener);data = userView.getData();//非必需
- * <br> userView.setOnClickListener(onClickListener);//非必需
- */
+
 public class MessageView extends BaseView<Message>  implements View.OnClickListener {
 	private static final String TAG = "UserView";
 
@@ -55,12 +42,14 @@ public class MessageView extends BaseView<Message>  implements View.OnClickListe
 	}
 
 	public ImageView iv_message_icon;
+	public TextView txt_message_time;
 	public TextView txt_message_content;
 	public Button btn_message_detail;
 	@SuppressLint("InflateParams")
 	@Override
 	public View createView() {
 		iv_message_icon = findView(R.id.iv_message_icon);
+		txt_message_time = findView(R.id.txt_message_time);
 		txt_message_content = findView(R.id.txt_message_content);
 		btn_message_detail = findView(R.id.btn_message_detail,this);
 		return super.createView();
@@ -71,6 +60,14 @@ public class MessageView extends BaseView<Message>  implements View.OnClickListe
 		super.bindView(data_ != null ? data_ : new Message());
 //		String headPortrait=data.getHeadPortrait();
 //		Glide.with(context).load(headPortrait ).into(iv_custody_face);
+		if (this.data.snapStatus.equalsIgnoreCase("normal")){
+			iv_message_icon.setImageResource(R.drawable.icon_inout_school_right_blue);
+			txt_message_content.setTextColor(context.getResources().getColor(R.color.xsz_text_black));
+		}else {
+			txt_message_content.setTextColor(context.getResources().getColor(R.color.red_text));
+			iv_message_icon.setImageResource(R.drawable.icon_inout_school_error);
+		}
+		txt_message_time.setText(data.getPushAppTime());
 		txt_message_content.setText(data.getPushAppTitle());
 	}
 
