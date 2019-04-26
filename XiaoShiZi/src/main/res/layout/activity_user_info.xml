@@ -18,179 +18,195 @@
             android:text="第一联系人/本人" />
     </RelativeLayout>
 
-    <RelativeLayout
-        style="@style/match_match"
-        android:layout_weight="1">
-
         <ScrollView style="@style/match_match">
+            <FrameLayout
+                android:paddingTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="90dp"
+                    android:layout_marginBottom="100dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="8dp">
+                        <LinearLayout style="@style/ll_vertical_match_match"
+                            android:layout_marginTop="150dp"
+                            >
 
-            <LinearLayout style="@style/ll_vertical_match_match">
-                <View style="@style/divider_horizontal_1px" />
+                            <View style="@style/divider_horizontal_1px" />
 
+                            <LinearLayout
+                                android:id="@+id/ll_user_sex"
+                                style="@style/content_item_white">
+
+                                <TextView
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_width="80dp"
+                                    android:text="姓别" />
+
+                                <TextView
+                                    android:id="@+id/txt_user_sex"
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_weight="1"
+                                    android:gravity="right|center_vertical"
+                                    android:paddingRight="10dp" />
+
+                            </LinearLayout>
+
+                            <View style="@style/divider_horizontal_1px" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_user_dizhi"
+                                style="@style/content_item_white">
+
+                                <TextView
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_width="80dp"
+                                    android:text="所在地" />
+
+                                <TextView
+                                    android:id="@+id/txt_user_dizhi"
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_weight="1"
+                                    android:gravity="right|center_vertical"
+                                    android:paddingRight="10dp" />
+                            </LinearLayout>
+
+                            <View style="@style/divider_horizontal_1px" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_user_phone"
+                                style="@style/content_item_white">
+
+                                <TextView
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_width="80dp"
+                                    android:text="手机号" />
+
+                                <TextView
+                                    android:id="@+id/txt_user_phone"
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_weight="1"
+                                    android:gravity="right|center_vertical"
+                                    android:paddingRight="10dp" />
+                            </LinearLayout>
+
+                            <View style="@style/divider_horizontal_1px" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_user_email"
+                                style="@style/content_item_white">
+
+                                <TextView
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_width="80dp"
+                                    android:text="电子邮箱" />
+
+                                <TextView
+                                    android:id="@+id/txt_user_email"
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_weight="1"
+                                    android:gravity="right|center_vertical"
+                                    android:paddingRight="10dp" />
+                            </LinearLayout>
+
+                            <View style="@style/divider_horizontal_1px" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_user_work_adddress"
+                                style="@style/content_item_white">
+
+                                <TextView
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_width="80dp"
+                                    android:text="工作地址" />
+
+                                <TextView
+                                    android:id="@+id/txt_user_work_adddress"
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_weight="1"
+                                    android:gravity="right|center_vertical"
+                                    android:paddingRight="10dp" />
+                            </LinearLayout>
+
+                            <View style="@style/divider_horizontal_1px" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_user_home_adddress"
+                                style="@style/content_item_white">
+
+                                <TextView
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_width="80dp"
+                                    android:text="家庭地址" />
+
+                                <TextView
+                                    android:id="@+id/txt_user_home_adddress"
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_weight="1"
+                                    android:gravity="right|center_vertical"
+                                    android:paddingRight="10dp" />
+                            </LinearLayout>
+
+                            <View style="@style/divider_horizontal_1px" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_user_id_cardno"
+                                style="@style/content_item_white">
+
+                                <TextView
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_width="80dp"
+                                    android:text="身份证号" />
+
+                                <TextView
+                                    android:id="@+id/txt_user_id_cardno"
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_weight="1"
+                                    android:gravity="right|center_vertical"
+                                    android:paddingRight="10dp" />
+                            </LinearLayout>
+
+                            <View style="@style/divider_horizontal_1px" />
+                        </LinearLayout>
+                </android.support.v7.widget.CardView>
                 <LinearLayout
-                    android:id="@+id/ll_user_face"
-                    android:layout_height="80dp"
-                    style="@style/content_item_white">
-
-                    <TextView
-                        style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
-                        android:text="头像" />
-
-                    <TextView
-                        android:id="@+id/txt_user_touxiang"
-                        style="@style/content_item_lf_tv"
-                        android:layout_weight="1"
-                        android:text="" />
-
+                    android:elevation="9dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:background="@color/transparent"
+                    >
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/iv_user_face"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_margin="10dp"
-                        android:scaleType="center"
-                        android:src="@mipmap/ic_launcher"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/user_default"
                         app:riv_border_color="@color/white"
                         app:riv_border_width="1dp"
                         app:riv_oval="true" />
-                </LinearLayout>
-                <View style="@style/divider_horizontal_1px" />
-
-                <LinearLayout
-                    android:id="@+id/ll_user_name"
-                    style="@style/content_item_white">
-
-                    <TextView
-                        style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
-                        android:text="姓名" />
 
                     <TextView
                         android:id="@+id/txt_user_name"
-                        style="@style/content_item_lf_tv"
-                        android:layout_weight="1"
-                        android:text="姓名" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="姓名"
+                        android:textSize="16sp" />
                 </LinearLayout>
-
-                <View style="@style/divider_horizontal_1px" />
-
-                <LinearLayout
-                    android:id="@+id/ll_user_sex"
-                    style="@style/content_item_white">
-
-                    <TextView
-                        style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
-                        android:text="姓别" />
-                    <TextView
-                        android:id="@+id/txt_user_sex"
-                        style="@style/content_item_lf_tv"
-                        android:layout_weight="1" />
-
-                </LinearLayout>
-                <View style="@style/divider_horizontal_1px" />
-
-                <LinearLayout
-                    android:id="@+id/ll_user_dizhi"
-                    style="@style/content_item_white">
-
-                    <TextView
-                        style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
-                        android:text="所在地" />
-
-                    <TextView
-                        android:id="@+id/txt_user_dizhi"
-                        style="@style/content_item_lf_tv"
-                        android:layout_weight="1" />
-                </LinearLayout>
-                <View style="@style/divider_horizontal_1px" />
-
-                <LinearLayout
-                    android:id="@+id/ll_user_phone"
-                    style="@style/content_item_white">
-
-                    <TextView
-                        style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
-                        android:text="手机号" />
-
-                    <TextView
-                        android:id="@+id/txt_user_phone"
-                        style="@style/content_item_lf_tv"
-                        android:layout_weight="1" />
-                </LinearLayout>
-                <View style="@style/divider_horizontal_1px" />
-
-                <LinearLayout
-                    android:id="@+id/ll_user_email"
-                    style="@style/content_item_white">
-
-                    <TextView
-                        style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
-                        android:text="电子邮箱" />
-
-                    <TextView
-                        android:id="@+id/txt_user_email"
-                        style="@style/content_item_lf_tv"
-                        android:layout_weight="1" />
-                </LinearLayout>
-                <View style="@style/divider_horizontal_1px" />
-
-                <LinearLayout
-                    android:id="@+id/ll_user_work_adddress"
-                    style="@style/content_item_white">
-
-                    <TextView
-                        style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
-                        android:text="工作地址" />
-
-                    <TextView
-                        android:id="@+id/txt_user_work_adddress"
-                        style="@style/content_item_lf_tv"
-                        android:layout_weight="1" />
-                </LinearLayout>
-                <View style="@style/divider_horizontal_1px" />
-
-                <LinearLayout
-                    android:id="@+id/ll_user_home_adddress"
-                    style="@style/content_item_white">
-
-                    <TextView
-                        style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
-                        android:text="家庭地址" />
-
-                    <TextView
-                        android:id="@+id/txt_user_home_adddress"
-                        style="@style/content_item_lf_tv"
-                        android:layout_weight="1" />
-                </LinearLayout>
-                <View style="@style/divider_horizontal_1px" />
-
-                <LinearLayout
-                    android:id="@+id/ll_user_id_cardno"
-                    style="@style/content_item_white">
-
-                    <TextView
-                        style="@style/content_item_lf_tv"
-                        android:layout_width="80dp"
-                        android:text="身份证号" />
-
-                    <TextView
-                        android:id="@+id/txt_user_id_cardno"
-                        style="@style/content_item_lf_tv"
-                        android:layout_weight="1" />
-                </LinearLayout>
-                <View style="@style/divider_horizontal_1px" />
-
                 <com.flyco.roundview.RoundTextView
+                    android:elevation="10dp"
+                    android:layout_gravity="bottom"
                     android:id="@+id/btn_change_user"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_centerInParent="true"
                     android:layout_margin="20dp"
                     android:gravity="center"
                     android:text="修改信息"
@@ -198,7 +214,6 @@
                     app:rv_backgroundColor="@color/colorPrimary"
                     app:rv_backgroundPressColor="@color/colorPrimaryDark"
                     app:rv_cornerRadius="5dp" />
-            </LinearLayout>
+            </FrameLayout>
         </ScrollView>
-    </RelativeLayout>
 </LinearLayout>

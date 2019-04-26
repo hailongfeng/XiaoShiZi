@@ -101,7 +101,7 @@ public class MyIntegrationActivity extends XszBaseActivity {
 
     @Override
     public void initData() {
-        int count=3;
+        int count=0;
         qianDaoDatas.add(new QianDao(1,1,count));
         qianDaoDatas.add(new QianDao(2,5,count));
         qianDaoDatas.add(new QianDao(3,10,count));

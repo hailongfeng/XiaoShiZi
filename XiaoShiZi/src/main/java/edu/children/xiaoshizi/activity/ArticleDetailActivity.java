@@ -142,7 +142,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 .useDefaultIndicator()
                 .createAgentWeb()
                 .ready();
-        getAgentWebField();
+        agentWeb= getAgentWebField(preAgentWeb);
         initShare();
     }
 
@@ -154,17 +154,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
         return articleType.getType().equalsIgnoreCase("VT");
     }
 
-    private void getAgentWebField(){
-        Field  field = null;
-        try {
-            field = preAgentWeb.getClass().getDeclaredField("mAgentWeb");
-            field.setAccessible(true);
-            agentWeb= (AgentWeb) field.get(preAgentWeb);
-            Log.d(TAG,(agentWeb==null)+",,,agentWeb==null");
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public void initData() {
         getArticleById(article.getContentId());
@@ -174,13 +164,6 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
         }else {
             tvBaseTitle.setText(title);
         }
-    }
-
-    private String getHtml(String body){
-
-        StringBuilder sb=new StringBuilder();
-        sb.append("<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /></head><body>").append(body).append("</body></html>");
-        return sb.toString();
     }
 
 

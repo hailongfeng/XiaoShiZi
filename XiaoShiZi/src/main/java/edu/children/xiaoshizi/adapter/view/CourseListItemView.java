@@ -46,6 +46,7 @@ public class CourseListItemView extends XszBaseView<Article>{
 	public void bindView(Article data_) {
 		this.data = data_;
 		loadImage(this.data.getBannerImage(),iv_course_pic);
+		txt_course_name.setText(this.data.getTitle());
 		//不一定要用单选功能，实现也不一定要用这种方式，这里写会影响所有BaseView子类的性能，子类写更好 itemView.setSelected(selected);
 	}
 }

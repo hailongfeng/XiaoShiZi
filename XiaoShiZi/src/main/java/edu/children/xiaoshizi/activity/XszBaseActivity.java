@@ -16,8 +16,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.bean.BuildBean;
 import com.gyf.barlibrary.ImmersionBar;
+import com.just.agentweb.AgentWeb;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
+
+import java.lang.reflect.Field;
 
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.DemoApplication;
@@ -89,6 +92,24 @@ public abstract class XszBaseActivity extends BaseActivity implements View.OnCli
     @Override
     public void onClick(View v) {
 
+    }
+    protected AgentWeb getAgentWebField(AgentWeb.PreAgentWeb preAgentWeb){
+        Field field = null;
+        AgentWeb agentWeb = null;
+        try {
+            field = preAgentWeb.getClass().getDeclaredField("mAgentWeb");
+            field.setAccessible(true);
+            agentWeb= (AgentWeb) field.get(preAgentWeb);
+            Log.d(TAG,(agentWeb==null)+",,,agentWeb==null");
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return agentWeb;
+    }
+    protected String getHtml(String body){
+        StringBuilder sb=new StringBuilder();
+        sb.append("<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /></head><body>").append(body).append("</body></html>");
+        return sb.toString();
     }
     protected boolean isLogin(){
         return DemoApplication.getInstance().isLogin();

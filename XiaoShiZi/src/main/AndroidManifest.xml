@@ -40,7 +40,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-
+        <activity android:name=".activity.IntegrationRuleActivity"></activity>
         <activity
             android:name=".activity.SplashActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -56,22 +56,20 @@
             android:name=".activity.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".activity.TestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.TestActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-
-        </activity>
-        <activity android:name=".activity.ninepic.NinePicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ninepic.NinePicActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RecogniteFeedbackActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -185,6 +183,7 @@
             android:name=".activity.ContributeArticleActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
+
         <provider
             android:name=".utils.XszFileProvider"
             android:authorities="edu.children.xiaoshizi.android7.fileprovider"

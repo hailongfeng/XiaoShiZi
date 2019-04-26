@@ -9,7 +9,7 @@ import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.module.AppGlideModule;
 
-@GlideModule
+//@GlideModule
 public class CustomAppGlideModule extends AppGlideModule {
 
     @Override
