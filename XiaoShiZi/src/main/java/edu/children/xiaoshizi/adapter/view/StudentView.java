@@ -62,7 +62,6 @@ public class StudentView extends XszBaseView<Student> implements OnClickListener
 	public ImageView iv_child_face;
 	public TextView txt_child_name;
 	public TextView txt_child_birthday;
-	public TextView tvUserViewName;
 	public TextView txt_child_school;
 	public TextView txt_child_gradle;
 	public TextView txt_child_Guardian;
@@ -71,14 +70,13 @@ public class StudentView extends XszBaseView<Student> implements OnClickListener
 	@Override
 	public View createView() {
 
-		iv_child_face = findView(R.id.iv_child_face, this);
-		txt_child_name = findView(R.id.txt_child_name, this);
-		txt_child_birthday = findView(R.id.txt_child_birthday, this);
-		tvUserViewName = findView(R.id.txt_child_school);
-		txt_child_school = findView(R.id.txt_child_gradle);
-		txt_child_gradle = findView(R.id.txt_child_Guardian);
+		iv_child_face = findView(R.id.iv_child_face);
+		txt_child_name = findView(R.id.txt_child_name);
+		txt_child_birthday = findView(R.id.txt_child_birthday);
+		txt_child_school = findView(R.id.txt_child_school);
+		txt_child_gradle = findView(R.id.txt_child_gradle);
+		txt_child_Guardian = findView(R.id.txt_child_Guardian);
 		btn_student_jiebang = findView(R.id.btn_student_jiebang, this);
-		txt_child_Guardian = findView(R.id.txt_child_Guardian, this);
 
 		return super.createView();
 	}
@@ -91,7 +89,7 @@ public class StudentView extends XszBaseView<Student> implements OnClickListener
 		txt_child_birthday.setText(data.getBirthday());
 		txt_child_name.setText(data.getStudentName());
 		txt_child_school.setText(data.getSchoolName());
-		txt_child_gradle.setText(data.getSchoolGradeName());
+		txt_child_gradle.setText(data.getSchoolGradeName()+" "+data.getSchoolClassName());
 		txt_child_Guardian.setText(data.getCustody());
 	}
 

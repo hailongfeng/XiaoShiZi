@@ -27,6 +27,7 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.walle.multistatuslayout.MultiStatusLayout;
+import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -186,6 +187,7 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 			images.add(b.getBannerImage());
 		}
 		banner.setImages(images);
+//		banner.setBannerAnimation(Transformer.Tablet);
 		banner.start();
 	}
 

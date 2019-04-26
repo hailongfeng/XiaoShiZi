@@ -63,11 +63,11 @@ android {
 
     flavorDimensions "zhangphil_demo"
     productFlavors {
-        zhengshi {
+        XszFormal {
             buildConfigField "String", "SERVER_URL", "\"http://app.shine-creativity.com/apprest/\""
         }
 
-        ceshi {
+        XszTest {
             buildConfigField "String", "SERVER_URL", "\"https://app.pinocc.cn/apprest/\""
         }
     }
@@ -87,7 +87,7 @@ android {
         androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
         implementation project(':QRCodeLibrary')
         implementation project(':ZBLibrary')
-        implementation project(':multi-image-selector')
+//        implementation project(':multi-image-selector')
         implementation project(':takephoto_library')
 //        implementation project(':SmallVideoLib2')
         implementation 'com.alibaba:fastjson:1.2.54'

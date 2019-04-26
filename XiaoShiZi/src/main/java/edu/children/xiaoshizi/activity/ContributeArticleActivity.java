@@ -20,8 +20,9 @@ import android.widget.RadioGroup;
 import com.blankj.utilcode.util.StringUtils;
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.listener.DialogUIListener;
-import com.flyco.roundview.RoundLinearLayout;
-import com.flyco.roundview.RoundTextView;
+
+import org.devio.takephoto.model.TImage;
+import org.devio.takephoto.model.TResult;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,8 +47,6 @@ import edu.children.xiaoshizi.utils.Constant;
 import edu.children.xiaoshizi.utils.DateUtil;
 import edu.children.xiaoshizi.utils.FileProvider7;
 import edu.children.xiaoshizi.utils.XszCache;
-import me.nereo.multi_image_selector.MultiImageSelector;
-import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import zuo.biao.library.base.BaseAdapter;
 import zuo.biao.library.base.BaseView;
 import zuo.biao.library.util.StringUtil;
@@ -55,7 +54,7 @@ import zuo.biao.library.util.StringUtil;
 /**
  * 投稿界面
  */
-public class ContributeArticleActivity extends XszBaseActivity {
+public class ContributeArticleActivity extends BaseTakePhotoActivity {
     @BindView(R.id.btn_sure)
     Button btn_sure;
     @BindView(R.id.edt_suggestion_title)
@@ -119,8 +118,8 @@ public class ContributeArticleActivity extends XszBaseActivity {
         @Override
         public void onViewClick(@NonNull BaseView bv, @NonNull View v) {
             if (v.getId() == R.id.ivAdd) {
-                startCamera();
-//                takePicture();
+//                startCamera();
+                takePicture();
             } else if (v.getId() == R.id.ivDel) {
                 DialogUIUtils.showMdAlert(context, "提示", "确认要删除?",new DialogUIListener() {
                     @Override
@@ -138,14 +137,14 @@ public class ContributeArticleActivity extends XszBaseActivity {
             }
         }
     };
-    private void startCamera() {
-        MultiImageSelector.create()
-                .showCamera(true) // 是否显示相机. 默认为显示
-                .count(3) // 最大选择图片数量, 默认为9. 只有在选择模式为多选时有效
-                .origin(listPhotoPath)
-                .multi()
-                .start(this, REQUEST_IMAGE); // 开始拍照
-    }
+//    private void startCamera() {
+//        MultiImageSelector.create()
+//                .showCamera(true) // 是否显示相机. 默认为显示
+//                .count(3) // 最大选择图片数量, 默认为9. 只有在选择模式为多选时有效
+//                .origin(listPhotoPath)
+//                .multi()
+//                .start(this, REQUEST_IMAGE); // 开始拍照
+//    }
 
     public void addImgs(String img) {
         /**添加的图片需要在+之前**/
@@ -293,11 +292,11 @@ public class ContributeArticleActivity extends XszBaseActivity {
                 print(path);
                 //uploadVideo();
             }else if (requestCode == REQUEST_IMAGE) {
-                    listPhotoPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                    for (int i = 0; i < listPhotoPath.size(); i++) {
-                        addImgs(listPhotoPath.get(i));
-                    }
-                    takeImageAdapter.refresh(mTakeImgs);
+//                    listPhotoPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+//                    for (int i = 0; i < listPhotoPath.size(); i++) {
+//                        addImgs(listPhotoPath.get(i));
+//                    }
+//                    takeImageAdapter.refresh(mTakeImgs);
             }
         }
     }
@@ -328,41 +327,13 @@ public class ContributeArticleActivity extends XszBaseActivity {
     }
 
 
-//    @Override
-//    public void takeSuccess(TResult result) {
-//        super.takeSuccess(result);
-//        ArrayList<TImage> images=result.getImages();
-//        for (int i = 0; i < images.size(); i++) {
-//            addImgs(images.get(i).getOriginalPath());
-//        }
-//        takeImageAdapter.refresh(mTakeImgs);
-
-
-//        if(!StringUtils.isEmpty(originalFilePath)){
-//            TreeMap sm = new TreeMap<String,String>();
-//            sm.put("width","80");
-//            sm.put("height","80");
-//            List<File> files =new ArrayList<>();
-//            files.add(new File(originalFilePath));
-//            loadImage(originalFilePath,iv_takephoto);
-//            LogicService.uploadPic(context,sm,files, new ApiSubscriber<Response<JSONArray>>() {
-//                @Override
-//                public void onSuccess(Response<JSONArray> respon) {
-//                    JSONArray jsonArray=respon.getResult();
-//                    JSONObject jsonObject=jsonArray.getJSONObject(0);
-//                    Log.d(TAG,jsonObject.getString("objectUrl"));
-//                    Log.d(TAG,jsonObject.getString("objectUrlWithStyle"));
-//                    Log.d(TAG,jsonObject.getString("fileName"));
-//                    headPortrait=jsonObject.getString("objectUrlWithStyle");
-////                    loadImage(headPortrait,iv_credentials_video_pic);
-//                }
-//
-//                @Override
-//                protected void onFail(Throwable  error) {
-//                    showShortToast(error.getMessage());
-//                    error.printStackTrace();
-//                }
-//            });
-//        }
-//    }
+    @Override
+    public void takeSuccess(TResult result) {
+        super.takeSuccess(result);
+        ArrayList<TImage> images=result.getImages();
+        for (int i = 0; i < images.size(); i++) {
+            addImgs(images.get(i).getOriginalPath());
+        }
+        takeImageAdapter.refresh(mTakeImgs);
+    }
 }

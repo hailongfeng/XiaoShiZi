@@ -64,7 +64,7 @@ public class SuggestionActivity extends XszBaseActivity {
         String title =edt_suggestion_title.getText().toString();
         String content=edt_suggestion_content.getText().toString();
         TreeMap sm = new TreeMap<String,String>();
-        sm.put("pushAppTitle",title);
+        sm.put("title",title);
         sm.put("content",content);
         showLoading(R.string.msg_handing);
         LogicService.post(context, APIMethod.submitFeedBack, sm, new ApiSubscriber<Response<User>>() {

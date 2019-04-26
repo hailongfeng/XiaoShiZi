@@ -66,9 +66,9 @@ public class SettingActivity extends XszBaseActivity{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_setting_clear_cache:
-                XszCache.getCacheSize();
+               long size= XszCache.getCacheSize();
                 XszCache.clearCacheSize();
-                dialog=DialogUIUtils.showAlert(context,"清除成功","本次为您清除缓存30MB！！","","","OK","",false,true,true,new DialogUIListener(){
+                dialog=DialogUIUtils.showAlert(context,"清除成功","本次为您清除缓存"+XszCache.getPrintSize(size)+"！！","","","OK","",false,true,true,new DialogUIListener(){
 
                     @Override
                     public void onPositive() {
@@ -80,8 +80,6 @@ public class SettingActivity extends XszBaseActivity{
 
                     }
                 }).show();
-
-                showShortToast("清除完成");
                 break;
             case R.id.ll_setting_about_us:
                 break;

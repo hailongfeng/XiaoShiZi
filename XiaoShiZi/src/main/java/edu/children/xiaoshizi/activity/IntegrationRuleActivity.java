@@ -19,9 +19,12 @@ public class IntegrationRuleActivity extends XszBaseActivity {
     LinearLayout linWeb;
     private AgentWeb agentWeb;
     private AgentWeb.PreAgentWeb preAgentWeb;
+    String pointRuleMsg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pointRuleMsg=getIntent().getStringExtra("pointRuleMsg");
         setContentView(R.layout.activity_integration_rule);
     }
 
@@ -33,11 +36,12 @@ public class IntegrationRuleActivity extends XszBaseActivity {
                 .createAgentWeb()
                 .ready();
         agentWeb= getAgentWebField(preAgentWeb);
+
     }
 
     @Override
     public void initData() {
-
+        agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml(pointRuleMsg), "text/html", "UTF-8", null);
     }
 
     @Override

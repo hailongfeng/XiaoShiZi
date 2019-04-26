@@ -1,3 +1,3 @@
-include  ':ZBLibrary', ':QRCodeLibrary', ':XiaoShiZi', ':multi-image-selector'
+include  ':ZBLibrary', ':QRCodeLibrary', ':XiaoShiZi'//, ':multi-image-selector'
 //include  ':SmallVideoLib2','sample'
 include ':takephoto_library', ':multipleimageselect'

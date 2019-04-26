@@ -1,5 +1,6 @@
 package edu.children.xiaoshizi.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,7 +61,7 @@ public class MyIntegrationActivity extends XszBaseActivity {
     @BindView(R.id.rvQianDaoRecyclerJiLu)
     RecyclerView rvQianDaoRecyclerJiLu;//签到记录
     private BaseAdapter qianDaoAdapterJiLu;
-
+    String pointRuleMsg;
     List<QianDao> qianDaoDatas =new ArrayList<>();
     List<IntegrationRecode> integrationRecodeData =new ArrayList<>();
     @Override
@@ -115,6 +116,7 @@ public class MyIntegrationActivity extends XszBaseActivity {
 
     void updataView(MyIntegrationResponse respon){
         if (respon!=null&&respon.getIntegralDetailList()!=null) {
+            pointRuleMsg=respon.getPointRuleMsg();
             integrationRecodeData.clear();
             integrationRecodeData.addAll(respon.getIntegralDetailList());
             qianDaoAdapterJiLu.refresh(integrationRecodeData);
@@ -181,7 +183,9 @@ public class MyIntegrationActivity extends XszBaseActivity {
         if (v.getId()==R.id.ll_qiandao){
             signedDaily();
         }else  if (v.getId()==R.id.iv_jifen_guize){
-
+            Intent intent= new Intent(context,IntegrationRuleActivity.class);
+            intent.putExtra("pointRuleMsg",pointRuleMsg);
+            toActivity(intent);
         }
     }
 }
