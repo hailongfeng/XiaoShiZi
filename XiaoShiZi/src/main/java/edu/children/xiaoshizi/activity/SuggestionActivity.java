@@ -14,11 +14,13 @@ import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.EventBusMessage;
+import edu.children.xiaoshizi.bean.Student;
 import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.Response;
+import zuo.biao.library.ui.AlertDialog;
 import zuo.biao.library.util.StringUtil;
 
 /**
@@ -49,11 +51,11 @@ public class SuggestionActivity extends XszBaseActivity {
 
     }
 
+
     @Override
     public void initEvent() {
         btn_sure.setOnClickListener(this);
     }
-
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -71,8 +73,14 @@ public class SuggestionActivity extends XszBaseActivity {
             @Override
             public void onSuccess(Response<User> respon) {
                 hideLoading();
-                showShortToast(respon.getMessage());
-                finish();
+                new AlertDialog(context, "提示", "提交成功", false, 0, new AlertDialog.OnDialogButtonClickListener() {
+                    @Override
+                    public void onDialogButtonClick(int requestCode, boolean isPositive) {
+                        if (isPositive){
+                            finish();
+                        }
+                    }
+                }).show();
             }
 
             @Override
@@ -82,5 +90,20 @@ public class SuggestionActivity extends XszBaseActivity {
                 error.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void onReturnClick(View v) {
+        new AlertDialog(context, "提示", "放弃提交当前反馈？", true, 0, new AlertDialog.OnDialogButtonClickListener() {
+            @Override
+            public void onDialogButtonClick(int requestCode, boolean isPositive) {
+                if (isPositive){
+                    SuggestionActivity.super.onReturnClick(v);
+                }else {
+
+                }
+            }
+        }).show();
+
     }
 }

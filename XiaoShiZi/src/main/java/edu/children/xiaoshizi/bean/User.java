@@ -14,6 +14,8 @@ limitations under the License.*/
 
 package edu.children.xiaoshizi.bean;
 
+import android.widget.RadioButton;
+
 import zuo.biao.library.base.BaseModel;
 
 /**用户类
@@ -27,7 +29,7 @@ public class User extends BaseModel {
 	public static final int SEX_FEMALE = 1;
 	public static final int SEX_UNKNOWN = 2;
 
-	private String sex; //性别
+	private String sex; //性别.U未知 F女 M男
 	private String head; //头像
 	private String name; //名字
 	private String phone; //电话号码
@@ -68,12 +70,12 @@ public class User extends BaseModel {
 	}
 	public String getSexName() {
 		String tsex="未知";
-		if (sex!=null){
-			if (sex.equals("M")){
-				tsex="男";
-			}else if (sex.equals("F")){
-				tsex="女";
-			}
+		if (sex.equalsIgnoreCase("U")){
+			tsex="未知";
+		}else if (sex.equalsIgnoreCase("M")){
+			tsex="男";
+		}else if (sex.equalsIgnoreCase("F")){
+			tsex="女";
 		}
 		return tsex;
 	}

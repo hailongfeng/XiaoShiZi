@@ -1,63 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/activity_page"
-    android:background="@color/white">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/rl_title"
-        style="@style/topbar_bg"
-        android:background="@color/gray_slight">
+    <LinearLayout
+        style="@style/activity_page"
+        android:background="@color/white">
 
-        <ImageButton style="@style/xsz_topbar_return_img" />
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            style="@style/topbar_bg"
+            android:background="@color/gray_slight">
 
-        <TextView
-            style="@style/topbar_title"
-            android:layout_centerHorizontal="true"
-            android:text="我的缓存" />
-        <Button
-            android:id="@+id/btn_edit"
-            style="@style/topbar_right_btn"
-            android:background="@drawable/null_drawable"
-            android:textColor="@color/colorPrimary"
-            android:text="编辑"
-            />
-    </RelativeLayout>
-    <ListView
-        android:layout_below="@id/rl_title"
-        android:id="@id/lvBaseList"
-        style="@style/lv"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        />
-    <RelativeLayout
-        android:id="@+id/rl_bottom_op"
-        android:padding="5dp"
-        android:visibility="gone"
-        style="@style/ll_vertical_match_wrap"
+            <ImageButton style="@style/xsz_topbar_return_img" />
 
-        >
-        <CheckBox
-            android:id="@+id/cb_select_all"
-            android:text="全选"
-            style="@style/CustomCheckBoxTheme"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/btn_delete"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:textSize="@dimen/text_size_middle"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="删除"
-            android:textColor="#D74F6A"
-            app:rv_backgroundColor="@color/transparent"
-            app:rv_strokeWidth="2dp"
-            app:rv_strokeColor="#D74F6A"
-            app:rv_cornerRadius="25dp" />
-    </RelativeLayout>
-</LinearLayout>
+            <TextView
+                style="@style/topbar_title"
+                android:layout_centerHorizontal="true"
+                android:text="我的缓存" />
+
+            <Button
+                android:id="@+id/btn_edit"
+                style="@style/topbar_right_btn"
+                android:background="@drawable/null_drawable"
+                android:text="编辑"
+                android:textColor="@color/colorPrimary" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@id/lvBaseList"
+                style="@style/lv"
+                android:layout_height="0dp"
+                android:layout_below="@id/rl_title"
+                android:layout_weight="1" />
+
+            <RelativeLayout
+                android:id="@+id/rl_bottom_op"
+                style="@style/ll_vertical_match_wrap"
+                android:padding="5dp"
+                android:visibility="gone"
+
+                >
+
+                <CheckBox
+                    android:id="@+id/cb_select_all"
+                    style="@style/CustomCheckBoxTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="全选" />
+
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/btn_delete"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="删除"
+                    android:textColor="#D74F6A"
+                    android:textSize="@dimen/text_size_middle"
+                    app:rv_backgroundColor="@color/transparent"
+                    app:rv_cornerRadius="25dp"
+                    app:rv_strokeColor="#D74F6A"
+                    app:rv_strokeWidth="2dp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</FrameLayout>

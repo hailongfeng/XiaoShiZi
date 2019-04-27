@@ -1,8 +1,10 @@
 package edu.children.xiaoshizi.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,7 +29,10 @@ import edu.children.xiaoshizi.bean.ArticleCache;
 import edu.children.xiaoshizi.bean.Message;
 import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.utils.XszCache;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import zuo.biao.library.base.BaseAdapter;
+import zuo.biao.library.base.BaseView;
 
 /**
  * 我的缓存
@@ -49,6 +54,8 @@ public class MyCacheListActivity extends XszBaseActivity {
     RoundTextView btn_delete;
     BaseAdapter<ArticleCache, MyCacheArticleView> myCacheArticleAdapter;
     List<ArticleCache> data=new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,20 +95,17 @@ public class MyCacheListActivity extends XszBaseActivity {
                 myCacheArticleAdapter.refresh(data);
             }
         });
-        myCacheArticleAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        myCacheArticleAdapter.setOnViewClickListener(new BaseView.OnViewClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent=new Intent(context,ArticleDetailActivity.class);
-//                Article article= data.get(position);
-//                intent.putExtra("article",article);
-//                article.getCategoryId();
-//                intent.putExtra("articleType",articleType);
-//                String pushAppTitle=articleType.getPushAppTitle()+"|"+article.getPushAppTitle();
-//                intent.putExtra(INTENT_TITLE,pushAppTitle);
-//                toActivity(intent);
+            public void onViewClick(@NonNull BaseView bv, @NonNull View v) {
+                ArticleCache cache= (ArticleCache) bv.data;
+                Intent intent= new Intent(context,VideoPlayActivity.class);
+                intent.putExtra("articleCache",cache);
+                toActivity(intent);
             }
         });
     }
+
     private int currentStatus=0;//1 编辑状态
     @Override
     public void onClick(View v) {

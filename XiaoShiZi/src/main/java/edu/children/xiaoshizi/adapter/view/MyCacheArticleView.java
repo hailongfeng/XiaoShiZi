@@ -16,6 +16,7 @@ package edu.children.xiaoshizi.adapter.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.net.Uri;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -25,10 +26,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.File;
+
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.activity.MyCacheListActivity;
 import edu.children.xiaoshizi.adapter.ArticleAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleCache;
+import edu.children.xiaoshizi.utils.XszCache;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import zuo.biao.library.util.Log;
 
 public class MyCacheArticleView extends XszBaseView<ArticleCache> implements OnClickListener {
@@ -39,7 +46,7 @@ public class MyCacheArticleView extends XszBaseView<ArticleCache> implements OnC
 	public CheckBox cb_select;
 	public ImageView iv_article_pic;
 	public TextView txt_article_title;
-
+	public JCVideoPlayerStandard player_list_video;
 	public MyCacheArticleView(Activity context, ViewGroup parent) {
 		super(context, R.layout.list_item_my_cache_article_view, parent);
 	}
@@ -50,6 +57,8 @@ public class MyCacheArticleView extends XszBaseView<ArticleCache> implements OnC
 		cb_select = findView(R.id.cb_select);
 		iv_article_pic = findView(R.id.iv_article_pic);
 		txt_article_title = findView(R.id.txt_article_title);
+		player_list_video = findView(R.id.player_list_video);
+		iv_article_pic.setOnClickListener(this);
 		return super.createView();
 	}
 
@@ -77,8 +86,10 @@ public class MyCacheArticleView extends XszBaseView<ArticleCache> implements OnC
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.ivUserViewHead:
-//			toActivity(WebViewActivity.createIntent(context, data.getName(), data.getHead()));
+		case R.id.iv_article_pic:
+			if (onViewClickListener!=null) {
+				onViewClickListener.onViewClick(this, v);
+			}
 			break;
 		default:
 			break;

@@ -80,11 +80,15 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements It
         edt_user_dizhi.setText(user.getHomeAddress());
         edt_user_work_adddress.setText(user.getWorkingAddress());
         edt_user_email.setText(user.getEmail());
-        boolean isMan=user.getSex()==null?true:user.getSex().equals("M")?true:false;
-        if (isMan){
+//        性别.U未知 F女 M男
+        String sex=user.getSex()==null?"U":user.getSex();
+        if (sex.equalsIgnoreCase("U")){
+            ((RadioButton)rg_user_sex.getChildAt(0)).setChecked(false);
+            ((RadioButton)rg_user_sex.getChildAt(1)).setChecked(false);
+        }else if (sex.equalsIgnoreCase("M")){
             ((RadioButton)rg_user_sex.getChildAt(0)).setChecked(true);
             ((RadioButton)rg_user_sex.getChildAt(1)).setChecked(false);
-        }else {
+        }else if (sex.equalsIgnoreCase("F")){
             ((RadioButton)rg_user_sex.getChildAt(0)).setChecked(false);
             ((RadioButton)rg_user_sex.getChildAt(1)).setChecked(true);
         }
@@ -121,7 +125,15 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements It
         sm.put("userName",edt_user_name.getText().toString());
         sm.put("email",edt_user_email.getText().toString());
         boolean isMan=((RadioButton)rg_user_sex.getChildAt(0)).isChecked();
-        sm.put("sex", isMan?"M":"F");
+        boolean isWoMan=((RadioButton)rg_user_sex.getChildAt(0)).isChecked();
+        if (isMan){
+            sm.put("sex", "M");
+        }else  if (isWoMan){
+            sm.put("sex", "F");
+        }else {
+            sm.put("sex", "U");
+        }
+
         sm.put("workingAddress",edt_user_work_adddress.getText().toString());
         sm.put("homeAddress",edt_user_home_adddress.getText().toString());
         sm.put("headPortrait",headPortrait);

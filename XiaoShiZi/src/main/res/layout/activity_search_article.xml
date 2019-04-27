@@ -58,16 +58,28 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
-        <com.walle.multistatuslayout.MultiStatusLayout
-            android:id="@+id/multiStatusLayout"
-            app:emptyLayout="@layout/layout_empty"
-            app:netErrorLayout="@layout/layout_error"
-            app:errorLayout="@layout/layout_error"
-            app:loadLayout="@layout/layout_loading"
+    <android.support.v7.widget.RecyclerView
+        android:id="@id/rvBaseRecycler"
+        style="@style/lv" />
+
+        <LinearLayout
+            android:id="@+id/ll_article_search_result_empty"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:id="@id/rvBaseRecycler"
-                style="@style/lv" />
-        </com.walle.multistatuslayout.MultiStatusLayout>
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginTop="100dp"
+                android:src="@drawable/article_search_result_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageButton
+                android:id="@+id/ivbtn_tcjy"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/null_drawable"
+                android:src="@drawable/btn_tcjy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 </LinearLayout>

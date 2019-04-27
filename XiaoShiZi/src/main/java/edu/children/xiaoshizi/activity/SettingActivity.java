@@ -21,8 +21,10 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.ArticleCache;
 import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.User;
+import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
@@ -68,6 +70,7 @@ public class SettingActivity extends XszBaseActivity{
             case R.id.ll_setting_clear_cache:
                long size= XszCache.getCacheSize();
                 XszCache.clearCacheSize();
+                DbUtils.deleteModel(ArticleCache.class);
                 dialog=DialogUIUtils.showAlert(context,"清除成功","本次为您清除缓存"+XszCache.getPrintSize(size)+"！！","","","OK","",false,true,true,new DialogUIListener(){
 
                     @Override

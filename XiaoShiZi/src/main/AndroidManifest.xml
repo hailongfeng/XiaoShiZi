@@ -40,7 +40,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".activity.IntegrationRuleActivity"></activity>
+        <activity android:name=".activity.VideoPlayActivity"></activity>
+        <activity android:name=".activity.IntegrationRuleActivity" />
         <activity
             android:name=".activity.SplashActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

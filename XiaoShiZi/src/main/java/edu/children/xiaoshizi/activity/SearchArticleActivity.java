@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -55,8 +56,10 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
     @BindView(R.id.txt_cancle)
     RoundTextView txt_cancle;
 
-    @BindView(R.id.multiStatusLayout)
-    MultiStatusLayout multiStatusLayout;
+    @BindView(R.id.ll_article_search_result_empty)
+    LinearLayout ll_article_search_result_empty;
+    @BindView(R.id.ivbtn_tcjy)
+    ImageButton ivbtn_tcjy;
 
     @BindView(R.id.rvBaseRecycler)
     RecyclerView rvBaseRecycler;
@@ -180,7 +183,7 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
                 }
             }
         });
-        updataList(new ArrayList<>());
+        updataList(new ArrayList<>(),true);
     }
 
 
@@ -214,7 +217,7 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
                     DbUtils.saveModel(history);
                 }
                 hideLoading();
-                updataList(respon.getResult());
+                updataList(respon.getResult(),false);
             }
 
             @Override
@@ -226,13 +229,19 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
         });
     }
 
-    void updataList(List<Article> articles) {
+    void updataList(List<Article> articles,boolean isFirst) {
         this.articles.clear();
         this.articles.addAll(articles);
         if (articles.size() != 0) {
-            multiStatusLayout.showContent();
+            rvBaseRecycler.setVisibility(View.VISIBLE);
+            ll_article_search_result_empty.setVisibility(View.GONE);
         } else {
-            multiStatusLayout.showEmpty();
+            rvBaseRecycler.setVisibility(View.GONE);
+            if (isFirst) {
+                ll_article_search_result_empty.setVisibility(View.GONE);
+            }else {
+                ll_article_search_result_empty.setVisibility(View.VISIBLE);
+            }
         }
         articleAdapter.refresh(this.articles);
     }
@@ -255,6 +264,7 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
     @Override
     public void initEvent() {
         iv_delete_input_text.setOnClickListener(this);
+        ivbtn_tcjy.setOnClickListener(this);
     }
 
     @Override
@@ -267,6 +277,9 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
                 break;
             case R.id.iv_delete_input_text:
                 edit_query.setText("");
+                break;
+            case R.id.ivbtn_tcjy:
+                toActivity(new Intent(context,SuggestionActivity.class));
                 break;
             case R.id.txt_cancle:
                 finish();

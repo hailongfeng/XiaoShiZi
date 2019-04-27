@@ -63,6 +63,7 @@ import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.StringUtils;
 import zuo.biao.library.base.BaseView;
+import zuo.biao.library.ui.AlertDialog;
 import zuo.biao.library.util.Log;
 
 /**设置fragment
@@ -122,8 +123,16 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		studentAdapter.setOnViewClickListener(new BaseView.OnViewClickListener() {
 			@Override
 			public void onViewClick(@NonNull BaseView bv, @NonNull View v) {
-				Student student=(Student)bv.data;
-				studentUnBinding(student.getStudentId());
+				new AlertDialog(context, "提示", "确定要解绑当前学生？", true, 0, new AlertDialog.OnDialogButtonClickListener() {
+					@Override
+					public void onDialogButtonClick(int requestCode, boolean isPositive) {
+						if (isPositive){
+							Student student=(Student)bv.data;
+							studentUnBinding(student.getStudentId());
+						}
+					}
+				}).show();
+
 			}
 		});
         //设置布局管理器
