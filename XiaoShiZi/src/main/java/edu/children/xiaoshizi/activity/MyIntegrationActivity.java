@@ -183,9 +183,13 @@ public class MyIntegrationActivity extends XszBaseActivity {
         if (v.getId()==R.id.ll_qiandao){
             signedDaily();
         }else  if (v.getId()==R.id.iv_jifen_guize){
-            Intent intent= new Intent(context,IntegrationRuleActivity.class);
-            intent.putExtra("pointRuleMsg",pointRuleMsg);
-            toActivity(intent);
+//            Intent intent= new Intent(context,IntegrationRuleActivity.class);
+//            intent.putExtra("pointRuleMsg",pointRuleMsg);
+//            toActivity(intent);
+            toActivity(XszWebViewActivity.createIntent(context,"积分规则",pointRuleMsg));
         }
     }
+
+
+
 }

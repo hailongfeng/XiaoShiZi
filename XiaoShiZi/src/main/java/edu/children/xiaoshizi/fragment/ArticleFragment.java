@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.blankj.utilcode.util.CacheUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.walle.multistatuslayout.MultiStatusLayout;
 
 import java.util.ArrayList;
@@ -79,6 +80,11 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				//点击查看某个文章
+
+				if (!NetworkUtils.isConnected()){
+					showShortToast(R.string.net_error);
+					return;
+				}
                 Intent intent=new Intent(context,ArticleDetailActivity.class);
                 Article article= articles.get(position);
                 intent.putExtra("article",article);
