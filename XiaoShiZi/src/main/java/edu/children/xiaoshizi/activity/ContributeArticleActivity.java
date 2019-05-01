@@ -274,30 +274,22 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK) {
-            if (requestCode==REQUEST_VIDEO){
-                if (!videoFile.exists()){
-                    showShortToast("视频拍摄失败，请重试");
-                    return;
-                }
-                MediaMetadataRetriever mmr=new MediaMetadataRetriever();//实例化MediaMetadataRetriever对象
-                mmr.setDataSource(videoFile.getAbsolutePath());//设置数据源为该文件对象指定的绝对路径
-                Bitmap bitmap=mmr.getFrameAtTime();//获得视频第一帧的Bitmap对象
-                iv_user_tougao.setImageBitmap(bitmap);
-                iv_user_tougao.setVisibility(View.VISIBLE);
-                iv_user_add_video.setVisibility(View.INVISIBLE);
-                String path=saveBitmap(bitmap);
-                videoImagePath =path;
-                print(path);
-                //uploadVideo();
-            }else if (requestCode == REQUEST_IMAGE) {
-//                    listPhotoPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-//                    for (int i = 0; i < listPhotoPath.size(); i++) {
-//                        addImgs(listPhotoPath.get(i));
-//                    }
-//                    takeImageAdapter.refresh(mTakeImgs);
+        if(resultCode == RESULT_OK&&requestCode==REQUEST_VIDEO) {
+            if (!videoFile.exists()){
+                showShortToast("视频拍摄失败，请重试");
+                return;
             }
+            MediaMetadataRetriever mmr=new MediaMetadataRetriever();//实例化MediaMetadataRetriever对象
+            mmr.setDataSource(videoFile.getAbsolutePath());//设置数据源为该文件对象指定的绝对路径
+            Bitmap bitmap=mmr.getFrameAtTime();//获得视频第一帧的Bitmap对象
+            iv_user_tougao.setImageBitmap(bitmap);
+            iv_user_tougao.setVisibility(View.VISIBLE);
+            iv_user_add_video.setVisibility(View.INVISIBLE);
+            String path=saveBitmap(bitmap);
+            videoImagePath =path;
+            print(path);
+        }else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 

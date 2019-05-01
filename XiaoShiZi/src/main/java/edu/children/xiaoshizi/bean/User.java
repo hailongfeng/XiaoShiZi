@@ -70,12 +70,14 @@ public class User extends BaseModel {
 	}
 	public String getSexName() {
 		String tsex="未知";
-		if (sex.equalsIgnoreCase("U")){
-			tsex="未知";
-		}else if (sex.equalsIgnoreCase("M")){
-			tsex="男";
-		}else if (sex.equalsIgnoreCase("F")){
-			tsex="女";
+		if (sex!=null){
+			if (sex.equalsIgnoreCase("U")){
+				tsex="未知";
+			}else if (sex.equalsIgnoreCase("M")){
+				tsex="男";
+			}else if (sex.equalsIgnoreCase("F")){
+				tsex="女";
+			}
 		}
 		return tsex;
 	}

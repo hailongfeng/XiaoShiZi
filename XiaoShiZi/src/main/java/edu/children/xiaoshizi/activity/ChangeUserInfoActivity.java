@@ -149,6 +149,7 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements It
                user.setHomeAddress(newUser.getHomeAddress());
                user.setEmail(newUser.getEmail());
                user.setHeadPortrait(newUser.getHeadPortrait());
+                user.setSex(newUser.getSex());
                DemoApplication.getInstance().getLoginRespon().setLoginResp(user);
                 EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_User_info_change,"用户信息更改",""));
                showShortToast(respon.getMessage());

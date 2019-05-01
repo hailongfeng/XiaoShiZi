@@ -185,6 +185,9 @@ public class MainActivity extends XszBaseActivity {
                 oldUser.setWorkingAddress(newUser.getWorkingAddress());
                 oldUser.setHomeAddress(newUser.getHomeAddress());
                 oldUser.setCardNum(newUser.getCardNum());
+                oldUser.setSex(newUser.getSex());
+                CacheUtils.get(context).remove(Constant.cache_user);
+                CacheUtils.get(context).put(Constant.cache_user,oldUser);
             }
 
             @Override

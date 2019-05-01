@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.flyco.roundview.RoundTextView;
 import com.gyf.barlibrary.ImmersionBar;
 import com.just.agentweb.AgentWeb;
@@ -300,6 +301,8 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
             @Override
             protected void onFail(Throwable  error) {
                 error.printStackTrace();
+                showShortToast(error.getMessage());
+                player.setUp("", JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
             }
         });
     }
@@ -328,6 +331,10 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_down_cache:
+               if (!NetworkUtils.isConnected()){
+                   showShortToast("无法连接到网络");
+                   return;
+               }
                 ArticleCache articleCache=new ArticleCache(article);
                 if (!articleCache.exists()){
                     articleCache.save();
@@ -357,6 +364,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     }
     public void onReturnClick(View v) {
             onBackPressed();//会从最外层子类调finish();BaseBottomWindow就是示例
+        
     }
 
     private  class CustomShareListener implements UMShareListener {

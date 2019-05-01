@@ -218,6 +218,9 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
                 }
                 hideLoading();
                 updataList(respon.getResult(),false);
+                if (historyPopupWindow!=null&&historyPopupWindow.isShowing()){
+                    historyPopupWindow.dismiss();
+                }
             }
 
             @Override
