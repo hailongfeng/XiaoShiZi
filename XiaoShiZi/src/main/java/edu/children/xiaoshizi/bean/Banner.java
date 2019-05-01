@@ -15,6 +15,12 @@ public class Banner extends BaseModel implements Serializable {
     @PrimaryKey
     private String id	;
     @Column
+    private String contentId	;
+    @Column
+    private String title	;
+    @Column
+    private String introduce	;
+    @Column
     private String sortNum	;
     @Column
     private String bannerImage	;
@@ -41,5 +47,29 @@ public class Banner extends BaseModel implements Serializable {
 
     public void setBannerImage(String bannerImage) {
         this.bannerImage = bannerImage;
+    }
+
+    public String getContentId() {
+        return contentId;
+    }
+
+    public void setContentId(String contentId) {
+        this.contentId = contentId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
     }
 }

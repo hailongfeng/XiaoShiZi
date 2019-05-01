@@ -28,6 +28,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.walle.multistatuslayout.MultiStatusLayout;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +40,7 @@ import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.ContributeArticleActivity;
 import edu.children.xiaoshizi.activity.SearchArticleActivity;
+import edu.children.xiaoshizi.activity.XszWebViewActivity;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
 import edu.children.xiaoshizi.bean.ArticleType_Table;
@@ -206,6 +208,33 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 		findView(R.id.rll_search,this);
 		findView(R.id.rtv_contribute,this);
 //		findView(R.id.llSettingLogout).setOnClickListener(this);
+		banner.setOnBannerListener(new OnBannerListener() {
+			@Override
+			public void OnBannerClick(int position) {
+				if (position<banners.size()){
+					Banner banner=banners.get(position);
+					loadBannerContentById(banner.getId());
+				}
+			}
+		});
+	}
+
+	void loadBannerContentById(String contentId){
+		TreeMap<String, String> param = new TreeMap<String, String>();
+		param.put("contentId",contentId);
+		LogicService.post(context, APIMethod.loadBannerContentById,param,new ApiSubscriber<Response<Banner>>() {
+			@Override
+			public void onSuccess(Response<Banner> respon) {
+				Banner banner=respon.getResult();
+				toActivity(XszWebViewActivity.createIntent(context,banner.getTitle(),banner.getIntroduce()));
+			}
+
+			@Override
+			protected void onFail(Throwable  error) {
+				showShortToast(error.getMessage());
+				error.printStackTrace();
+			}
+		});
 	}
 
 

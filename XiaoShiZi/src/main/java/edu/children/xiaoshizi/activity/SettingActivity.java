@@ -23,6 +23,7 @@ import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.ArticleCache;
 import edu.children.xiaoshizi.bean.EventBusMessage;
+import edu.children.xiaoshizi.bean.MyIntegrationResponse;
 import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
@@ -85,11 +86,27 @@ public class SettingActivity extends XszBaseActivity{
                 }).show();
                 break;
             case R.id.ll_setting_about_us:
+                aboutContent();
                 break;
             case R.id.btn_logout:
                 loginOut();
                 break;
         }
+    }
+
+    void aboutContent(){
+        LogicService.post(context, APIMethod.aboutContent,null,new ApiSubscriber<Response<String>>() {
+            @Override
+            public void onSuccess(Response<String> respon) {
+                toActivity(XszWebViewActivity.createIntent(context,"关于我们",respon.getResult()));
+            }
+
+            @Override
+            protected void onFail(Throwable  error) {
+                showShortToast(error.getMessage());
+                error.printStackTrace();
+            }
+        });
     }
 
     void loginOut(){

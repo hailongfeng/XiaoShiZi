@@ -10,22 +10,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.dou361.dialogui.DialogUIUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzj.pass.dialog.PayPassDialog;
 import com.lzj.pass.dialog.PayPassView;
 
 import org.greenrobot.eventbus.EventBus;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.EventBusMessage;
@@ -35,12 +31,9 @@ import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
-import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.DateUtil;
-import zuo.biao.library.base.BaseActivity;
 import zuo.biao.library.ui.DatePickerWindow;
-import zuo.biao.library.ui.EditTextInfoActivity;
 import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.MD5Util;
 import zuo.biao.library.util.StringUtil;
@@ -194,20 +187,22 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
             String pass=MD5Util.MD5(edt_bindingPassword.getText().toString());
             sm.put("bindingPassword", pass);
         }
-
+        showLoading(R.string.msg_handing);
         LogicService.post(context, APIMethod.studentBinding, sm, new ApiSubscriber<Response<LoginRespon>>() {
             @Override
             public void onSuccess(Response<LoginRespon> response) {
+                hideLoading();
                     showShortToast(response.getMessage());
                     LoginRespon loginRespon=response.getResult();
                     DemoApplication.getInstance().getLoginRespon().setParents(loginRespon.getParents());
                     DemoApplication.getInstance().getLoginRespon().setStudents(loginRespon.getStudents());
-                    EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_binding_user,"绑定学生",""));
+                    EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_binding_student,"绑定学生",""));
                     context.finish();
             }
 
             @Override
             protected void onFail(Throwable  error) {
+                hideLoading();
                 showShortToast(error.getMessage());
             }
         });

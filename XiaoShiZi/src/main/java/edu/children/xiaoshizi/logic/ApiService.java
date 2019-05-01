@@ -101,6 +101,10 @@ public interface ApiService {
     Call<Response<List<Banner>>> loadSysBannerList(@Body RequestBody requestBody);
     @POST("v1/sys/loadSysBannerList")
     Observable<Response<List<Banner>>>loadSysBannerListAsys(@Body RequestBody requestBody);
+    @POST("v1/sys/aboutContent")
+    Observable<Response<String>>aboutContent(@Body RequestBody requestBody);
+    @POST("v1/sys/loadBannerContentById")
+    Observable<Response<Banner>>loadBannerContentById(@Body RequestBody requestBody);
     @POST("v1/index/loadContentCategory")
     Call<Response<LoadContentCategoryResponse>> loadContentCategory(@Body RequestBody requestBody);
     @POST("v1/index/loadContentCategory")

@@ -152,12 +152,17 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserInfoChange(EventBusMessage<String> messageEvent) {
+        Log.d(TAG,"EventBusMessage type= "+messageEvent.getType());
         if (messageEvent.getType()==EventBusMessage.Type_user_login){
-            Log.d(TAG,"Type_user_login====");
             initData();
         }else if (messageEvent.getType()==EventBusMessage.Type_user_logout){
             initData();
+        }else if (messageEvent.getType()==EventBusMessage.Type_binding_student){
+            initData();
+        }else if (messageEvent.getType()==EventBusMessage.Type_unbinding_student){
+            initData();
         }
+
     }
 
     private void getRecodeByDate(String studentId,String snapMsgDate) {

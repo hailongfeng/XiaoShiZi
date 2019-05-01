@@ -29,7 +29,7 @@
             <TextView
                 android:padding="5dp"
                 android:id="@+id/txt_article_pinglun"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
                 android:textSize="14sp"

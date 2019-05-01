@@ -35,4 +35,6 @@ public enum  APIMethod {
     uploadVerifiedVideo,
     loadIntegralDetailList,
     signedDaily,
+    aboutContent,
+    loadBannerContentById,
 }

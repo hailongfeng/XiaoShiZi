@@ -225,6 +225,10 @@ public class LogicService {
             observable = apiService.loadIntegralDetailList(requestBody);
         }else if (method == APIMethod.signedDaily) {
             observable = apiService.signedDaily(requestBody);
+        }else if (method == APIMethod.aboutContent) {
+            observable = apiService.aboutContent(requestBody);
+        }else if (method == APIMethod.loadBannerContentById) {
+            observable = apiService.loadBannerContentById(requestBody);
         }
 
         if (observable != null) {

@@ -2,7 +2,6 @@ package edu.children.xiaoshizi.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -11,9 +10,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import butterknife.BindView;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
-import edu.children.xiaoshizi.bean.Message;
-import edu.children.xiaoshizi.bean.Student;
-import zuo.biao.library.ui.WebViewActivity;
 
 public class InOutSchoolRecodeDetailActivity extends XszBaseActivity {
     @BindView(R.id.txt_student_name)

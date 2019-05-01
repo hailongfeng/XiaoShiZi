@@ -30,7 +30,6 @@ import android.widget.TextView;
 
 import com.flyco.roundview.RoundTextView;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.walle.multistatuslayout.MultiStatusLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -169,6 +168,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 					cv_no_students.setVisibility(View.GONE);
 					studentAdapter.refresh(list);
 				}
+				EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_unbinding_student,"解绑学生",""));
 			}
 
 			@Override
@@ -280,7 +280,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	public void onUserInfoChange(EventBusMessage<String> messageEvent) {
 		if (messageEvent.getType()==EventBusMessage.Type_User_info_change){
 			updateUserInfo();
-		}else if (messageEvent.getType()==EventBusMessage.Type_binding_user){
+		}else if (messageEvent.getType()==EventBusMessage.Type_binding_student){
 			updateStudent();
 		}else if (messageEvent.getType()==EventBusMessage.Type_user_login){
 			Log.d(TAG,"Type_user_login====");

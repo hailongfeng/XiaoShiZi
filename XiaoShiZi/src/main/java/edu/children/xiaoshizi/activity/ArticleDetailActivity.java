@@ -364,7 +364,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     }
     public void onReturnClick(View v) {
             onBackPressed();//会从最外层子类调finish();BaseBottomWindow就是示例
-        
+
     }
 
     private  class CustomShareListener implements UMShareListener {
