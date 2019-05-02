@@ -21,6 +21,7 @@ import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -103,7 +104,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Activity
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+		//android O fix bug orientation
+		if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		}
 		context = (BaseActivity) getActivity();
 		isAlive = true;
 		fragmentManager = getSupportFragmentManager();

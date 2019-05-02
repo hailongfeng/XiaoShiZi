@@ -26,12 +26,10 @@
         >
         <activity
             android:name="zuo.biao.library.ui.SelectPictureActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/WindowCompleteAlpha"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="zuo.biao.library.ui.CutPictureActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Window"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
@@ -49,32 +47,26 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="zuo.biao.library.ui.TopMenuWindow"
-            android:screenOrientation="portrait"
             android:theme="@style/Window"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="zuo.biao.library.ui.BottomMenuWindow"
-            android:screenOrientation="portrait"
             android:theme="@style/Window"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="zuo.biao.library.ui.EditTextInfoWindow"
-            android:screenOrientation="portrait"
             android:theme="@style/Window"
             android:windowSoftInputMode="stateVisible|adjustResize|adjustUnspecified" />
         <activity
             android:name="zuo.biao.library.ui.PlacePickerWindow"
-            android:screenOrientation="portrait"
             android:theme="@style/Window"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="zuo.biao.library.ui.DatePickerWindow"
-            android:screenOrientation="portrait"
             android:theme="@style/Window"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="zuo.biao.library.ui.TimePickerWindow"
-            android:screenOrientation="portrait"
             android:theme="@style/Window"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
