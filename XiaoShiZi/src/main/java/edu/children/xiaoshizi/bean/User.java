@@ -47,6 +47,7 @@ public class User extends BaseModel {
 	private String cardNum;
 	private String verifiedStatus; //是否实名认证。1 是 0不是
 	private String firstGuardianStatus; //是否第一联系人。1 是，0不是
+	private String appShareUrl; //分享
 
 
 
@@ -207,5 +208,13 @@ public class User extends BaseModel {
 
 	public void setFirstGuardianStatus(String firstGuardianStatus) {
 		this.firstGuardianStatus = firstGuardianStatus;
+	}
+
+	public String getAppShareUrl() {
+		return appShareUrl;
+	}
+
+	public void setAppShareUrl(String appShareUrl) {
+		this.appShareUrl = appShareUrl;
 	}
 }

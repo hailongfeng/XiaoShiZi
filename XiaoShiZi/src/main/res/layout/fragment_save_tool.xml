@@ -89,7 +89,7 @@
                 android:layout_margin="10dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
+                app:cardElevation="5dp">
 
                 <RelativeLayout
                     style="@style/ll_horizontal_match_wrap"
@@ -231,7 +231,7 @@
                 android:layout_margin="10dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
+                app:cardElevation="5dp">
 
                 <LinearLayout
                     android:orientation="vertical"

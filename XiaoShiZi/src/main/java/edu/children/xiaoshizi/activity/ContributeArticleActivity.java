@@ -77,8 +77,7 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
     private BaseAdapter takeImageAdapter;
     private String add;
     List<String> mTakeImgs = new ArrayList<>();
-    private static final int REQUEST_IMAGE = 1001;
-    private static final int REQUEST_VIDEO = 1002;
+    private static final int REQUEST_VIDEO = 2;
 
 
     private String headPortrait="";

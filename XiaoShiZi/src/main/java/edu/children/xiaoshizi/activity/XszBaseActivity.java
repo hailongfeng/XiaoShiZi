@@ -7,6 +7,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -21,6 +23,8 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 
 import java.lang.reflect.Field;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
 import edu.children.xiaoshizi.DemoApplication;
@@ -31,10 +35,21 @@ import zuo.biao.library.util.Log;
 
 public abstract class XszBaseActivity extends BaseActivity implements View.OnClickListener {
 
-  protected  SPUtils spUtils;
-  protected static   RequestOptions glideOptions = new RequestOptions()
-            .fallback( R.drawable.user_default) //url为空的时候,显示的图片
+    protected SPUtils spUtils;
+    protected static RequestOptions glideOptions = new RequestOptions()
+            .fallback(R.drawable.user_default) //url为空的时候,显示的图片
             .error(R.drawable.user_default);//图片加载失败后，显示的图片
+
+    protected InputFilter filterLetterAndChines = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern p = Pattern.compile("[a-zA-Z|\u4e00-\u9fa5]+");
+            Matcher m = p.matcher(source.toString());
+            if (!m.matches()) return "";
+            return null;
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +78,7 @@ public abstract class XszBaseActivity extends BaseActivity implements View.OnCli
         super.onResume();
         MobclickAgent.onResume(this); // 不能遗漏
     }
+
     // Activity页面onResume函数重载
     @Override
     public void onPause() {
@@ -70,19 +86,22 @@ public abstract class XszBaseActivity extends BaseActivity implements View.OnCli
         MobclickAgent.onPause(this); // 不能遗漏
     }
 
-    private Dialog loadingDialog=null;
-    protected  void showLoading(String msg){
-        loadingDialog=DialogUIUtils.showLoading(context, msg,true,false,false,true).show();
+    private Dialog loadingDialog = null;
+
+    protected void showLoading(String msg) {
+        loadingDialog = DialogUIUtils.showLoading(context, msg, true, false, false, true).show();
     }
-    protected  void showLoading(@StringRes int rid){
-        String msg= context.getResources().getString(rid);
-        loadingDialog=DialogUIUtils.showLoading(context, msg,true,false,false,true).show();
+
+    protected void showLoading(@StringRes int rid) {
+        String msg = context.getResources().getString(rid);
+        loadingDialog = DialogUIUtils.showLoading(context, msg, true, false, false, true).show();
     }
-    protected  void hideLoading(){
+
+    protected void hideLoading() {
         DialogUIUtils.dismiss(loadingDialog);
     }
 
-    protected void loadImage(String url, ImageView imageView){
+    protected void loadImage(String url, ImageView imageView) {
         Glide.with(context)
                 .load(url)
                 .apply(glideOptions)
@@ -93,28 +112,32 @@ public abstract class XszBaseActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
 
     }
-    protected AgentWeb getAgentWebField(AgentWeb.PreAgentWeb preAgentWeb){
+
+    protected AgentWeb getAgentWebField(AgentWeb.PreAgentWeb preAgentWeb) {
         Field field = null;
         AgentWeb agentWeb = null;
         try {
             field = preAgentWeb.getClass().getDeclaredField("mAgentWeb");
             field.setAccessible(true);
-            agentWeb= (AgentWeb) field.get(preAgentWeb);
-            Log.d(TAG,(agentWeb==null)+",,,agentWeb==null");
+            agentWeb = (AgentWeb) field.get(preAgentWeb);
+            Log.d(TAG, (agentWeb == null) + ",,,agentWeb==null");
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return agentWeb;
     }
-    protected String getHtml(String body){
-        StringBuilder sb=new StringBuilder();
+
+    protected String getHtml(String body) {
+        StringBuilder sb = new StringBuilder();
         sb.append("<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /></head><body>").append(body).append("</body></html>");
         return sb.toString();
     }
-    protected boolean isLogin(){
+
+    protected boolean isLogin() {
         return DemoApplication.getInstance().isLogin();
     }
-    protected void print(String msg){
-        Log.d(TAG,msg);
+
+    protected void print(String msg) {
+        Log.d(TAG, msg);
     }
 }

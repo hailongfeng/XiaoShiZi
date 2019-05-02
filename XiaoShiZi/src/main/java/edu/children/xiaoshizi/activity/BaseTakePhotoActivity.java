@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.InputFilter;
+import android.text.Spanned;
 
 
 import org.devio.takephoto.app.TakePhoto;
@@ -18,6 +20,8 @@ import org.devio.takephoto.permission.PermissionManager;
 import org.devio.takephoto.permission.TakePhotoInvocationHandler;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import edu.children.xiaoshizi.utils.Constant;
 import edu.children.xiaoshizi.utils.XszCache;
@@ -33,6 +37,7 @@ public abstract class BaseTakePhotoActivity extends XszBaseActivity implements T
     private CropOptions cropOptions;
     protected String originalFilePath;
     protected String compressFilePath;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

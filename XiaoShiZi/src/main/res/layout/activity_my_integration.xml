@@ -97,7 +97,7 @@
                     android:layout_marginBottom="20dp"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="8dp"
-                    app:cardElevation="8dp">
+                    app:cardElevation="5dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -157,7 +157,7 @@
                 android:layout_margin="10dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
+                app:cardElevation="5dp">
 
                 <com.walle.multistatuslayout.MultiStatusLayout
                     android:id="@+id/multiStatusLayout"

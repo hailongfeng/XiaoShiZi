@@ -64,7 +64,7 @@ android {
     flavorDimensions "zhangphil_demo"
     productFlavors {
         XszFormal {
-            buildConfigField "String", "SERVER_URL", "\"http://app.shine-creativity.com/apprest/\""
+            buildConfigField "String", "SERVER_URL", "\"https://app.shine-creativity.com/apprest/\""
         }
 
         XszTest {

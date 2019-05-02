@@ -18,40 +18,25 @@
             android:text="重要联系人" />
     </RelativeLayout>
     <View style="@style/divider_horizontal_1px" />
-    <RelativeLayout
-        style="@style/match_match"
-        android:layout_weight="1">
-
         <ScrollView style="@style/match_match">
+            <FrameLayout
+                android:paddingTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="100dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="16dp">
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
             <LinearLayout
                 style="@style/ll_vertical_match_match"
+                android:layout_marginTop="90dp"
                 >
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/iv_parent_face"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="10dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/user_default"
-                    app:riv_border_color="@color/white"
-                    app:riv_border_width="1dp"
-                    app:riv_oval="true" />
-                <TextView
-                    android:id="@+id/txt_parent_name"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:text="姓名" />
                 <LinearLayout
                     android:id="@+id/ll_parent_address"
                     style="@style/content_item_white">
@@ -154,7 +139,33 @@
                 </LinearLayout>
             </LinearLayout>
             </android.support.v7.widget.CardView>
-        </ScrollView>
+                <LinearLayout
+                    android:elevation="9dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:background="@color/transparent"
+                    >
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/iv_parent_face"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="10dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/user_default"
+                        app:riv_border_color="@color/white"
+                        app:riv_border_width="1dp"
+                        app:riv_oval="true" />
 
-    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/txt_parent_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="姓名"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </FrameLayout>
+        </ScrollView>
 </LinearLayout>

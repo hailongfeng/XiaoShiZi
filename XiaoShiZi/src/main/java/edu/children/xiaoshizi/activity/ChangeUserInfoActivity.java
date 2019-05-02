@@ -3,6 +3,7 @@ package edu.children.xiaoshizi.activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +35,7 @@ import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
+import edu.children.xiaoshizi.utils.SizeFilterWithTextAndLetter;
 import edu.children.xiaoshizi.utils.StringUtils;
 import zuo.biao.library.ui.ItemDialog;
 import zuo.biao.library.util.Log;
@@ -69,6 +71,7 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements It
         ImmersionBar.with(this)
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
+        edt_user_name.setFilters(new InputFilter[]{new SizeFilterWithTextAndLetter(8,4)});
     }
 
     @Override

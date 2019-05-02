@@ -3,7 +3,9 @@ package edu.children.xiaoshizi.activity;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -13,6 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.CacheUtils;
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.listener.DialogUIListener;
+import com.flyco.roundview.RoundTextView;
 import com.gyf.barlibrary.ImmersionBar;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -61,6 +64,10 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
     ImageButton ib_login_by_wexin;
     @BindView(R.id.ib_login_by_qq)
     ImageButton ib_login_by_qq;
+    @BindView(R.id.btn_get_verify_code)
+    RoundTextView btn_get_verify_code;
+
+    private TimeCount time;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +76,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
 
     @Override
     public void initView() {
+        time = new TimeCount(3*60*1000, 1000);
         ImmersionBar.with(this)
                 .statusBarColor(R.color.white)     //状态栏颜色，不写默认透明色
                 .init();
@@ -142,6 +150,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                 Log.d(TAG,"response code:"+response.getCode());
                 Log.d(TAG,"onNext  , "+Thread.currentThread().getName());
                 showShortToast(response.getMessage());
+                time.start();
             }
 
             @Override
@@ -311,6 +320,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
 
     @Override
     protected void onDestroy() {
+        time.onFinish();
         super.onDestroy();
         UMShareAPI.get(this).release();
 
@@ -320,5 +330,29 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         UMShareAPI.get(this).onSaveInstanceState(outState);
+    }
+
+
+    class TimeCount extends CountDownTimer {
+
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+//            btn_get_verify_code.setBackgroundColor(Color.parseColor("#B6B6D8"));
+            btn_get_verify_code.setClickable(false);
+            btn_get_verify_code.setText(millisUntilFinished / 1000 +"秒");
+        }
+
+        @Override
+        public void onFinish() {
+            btn_get_verify_code.setText("获取验证码");
+            btn_get_verify_code.setClickable(true);
+//            btn_get_verify_code.setBackgroundColor(Color.parseColor("#4EB84A"));
+
+        }
     }
 }

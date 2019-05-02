@@ -14,6 +14,7 @@ limitations under the License.*/
 
 package edu.children.xiaoshizi.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,14 +28,24 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.flyco.roundview.RoundTextView;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
+import com.umeng.socialize.shareboard.SnsPlatform;
+import com.umeng.socialize.utils.ShareBoardlistener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -48,6 +59,7 @@ import edu.children.xiaoshizi.activity.MyIntegrationActivity;
 import edu.children.xiaoshizi.activity.ParentInfoActivity;
 import edu.children.xiaoshizi.activity.RealNameAuthActivity;
 import edu.children.xiaoshizi.activity.SettingActivity;
+import edu.children.xiaoshizi.activity.ShareBoardActivity;
 import edu.children.xiaoshizi.activity.SuggestionActivity;
 import edu.children.xiaoshizi.activity.UserInfoActivity;
 import edu.children.xiaoshizi.adapter.ParentAdapter;
@@ -148,6 +160,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 			}
 		});
         rvParentRecycler.setAdapter(parentAdapter);
+		initShare();
 	}
 
 	private void studentUnBinding(String studentId){
@@ -253,6 +266,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 
 	@Override
 	public void initEvent() {//必须调用
+		findView(R.id.iv_user_face, this);
 		findView(R.id.iv_user_setting, this);
 		findView(R.id.btn_add_student, this);
 		findView(R.id.ll_my_jifen, this);
@@ -272,7 +286,94 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 			});
 		}
 	}
+	private UMShareListener mShareListener;
+	private ShareAction mShareAction;
+	void initShare(){
+		mShareListener = new WoDeFragment.CustomShareListener(context);
+		/*增加自定义按钮的分享面板*/
+		mShareAction = new ShareAction(context).setDisplayList(
+				SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
+				SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE)
+				.setShareboardclickCallback(new ShareBoardlistener() {
+					@Override
+					public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+						String url=DemoApplication.getInstance().getUser().getAppShareUrl();
+						print("ShareUrl==="+url);
+						UMWeb web = new UMWeb(url);
+						web.setTitle("推荐小狮子");
+						web.setDescription("来自小狮子的分享");
+						web.setThumb(new UMImage(context, R.mipmap.logo));
+						new ShareAction(context).withMedia(web)
+								.setPlatform(share_media)
+								.setCallback(mShareListener)
+								.share();
+					}
+				});
+	}
 
+
+	private  class CustomShareListener implements UMShareListener {
+		private WeakReference<ShareBoardActivity> mActivity;
+		private CustomShareListener(Context activity) {
+			mActivity = new WeakReference(activity);
+		}
+
+		@Override
+		public void onStart(SHARE_MEDIA platform) {
+
+		}
+
+		@Override
+		public void onResult(SHARE_MEDIA platform) {
+
+			if (platform.name().equals("WEIXIN_FAVORITE")) {
+				Toast.makeText(mActivity.get(), platform + " 收藏成功啦", Toast.LENGTH_SHORT).show();
+//				submitComment(article.getContentId(),"0","", ArticleComment.comment_type_Share);
+			} else {
+				if (platform != SHARE_MEDIA.MORE && platform != SHARE_MEDIA.SMS
+						&& platform != SHARE_MEDIA.EMAIL
+						&& platform != SHARE_MEDIA.FLICKR
+						&& platform != SHARE_MEDIA.FOURSQUARE
+						&& platform != SHARE_MEDIA.TUMBLR
+						&& platform != SHARE_MEDIA.POCKET
+						&& platform != SHARE_MEDIA.PINTEREST
+
+						&& platform != SHARE_MEDIA.INSTAGRAM
+						&& platform != SHARE_MEDIA.GOOGLEPLUS
+						&& platform != SHARE_MEDIA.YNOTE
+						&& platform != SHARE_MEDIA.EVERNOTE) {
+//					submitComment(article.getContentId(),"0","", ArticleComment.comment_type_Share);
+					Toast.makeText(mActivity.get(), platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+				}else {
+					showShortToast("分享失败啦");
+				}
+			}
+		}
+
+		@Override
+		public void onError(SHARE_MEDIA platform, Throwable t) {
+			if (platform != SHARE_MEDIA.MORE && platform != SHARE_MEDIA.SMS
+					&& platform != SHARE_MEDIA.EMAIL
+					&& platform != SHARE_MEDIA.FLICKR
+					&& platform != SHARE_MEDIA.FOURSQUARE
+					&& platform != SHARE_MEDIA.TUMBLR
+					&& platform != SHARE_MEDIA.POCKET
+					&& platform != SHARE_MEDIA.PINTEREST
+
+					&& platform != SHARE_MEDIA.INSTAGRAM
+					&& platform != SHARE_MEDIA.GOOGLEPLUS
+					&& platform != SHARE_MEDIA.YNOTE
+					&& platform != SHARE_MEDIA.EVERNOTE) {
+				Toast.makeText(mActivity.get(), platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+			}
+
+		}
+
+		@Override
+		public void onCancel(SHARE_MEDIA platform) {
+			Toast.makeText(mActivity.get(), platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+		}
+	}
 
 
 //	@Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
@@ -306,6 +407,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 			return;
 		}
 		switch (v.getId()) {
+			case R.id.iv_user_face:
 			case R.id.iv_user_setting:
 				toActivity(new Intent(context, UserInfoActivity.class));
 				break;
@@ -320,6 +422,10 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 				break;
 			case R.id.ll_my_jiazhangjianyi:
 				toActivity(new Intent(context, SuggestionActivity.class));
+				break;
+			case R.id.ll_my_fenxiang:
+				//toActivity(new Intent(context, SuggestionActivity.class));
+				mShareAction.open();
 				break;
 			case R.id.btn_no_student_bind:
 			case R.id.btn_add_student:
@@ -337,10 +443,17 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	}
 
 	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		UMShareAPI.get(context).onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		if(EventBus.getDefault().isRegistered(this)) {
 			EventBus.getDefault().unregister(this);
 		}
+		UMShareAPI.get(context).release();
 	}
 }

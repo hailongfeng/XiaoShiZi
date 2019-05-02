@@ -71,6 +71,7 @@
                         android:text="姓名" />
 
                     <EditText
+                        android:lines="1"
                         android:id="@+id/edt_user_name"
                         style="@style/content_item_lf_tv"
                         android:theme="@style/MyEditText"

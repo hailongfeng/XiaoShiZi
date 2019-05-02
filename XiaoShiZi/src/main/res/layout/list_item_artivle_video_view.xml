@@ -12,7 +12,7 @@
         android:layout_margin="10dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
-        app:cardElevation="8dp">
+        app:cardElevation="5dp">
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

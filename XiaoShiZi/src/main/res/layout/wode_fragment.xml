@@ -89,7 +89,7 @@
                     android:visibility="gone"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="8dp"
-                    app:cardElevation="8dp">
+                    app:cardElevation="5dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -181,7 +181,7 @@
                 android:layout_marginBottom="20dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
+                app:cardElevation="5dp">
 
                 <LinearLayout style="@style/ll_vertical_match_wrap">
 
