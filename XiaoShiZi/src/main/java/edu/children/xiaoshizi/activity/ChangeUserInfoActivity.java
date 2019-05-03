@@ -128,7 +128,7 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements It
         sm.put("userName",edt_user_name.getText().toString());
         sm.put("email",edt_user_email.getText().toString());
         boolean isMan=((RadioButton)rg_user_sex.getChildAt(0)).isChecked();
-        boolean isWoMan=((RadioButton)rg_user_sex.getChildAt(0)).isChecked();
+        boolean isWoMan=((RadioButton)rg_user_sex.getChildAt(1)).isChecked();
         if (isMan){
             sm.put("sex", "M");
         }else  if (isWoMan){

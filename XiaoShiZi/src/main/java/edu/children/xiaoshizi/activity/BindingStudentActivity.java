@@ -129,7 +129,7 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
                 new ItemDialog(context, TOPBAR_SCHOOL_GRADLE, "选择年级", DIALOG_SET_GRADLE, this).show();
                 break;
             case R.id.ll_student_banji:
-                if (currentSchoolIndex<0){
+                if (currentGradlelIndex<0){
                     showShortToast("先选择年级");
                     return;
                 }
@@ -139,7 +139,6 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
                     TOPBAR_SCHOOL_BANJI[i]=banjis.get(i).schoolName;
                 }
                 new ItemDialog(context, TOPBAR_SCHOOL_BANJI, "选择班级", DIALOG_SET_BANJI, this).show();
-
                 break;
             case R.id.ll_student_guanxi:
                 new ItemDialog(context, STUDENT_GUARDIAN_GUANXI, "选择监护人", DIALOG_SET_GUANXI, this).show();
@@ -168,7 +167,15 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
             sm.put("userName", edt_student_name.getText().toString());
         }
         boolean isMan=((RadioButton)rg_student_sex.getChildAt(0)).isChecked();
-        sm.put("sex", isMan?"M":"F");
+        boolean isWoMan=((RadioButton)rg_student_sex.getChildAt(1)).isChecked();
+        if (isMan){
+            sm.put("sex", "M");
+        }else  if (isWoMan){
+            sm.put("sex", "F");
+        }else {
+            sm.put("sex", "U");
+        }
+
         if (currentSchoolIndex>=0){
             sm.put("schoolId", schools.get(currentSchoolIndex).id);
         }

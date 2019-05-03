@@ -212,7 +212,7 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
 
 
         Map<String,File> videofiles=new HashMap<>();
-        if (videoFile.exists()){
+        if (videoFile!=null&&videoFile.exists()){
             print("videoFile:"+videoFile.getAbsolutePath());
             videofiles.put("contentVideo",videoFile);
         }

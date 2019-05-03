@@ -39,6 +39,7 @@ import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.ContributeArticleActivity;
+import edu.children.xiaoshizi.activity.LoginActivity;
 import edu.children.xiaoshizi.activity.SearchArticleActivity;
 import edu.children.xiaoshizi.activity.XszWebViewActivity;
 import edu.children.xiaoshizi.bean.Article;
@@ -265,7 +266,8 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 				break;
 			case R.id.rtv_contribute:
 				if (!isLogin()){
-					showShortToast("请先登录");
+//					showShortToast("请先登录");
+					toActivity(new Intent(context, LoginActivity.class));
 					return;
 				}
 				toActivity(new Intent(context, ContributeArticleActivity.class));
