@@ -194,6 +194,7 @@ public class ContributeArticleActivity extends BaseTakePhotoActivity {
         sm.put("type", isJiaZhang?"P":"S");
         sm.put("introduce",edt_suggestion_content.getText().toString());
 
+
         Map<String,File> imagefiles=new HashMap<>();
         int index=0;
         for (int i = 0; i < mTakeImgs.size(); i++) {

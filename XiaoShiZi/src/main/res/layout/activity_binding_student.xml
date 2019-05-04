@@ -214,9 +214,29 @@
                         android:text="绑定密码" />
 
                     <EditText
-                        android:inputType="text"
+                        android:inputType="textPassword"
                         android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         android:id="@+id/edt_bindingPassword"
+                        android:lines="1"
+                        android:maxLength="12"
+                        style="@style/content_item_lf_tv"
+                        android:layout_weight="1" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_student_bangdingmima_again"
+                    style="@style/content_item_white">
+
+                    <TextView
+                        style="@style/content_item_lf_tv"
+                        android:layout_width="80dp"
+                        android:text="重复密码" />
+
+                    <EditText
+                        android:inputType="textPassword"
+                        android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:id="@+id/edt_bindingPassword_again"
+                        android:lines="1"
+                        android:maxLength="12"
                         style="@style/content_item_lf_tv"
                         android:layout_weight="1" />
                 </LinearLayout>

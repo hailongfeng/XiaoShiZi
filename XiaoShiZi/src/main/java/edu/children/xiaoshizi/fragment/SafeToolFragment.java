@@ -108,7 +108,6 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
 
     @Override
     public void initView() {
-
     }
 
     @Override
@@ -160,6 +159,8 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
         }else if (messageEvent.getType()==EventBusMessage.Type_binding_student){
             initData();
         }else if (messageEvent.getType()==EventBusMessage.Type_unbinding_student){
+            initData();
+        }else if (messageEvent.getType()==EventBusMessage.Type_message_new){
             initData();
         }
 

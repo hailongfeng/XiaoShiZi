@@ -63,6 +63,7 @@ public class LogicService {
         for (String key : keys) {
             params.put(key, convertToRequestBody(param.get(key)));
         }
+
         //图片参数
         Set<Map.Entry<String, File>> setImage = imagefiles.entrySet();
         for (Map.Entry<String, File> entry : setImage) {
@@ -79,6 +80,10 @@ public class LogicService {
             RequestBody body1 = RequestBody.create(MediaType.parse("video/mp4"), file);
             builder.addFormDataPart(key, file.getName(), body1);
 
+        }
+
+        if (imagefiles.size()==0&&videoFiles.size()==0){
+            builder.addFormDataPart("", "");
         }
         ApiService apiService = RetrofitClient.getInstance(context).provideApiService();
         List<MultipartBody.Part> parts = builder.build().parts();

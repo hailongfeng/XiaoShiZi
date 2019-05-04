@@ -9,6 +9,7 @@ public class EventBusMessage<T> implements Serializable {
     public static final int Type_user_logout=3;
     public static final int Type_user_real_name_auth=4;
     public static final int Type_unbinding_student=5;
+    public static final int Type_message_new=6;
     private int type;
     private String message;
     private T data;

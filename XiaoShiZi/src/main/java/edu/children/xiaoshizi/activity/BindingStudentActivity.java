@@ -57,6 +57,8 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
     TextView txt_student_guanxi;
     @BindView(R.id.edt_bindingPassword)
     EditText edt_bindingPassword;
+    @BindView(R.id.edt_bindingPassword_again)
+    EditText edt_bindingPassword_again;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +87,7 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
         findView(R.id.ll_student_banji).setOnClickListener(this);
         findView(R.id.ll_student_guanxi).setOnClickListener(this);
         findView(R.id.ll_student_bangdingmima).setOnClickListener(this);
+        findView(R.id.ll_student_bangdingmima_again).setOnClickListener(this);
         findView(R.id.btn_bind_student).setOnClickListener(this);
 
     }
@@ -158,6 +161,14 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
     private void bindingStudent(){
         if (StringUtil.isEmpty(edt_bindingPassword,true)){
             showShortToast("请输入绑定密码");
+            return;
+        }
+        if (StringUtil.isEmpty(edt_bindingPassword_again,true)){
+            showShortToast("重复密码不能为空");
+            return;
+        }
+        if (!edt_bindingPassword_again.toString().equalsIgnoreCase(edt_bindingPassword.toString())){
+            showShortToast("两次密码不相同");
             return;
         }
 

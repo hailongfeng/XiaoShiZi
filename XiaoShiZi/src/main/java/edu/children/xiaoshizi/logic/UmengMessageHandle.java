@@ -12,11 +12,14 @@ import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 import com.umeng.socialize.PlatformConfig;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Map;
 
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.MessageDetailActivity;
+import edu.children.xiaoshizi.bean.EventBusMessage;
 import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
 
@@ -107,6 +110,7 @@ public class UmengMessageHandle {
             if (!StringUtil.isEmpty(snapMsgId,true)){
                 DemoApplication.getInstance().startActivity(MessageDetailActivity.createIntent(context,snapMsgId));
 //                context.startActivity();
+                EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_message_new,"新消息",""));
             }else {
                 Log.e(TAG,"该消息[ "+msg.msg_id +" ]snapMsgId为空");
             }
