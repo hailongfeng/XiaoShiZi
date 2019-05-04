@@ -43,9 +43,11 @@ import butterknife.BindView;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleCache;
+import edu.children.xiaoshizi.bean.ArticleCache_Table;
 import edu.children.xiaoshizi.bean.ArticleComment;
 import edu.children.xiaoshizi.bean.ArticleType;
 import edu.children.xiaoshizi.bean.EventBusMessage;
+import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
@@ -245,6 +247,12 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                     @Override
                     protected void completed(BaseDownloadTask task) {
                         showShortToast("缓存成功");
+                        ArticleCache dbArticleCache=DbUtils.getModelSingle(ArticleCache.class, ArticleCache_Table.contentId.eq(article.getContentId()));
+                        if (dbArticleCache!=null){
+                            dbArticleCache.delete();
+                        }
+                        ArticleCache articleCache=new ArticleCache(article);
+                        articleCache.save();
 
                     }
 
@@ -339,10 +347,6 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                    showShortToast("无法连接到网络");
                    return;
                }
-                ArticleCache articleCache=new ArticleCache(article);
-                if (!articleCache.exists()){
-                    articleCache.save();
-                }
                 String url=article.getActivityVideoUrl();
                 File file=XszCache.getCachedVideoFile(url);
                 if(file.exists()){
