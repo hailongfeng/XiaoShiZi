@@ -15,6 +15,8 @@ limitations under the License.*/
 package edu.children.xiaoshizi.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +29,10 @@ import com.blankj.utilcode.util.CacheUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.walle.multistatuslayout.MultiStatusLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -37,6 +43,7 @@ import edu.children.xiaoshizi.activity.ArticleDetailActivity;
 import edu.children.xiaoshizi.adapter.ArticleAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
@@ -60,6 +67,16 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 	private ArticleType firstArticleType;
 	@BindView(R.id.multiStatusLayout)
 	MultiStatusLayout multiStatusLayout;
+
+
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if(!EventBus.getDefault().isRegistered(this)) {
+			EventBus.getDefault().register(this);
+		}
+	}
+
 	@Override
 	int getLayoutId() {
 		return R.layout.fragment_article_layout;
@@ -147,6 +164,31 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 		});
 	}
 
+
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void onReceiveEventBusMessage(EventBusMessage<Article> messageEvent) {
+		Log.d(TAG,"EventBusMessage type= "+messageEvent.getType());
+		if (messageEvent.getType()==EventBusMessage.Type_article_comment){
+			Article newArticle=messageEvent.getData();
+			boolean isExit=false;
+			for (Article article:this.articles){
+				if (article.getContentId().equalsIgnoreCase(newArticle.getContentId())){
+					article.setLikedNumber(newArticle.getLikedNumber());
+					article.setShareNumber(newArticle.getShareNumber());
+					article.setIntroduce(newArticle.getIntroduce());
+					article.setShareUrl(newArticle.getShareUrl());
+					isExit=true;
+					break;
+				}
+			}
+			if (isExit){
+				articleAdapter.refresh(this.articles);
+			}
+		}
+
+	}
+
 	@Override
 	public void initData() {//必须调用
 
@@ -181,6 +223,14 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 //				break;
 			default:
 				break;
+		}
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if(EventBus.getDefault().isRegistered(this)) {
+			EventBus.getDefault().unregister(this);
 		}
 	}
 

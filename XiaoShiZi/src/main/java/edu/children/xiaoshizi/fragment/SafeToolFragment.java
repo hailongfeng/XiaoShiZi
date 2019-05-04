@@ -53,6 +53,8 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     ImageView iv_student_face;
     @BindView(R.id.txt_student_name)
     TextView txt_student_name;
+    @BindView(R.id.iv_student_sex)
+    ImageView iv_student_sex;
     @BindView(R.id.txt_student_birthday)
     TextView txt_student_birthday;
     @BindView(R.id.txt_student_school)
@@ -237,7 +239,11 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
         txt_student_school.setText(student.getSchoolName());
         txt_student_gradle.setText(student.getSchoolGradeName()+","+student.getSchoolClassName());
         txt_student_Guardian.setText(student.getCustody());
-
+        if (student.getSex()!=null&&student.getSex().equalsIgnoreCase("F")){
+            iv_student_sex.setImageResource(R.drawable.icon_sex_man);
+        }else {
+            iv_student_sex.setImageResource(R.drawable.icon_sex_women);
+        }
     }
 
     @Override

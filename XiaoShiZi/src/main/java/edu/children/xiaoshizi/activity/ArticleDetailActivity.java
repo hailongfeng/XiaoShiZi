@@ -32,6 +32,8 @@ import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
@@ -43,6 +45,7 @@ import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleCache;
 import edu.children.xiaoshizi.bean.ArticleComment;
 import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
@@ -187,7 +190,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
         rtv_dianzan.setText(article.getLikedNumber()+"");
         rtv_fenxiang.setText(article.getShareNumber()+"");
     }
-
+    //点赞或评论
     void submitComment(String contentId,String commentParentId,String commentContent,String articleCommentType){
         showLoading(R.string.msg_handing);
         TreeMap sm = new TreeMap<String, String>();
@@ -212,6 +215,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 }else {
                     updateCommont(newArticle);
                 }
+                EventBus.getDefault().post(new EventBusMessage<Article>(EventBusMessage.Type_article_comment,"评论数变化了",article));
             }
 
             @Override

@@ -27,6 +27,7 @@ import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.LoginRespon;
 import edu.children.xiaoshizi.bean.School;
+import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
@@ -59,6 +60,11 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
     EditText edt_bindingPassword;
     @BindView(R.id.edt_bindingPassword_again)
     EditText edt_bindingPassword_again;
+    @BindView(R.id.ll_student_bangdingmima_again)
+    LinearLayout ll_student_bangdingmima_again;
+
+    boolean isFirstGuardian=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +76,15 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
         ImmersionBar.with(this)
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
+
+        User user=DemoApplication.getInstance().getUser();
+        if (user.getFirstGuardianStatus().equalsIgnoreCase("1")){
+            isFirstGuardian=true;
+            ll_student_bangdingmima_again.setVisibility(View.VISIBLE);
+        }else {
+            isFirstGuardian=false;
+            ll_student_bangdingmima_again.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -163,13 +178,15 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
             showShortToast("请输入绑定密码");
             return;
         }
-        if (StringUtil.isEmpty(edt_bindingPassword_again,true)){
-            showShortToast("重复密码不能为空");
-            return;
-        }
-        if (!edt_bindingPassword_again.toString().equalsIgnoreCase(edt_bindingPassword.toString())){
-            showShortToast("两次密码不相同");
-            return;
+        if (isFirstGuardian) {
+            if (StringUtil.isEmpty(edt_bindingPassword_again, true)) {
+                showShortToast("重复密码不能为空");
+                return;
+            }
+            if (!edt_bindingPassword_again.toString().equalsIgnoreCase(edt_bindingPassword.toString())) {
+                showShortToast("两次密码不相同");
+                return;
+            }
         }
 
         TreeMap sm = new TreeMap<String,String>();
@@ -231,36 +248,6 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
         bindingStudent();
     }
 
-    private void payDia() {
-        final PayPassDialog dialog=new PayPassDialog(this,R.style.dialog_pay_theme);
-        //弹框自定义配置
-        dialog.setAlertDialog(false)
-                .setWindowSize(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,0.4f)
-                .setOutColse(false)
-                .setGravity(R.style.dialogOpenAnimation, Gravity.BOTTOM);
-        //组合控件自定义配置
-        PayPassView payView=dialog.getPayViewPass();
-        payView.setForgetText("输入绑定密码");
-        payView.setForgetColor(getResources().getColor(R.color.colorPrimary));
-        payView.setForgetSize(16);
-        payView.setPayClickListener(new PayPassView.OnPayClickListener() {
-            @Override
-            public void onPassFinish(String passContent) {
-                //6位输入完成回调
-                showShortToast(passContent);
-            }
-            @Override
-            public void onPayClose() {
-                dialog.dismiss();
-                //关闭回调
-            }
-            @Override
-            public void onPayForget() {
-                dialog.dismiss();
-                //忘记密码回调
-            }
-        });
-    }
 
     @Override
     public void onDialogItemClick(int requestCode, int position, String item) {
