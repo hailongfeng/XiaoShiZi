@@ -139,10 +139,6 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
             showShortToast("手机号不能为空");
             return;
         }
-//        if (!StringUtil.isPhone(phone)){
-//            showShortToast("手机号格式不正确");
-//            return;
-//        }
         sm.put("phoneNumber",phone);
         LogicService.post(context, APIMethod.getVerifyCode,sm,new ApiSubscriber<Response>(){
             @Override

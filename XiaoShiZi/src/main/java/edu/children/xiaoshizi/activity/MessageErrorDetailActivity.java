@@ -43,6 +43,7 @@ public class MessageErrorDetailActivity extends XszBaseActivity implements View.
 
     private InAndOutSchoolRecode inAndOutSchoolRecode;
     private String snapMsgId="";
+    private String snapStatus="";
     private static final String EXTRA_MESSAGE="snapMsgId";
     private static final String EXTRA_TYPE="type";
     public static Intent createIntent(Context context, String messageId) {
@@ -56,6 +57,7 @@ public class MessageErrorDetailActivity extends XszBaseActivity implements View.
         Bundle bun = getIntent().getExtras();
         if (bun != null) {
             snapMsgId = bun.getString("snapMsgId");
+            snapStatus = bun.getString("snapStatus");
         }
         setContentView(R.layout.activity_message_error_detail);
     }
@@ -66,11 +68,18 @@ public class MessageErrorDetailActivity extends XszBaseActivity implements View.
         Bundle bun = getIntent().getExtras();
         if (bun != null) {
             snapMsgId = bun.getString("snapMsgId");
+            snapStatus = bun.getString("snapStatus");
         }
     }
     @Override
     public void initView() {
-
+        if (snapStatus.equalsIgnoreCase("errorGoschool")){
+            rtv_recognite_already_out.setText("已入校门");
+            rtv_recognite_not_out.setText("未入校门");
+        }else if (snapStatus.equalsIgnoreCase("errorLeaveschool")){
+            rtv_recognite_already_out.setText("已出校门");
+            rtv_recognite_not_out.setText("未出校门");
+        }
     }
 
     private void getMessageById(String messageId){
@@ -123,7 +132,7 @@ public class MessageErrorDetailActivity extends XszBaseActivity implements View.
             public void onSuccess(Response<Message> response) {
                 hideLoading();
 
-                dialog=DialogUIUtils.showAlert(context, "提示", "感谢您的反馈", "","","确定","取消",false,false,false,new DialogUIListener() {
+                dialog=DialogUIUtils.showAlert(context, "提示", "感谢您的反馈", "","","确定","",false,false,false,new DialogUIListener() {
                     @Override
                     public void onPositive() {
                         DialogUIUtils.dismiss(dialog);
@@ -151,9 +160,11 @@ public class MessageErrorDetailActivity extends XszBaseActivity implements View.
     @Override
     public void onClick(View v) {
         if (v.getId()==R.id.rtv_recognite_already_out){
-            recogniteBack(this.snapMsgId,"已出校门");
+            String msg=rtv_recognite_already_out.getText().toString();
+            recogniteBack(this.snapMsgId,msg);
         }else if (v.getId()==R.id.rtv_recognite_not_out){
-            recogniteBack(this.snapMsgId,"未出校门");
+            String msg=rtv_recognite_not_out.getText().toString();
+            recogniteBack(this.snapMsgId,msg);
         }
     }
 }

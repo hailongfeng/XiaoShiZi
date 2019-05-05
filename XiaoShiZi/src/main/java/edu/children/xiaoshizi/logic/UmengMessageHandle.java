@@ -2,6 +2,7 @@ package edu.children.xiaoshizi.logic;
 
 import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.umeng.commonsdk.UMConfigure;
@@ -14,6 +15,7 @@ import com.umeng.socialize.PlatformConfig;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import edu.children.xiaoshizi.DemoApplication;
@@ -106,17 +108,28 @@ public class UmengMessageHandle {
     private UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler(){
 
         @Override
+        public void openActivity(Context context, UMessage uMessage) {
+            super.openActivity(context, uMessage);
+        }
+
+        @Override
         public void dealWithCustomAction(Context context, UMessage msg){
-            Log.e(TAG,"click");
             String snapMsgId=msg.extra.get("snapMsgId");
             String snapStatus=msg.extra.get("snapStatus");
+            Log.d(TAG,"click,snapMsgId="+snapMsgId+",snapStatus="+snapStatus);
             if (!StringUtil.isEmpty(snapMsgId,true)&&!StringUtil.isEmpty(snapStatus,true)){
                 if (snapStatus.equalsIgnoreCase("errorGoschool")
                         ||snapStatus.equalsIgnoreCase("errorLeaveschool")
                 ){
-                    DemoApplication.getInstance().startActivity(MessageErrorDetailActivity.createIntent(context, snapMsgId));
+                    Intent intent=MessageErrorDetailActivity.createIntent(context, snapMsgId);
+                    append(intent,msg);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    DemoApplication.getInstance().startActivity(intent);
                 }else {
-                    DemoApplication.getInstance().startActivity(MessageDetailActivity.createIntent(context, snapMsgId));
+                    Intent intent=MessageDetailActivity.createIntent(context, snapMsgId);
+                    append(intent,msg);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    DemoApplication.getInstance().startActivity(intent);
                 }
                 EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_message_new,"新消息",""));
             }else {
@@ -124,4 +137,23 @@ public class UmengMessageHandle {
             }
         }
     };
+
+    private Intent append(Intent var1, UMessage var2) {
+        if (var1 != null && var2 != null && var2.extra != null) {
+            Iterator var3 = var2.extra.entrySet().iterator();
+
+            while(var3.hasNext()) {
+                Map.Entry var4 = (Map.Entry)var3.next();
+                String var5 = (String)var4.getKey();
+                String var6 = (String)var4.getValue();
+                if (var5 != null) {
+                    var1.putExtra(var5, var6);
+                }
+            }
+
+            return var1;
+        } else {
+            return var1;
+        }
+    }
 }

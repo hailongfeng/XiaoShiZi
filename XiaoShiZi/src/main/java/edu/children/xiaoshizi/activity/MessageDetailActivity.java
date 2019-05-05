@@ -115,8 +115,6 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
         txt_in_out_time.setText(inAndOutSchoolRecode.triggerTime);
         txt_in_out_reason.setText(inAndOutSchoolRecode.snapRemark);
 
-        inAndOutSchoolRecode.setFeedbackStatus(new Random().nextInt()%2==0?"1":"0");
-
         if (inAndOutSchoolRecode.getFeedbackStatus().equalsIgnoreCase("1")){
             ll_feed_back.setVisibility(View.GONE);
             btn_tgsbl.setVisibility(View.VISIBLE);
