@@ -216,7 +216,7 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     public void onClick(View v) {
 
         if (!isLogin()){
-            showShortToast("您还未登陆，请先登陆");
+            toActivity(new Intent(context, LoginActivity.class));
             return;
         }
         if (v.getId()==R.id.iv_message){
