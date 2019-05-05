@@ -60,7 +60,7 @@ public class UmengMessageHandle {
                 Log.i(TAG, s+","+s1+"");
             }
         });
-//        mPushAgent.setMessageHandler(messageHandler);
+        mPushAgent.setMessageHandler(messageHandler);
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
         Log.d(TAG,"weixin = "+"wxa41c3e0c840a841a"+" , "+"fa491522a0411a83437a90d57b252e0b");
 //        PlatformConfig.setWeixin("wxa41c3e0c840a841a", "fa491522a0411a83437a90d57b252e0b");
@@ -70,6 +70,13 @@ public class UmengMessageHandle {
     }
 
     private UmengMessageHandler messageHandler = new UmengMessageHandler() {
+
+        @Override
+        public void handleMessage(Context context, UMessage uMessage) {
+            EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_message_new,"新消息",""));
+            super.handleMessage(context, uMessage);
+        }
+
         /**
          * 自定义通知栏样式的回调方法
          */
@@ -81,27 +88,28 @@ public class UmengMessageHandle {
                 Log.d(TAG,key.toString()+"="+value);
             }
             Log.e(TAG,"msg.builder_id ="+msg.builder_id+"getNotification after_open=" +msg.after_open);
-            switch (msg.builder_id) {
-                case 1:
-                    Log.d(TAG,"创建通知...");
-                    Notification.Builder builder = new Notification.Builder(context);
-                    RemoteViews myNotificationView = new RemoteViews(context.getPackageName(),
-                            R.layout.notification_view);
-                    myNotificationView.setTextViewText(R.id.notification_title, msg.title);
-                    myNotificationView.setTextViewText(R.id.notification_text, msg.text);
-                    myNotificationView.setImageViewBitmap(R.id.notification_large_icon, getLargeIcon(context, msg));
-                    myNotificationView.setImageViewResource(R.id.notification_small_icon,
-                            getSmallIconId(context, msg));
-                    builder.setContent(myNotificationView)
-                            .setSmallIcon(getSmallIconId(context, msg))
-                            .setTicker(msg.ticker)
-                            .setAutoCancel(true);
-                    Notification notification1 = builder.build();
-                    return notification1;
-                default:
-                    //默认为0，若填写的builder_id并不存在，也使用默认。
-                    return super.getNotification(context, msg);
-            }
+//            switch (msg.builder_id) {
+//                case 1:
+//                    Log.d(TAG,"创建通知...");
+//                    Notification.Builder builder = new Notification.Builder(context);
+//                    RemoteViews myNotificationView = new RemoteViews(context.getPackageName(),
+//                            R.layout.notification_view);
+//                    myNotificationView.setTextViewText(R.id.notification_title, msg.title);
+//                    myNotificationView.setTextViewText(R.id.notification_text, msg.text);
+//                    myNotificationView.setImageViewBitmap(R.id.notification_large_icon, getLargeIcon(context, msg));
+//                    myNotificationView.setImageViewResource(R.id.notification_small_icon,
+//                            getSmallIconId(context, msg));
+//                    builder.setContent(myNotificationView)
+//                            .setSmallIcon(getSmallIconId(context, msg))
+//                            .setTicker(msg.ticker)
+//                            .setAutoCancel(true);
+//                    Notification notification1 = builder.build();
+//                    return notification1;
+//                default:
+//                    //默认为0，若填写的builder_id并不存在，也使用默认。
+//                    return super.getNotification(context, msg);
+//            }
+            return super.getNotification(context, msg);
         }
     };
 
@@ -131,7 +139,6 @@ public class UmengMessageHandle {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     DemoApplication.getInstance().startActivity(intent);
                 }
-                EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_message_new,"新消息",""));
             }else {
                 Log.e(TAG,"该消息[ "+msg.msg_id +" ]snapMsgId为空");
             }

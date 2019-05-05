@@ -69,7 +69,7 @@ public class CourseListActivity extends XszBaseActivity {
     }
 
     private void getListCourse() {
-        showLoading(R.string.loading);
+        showLoading(R.string.msg_Loading);
         TreeMap sm = new TreeMap<String,String>();
         sm.put("categoryId",articleType.getCategoryId());
         LogicService.post(context, APIMethod.loadSeClassRoomContentByCategory,sm, new ApiSubscriber<Response<List<Article>>>() {
