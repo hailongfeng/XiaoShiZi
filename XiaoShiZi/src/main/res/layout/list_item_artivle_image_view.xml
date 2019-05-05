@@ -3,12 +3,13 @@
 <!-- 如果一定要用，则必须在根布局加上 android:descendantFocusability="blocksDescendants" -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/ll_horizontal_match_wrap"
+    style="@style/match_wrap"
+    android:gravity="center_vertical"
     android:background="@drawable/list_item_white_to_alpha"
     android:padding="4dp">
 
     <RelativeLayout
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:padding="4dp" >
@@ -22,7 +23,7 @@
 
         <LinearLayout
             android:id="@+id/ll_article_pl_and_fx"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/txt_article_title"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

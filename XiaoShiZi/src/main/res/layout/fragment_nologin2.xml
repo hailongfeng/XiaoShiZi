@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/match_match"
+    android:background="@color/white"
+    tools:context=".activity.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_article_search_result_empty"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginTop="100dp"
+            android:src="@drawable/article_search_result_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:src="@drawable/nhmydl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/rtv_login"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="去登陆"
+            android:textColor="@color/colorPrimary"
+            app:rv_backgroundColor="@color/white"
+            app:rv_strokeColor="@color/colorPrimary"
+            app:rv_strokeWidth="1dp"
+            app:rv_cornerRadius="15dp" />
+    </LinearLayout>
+
+</LinearLayout>

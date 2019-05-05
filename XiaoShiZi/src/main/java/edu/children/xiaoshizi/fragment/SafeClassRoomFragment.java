@@ -90,7 +90,11 @@ public class SafeClassRoomFragment extends XszBaseFragment implements OnClickLis
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void onUserInfoChange(EventBusMessage<String> messageEvent) {
 		if (messageEvent.getType()==EventBusMessage.Type_user_login){
-			Log.d(TAG,"Type_user_login====");
+			print("Type_user_login====");
+			clearFragment();
+			updatePage();
+		}else if (messageEvent.getType()==EventBusMessage.Type_user_logout){
+			print("Type_user_logout====");
 			clearFragment();
 			updatePage();
 		}
@@ -149,8 +153,8 @@ public class SafeClassRoomFragment extends XszBaseFragment implements OnClickLis
 		print("islogin : "+isLogin());
 		mFragments.clear();
 		if (!isLogin()){
-			mFragments.add(NoLoginFragment.newInstance());
-			mFragments.add(NoLoginFragment.newInstance());
+			mFragments.add(NoLoginFragment2.newInstance());
+			mFragments.add(NoLoginFragment2.newInstance());
 		}else {
 			mFragments.add(SafeClassFragment.newInstance("",""));
 			mFragments.add(SafeLabFragment.newInstance("",""));

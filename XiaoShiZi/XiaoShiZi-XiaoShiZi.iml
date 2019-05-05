@@ -315,8 +315,5 @@
     <orderEntry type="module" module-name="ZBLibrary" />
     <orderEntry type="module" module-name="takephoto_library" />
     <orderEntry type="module" module-name="QRCodeLibrary" />
-    <orderEntry type="module" module-name="ZBLibrary" />
-    <orderEntry type="module" module-name="takephoto_library" />
-    <orderEntry type="module" module-name="QRCodeLibrary" />
   </component>
 </module>
