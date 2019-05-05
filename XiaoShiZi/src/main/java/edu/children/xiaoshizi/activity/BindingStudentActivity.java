@@ -80,13 +80,11 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
                 .init();
 
         User user=DemoApplication.getInstance().getUser();
-//        if (user.getFirstGuardianStatus().equalsIgnoreCase("1")){
-//            isFirstGuardian=true;
-//            ll_student_bangdingmima_again.setVisibility(View.VISIBLE);
-//        }else {
-//            isFirstGuardian=false;
-//            ll_student_bangdingmima_again.setVisibility(View.GONE);
-//        }
+        if (user.getFirstGuardianStatus().equalsIgnoreCase("1")){
+            isFirstGuardian=true;
+        }else {
+            isFirstGuardian=false;
+        }
     }
 
     @Override
@@ -316,7 +314,9 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
             case REQUEST_TO_PASSWORD_INPUT:
                 if (data != null) {
                     psdone=data.getStringExtra("psd");
-                    toActivity(new Intent(context,PasswordReInputActivity.class),REQUEST_TO_PASSWORD_RE_INPUT);
+                    if (isFirstGuardian) {
+                        toActivity(new Intent(context, PasswordReInputActivity.class), REQUEST_TO_PASSWORD_RE_INPUT);
+                    }
                 }
                 break;
             case REQUEST_TO_PASSWORD_RE_INPUT:
