@@ -85,9 +85,9 @@ public class InAndOutSchoolRecodeView extends XszBaseView<InAndOutSchoolRecode> 
 			if (message.getSnapStatus().equalsIgnoreCase("errorGoschool")
 					||message.getSnapStatus().equalsIgnoreCase("errorLeaveschool")
 			){
-				toActivity(MessageErrorDetailActivity.createIntent(context, message.getId()));
+				toActivity(MessageErrorDetailActivity.createIntent(context, message.getId(),message.getSnapStatus()));
 			}else {
-				toActivity(MessageDetailActivity.createIntent(context, message.getId()));
+				toActivity(MessageDetailActivity.createIntent(context, message.getId(),message.getSnapStatus()));
 			}
 			break;
 		default:

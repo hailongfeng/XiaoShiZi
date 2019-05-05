@@ -77,9 +77,9 @@ public class MessageListActivity extends XszBaseActivity {
                 if (message.getSnapStatus().equalsIgnoreCase("errorGoschool")
                 ||message.getSnapStatus().equalsIgnoreCase("errorLeaveschool")
                 ){
-                    toActivity(MessageErrorDetailActivity.createIntent(context, ((Message) bv.data).getId()));
+                    toActivity(MessageErrorDetailActivity.createIntent(context, message.getId(),message.getSnapStatus()));
                 }else {
-                    toActivity(MessageDetailActivity.createIntent(context, ((Message) bv.data).getId()));
+                    toActivity(MessageDetailActivity.createIntent(context, message.getId(),message.getSnapStatus()));
                 }
             }
         });

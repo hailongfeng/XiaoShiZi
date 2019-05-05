@@ -52,10 +52,13 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
     private InAndOutSchoolRecode inAndOutSchoolRecode;
     private String snapMsgId="";
     private static final String EXTRA_MESSAGE="snapMsgId";
+    private static final String EXTRA_SNAPSTATUS="snapStatus";
     private static final String EXTRA_TYPE="type";
-    public static Intent createIntent(Context context, String messageId) {
+    
+    public static Intent createIntent(Context context, String messageId,String snapStatus) {
         return new Intent(context, MessageDetailActivity.class).
-                putExtra(MessageDetailActivity.EXTRA_MESSAGE, messageId);
+                putExtra(MessageDetailActivity.EXTRA_MESSAGE, messageId).
+                putExtra(MessageDetailActivity.EXTRA_SNAPSTATUS, snapStatus);
     }
 
     @Override

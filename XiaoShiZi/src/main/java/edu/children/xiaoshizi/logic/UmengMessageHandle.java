@@ -121,12 +121,12 @@ public class UmengMessageHandle {
                 if (snapStatus.equalsIgnoreCase("errorGoschool")
                         ||snapStatus.equalsIgnoreCase("errorLeaveschool")
                 ){
-                    Intent intent=MessageErrorDetailActivity.createIntent(context, snapMsgId);
+                    Intent intent=MessageErrorDetailActivity.createIntent(context, snapMsgId,snapStatus);
                     append(intent,msg);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     DemoApplication.getInstance().startActivity(intent);
                 }else {
-                    Intent intent=MessageDetailActivity.createIntent(context, snapMsgId);
+                    Intent intent=MessageDetailActivity.createIntent(context, snapMsgId,snapStatus);
                     append(intent,msg);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     DemoApplication.getInstance().startActivity(intent);

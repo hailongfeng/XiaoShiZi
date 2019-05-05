@@ -45,10 +45,12 @@ public class MessageErrorDetailActivity extends XszBaseActivity implements View.
     private String snapMsgId="";
     private String snapStatus="";
     private static final String EXTRA_MESSAGE="snapMsgId";
+    private static final String EXTRA_SNAPSTATUS="snapStatus";
     private static final String EXTRA_TYPE="type";
-    public static Intent createIntent(Context context, String messageId) {
+    public static Intent createIntent(Context context, String messageId,String snapStatus) {
         return new Intent(context, MessageErrorDetailActivity.class).
-                putExtra(MessageErrorDetailActivity.EXTRA_MESSAGE, messageId);
+                putExtra(MessageErrorDetailActivity.EXTRA_MESSAGE, messageId).
+                putExtra(MessageErrorDetailActivity.EXTRA_SNAPSTATUS, snapStatus);
     }
 
     @Override
