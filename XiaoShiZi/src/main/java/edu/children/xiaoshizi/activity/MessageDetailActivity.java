@@ -146,8 +146,8 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
             @Override
             public void onSuccess(Response<Message> response) {
                 hideLoading();
-                inAndOutSchoolRecode.setFeedbackStatus(response.getResult().getFeedbackStatus());
-                initMessage();
+//                inAndOutSchoolRecode.setFeedbackStatus(response.getResult().getFeedbackStatus());
+//                initData();
                 dialog=DialogUIUtils.showAlert(context, "提示", "感谢您的反馈", "","","确定","取消",false,false,false,new DialogUIListener() {
                     @Override
                     public void onPositive() {
@@ -180,14 +180,15 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
             @Override
             public void onSuccess(Response<Message> response) {
                 hideLoading();
-                inAndOutSchoolRecode.setFeedbackStatus(response.getResult().getFeedbackStatus());
-                initMessage();
+//                inAndOutSchoolRecode.setFeedbackStatus(response.getResult().getFeedbackStatus());
+//                initData();
                 dialog=DialogUIUtils.showAlert(context, "提示", "感谢您的反馈\n是否手动提高识别率", "","","确定","取消",false,false,false,new DialogUIListener() {
                     @Override
                     public void onPositive() {
                         DialogUIUtils.dismiss(dialog);
                         //提高识别
                         toActivity(RecogniteFeedbackActivity.createIntent(context, inAndOutSchoolRecode.getStudentId()));
+                        finish();
                     }
 
                     @Override
