@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dou361.dialogui.DialogUIUtils;
@@ -12,7 +13,7 @@ import com.dou361.dialogui.listener.DialogUIListener;
 import com.flyco.roundview.RoundTextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import java.util.Set;
+import java.util.Random;
 import java.util.TreeMap;
 
 import butterknife.BindView;
@@ -42,9 +43,13 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
     RoundTextView rtv_recognite_error;
     @BindView(R.id.rtv_recognite_right)
     RoundTextView rtv_recognite_right;
+    @BindView(R.id.btn_tgsbl)
+    RoundTextView btn_tgsbl;
+    @BindView(R.id.ll_feed_back)
+    LinearLayout ll_feed_back;
 
 
-    private InAndOutSchoolRecode message;
+    private InAndOutSchoolRecode inAndOutSchoolRecode;
     private String snapMsgId="";
     private static final String EXTRA_MESSAGE="snapMsgId";
     private static final String EXTRA_TYPE="type";
@@ -83,13 +88,12 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
             @Override
             public void onSuccess(Response<InAndOutSchoolRecode> response) {
                 if (response.getResult()!=null) {
-                    message = response.getResult();
+                    inAndOutSchoolRecode = response.getResult();
                     initMessage();
                 }else {
                     showShortToast("消息读取失败");
                 }
             }
-
             @Override
             protected void onFail(Throwable  error) {
                 showShortToast(error.getMessage());
@@ -102,19 +106,34 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
         getMessageById(snapMsgId);
     }
 
+
     private void initMessage(){
-        loadImage(message.imgPicUrl,iv_student_face);
-        loadImage(message.snapPicUrl,iv_student_recognite_face);
-        txt_student_name.setText(message.getStudentName());
-        txt_pic_xsd.setText(message.similarity+"");
-        txt_in_out_time.setText(message.triggerTime);
-        txt_in_out_reason.setText(message.snapRemark);
+        loadImage(inAndOutSchoolRecode.imgPicUrl,iv_student_face);
+        loadImage(inAndOutSchoolRecode.snapPicUrl,iv_student_recognite_face);
+        txt_student_name.setText(inAndOutSchoolRecode.getStudentName());
+        txt_pic_xsd.setText(inAndOutSchoolRecode.similarity+"");
+        txt_in_out_time.setText(inAndOutSchoolRecode.triggerTime);
+        txt_in_out_reason.setText(inAndOutSchoolRecode.snapRemark);
+
+        inAndOutSchoolRecode.setFeedbackStatus(new Random().nextInt()%2==0?"1":"0");
+
+        if (inAndOutSchoolRecode.getFeedbackStatus().equalsIgnoreCase("1")){
+            ll_feed_back.setVisibility(View.GONE);
+            btn_tgsbl.setVisibility(View.VISIBLE);
+        }else if (inAndOutSchoolRecode.getFeedbackStatus().equalsIgnoreCase("0")){
+            ll_feed_back.setVisibility(View.VISIBLE);
+            btn_tgsbl.setVisibility(View.GONE);
+        }else {
+            ll_feed_back.setVisibility(View.GONE);
+            btn_tgsbl.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void initEvent() {
         rtv_recognite_error.setOnClickListener(this);
         rtv_recognite_right.setOnClickListener(this);
+        btn_tgsbl.setOnClickListener(this);
     }
 
     private void recogniteBackRight(String snapMsgId, String feedbackResult){
@@ -163,9 +182,8 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
                     @Override
                     public void onPositive() {
                         DialogUIUtils.dismiss(dialog);
-                        //TODO:提高识别
-                        toActivity(RecogniteFeedbackActivity.createIntent(context,message.getStudentId()));
-                        finish();
+                        //提高识别
+                        toActivity(RecogniteFeedbackActivity.createIntent(context, inAndOutSchoolRecode.getStudentId()));
                     }
 
                     @Override
@@ -192,6 +210,8 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
             recogniteBackError(this.snapMsgId,"识别错误");
         }else if (v.getId()==R.id.rtv_recognite_right){
             recogniteBackRight(this.snapMsgId,"识别正确");
+        }else if (v.getId()==R.id.btn_tgsbl){
+            toActivity(RecogniteFeedbackActivity.createIntent(context, inAndOutSchoolRecode.getStudentId()));
         }
     }
 }

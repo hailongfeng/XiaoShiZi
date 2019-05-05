@@ -42,6 +42,8 @@ import zuo.biao.library.util.TimeUtil;
 
 public class BindingStudentActivity extends XszBaseActivity  implements ItemDialog.OnDialogItemClickListener {
     private static final int REQUEST_TO_DATE_PICKER = 1;
+    private static final int REQUEST_TO_PASSWORD_INPUT = 2;
+    private static final int REQUEST_TO_PASSWORD_RE_INPUT = 3;
     @BindView(R.id.edt_student_name)
     EditText edt_student_name;
     @BindView(R.id.rg_student_sex)
@@ -56,12 +58,12 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
     TextView txt_student_banji;
     @BindView(R.id.txt_student_guanxi)
     TextView txt_student_guanxi;
-    @BindView(R.id.edt_bindingPassword)
-    EditText edt_bindingPassword;
-    @BindView(R.id.edt_bindingPassword_again)
-    EditText edt_bindingPassword_again;
-    @BindView(R.id.ll_student_bangdingmima_again)
-    LinearLayout ll_student_bangdingmima_again;
+//    @BindView(R.id.edt_bindingPassword)
+//    EditText edt_bindingPassword;
+//    @BindView(R.id.edt_bindingPassword_again)
+//    EditText edt_bindingPassword_again;
+//    @BindView(R.id.ll_student_bangdingmima_again)
+//    LinearLayout ll_student_bangdingmima_again;
 
     boolean isFirstGuardian=false;
 
@@ -78,13 +80,13 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
                 .init();
 
         User user=DemoApplication.getInstance().getUser();
-        if (user.getFirstGuardianStatus().equalsIgnoreCase("1")){
-            isFirstGuardian=true;
-            ll_student_bangdingmima_again.setVisibility(View.VISIBLE);
-        }else {
-            isFirstGuardian=false;
-            ll_student_bangdingmima_again.setVisibility(View.GONE);
-        }
+//        if (user.getFirstGuardianStatus().equalsIgnoreCase("1")){
+//            isFirstGuardian=true;
+//            ll_student_bangdingmima_again.setVisibility(View.VISIBLE);
+//        }else {
+//            isFirstGuardian=false;
+//            ll_student_bangdingmima_again.setVisibility(View.GONE);
+//        }
     }
 
     @Override
@@ -102,7 +104,7 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
         findView(R.id.ll_student_banji).setOnClickListener(this);
         findView(R.id.ll_student_guanxi).setOnClickListener(this);
         findView(R.id.ll_student_bangdingmima).setOnClickListener(this);
-        findView(R.id.ll_student_bangdingmima_again).setOnClickListener(this);
+//        findView(R.id.ll_student_bangdingmima_again).setOnClickListener(this);
         findView(R.id.btn_bind_student).setOnClickListener(this);
 
     }
@@ -167,24 +169,23 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
 
                 break;
             case R.id.btn_bind_student:
-//                payDia();
                 bindingStudent();
+                break;
+            case R.id.ll_student_bangdingmima:
+                toActivity(new Intent(context,PasswordInputActivity.class),REQUEST_TO_PASSWORD_INPUT);
                 break;
         }
     }
 
+
     private void bindingStudent(){
-        if (StringUtil.isEmpty(edt_bindingPassword,true)){
+        if (StringUtil.isEmpty(psdone)){
             showShortToast("请输入绑定密码");
             return;
         }
         if (isFirstGuardian) {
-            if (StringUtil.isEmpty(edt_bindingPassword_again, true)) {
-                showShortToast("重复密码不能为空");
-                return;
-            }
-            if (!edt_bindingPassword_again.toString().equalsIgnoreCase(edt_bindingPassword.toString())) {
-                showShortToast("两次密码不相同");
+            if (!psdone.equalsIgnoreCase(psdtwo)){
+                showShortToast("两次密码不相同，请重新输入");
                 return;
             }
         }
@@ -218,10 +219,8 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
         if (currentGuanXi>=0){
             sm.put("parentCustody",STUDENT_GUARDIAN_GUANXI[currentGuanXi] );
         }
-        if (StringUtil.isNotEmpty(edt_bindingPassword,true)){
-            String pass=MD5Util.MD5(edt_bindingPassword.getText().toString());
-            sm.put("bindingPassword", pass);
-        }
+        String pass=MD5Util.MD5(psdone);
+        sm.put("bindingPassword", pass);
         showLoading(R.string.msg_handing);
         LogicService.post(context, APIMethod.studentBinding, sm, new ApiSubscriber<Response<LoginRespon>>() {
             @Override
@@ -287,6 +286,8 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
 
     private int[] selectedDate = new int[]{1971, 0, 1};
     private String currentDate="";
+    private String psdone="";
+    private String psdtwo="";
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -309,6 +310,22 @@ public class BindingStudentActivity extends XszBaseActivity  implements ItemDial
                         calendar.set(Calendar.DAY_OF_MONTH,(selectedDate[2]));
                         currentDate= DateUtil.format(calendar.getTime(),DateUtil.P1);
                         txt_student_birthday.setText(currentDate);
+                    }
+                }
+                break;
+            case REQUEST_TO_PASSWORD_INPUT:
+                if (data != null) {
+                    psdone=data.getStringExtra("psd");
+                    toActivity(new Intent(context,PasswordReInputActivity.class),REQUEST_TO_PASSWORD_RE_INPUT);
+                }
+                break;
+            case REQUEST_TO_PASSWORD_RE_INPUT:
+                if (data != null) {
+                    psdtwo=data.getStringExtra("psd");
+                    if (!psdone.equalsIgnoreCase(psdtwo)){
+                        showShortToast("两次密码不一致，请重新输入");
+                        psdone="";
+                        psdtwo="";
                     }
                 }
                 break;

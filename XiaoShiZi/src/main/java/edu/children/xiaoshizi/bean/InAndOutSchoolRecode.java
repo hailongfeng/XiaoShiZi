@@ -17,6 +17,7 @@ public class InAndOutSchoolRecode  implements Serializable {
     public String studentName;
     public String snapRemark;//消息描述
     public String snapStatus;//消息状态。normal 正常，error 异常
+    public String feedbackStatus;//feedbackStatus=1，表示识别反馈过的,0没有
 
     public Student student;
 
@@ -106,5 +107,13 @@ public class InAndOutSchoolRecode  implements Serializable {
 
     public void setSnapStatus(String snapStatus) {
         this.snapStatus = snapStatus;
+    }
+
+    public String getFeedbackStatus() {
+        return feedbackStatus;
+    }
+
+    public void setFeedbackStatus(String feedbackStatus) {
+        this.feedbackStatus = feedbackStatus;
     }
 }

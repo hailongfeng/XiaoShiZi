@@ -15,6 +15,7 @@
             android:layout_centerHorizontal="true"
             android:text="识别反馈" />
     </RelativeLayout>
+    <View style="@style/divider_horizontal_1px" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
