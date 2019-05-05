@@ -76,7 +76,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
 
     @Override
     public void initView() {
-        time = new TimeCount(3*60*1000, 1000);
+        time = new TimeCount(60*1000, 1000);
         ImmersionBar.with(this)
                 .statusBarColor(R.color.white)     //状态栏颜色，不写默认透明色
                 .init();

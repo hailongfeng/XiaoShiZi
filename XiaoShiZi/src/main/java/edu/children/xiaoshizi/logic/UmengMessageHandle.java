@@ -19,7 +19,9 @@ import java.util.Map;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.MessageDetailActivity;
+import edu.children.xiaoshizi.activity.MessageErrorDetailActivity;
 import edu.children.xiaoshizi.bean.EventBusMessage;
+import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
 
@@ -107,9 +109,15 @@ public class UmengMessageHandle {
         public void dealWithCustomAction(Context context, UMessage msg){
             Log.e(TAG,"click");
             String snapMsgId=msg.extra.get("snapMsgId");
-            if (!StringUtil.isEmpty(snapMsgId,true)){
-                DemoApplication.getInstance().startActivity(MessageDetailActivity.createIntent(context,snapMsgId));
-//                context.startActivity();
+            String snapStatus=msg.extra.get("snapStatus");
+            if (!StringUtil.isEmpty(snapMsgId,true)&&!StringUtil.isEmpty(snapStatus,true)){
+                if (snapStatus.equalsIgnoreCase("errorGoschool")
+                        ||snapStatus.equalsIgnoreCase("errorLeaveschool")
+                ){
+                    DemoApplication.getInstance().startActivity(MessageErrorDetailActivity.createIntent(context, snapMsgId));
+                }else {
+                    DemoApplication.getInstance().startActivity(MessageDetailActivity.createIntent(context, snapMsgId));
+                }
                 EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_message_new,"新消息",""));
             }else {
                 Log.e(TAG,"该消息[ "+msg.msg_id +" ]snapMsgId为空");

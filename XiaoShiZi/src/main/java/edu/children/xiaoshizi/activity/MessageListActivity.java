@@ -73,7 +73,14 @@ public class MessageListActivity extends XszBaseActivity {
         adapter.setOnViewClickListener(new BaseView.OnViewClickListener() {
             @Override
             public void onViewClick(@NonNull BaseView bv, @NonNull View v) {
-                toActivity(MessageDetailActivity.createIntent(context, ((Message)bv.data).getId()));
+                Message message=((Message)bv.data);
+                if (message.getSnapStatus().equalsIgnoreCase("errorGoschool")
+                ||message.getSnapStatus().equalsIgnoreCase("errorLeaveschool")
+                ){
+                    toActivity(MessageErrorDetailActivity.createIntent(context, ((Message) bv.data).getId()));
+                }else {
+                    toActivity(MessageDetailActivity.createIntent(context, ((Message) bv.data).getId()));
+                }
             }
         });
     }

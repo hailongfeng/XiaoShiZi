@@ -16,7 +16,7 @@ public class InAndOutSchoolRecode  implements Serializable {
     public String studentId;
     public String studentName;
     public String snapRemark;//消息描述
-    public String snapStatus;//消息状态。normal 正常，error 异常
+    public String snapStatus;//消息状态。normal 正常，error 异常,snapStatus  消息状态。normal 正常，error 异常 ，errorLeaveschool  时间段内未抓拍到学生离校异常标示，errorGoschool 时间段内未抓拍到学生入校异常标示
     public String feedbackStatus;//feedbackStatus=1，表示识别反馈过的,0没有
 
     public Student student;
