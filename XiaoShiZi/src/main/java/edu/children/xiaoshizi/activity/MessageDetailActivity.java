@@ -13,11 +13,14 @@ import com.dou361.dialogui.listener.DialogUIListener;
 import com.flyco.roundview.RoundTextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Random;
 import java.util.TreeMap;
 
 import butterknife.BindView;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.InAndOutSchoolRecode;
 import edu.children.xiaoshizi.bean.Message;
 import edu.children.xiaoshizi.logic.APIMethod;
@@ -146,9 +149,8 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
             @Override
             public void onSuccess(Response<Message> response) {
                 hideLoading();
-//                inAndOutSchoolRecode.setFeedbackStatus(response.getResult().getFeedbackStatus());
-//                initData();
-                dialog=DialogUIUtils.showAlert(context, "提示", "感谢您的反馈", "","","确定","取消",false,false,false,new DialogUIListener() {
+                EventBus.getDefault().post(new EventBusMessage<Message>(EventBusMessage.Type_message_FeedBack,"反馈更新了",response.getResult()));
+                dialog=DialogUIUtils.showAlert(context, "提示", "感谢您的反馈", "","","确定","",false,false,false,new DialogUIListener() {
                     @Override
                     public void onPositive() {
                         DialogUIUtils.dismiss(dialog);
@@ -179,9 +181,9 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
         LogicService.post(context, APIMethod.doSnapMsgFeedBack, sm, new ApiSubscriber<Response<Message>>() {
             @Override
             public void onSuccess(Response<Message> response) {
+
+                EventBus.getDefault().post(new EventBusMessage<Message>(EventBusMessage.Type_message_FeedBack,"反馈更新了",response.getResult()));
                 hideLoading();
-//                inAndOutSchoolRecode.setFeedbackStatus(response.getResult().getFeedbackStatus());
-//                initData();
                 dialog=DialogUIUtils.showAlert(context, "提示", "感谢您的反馈\n是否手动提高识别率", "","","确定","取消",false,false,false,new DialogUIListener() {
                     @Override
                     public void onPositive() {

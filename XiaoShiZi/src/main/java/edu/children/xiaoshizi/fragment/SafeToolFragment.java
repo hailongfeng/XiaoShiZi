@@ -164,6 +164,8 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
             initData();
         }else if (messageEvent.getType()==EventBusMessage.Type_message_new){
             initData();
+        }else if (messageEvent.getType()==EventBusMessage.Type_message_FeedBack){
+            initData();
         }
 
     }
