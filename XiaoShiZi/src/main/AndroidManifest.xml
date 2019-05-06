@@ -40,6 +40,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
+        <activity android:name=".activity.ConstraintActivity"></activity>
         <activity
             android:name=".activity.SplashActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -64,14 +65,14 @@
             android:name=".activity.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.PasswordInputActivity"
+        <activity
+            android:name=".activity.PasswordInputActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.PasswordReInputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PasswordReInputActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.XszWebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
