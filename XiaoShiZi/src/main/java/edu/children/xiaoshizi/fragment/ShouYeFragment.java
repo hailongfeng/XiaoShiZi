@@ -27,11 +27,8 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.walle.multistatuslayout.MultiStatusLayout;
-import com.youth.banner.Transformer;
-import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -41,18 +38,14 @@ import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.ContributeArticleActivity;
 import edu.children.xiaoshizi.activity.LoginActivity;
 import edu.children.xiaoshizi.activity.SearchArticleActivity;
-import edu.children.xiaoshizi.activity.XszWebViewActivity;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
-import edu.children.xiaoshizi.bean.ArticleType_Table;
-import edu.children.xiaoshizi.bean.Banner;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.Response;
-import edu.children.xiaoshizi.utils.GlideImageLoader;
 import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
 import zuo.biao.library.util.Log;
 
@@ -63,14 +56,13 @@ import zuo.biao.library.util.Log;
 public class ShouYeFragment extends XszBaseFragment implements OnClickListener, OnDialogButtonClickListener {
 	@BindView(R.id.multiStatusLayout_shouye)
 	MultiStatusLayout multiStatusLayout_shouye;
-	@BindView(R.id.banner)
-	com.youth.banner.Banner banner;
+
 	@BindView(R.id.viewpagertab)
 	SmartTabLayout viewPagerTab;
 	@BindView(R.id.viewpager)
 	ViewPager viewPager;
 	private List<ArticleType> articleTypes=new ArrayList<>();
-	private List<Banner> banners;
+
 
 	public static ShouYeFragment createInstance() {
 		return new ShouYeFragment();
@@ -96,11 +88,7 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 		initType(articleTypes2);
 		loadContentCategory();
 
-		banners=DbUtils.getModelList(Banner.class);
-		if (banners!=null&&banners.size()>0){
-			initBanber(banners);
-		}
-		loadSysBannerList();
+
 	}
 
 	private  void initType(List<ArticleType> types){
@@ -115,24 +103,7 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 	}
 
 
-	private void loadSysBannerList() {
-		TreeMap sm = new TreeMap<String,String>();
-		LogicService.post(context, APIMethod.loadSysBannerList,sm, new ApiSubscriber<Response<List<Banner>>>() {
-			@Override
-			public void onSuccess(Response<List<Banner>> response) {
-				DemoApplication.getInstance().setBanners(response.getResult());
-				banners=response.getResult();
-				DbUtils.deleteModel(Banner.class);
-				DbUtils.saveModelList(banners);
-				initBanber(banners);
-			}
 
-			@Override
-			protected void onFail(Throwable  error) {
-				error.printStackTrace();
-			}
-		});
-	}
 	private void loadContentCategory() {
 		TreeMap sm = new TreeMap<String,String>();
 		LogicService.post(context, APIMethod.loadContentCategory,sm, new ApiSubscriber<Response<LoadContentCategoryResponse>>() {
@@ -183,16 +154,6 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
         });
 	}
 
-	private void initBanber(List<Banner> banners){
-		banner.setImageLoader(new GlideImageLoader());
-		List<String> images=new ArrayList<String>();
-		for (Banner b:banners){
-			images.add(b.getBannerImage());
-		}
-		banner.setImages(images);
-//		banner.setBannerAnimation(Transformer.Tablet);
-		banner.start();
-	}
 
 
 
@@ -209,36 +170,7 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 		findView(R.id.rll_search,this);
 		findView(R.id.rtv_contribute,this);
 //		findView(R.id.llSettingLogout).setOnClickListener(this);
-		banner.setOnBannerListener(new OnBannerListener() {
-			@Override
-			public void OnBannerClick(int position) {
-				if (position<banners.size()){
-					Banner banner=banners.get(position);
-					loadBannerContentById(banner.getId());
-				}
-			}
-		});
 	}
-
-	void loadBannerContentById(String contentId){
-		TreeMap<String, String> param = new TreeMap<String, String>();
-		param.put("contentId",contentId);
-		LogicService.post(context, APIMethod.loadBannerContentById,param,new ApiSubscriber<Response<Banner>>() {
-			@Override
-			public void onSuccess(Response<Banner> respon) {
-				Banner banner=respon.getResult();
-				toActivity(XszWebViewActivity.createIntent(context,banner.getTitle(),banner.getIntroduce()));
-			}
-
-			@Override
-			protected void onFail(Throwable  error) {
-				showShortToast(error.getMessage());
-				error.printStackTrace();
-			}
-		});
-	}
-
-
 
 
 	@Override

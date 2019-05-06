@@ -2,16 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/activity_page">
-        <com.walle.multistatuslayout.MultiStatusLayout
-            android:id="@+id/multiStatusLayout"
-            app:emptyLayout="@layout/layout_empty"
-            app:netErrorLayout="@layout/layout_error"
-            app:errorLayout="@layout/layout_error"
-            app:loadLayout="@layout/layout_loading"
+
+    <com.walle.multistatuslayout.MultiStatusLayout
+        android:id="@+id/multiStatusLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:emptyLayout="@layout/layout_empty"
+        app:errorLayout="@layout/layout_error"
+        app:loadLayout="@layout/layout_loading"
+        app:netErrorLayout="@layout/layout_error">
+
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="5dp" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@id/rvBaseRecycler"
                     style="@style/lv" />
-        </com.walle.multistatuslayout.MultiStatusLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </com.walle.multistatuslayout.MultiStatusLayout>
 </LinearLayout>

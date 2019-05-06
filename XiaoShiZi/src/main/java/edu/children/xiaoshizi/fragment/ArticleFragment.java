@@ -28,6 +28,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.blankj.utilcode.util.CacheUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.walle.multistatuslayout.MultiStatusLayout;
+import com.youth.banner.listener.OnBannerListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -38,17 +39,21 @@ import java.util.List;
 import java.util.TreeMap;
 
 import butterknife.BindView;
+import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.ArticleDetailActivity;
+import edu.children.xiaoshizi.activity.XszWebViewActivity;
 import edu.children.xiaoshizi.adapter.ArticleAdapter;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
+import edu.children.xiaoshizi.bean.Banner;
 import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.Response;
+import edu.children.xiaoshizi.utils.GlideImageLoader;
 import zuo.biao.library.ui.AlertDialog.OnDialogButtonClickListener;
 import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
@@ -67,7 +72,9 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 	private ArticleType firstArticleType;
 	@BindView(R.id.multiStatusLayout)
 	MultiStatusLayout multiStatusLayout;
-
+    @BindView(R.id.banner)
+    com.youth.banner.Banner banner;
+    private List<Banner> banners;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,7 +94,21 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 	public void initView() {
 		articleType=(ArticleType) getArguments().getSerializable("articleType");
 		Log.d(TAG,"articleType"+articleType.getTitle()+","+articleType.getCategoryId());
-        rvBaseRecycler.setLayoutManager(new LinearLayoutManager(context));
+//        rvBaseRecycler.setLayoutManager(new LinearLayoutManager(context));
+		rvBaseRecycler.setLayoutManager(new LinearLayoutManager(context){
+			@Override
+			public boolean canScrollVertically() {
+				//解决ScrollView里存在多个RecyclerView时滑动卡顿的问题
+				//如果你的RecyclerView是水平滑动的话可以重写canScrollHorizontally方法
+				return false;
+			}
+		});
+		//解决数据加载不完的问题
+		rvBaseRecycler.setNestedScrollingEnabled(false);
+		rvBaseRecycler.setHasFixedSize(true);
+		//解决数据加载完成后, 没有停留在顶部的问题
+		rvBaseRecycler.setFocusable(false);
+
         DividerItemDecoration divider = new DividerItemDecoration(context,DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(context,R.drawable.list_view_divider));
         rvBaseRecycler.addItemDecoration(divider);
@@ -191,14 +212,75 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 
 	@Override
 	public void initData() {//必须调用
-
+        banners=DbUtils.getModelList(Banner.class);
+        if (banners!=null&&banners.size()>0){
+            initBanber(banners);
+        }
+        if (DemoApplication.getInstance().getBanners()==null) {
+            loadSysBannerList();
+        }
 	}
 
-	@Override
+    private void loadSysBannerList() {
+        TreeMap sm = new TreeMap<String,String>();
+        LogicService.post(context, APIMethod.loadSysBannerList,sm, new ApiSubscriber<Response<List<Banner>>>() {
+            @Override
+            public void onSuccess(Response<List<Banner>> response) {
+                DemoApplication.getInstance().setBanners(response.getResult());
+                banners=response.getResult();
+                DbUtils.deleteModel(Banner.class);
+                DbUtils.saveModelList(banners);
+                initBanber(banners);
+            }
+
+            @Override
+            protected void onFail(Throwable  error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
+    private void initBanber(List<Banner> banners){
+        banner.setImageLoader(new GlideImageLoader());
+        List<String> images=new ArrayList<String>();
+        for (Banner b:banners){
+            images.add(b.getBannerImage());
+        }
+        banner.setImages(images);
+//		banner.setBannerAnimation(Transformer.Tablet);
+        banner.start();
+    }
+
+
+    @Override
 	public void initEvent() {//必须调用
-
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                if (position<banners.size()){
+                    Banner banner=banners.get(position);
+                    loadBannerContentById(banner.getId());
+                }
+            }
+        });
 	}
+    void loadBannerContentById(String contentId){
+        TreeMap<String, String> param = new TreeMap<String, String>();
+        param.put("contentId",contentId);
+        LogicService.post(context, APIMethod.loadBannerContentById,param,new ApiSubscriber<Response<Banner>>() {
+            @Override
+            public void onSuccess(Response<Banner> respon) {
+                Banner banner=respon.getResult();
+                toActivity(XszWebViewActivity.createIntent(context,banner.getTitle(),banner.getIntroduce()));
+            }
 
+            @Override
+            protected void onFail(Throwable  error) {
+                showShortToast(error.getMessage());
+                error.printStackTrace();
+            }
+        });
+    }
 	@Override
 	public void onDialogButtonClick(int requestCode, boolean isPositive) {
 		if (! isPositive) {
