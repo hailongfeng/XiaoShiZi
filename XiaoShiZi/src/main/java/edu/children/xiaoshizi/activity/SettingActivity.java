@@ -69,7 +69,7 @@ public class SettingActivity extends XszBaseActivity{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_setting_clear_cache:
-               long size= XszCache.getCacheSize();
+                long size= XszCache.getCacheSize();
                 XszCache.clearCacheSize();
                 DbUtils.deleteModel(ArticleCache.class);
                 dialog=DialogUIUtils.showAlert(context,"清除成功","本次为您清除缓存"+XszCache.getPrintSize(size)+"！！","","","OK","",false,true,true,new DialogUIListener(){

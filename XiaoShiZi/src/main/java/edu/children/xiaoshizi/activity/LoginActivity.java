@@ -1,9 +1,7 @@
 package edu.children.xiaoshizi.activity;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -13,8 +11,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.CacheUtils;
-import com.dou361.dialogui.DialogUIUtils;
-import com.dou361.dialogui.listener.DialogUIListener;
+import com.blankj.utilcode.util.StringUtils;
 import com.flyco.roundview.RoundTextView;
 import com.gyf.barlibrary.ImmersionBar;
 import com.umeng.socialize.UMAuthListener;
@@ -31,26 +28,26 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.ArticleCache;
 import edu.children.xiaoshizi.bean.Banner;
 import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.bean.LoadContentCategoryResponse;
 import edu.children.xiaoshizi.bean.LoginRespon;
+import edu.children.xiaoshizi.bean.SearchWorldHistory;
 import edu.children.xiaoshizi.bean.User;
+import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.logic.UmengThirdLoginHandle;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
-import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.Constant;
-import edu.children.xiaoshizi.utils.StringUtils;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import pub.devrel.easypermissions.EasyPermissions;
 import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
 
@@ -158,6 +155,10 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
     }
 
     private void login() {
+        if (StringUtils.isEmpty(DemoApplication.getInstance().getDeviceToken())){
+            showShortToast("请退出应用，重新登录");
+            return;
+        }
         showLoading("正在登录");
         String verifyCode=edit_verifyCode.getText().toString();
         TreeMap sm = new TreeMap<String,String>();
@@ -175,6 +176,11 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                 DemoApplication.getInstance().setLoginRespon(respon.getResult());
                 User user=respon.getResult().getLoginResp();
                 DemoApplication.getInstance().setUser(user);
+                if (!StringUtils.equals(spUtils.getString("phoneNumber",""),phoneNumber)){
+                    DbUtils.deleteModel(ArticleCache.class);
+                    DbUtils.deleteModel(SearchWorldHistory.class);
+                    spUtils.put("lastUser",phoneNumber);
+                }
                 EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_login,"登陆成功",""));
                 CacheUtils.get(context).remove(Constant.cache_user);
                 CacheUtils.get(context).put(Constant.cache_user,user);

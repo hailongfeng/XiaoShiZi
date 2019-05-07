@@ -5,18 +5,75 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ConstraintActivity">
-    <Button
-        android:id="@+id/btn1"
+
+    <ImageView
+        android:id="@+id/iv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_inout_school_error"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="ok1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:padding="10dp"
+        android:text="创建相对其它View的布局的形式就比较多样化了，结合相对父布局的约束，可以实现出非常复杂的界面。当创建一个相对其它View的约束时，将锚点拖动到其它View上面的锚点即可。"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/iv_status"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
-        app:layout_constraintLeft_toRightOf="@id/btn1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="ok2"
+        android:id="@+id/btn_1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/null_drawable"
+        android:text="查看详情"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn_1">
+
+        <TextView
+            android:id="@+id/tab1"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="#0f0"
+            android:gravity="center"
+            android:text="Tab1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tab2" />
+
+
+        <TextView
+            android:id="@+id/tab2"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="#ff0"
+            android:gravity="center"
+            android:text="Tab2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/tab1"
+            app:layout_constraintRight_toLeftOf="@+id/tab3" />
+
+
+        <TextView
+            android:id="@+id/tab3"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="#f0f"
+            android:gravity="center"
+            android:text="Tab3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/tab2"
+            app:layout_constraintRight_toRightOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

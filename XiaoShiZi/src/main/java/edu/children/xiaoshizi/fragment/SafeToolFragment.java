@@ -97,6 +97,9 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParamCurrentStudentIndex = getArguments().getInt(ARG_PARAM_CURRENT_STUDENT);
+        }
         EventBus.getDefault().register(this);
     }
 
@@ -125,9 +128,6 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
                }
            });
         }else {
-            if (getArguments() != null) {
-                mParamCurrentStudentIndex = getArguments().getInt(ARG_PARAM_CURRENT_STUDENT);
-            }
             List<Student> students=DemoApplication.getInstance().getLoginRespon().getStudents();
             BINDING_STUDENT_NAMES =new String[students.size()];
             for (int i = 0; i < students.size(); i++) {
@@ -144,7 +144,7 @@ public class SafeToolFragment extends XszBaseFragment implements View.OnClickLis
                 txt_date.setText(currentDate);
                 inOutSchoolRecodeAdapter= new InOutSchoolRecodeAdapter(context,student);
                 lvBaseList.setAdapter(inOutSchoolRecodeAdapter);
-                changeCurrentStudent(0);
+                changeCurrentStudent(mParamCurrentStudentIndex);
                 getRecodeByDate(student.getStudentId(),currentDate);
             }
         }
