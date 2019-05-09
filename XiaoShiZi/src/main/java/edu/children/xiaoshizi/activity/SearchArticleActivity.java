@@ -1,6 +1,7 @@
 package edu.children.xiaoshizi.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -146,13 +147,12 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
 
         txt_cancle.setOnClickListener(this);
         edit_query.setOnEditorActionListener(new mEditorActionListener());
-        edit_query.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                showHistoryList();
-            }
-        });
-
+//        edit_query.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                showHistoryList();
+//            }
+//        });
         rvBaseRecycler.setLayoutManager(new LinearLayoutManager(context));
         DividerItemDecoration divider = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(context, R.drawable.list_view_divider));
@@ -184,6 +184,12 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
             }
         });
         updataList(new ArrayList<>(),true);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showHistoryList();
+            }
+        },300);
     }
 
 
@@ -209,6 +215,7 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
         LogicService.post(context, APIMethod.searchContentByTitle, sm, new ApiSubscriber<Response<List<Article>>>() {
             @Override
             public void onSuccess(Response<List<Article>> respon) {
+                edit_query.clearFocus();
                 SearchWorldHistory historyExit= DbUtils.getModelSingle(SearchWorldHistory.class, SearchWorldHistory_Table.name.eq(searchkeyWord));
                 if (historyExit == null) {
                     SearchWorldHistory history = new SearchWorldHistory();
@@ -220,6 +227,7 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
                 updataList(respon.getResult(),false);
                 if (historyPopupWindow!=null&&historyPopupWindow.isShowing()){
                     historyPopupWindow.dismiss();
+                    historyPopupWindow=null;
                 }
             }
 
@@ -238,6 +246,7 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
         if (articles.size() != 0) {
             rvBaseRecycler.setVisibility(View.VISIBLE);
             ll_article_search_result_empty.setVisibility(View.GONE);
+            articleAdapter.refresh(this.articles);
         } else {
             rvBaseRecycler.setVisibility(View.GONE);
             if (isFirst) {
@@ -246,7 +255,6 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
                 ll_article_search_result_empty.setVisibility(View.VISIBLE);
             }
         }
-        articleAdapter.refresh(this.articles);
     }
 
     @Override

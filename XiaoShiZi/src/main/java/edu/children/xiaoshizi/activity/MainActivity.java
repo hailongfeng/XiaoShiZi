@@ -1,8 +1,11 @@
 package edu.children.xiaoshizi.activity;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -49,6 +52,7 @@ import edu.children.xiaoshizi.net.rxjava.NetErrorException;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.Constant;
 import pub.devrel.easypermissions.EasyPermissions;
+import zuo.biao.library.ui.AlertDialog;
 import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
 
@@ -67,7 +71,9 @@ public class MainActivity extends XszBaseActivity {
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
         autoLogin();
+
     }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserInfoChange(EventBusMessage<String> messageEvent) {
@@ -81,8 +87,14 @@ public class MainActivity extends XszBaseActivity {
         } else if (messageEvent.getType() == EventBusMessage.Type_user_real_name_auth) {
             Log.d(TAG, "Type_user_real_name_auth====");
             getStudentsAndParents();
+        }else if (messageEvent.getType() == EventBusMessage.Type_login_ineffective) {
+            Log.d(TAG, "Type_user_real_name_auth====");
+//            loginout(messageEvent.getMessage());
         }
     }
+
+
+
 
     private void autoLogin() {
         Object uo = CacheUtils.get(context).getAsObject(Constant.cache_user);

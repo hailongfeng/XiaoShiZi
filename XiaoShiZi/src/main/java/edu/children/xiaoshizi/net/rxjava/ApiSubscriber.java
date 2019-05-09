@@ -1,10 +1,17 @@
 package edu.children.xiaoshizi.net.rxjava;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONException;
+import com.blankj.utilcode.util.CacheUtils;
+import com.dou361.dialogui.DialogUIUtils;
+import com.dou361.dialogui.listener.DialogUIListener;
 import com.google.gson.JsonParseException;
 import com.umeng.analytics.MobclickAgent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -13,10 +20,15 @@ import java.net.UnknownHostException;
 import java.net.UnknownServiceException;
 
 import edu.children.xiaoshizi.DemoApplication;
+import edu.children.xiaoshizi.activity.LoginOutActivity;
+import edu.children.xiaoshizi.bean.EventBusMessage;
+import edu.children.xiaoshizi.bean.Student;
+import edu.children.xiaoshizi.utils.Constant;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.subscribers.ResourceSubscriber;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
+import zuo.biao.library.ui.AlertDialog;
 import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
 
@@ -32,13 +44,25 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
     @Override
     public final void onNext(T t) {
         Log.d(TAG, "code:" + t.getCode() + "，message ：" + t.getMessage());
-        if (t!=null&&t.getCode().equals(Response.SUCCESS)||t.getCode().equals("10012")) {
+        if (t!=null&&t.getCode().equals(Response.SUCCESS)) {
             onSuccess(t);
-        } else {
+        } else if (t.getCode().equals("10012")){
+//            t1(t.getMessage());
+//            EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_login_ineffective,t.getMessage()));
+            DemoApplication.getInstance().startActivity(LoginOutActivity.createIntent(DemoApplication.getInstance(), t.getMessage()));
+            String msg=(t!=null&&StringUtil.isNotEmpty(t.getMessage(),true)?t.getMessage():"服务器异常");
+            onFail(new Exception(msg));
+        }else{
             String msg=(t!=null&&StringUtil.isNotEmpty(t.getMessage(),true)?t.getMessage():"服务器异常");
             onFail(new Exception(msg));
         }
     }
+
+    void t1(){
+        
+    }
+
+
 
     @Override
     public final void onError(Throwable e) {

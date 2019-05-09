@@ -23,6 +23,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:layout_margin="5dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 app:rv_backgroundColor="@color/white"
                 app:rv_cornerRadius="25dp"
                 >

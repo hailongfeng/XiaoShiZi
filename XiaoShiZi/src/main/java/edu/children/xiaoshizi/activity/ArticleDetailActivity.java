@@ -126,13 +126,14 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 .init();
         articleType=(ArticleType) getIntent().getSerializableExtra("articleType");
         article=(Article) getIntent().getSerializableExtra("article");
-        print("typeTitle="+articleType.getTitle()+",belongTo"+articleType.getBelongTo());
+        print(articleType.toString());
         print(article.toString());
         if (isVideoArticle()){
             cv_video_wrap.setVisibility(View.VISIBLE);
             btn_down_cache.setVisibility(View.VISIBLE);
             ll_xiepinglun.setVisibility(View.GONE);
             ib_share.setVisibility(View.VISIBLE);
+            loadImage(article.getActivityVideoImageUrl(), player.thumbImageView);
         }else {
             if (articleType.getBelongTo()==1&&isLogin()){
                 ll_xiepinglun.setVisibility(View.VISIBLE);
@@ -161,8 +162,6 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
         return articleType.getType().equalsIgnoreCase("VT");
     }
 
-
-
     public void initData() {
         getArticleById(article.getContentId());
 //        String pushAppTitle=articleType.getPushAppTitle()+"|"+article.getPushAppTitle();
@@ -171,6 +170,59 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
         }else {
             tvBaseTitle.setText(title);
         }
+    }
+
+    private void getArticleById(String id) {
+        TreeMap sm = new TreeMap<String,String>();
+        sm.put("contentId",id);
+
+        APIMethod method=APIMethod.loadContentById;
+        if (articleType.getBelongTo()==2){
+            method=APIMethod.loadSeClassRoomContentById;
+        }else if (articleType.getBelongTo()==3){
+            method=APIMethod.loadSafeLabContentById;
+        }
+        LogicService.post(context, method,sm, new ApiSubscriber<Response<Article>>() {
+            @Override
+            public void onSuccess(Response<Article> respon) {
+                if (respon.getResult()!=null){
+                    article=respon.getResult();
+                    String videoImageUrl=article.getActivityVideoImageUrl();
+                    if (isVideoArticle()){
+                        String url=article.getActivityVideoUrl();
+                        if (StringUtils.isEmpty(url)){
+                            showShortToast("视频地址无效，无法播放");
+                        }else {
+                            print("111111");
+                            File file = XszCache.getCachedVideoFile(url);
+                            if (file.exists()) {
+                                print("已经存在，直接播放");
+                                Uri uri = Uri.fromFile(file);
+                                player.setUp(uri.getPath(), JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
+                            } else {
+                                print("网络下载播放");
+                                player.setUp(url, JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
+                            }
+                            loadImage(videoImageUrl, player.thumbImageView);
+                        }
+                    }else {
+                        updateCommont(article);
+                    }
+                    String introduce=respon.getResult().getIntroduce();
+                    if (StringUtil.isNotEmpty(respon.getResult().getIntroduce(),true)){
+                        introduce="";
+                    }
+                    agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml(introduce), "text/html", "UTF-8", null);
+                }
+            }
+
+            @Override
+            protected void onFail(Throwable  error) {
+                error.printStackTrace();
+                showShortToast(error.getMessage());
+                player.setUp("", JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
+            }
+        });
     }
 
 
@@ -274,56 +326,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 }).start();
     }
 
-    private void getArticleById(String id) {
-        TreeMap sm = new TreeMap<String,String>();
-        sm.put("contentId",id);
 
-        APIMethod method=APIMethod.loadContentById;
-        if (articleType.getBelongTo()==2){
-            method=APIMethod.loadSeClassRoomContentById;
-        }else if (articleType.getBelongTo()==3){
-            method=APIMethod.loadSafeLabContentById;
-        }
-        LogicService.post(context, method,sm, new ApiSubscriber<Response<Article>>() {
-            @Override
-            public void onSuccess(Response<Article> respon) {
-                if (respon.getResult()!=null&&StringUtil.isNotEmpty(respon.getResult().getIntroduce(),true)){
-                    article=respon.getResult();
-                    String videoImageUrl=article.getActivityVideoImageUrl();
-                    if (isVideoArticle()){
-                        String url=article.getActivityVideoUrl();
-                        if (StringUtils.isEmpty(url)){
-                            showShortToast("视频地址无效，无法播放");
-                        }else {
-                            File file = XszCache.getCachedVideoFile(url);
-                            if (file.exists()) {
-                                Log.d(TAG, "已经存在，直接播放");
-                                Uri uri = Uri.fromFile(file);
-                                player.setUp(uri.getPath(), JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
-                            } else {
-                                Log.d(TAG, "网络下载播放");
-                                player.setUp(url, JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
-                            }
-                            loadImage(article.getActivityVideoImageUrl(), player.thumbImageView);
-                        }
-                    }else {
-                        updateCommont(article);
-                    }
-                    String introduce=respon.getResult().getIntroduce();
-                    agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml(introduce), "text/html", "UTF-8", null);
-                }else {
-                    agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml("内容为空"), "text/html", "UTF-8", null);
-                }
-     }
-
-            @Override
-            protected void onFail(Throwable  error) {
-                error.printStackTrace();
-                showShortToast(error.getMessage());
-                player.setUp("", JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
-            }
-        });
-    }
 
     public void initEvent() {
         ib_share.setOnClickListener(this);
@@ -467,6 +470,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     protected void onDestroy() {
         super.onDestroy();
         UMShareAPI.get(this).release();
+        agentWeb.destroy();
     }
 
 }

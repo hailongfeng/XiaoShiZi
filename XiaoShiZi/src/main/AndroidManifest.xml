@@ -40,7 +40,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".activity.ConstraintActivity"></activity>
+        <activity android:name=".activity.LoginOutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Window"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            ></activity>
+        <activity android:name=".activity.ConstraintActivity" />
         <activity
             android:name=".activity.SplashActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

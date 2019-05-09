@@ -37,6 +37,7 @@ import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.activity.ContributeArticleActivity;
 import edu.children.xiaoshizi.activity.LoginActivity;
+import edu.children.xiaoshizi.activity.LoginOutActivity;
 import edu.children.xiaoshizi.activity.SearchArticleActivity;
 import edu.children.xiaoshizi.bean.Article;
 import edu.children.xiaoshizi.bean.ArticleType;
@@ -194,6 +195,7 @@ public class ShouYeFragment extends XszBaseFragment implements OnClickListener, 
 	public void onClick(View v) {//直接调用不会显示v被点击效果
 		switch (v.getId()) {
 			case R.id.rll_search:
+
 				toActivity(new Intent(context,SearchArticleActivity.class));
 				break;
 			case R.id.rtv_contribute:

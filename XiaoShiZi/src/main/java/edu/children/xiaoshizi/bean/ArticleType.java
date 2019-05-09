@@ -89,4 +89,17 @@ public class ArticleType extends BaseModel implements Serializable {
     public void setBelongTo(int belongTo) {
         this.belongTo = belongTo;
     }
+
+    @Override
+    public String toString() {
+        return "ArticleType{" +
+                "cid=" + cid +
+                ", categoryId=" + categoryId +
+                ", sortNum=" + sortNum +
+                ", type='" + type + '\'' +
+                ", title='" + title + '\'' +
+                ", bannerImage='" + bannerImage + '\'' +
+                ", belongTo=" + belongTo +
+                '}';
+    }
 }
