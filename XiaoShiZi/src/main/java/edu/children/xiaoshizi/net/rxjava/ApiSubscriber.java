@@ -49,9 +49,9 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
         } else if (t.getCode().equals("10012")){
 //            t1(t.getMessage());
 //            EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_login_ineffective,t.getMessage()));
-            DemoApplication.getInstance().startActivity(LoginOutActivity.createIntent(DemoApplication.getInstance(), t.getMessage()));
             String msg=(t!=null&&StringUtil.isNotEmpty(t.getMessage(),true)?t.getMessage():"服务器异常");
             onFail(new Exception(msg));
+            DemoApplication.getInstance().startActivity(LoginOutActivity.createIntent(DemoApplication.getInstance(), t.getMessage()));
         }else{
             String msg=(t!=null&&StringUtil.isNotEmpty(t.getMessage(),true)?t.getMessage():"服务器异常");
             onFail(new Exception(msg));
