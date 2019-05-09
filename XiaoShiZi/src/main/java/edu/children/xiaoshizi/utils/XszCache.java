@@ -71,7 +71,7 @@ public class XszCache {
         long fileSize=getFileOrDirSize(getCacheDir(Constant.CACHE_DIR_FILE));
         return imageSize+fileSize;
     }
-    public static void clearCacheSize() {
+    public static void clearCache() {
         FileUtils.deleteFilesInDir(getCacheDir(Constant.CACHE_DIR_IMAGE));
         FileUtils.deleteFilesInDir(getCacheDir(Constant.CACHE_DIR_FILE));
     }

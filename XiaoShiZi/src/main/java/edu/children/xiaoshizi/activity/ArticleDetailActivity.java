@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.flyco.roundview.RoundTextView;
 import com.gyf.barlibrary.ImmersionBar;
 import com.just.agentweb.AgentWeb;
@@ -288,18 +289,23 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
             public void onSuccess(Response<Article> respon) {
                 if (respon.getResult()!=null&&StringUtil.isNotEmpty(respon.getResult().getIntroduce(),true)){
                     article=respon.getResult();
+                    String videoImageUrl=article.getActivityVideoImageUrl();
                     if (isVideoArticle()){
                         String url=article.getActivityVideoUrl();
-                        File file=XszCache.getCachedVideoFile(url);
-                        if (file.exists()){
-                            Log.d(TAG,"已经存在，直接播放");
-                            Uri uri= Uri.fromFile(file);
-                            player.setUp(uri.getPath(), JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
+                        if (StringUtils.isEmpty(url)){
+                            showShortToast("视频地址无效，无法播放");
                         }else {
-                            Log.d(TAG,"网络下载播放");
-                            player.setUp(url, JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
+                            File file = XszCache.getCachedVideoFile(url);
+                            if (file.exists()) {
+                                Log.d(TAG, "已经存在，直接播放");
+                                Uri uri = Uri.fromFile(file);
+                                player.setUp(uri.getPath(), JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
+                            } else {
+                                Log.d(TAG, "网络下载播放");
+                                player.setUp(url, JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
+                            }
+                            loadImage(article.getActivityVideoImageUrl(), player.thumbImageView);
                         }
-                        loadImage(article.getActivityVideoImageUrl(),player.thumbImageView);
                     }else {
                         updateCommont(article);
                     }

@@ -1,16 +1,12 @@
 package edu.children.xiaoshizi.activity;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 
 import com.blankj.utilcode.util.CacheUtils;
-import com.blankj.utilcode.util.FileUtils;
 import com.dou361.dialogui.DialogUIUtils;
-import com.dou361.dialogui.bean.BuildBean;
 import com.dou361.dialogui.listener.DialogUIListener;
 import com.flyco.roundview.RoundTextView;
 
@@ -23,7 +19,6 @@ import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
 import edu.children.xiaoshizi.bean.ArticleCache;
 import edu.children.xiaoshizi.bean.EventBusMessage;
-import edu.children.xiaoshizi.bean.MyIntegrationResponse;
 import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.db.DbUtils;
 import edu.children.xiaoshizi.logic.APIMethod;
@@ -32,7 +27,6 @@ import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.Constant;
 import edu.children.xiaoshizi.utils.XszCache;
-import zuo.biao.library.util.StringUtil;
 
 public class SettingActivity extends XszBaseActivity{
 
@@ -70,7 +64,7 @@ public class SettingActivity extends XszBaseActivity{
         switch (v.getId()) {
             case R.id.ll_setting_clear_cache:
                 long size= XszCache.getCacheSize();
-                XszCache.clearCacheSize();
+                XszCache.clearCache();
                 DbUtils.deleteModel(ArticleCache.class);
                 dialog=DialogUIUtils.showAlert(context,"清除成功","本次为您清除缓存"+XszCache.getPrintSize(size)+"！！","","","OK","",false,true,true,new DialogUIListener(){
 

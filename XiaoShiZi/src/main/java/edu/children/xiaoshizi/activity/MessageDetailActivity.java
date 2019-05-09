@@ -189,7 +189,7 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
                     public void onPositive() {
                         DialogUIUtils.dismiss(dialog);
                         //提高识别
-                        toActivity(RecogniteFeedbackActivity.createIntent(context, inAndOutSchoolRecode.getStudentId()));
+                        toActivity(RecogniteFeedbackActivity.createIntent(context, inAndOutSchoolRecode.getStudentId(),snapMsgId));
                         finish();
                     }
 
@@ -218,7 +218,7 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
         }else if (v.getId()==R.id.rtv_recognite_right){
             recogniteBackRight(this.snapMsgId,"识别正确");
         }else if (v.getId()==R.id.btn_tgsbl){
-            toActivity(RecogniteFeedbackActivity.createIntent(context, inAndOutSchoolRecode.getStudentId()));
+            toActivity(RecogniteFeedbackActivity.createIntent(context, inAndOutSchoolRecode.getStudentId(),snapMsgId));
         }
     }
 }

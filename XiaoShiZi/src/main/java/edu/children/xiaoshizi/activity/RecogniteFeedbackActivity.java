@@ -50,11 +50,14 @@ public class RecogniteFeedbackActivity extends BaseTakePhotoActivity  {
     RoundTextView btn_sure;
 
     private String studentId;
+    private String snapMsgId;
 
     private static final String EXTRA_MESSAGE="studentId";
-    public static Intent createIntent(Context context, String studentId) {
+    private static final String EXTRA_SNAPMSGID="snapMsgId";
+    public static Intent createIntent(Context context, String studentId, String snapMsgId) {
         return new Intent(context, RecogniteFeedbackActivity.class).
-                putExtra(RecogniteFeedbackActivity.EXTRA_MESSAGE, studentId);
+                putExtra(RecogniteFeedbackActivity.EXTRA_MESSAGE, studentId).
+                putExtra(RecogniteFeedbackActivity.EXTRA_SNAPMSGID, snapMsgId);
     }
 
     @Override
@@ -62,6 +65,7 @@ public class RecogniteFeedbackActivity extends BaseTakePhotoActivity  {
         super.onCreate(savedInstanceState);
         if (getIntent()!=null&&!StringUtils.isEmail(getIntent().getStringExtra(EXTRA_MESSAGE))){
             studentId=getIntent().getStringExtra(EXTRA_MESSAGE);
+            snapMsgId=getIntent().getStringExtra(EXTRA_SNAPMSGID);
         }
         setContentView(R.layout.activity_recognite_feedback);
     }
@@ -104,6 +108,7 @@ public class RecogniteFeedbackActivity extends BaseTakePhotoActivity  {
             return;
         }
         sm.put("studentId",studentId);
+        sm.put("snapMsgId",snapMsgId);
         Map<String,File> imagefiles=new HashMap<>();
         imagefiles.put("studentHeadPortrait",new File(originalFilePath));
         Map<String,File> videofiles=new HashMap<>();

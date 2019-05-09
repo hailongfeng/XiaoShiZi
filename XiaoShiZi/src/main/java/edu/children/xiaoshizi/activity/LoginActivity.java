@@ -42,6 +42,7 @@ import edu.children.xiaoshizi.logic.UmengThirdLoginHandle;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.utils.Constant;
+import edu.children.xiaoshizi.utils.XszCache;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -179,6 +180,7 @@ public class LoginActivity extends XszBaseActivity implements View.OnClickListen
                 if (!StringUtils.equals(spUtils.getString("phoneNumber",""),phoneNumber)){
                     DbUtils.deleteModel(ArticleCache.class);
                     DbUtils.deleteModel(SearchWorldHistory.class);
+                    XszCache.clearCache();
                     spUtils.put("lastUser",phoneNumber);
                 }
                 EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_login,"登陆成功",""));
