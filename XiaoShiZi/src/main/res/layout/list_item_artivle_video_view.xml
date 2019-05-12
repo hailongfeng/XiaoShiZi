@@ -30,18 +30,19 @@
                 android:layout_gravity="bottom"
                 android:drawablePadding="5dp"
                 android:textSize="14sp"
-                android:drawableLeft="@drawable/icon_sex_man"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/icon_spbf"
                 android:text="156" />
             <TextView
                 android:padding="5dp"
                 android:id="@+id/txt_video_time"
+                android:gravity="center_vertical"
                 android:layout_gravity="bottom|right"
                 android:layout_marginLeft="40dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:drawablePadding="5dp"
                 android:textSize="14sp"
-                android:drawableLeft="@drawable/icon_sex_man"
                 android:text="00:08:18" />
         </FrameLayout>
     </android.support.v7.widget.CardView>

@@ -111,6 +111,7 @@ public class ArticleFragment extends XszBaseFragment implements View.OnClickList
 
         DividerItemDecoration divider = new DividerItemDecoration(context,DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(context,R.drawable.list_view_divider));
+
         rvBaseRecycler.addItemDecoration(divider);
         articleAdapter = new ArticleAdapter(context,ArticleAdapter.Type_Shoye_Article);
 		rvBaseRecycler.setAdapter(articleAdapter);

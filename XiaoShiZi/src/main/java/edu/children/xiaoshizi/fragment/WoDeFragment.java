@@ -99,6 +99,8 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 	RecyclerView rvStudentsRecycler;
 	private StudentAdapter studentAdapter;
 
+	@BindView(R.id.cv_no_parent)
+	CardView cv_no_parent;
 	@BindView(R.id.cv_no_students)
 	CardView cv_no_students;
 	@BindView(R.id.btn_no_student_bind)
@@ -221,6 +223,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 
 	private void updateStudent() {
 		if (isLogin()) {
+			cv_no_parent.setVisibility(View.VISIBLE);
 			List<Student> list = DemoApplication.getInstance().getLoginRespon().getStudents();
 			if (list != null) {
 				Log.d(TAG,"有学生"+list.size());
@@ -238,6 +241,7 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 		}else {
 			btn_add_student.setVisibility(View.GONE);
 			rvStudentsRecycler.setVisibility(View.GONE);
+			cv_no_parent.setVisibility(View.GONE);
 			cv_no_students.setVisibility(View.VISIBLE);
 		}
 

@@ -6,6 +6,7 @@
     android:background="@drawable/white_to_alpha"
     android:gravity="center_vertical" >
 <TextView
+    android:layout_marginLeft="@dimen/dp_10"
     android:id="@+id/txt_name"
     android:layout_alignParentLeft="true"
     android:text=""
@@ -14,6 +15,7 @@
     android:layout_width="wrap_content"
     android:layout_height="60dp" />
     <ImageView
+        android:layout_marginRight="@dimen/dp_10"
         android:id="@+id/iv_delete"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"

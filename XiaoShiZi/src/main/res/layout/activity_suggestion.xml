@@ -40,7 +40,7 @@
         <EditText
             android:id="@+id/edt_suggestion_content"
             android:layout_width="match_parent"
-            android:lines="20"
+            android:lines="200"
             android:padding="10dp"
             android:hint="请输入建议"
             android:background="@drawable/null_drawable"
