@@ -41,9 +41,12 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
 
     }
 
+   public static int i=0;
     @Override
     public final void onNext(T t) {
-        Log.d(TAG, "code:" + t.getCode() + "，message ：" + t.getMessage());
+        i++;
+        Log.d(TAG, "code:" + t.getCode() + "，message ：" + t.getMessage()+",i=" +i);
+//        if (i==36) t.setCode("10012");
         if (t!=null&&t.getCode().equals(Response.SUCCESS)) {
             onSuccess(t);
         } else if (t.getCode().equals("10012")){

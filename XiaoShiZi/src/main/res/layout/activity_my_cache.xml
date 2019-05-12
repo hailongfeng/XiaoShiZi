@@ -35,7 +35,10 @@
 
             <ListView
                 android:id="@id/lvBaseList"
+                android:padding="@dimen/dp_20"
                 style="@style/lv"
+                android:dividerHeight="20dp"
+                android:divider="@android:color/transparent"
                 android:layout_height="0dp"
                 android:layout_below="@id/rl_title"
                 android:layout_weight="1" />

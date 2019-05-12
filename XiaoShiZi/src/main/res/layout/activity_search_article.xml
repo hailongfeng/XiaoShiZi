@@ -34,7 +34,7 @@
                     android:layout_marginLeft="5dp"
                     android:drawableLeft="@drawable/icon_search"
                     android:drawablePadding="5dp"
-                    android:hint="放大镜"
+                    android:hint="搜索你想要的内容"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:lines="1"

@@ -11,8 +11,11 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.CacheUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.R;
+import edu.children.xiaoshizi.bean.EventBusMessage;
 import edu.children.xiaoshizi.utils.Constant;
 import zuo.biao.library.ui.AlertDialog;
 import zuo.biao.library.util.StringUtil;
@@ -25,8 +28,10 @@ public class LoginOutActivity extends XszBaseActivity {
 
 
     public static Intent createIntent(Context context, String title) {
-        return new Intent(context, LoginOutActivity.class).
-                putExtra(INTENT_TITLE, title);
+        Intent intent= new Intent(context, LoginOutActivity.class);
+        intent.putExtra(INTENT_TITLE, title);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        return intent;
     }
 
     @Override
@@ -73,9 +78,14 @@ public class LoginOutActivity extends XszBaseActivity {
 
     @Override
     public void onClick(View v) {
-        CacheUtils.get(context).remove(Constant.cache_user);
         CacheUtils.get(context).clear();
-        DemoApplication.getInstance().exit();
+        CacheUtils.get(context).remove(Constant.cache_user);
+        DemoApplication.getInstance().setUser(null);
+        DemoApplication.getInstance().setLoginRespon(null);
+        EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_user_logout,"用户退出"));
+        toActivity(new Intent(context, LoginActivity.class));
+        finish();
+//        DemoApplication.getInstance().exit();
     }
 
     @Override

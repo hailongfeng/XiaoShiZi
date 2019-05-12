@@ -28,20 +28,21 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/orange_btn"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp">
+                    android:paddingBottom="80dp"
+                    android:background="@color/orange_btn">
 
                     <RelativeLayout
                         android:id="@+id/ll_tmp1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:gravity="center_vertical"
+                        android:layout_height="60dp">
 
                         <com.makeramen.roundedimageview.RoundedImageView
                             android:id="@+id/iv_user_face"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_margin="10dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp_10"
                             android:scaleType="fitXY"
                             android:src="@drawable/user_default"
                             app:riv_border_color="@color/white"
@@ -49,12 +50,13 @@
                             app:riv_oval="true" />
 
                         <TextView
+                            android:layout_marginLeft="5dp"
                             android:id="@+id/txt_user_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:layout_margin="10dp"
-                            android:layout_toRightOf="@id/iv_user_face"
                             android:gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="ddddddddddddddd"
+                            android:layout_toRightOf="@id/iv_user_face"
                             android:textColor="@color/white"
                             android:textSize="16sp" />
 
@@ -69,22 +71,29 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/icon_wenhao" />
                     </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/txt_jifen_all"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
                         android:layout_below="@id/ll_tmp1"
-                        android:layout_centerHorizontal="true"
-                        android:text="600"
-                        android:textColor="@color/white"
-                        android:textSize="40sp" />
-
-                    <TextView
+                        android:layout_alignParentBottom="true"
+                        android:orientation="horizontal"
+                        android:gravity="center_horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_below="@id/txt_jifen_all"
-                        android:layout_alignParentBottom="true" />
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/txt_jifen_all"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ll_tmp1"
+                            android:layout_centerHorizontal="true"
+                            android:text="600"
+                            android:textColor="@color/white"
+                            android:textSize="40sp" />
+                        <TextView
+                            android:text="积分"
+                            android:textColor="@color/white"
+                            android:textSize="25sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <android.support.v7.widget.CardView
@@ -92,7 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="150dp"
+                    android:layout_marginTop="130dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="20dp"
                     app:cardBackgroundColor="@color/white"
@@ -132,7 +141,6 @@
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
                             <GridView
-
                                 android:id="@+id/rvQianDaoRecycler"
                                 style="@style/lv"
                                 android:padding="0dp"

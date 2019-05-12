@@ -117,7 +117,7 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
         loadImage(inAndOutSchoolRecode.imgPicUrl,iv_student_face);
         loadImage(inAndOutSchoolRecode.snapPicUrl,iv_student_recognite_face);
         txt_student_name.setText(inAndOutSchoolRecode.getStudentName());
-        txt_pic_xsd.setText(inAndOutSchoolRecode.similarity+"");
+        txt_pic_xsd.setText(inAndOutSchoolRecode.similarity+"%");
         txt_in_out_time.setText(inAndOutSchoolRecode.triggerTime);
         txt_in_out_reason.setText(inAndOutSchoolRecode.snapRemark);
 
@@ -150,7 +150,7 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
             public void onSuccess(Response<Message> response) {
                 hideLoading();
                 EventBus.getDefault().post(new EventBusMessage<Message>(EventBusMessage.Type_message_FeedBack,"反馈更新了",response.getResult()));
-                dialog=DialogUIUtils.showAlert(context, "提示", "感谢您的反馈", "","","确定","",false,false,false,new DialogUIListener() {
+                dialog=DialogUIUtils.showAlert(context, "提示", "感谢您的反馈!", "","","确定","",false,false,false,new DialogUIListener() {
                     @Override
                     public void onPositive() {
                         DialogUIUtils.dismiss(dialog);
@@ -184,18 +184,18 @@ public class MessageDetailActivity extends XszBaseActivity implements View.OnCli
 
                 EventBus.getDefault().post(new EventBusMessage<Message>(EventBusMessage.Type_message_FeedBack,"反馈更新了",response.getResult()));
                 hideLoading();
-                dialog=DialogUIUtils.showAlert(context, "提示", "感谢您的反馈\n是否手动提高识别率", "","","确定","取消",false,false,false,new DialogUIListener() {
+                dialog=DialogUIUtils.showAlert(context, "提示", "感谢您的反馈\n是否手动提高识别率？", "","","取消","提高",false,false,false,new DialogUIListener() {
                     @Override
                     public void onPositive() {
                         DialogUIUtils.dismiss(dialog);
-                        //提高识别
-                        toActivity(RecogniteFeedbackActivity.createIntent(context, inAndOutSchoolRecode.getStudentId(),snapMsgId));
                         finish();
                     }
 
                     @Override
                     public void onNegative() {
                         DialogUIUtils.dismiss(dialog);
+                        //提高识别
+                        toActivity(RecogniteFeedbackActivity.createIntent(context, inAndOutSchoolRecode.getStudentId(),snapMsgId));
                         finish();
                     }
                 }).show();

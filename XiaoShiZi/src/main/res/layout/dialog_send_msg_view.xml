@@ -35,9 +35,9 @@
             <com.flyco.roundview.RoundLinearLayout
                 android:layout_width="wrap_content"
                 app:rv_strokeWidth="@dimen/dp_1"
-                app:rv_cornerRadius="@dimen/dp_15"
+                app:rv_cornerRadius="@dimen/dp_5"
                 app:rv_strokeColor="@color/gray_2"
-                android:layout_height="40dp">
+                android:layout_height="35dp">
             <EditText
                 android:id="@+id/edt_user_input_code"
                 android:hint="请输入验证码"
@@ -53,7 +53,7 @@
             <com.flyco.roundview.RoundTextView
                 android:id="@+id/btn_resend"
                 android:layout_width="80dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="5dp"
                 android:layout_centerInParent="true"
                 android:gravity="center"

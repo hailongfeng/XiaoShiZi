@@ -36,27 +36,22 @@
                         <LinearLayout style="@style/ll_vertical_match_match"
                             android:layout_marginTop="90dp"
                             >
-
-                            <View style="@style/divider_horizontal_1px" />
-
                             <LinearLayout
-                                android:id="@+id/ll_user_sex"
+                                android:id="@+id/ll_user_phone"
                                 style="@style/content_item_white">
 
                                 <TextView
                                     style="@style/content_item_lf_tv"
                                     android:layout_width="80dp"
-                                    android:text="姓别" />
+                                    android:text="联系电话" />
 
                                 <TextView
-                                    android:id="@+id/txt_user_sex"
+                                    android:id="@+id/txt_user_phone"
                                     style="@style/content_item_lf_tv"
                                     android:layout_weight="1"
                                     android:gravity="right|center_vertical"
                                     android:paddingRight="10dp" />
-
                             </LinearLayout>
-
                             <View style="@style/divider_horizontal_1px" />
 
                             <LinearLayout
@@ -70,44 +65,6 @@
 
                                 <TextView
                                     android:id="@+id/txt_user_dizhi"
-                                    style="@style/content_item_lf_tv"
-                                    android:layout_weight="1"
-                                    android:gravity="right|center_vertical"
-                                    android:paddingRight="10dp" />
-                            </LinearLayout>
-
-                            <View style="@style/divider_horizontal_1px" />
-
-                            <LinearLayout
-                                android:id="@+id/ll_user_phone"
-                                style="@style/content_item_white">
-
-                                <TextView
-                                    style="@style/content_item_lf_tv"
-                                    android:layout_width="80dp"
-                                    android:text="手机号" />
-
-                                <TextView
-                                    android:id="@+id/txt_user_phone"
-                                    style="@style/content_item_lf_tv"
-                                    android:layout_weight="1"
-                                    android:gravity="right|center_vertical"
-                                    android:paddingRight="10dp" />
-                            </LinearLayout>
-
-                            <View style="@style/divider_horizontal_1px" />
-
-                            <LinearLayout
-                                android:id="@+id/ll_user_email"
-                                style="@style/content_item_white">
-
-                                <TextView
-                                    style="@style/content_item_lf_tv"
-                                    android:layout_width="80dp"
-                                    android:text="电子邮箱" />
-
-                                <TextView
-                                    android:id="@+id/txt_user_email"
                                     style="@style/content_item_lf_tv"
                                     android:layout_weight="1"
                                     android:gravity="right|center_vertical"
@@ -151,7 +108,24 @@
                                     android:gravity="right|center_vertical"
                                     android:paddingRight="10dp" />
                             </LinearLayout>
+                            <View style="@style/divider_horizontal_1px" />
 
+                            <LinearLayout
+                                android:id="@+id/ll_user_email"
+                                style="@style/content_item_white">
+
+                                <TextView
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_width="80dp"
+                                    android:text="电子邮箱" />
+
+                                <TextView
+                                    android:id="@+id/txt_user_email"
+                                    style="@style/content_item_lf_tv"
+                                    android:layout_weight="1"
+                                    android:gravity="right|center_vertical"
+                                    android:paddingRight="10dp" />
+                            </LinearLayout>
                             <View style="@style/divider_horizontal_1px" />
 
                             <LinearLayout

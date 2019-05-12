@@ -30,8 +30,6 @@ public class UserInfoActivity extends XszBaseActivity implements View.OnClickLis
     ImageView iv_user_face;
     @BindView(R.id.txt_user_name)
     TextView txt_user_name;
-    @BindView(R.id.txt_user_sex)
-    TextView txt_user_sex;
     @BindView(R.id.txt_user_dizhi)
     TextView txt_user_dizhi;
     @BindView(R.id.txt_user_phone)
@@ -70,7 +68,6 @@ public class UserInfoActivity extends XszBaseActivity implements View.OnClickLis
         txt_user_work_adddress.setText(user.getWorkingAddress());
         txt_user_email.setText(user.getEmail());
         txt_user_id_cardno.setText(user.getCardNum());
-        txt_user_sex.setText(user.getSexName());
     }
 
     @Override

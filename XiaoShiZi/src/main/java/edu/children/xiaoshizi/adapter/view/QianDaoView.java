@@ -78,6 +78,11 @@ public class QianDaoView extends BaseView<QianDao> implements OnClickListener {
 		if (this.data.day<=this.data.signedDayNum){
 			drawable=context.getResources().getDrawable(R.drawable.icon_xingxing);
 			txt_jifen.setCompoundDrawablesWithIntrinsicBounds(null,drawable,null,null);
+			txt_day.setTextColor(context.getResources().getColor(R.color.text_black));
+			txt_jifen.setTextColor(context.getResources().getColor(R.color.text_black));
+		}else {
+			txt_day.setTextColor(context.getResources().getColor(R.color.text_gray));
+			txt_jifen.setTextColor(context.getResources().getColor(R.color.text_gray));
 		}
 		txt_jifen.setCompoundDrawablesWithIntrinsicBounds(null,drawable,null,null);
 	}

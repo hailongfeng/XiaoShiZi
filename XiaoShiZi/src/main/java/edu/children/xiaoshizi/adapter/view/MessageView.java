@@ -64,7 +64,7 @@ public class MessageView extends BaseView<Message>  implements View.OnClickListe
 			iv_message_icon.setImageResource(R.drawable.icon_inout_school_right_blue);
 			txt_message_content.setTextColor(context.getResources().getColor(R.color.xsz_text_black));
 		}else {
-			txt_message_content.setTextColor(context.getResources().getColor(R.color.red_text));
+			txt_message_content.setTextColor(context.getResources().getColor(R.color.red));
 			iv_message_icon.setImageResource(R.drawable.icon_inout_school_error);
 		}
 		txt_message_time.setText(data.getPushAppTime());

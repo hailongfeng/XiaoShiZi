@@ -6,6 +6,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import com.dou361.dialogui.DialogUIUtils;
+import com.dou361.dialogui.listener.DialogUIListener;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.TreeMap;
@@ -73,12 +76,24 @@ public class SuggestionActivity extends XszBaseActivity {
             @Override
             public void onSuccess(Response<User> respon) {
                 hideLoading();
-                new AlertDialog(context, "提示", "提交成功", false, 0, new AlertDialog.OnDialogButtonClickListener() {
+//                new AlertDialog(context, "提示", "提交成功!", false, 0, new AlertDialog.OnDialogButtonClickListener() {
+//                    @Override
+//                    public void onDialogButtonClick(int requestCode, boolean isPositive) {
+//                        if (isPositive){
+//                            finish();
+//                        }
+//                    }
+//                }).show();
+
+                DialogUIUtils.showAlert(context, "提示", "提交成功!", "", "", "", "确定", false, false, false, new DialogUIListener() {
                     @Override
-                    public void onDialogButtonClick(int requestCode, boolean isPositive) {
-                        if (isPositive){
-                            finish();
-                        }
+                    public void onPositive() {
+                        finish();
+                    }
+
+                    @Override
+                    public void onNegative() {
+
                     }
                 }).show();
             }
@@ -94,16 +109,27 @@ public class SuggestionActivity extends XszBaseActivity {
 
     @Override
     public void onReturnClick(View v) {
-        new AlertDialog(context, "提示", "放弃提交当前反馈？", true, 0, new AlertDialog.OnDialogButtonClickListener() {
-            @Override
-            public void onDialogButtonClick(int requestCode, boolean isPositive) {
-                if (isPositive){
-                    SuggestionActivity.super.onReturnClick(v);
-                }else {
+//        new AlertDialog(context, "提示", "放弃提交当前反馈？", true, 0, new AlertDialog.OnDialogButtonClickListener() {
+//            @Override
+//            public void onDialogButtonClick(int requestCode, boolean isPositive) {
+//                if (isPositive){
+//                    SuggestionActivity.super.onReturnClick(v);
+//                }else {
+//
+//                }
+//            }
+//        }).show();
 
-                }
+        DialogUIUtils.showAlert(context, "提示", "放弃提交当前反馈？", "", "", "取消", "确定", false, false, false, new DialogUIListener() {
+            @Override
+            public void onPositive() {
+                SuggestionActivity.super.onReturnClick(v);
+            }
+
+            @Override
+            public void onNegative() {
+
             }
         }).show();
-
     }
 }

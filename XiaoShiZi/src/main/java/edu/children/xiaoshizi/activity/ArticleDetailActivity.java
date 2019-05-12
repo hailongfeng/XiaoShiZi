@@ -36,6 +36,7 @@ import com.umeng.socialize.utils.ShareBoardlistener;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.TreeMap;
@@ -59,7 +60,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import zuo.biao.library.util.Log;
 import zuo.biao.library.util.StringUtil;
 
-public class ArticleDetailActivity extends XszBaseActivity implements View.OnClickListener{
+public class ArticleDetailActivity extends XszBaseActivity implements View.OnClickListener {
 
     private ArticleType articleType;
     private Article article;
@@ -90,15 +91,16 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     private UMShareListener mShareListener;
     private ShareAction mShareAction;
     String title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        title= getIntent().getStringExtra(INTENT_TITLE);
+        title = getIntent().getStringExtra(INTENT_TITLE);
         setContentView(R.layout.activity_article_detail);
     }
 
 
-    void initShare(){
+    void initShare() {
         mShareListener = new ArticleDetailActivity.CustomShareListener(this);
         /*增加自定义按钮的分享面板*/
         mShareAction = new ShareAction(context).setDisplayList(
@@ -107,7 +109,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 .setShareboardclickCallback(new ShareBoardlistener() {
                     @Override
                     public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
-                        print("ShareUrl==="+article.getShareUrl());
+                        print("ShareUrl===" + article.getShareUrl());
                         UMWeb web = new UMWeb(article.getShareUrl());
                         web.setTitle(title);
                         web.setDescription("来自小狮子的分享");
@@ -124,75 +126,77 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
         ImmersionBar.with(this)
                 .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .init();
-        articleType=(ArticleType) getIntent().getSerializableExtra("articleType");
-        article=(Article) getIntent().getSerializableExtra("article");
+        articleType = (ArticleType) getIntent().getSerializableExtra("articleType");
+        article = (Article) getIntent().getSerializableExtra("article");
         print(articleType.toString());
         print(article.toString());
-        if (isVideoArticle()){
+        if (isVideoArticle()) {
             cv_video_wrap.setVisibility(View.VISIBLE);
             btn_down_cache.setVisibility(View.VISIBLE);
             ll_xiepinglun.setVisibility(View.GONE);
             ib_share.setVisibility(View.VISIBLE);
             loadImage(article.getActivityVideoImageUrl(), player.thumbImageView);
-        }else {
-            if (articleType.getBelongTo()==1&&isLogin()){
+        } else {
+            if (articleType.getBelongTo() == 1 && isLogin()) {
                 ll_xiepinglun.setVisibility(View.VISIBLE);
                 edit_xiepinglun.setOnEditorActionListener(new EditorActionListener());
-            }else {
+            } else {
                 ll_xiepinglun.setVisibility(View.GONE);
             }
             cv_video_wrap.setVisibility(View.GONE);
             btn_down_cache.setVisibility(View.GONE);
             ib_share.setVisibility(View.GONE);
         }
-        preAgentWeb= AgentWeb.with(this)
+        preAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent((LinearLayout) linWeb, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator()
                 .createAgentWeb()
                 .ready();
-        agentWeb= getAgentWebField(preAgentWeb);
+        agentWeb = getAgentWebField(preAgentWeb);
         initShare();
     }
 
 
-    private boolean isImageArticle(){
-       return articleType.getType().equalsIgnoreCase("IT");
+    private boolean isImageArticle() {
+        return articleType.getType().equalsIgnoreCase("IT");
     }
-    private boolean isVideoArticle(){
+
+    private boolean isVideoArticle() {
         return articleType.getType().equalsIgnoreCase("VT");
     }
 
     public void initData() {
         getArticleById(article.getContentId());
 //        String pushAppTitle=articleType.getPushAppTitle()+"|"+article.getPushAppTitle();
-        if (isVideoArticle()){
+        if (isVideoArticle()) {
             tvBaseTitle.setText("视频详情");
-        }else {
+        } else {
+           String tmpTitle= substring(title, 16);
             tvBaseTitle.setText(title);
         }
     }
 
     private void getArticleById(String id) {
-        TreeMap sm = new TreeMap<String,String>();
-        sm.put("contentId",id);
+        TreeMap sm = new TreeMap<String, String>();
+        sm.put("contentId", id);
 
-        APIMethod method=APIMethod.loadContentById;
-        if (articleType.getBelongTo()==2){
-            method=APIMethod.loadSeClassRoomContentById;
-        }else if (articleType.getBelongTo()==3){
-            method=APIMethod.loadSafeLabContentById;
+        APIMethod method = APIMethod.loadContentById;
+        if (articleType.getBelongTo() == 2) {
+            method = APIMethod.loadSeClassRoomContentById;
+        } else if (articleType.getBelongTo() == 3) {
+            method = APIMethod.loadSafeLabContentById;
         }
-        LogicService.post(context, method,sm, new ApiSubscriber<Response<Article>>() {
+        LogicService.post(context, method, sm, new ApiSubscriber<Response<Article>>() {
             @Override
             public void onSuccess(Response<Article> respon) {
-                if (respon.getResult()!=null){
-                    article=respon.getResult();
-                    String videoImageUrl=article.getActivityVideoImageUrl();
-                    if (isVideoArticle()){
-                        String url=article.getActivityVideoUrl();
-                        if (StringUtils.isEmpty(url)){
+                if (respon.getResult() != null) {
+                    article = respon.getResult();
+                    String videoImageUrl = article.getActivityVideoImageUrl();
+                    if (isVideoArticle()) {
+                        String url = article.getActivityVideoUrl();
+                        if (StringUtils.isEmpty(url)) {
                             showShortToast("视频地址无效，无法播放");
-                        }else {
+                        } else {
                             print("111111");
                             File file = XszCache.getCachedVideoFile(url);
                             if (file.exists()) {
@@ -205,19 +209,19 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                             }
                             loadImage(videoImageUrl, player.thumbImageView);
                         }
-                    }else {
+                    } else {
                         updateCommont(article);
                     }
-                    String introduce=respon.getResult().getIntroduce();
-                    if (StringUtil.isNotEmpty(respon.getResult().getIntroduce(),true)){
-                        introduce="";
+                    String introduce = respon.getResult().getIntroduce();
+                    if (StringUtil.isEmpty(introduce, true)) {
+                        introduce = "";
                     }
                     agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml(introduce), "text/html", "UTF-8", null);
                 }
             }
 
             @Override
-            protected void onFail(Throwable  error) {
+            protected void onFail(Throwable error) {
                 error.printStackTrace();
                 showShortToast(error.getMessage());
                 player.setUp("", JCVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
@@ -233,7 +237,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 case R.id.edit_xiepinglun://写评论
                     if (actionId == EditorInfo.IME_ACTION_SEND) {
                         String content = edit_xiepinglun.getText().toString();
-                        submitComment(article.getContentId(),"0",content, ArticleComment.comment_type_Comment);
+                        submitComment(article.getContentId(), "0", content, ArticleComment.comment_type_Comment);
                     }
                     break;
             }
@@ -241,12 +245,13 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
         }
     }
 
-    void updateCommont(Article article){
-        rtv_dianzan.setText(article.getLikedNumber()+"");
-        rtv_fenxiang.setText(article.getShareNumber()+"");
+    void updateCommont(Article article) {
+        rtv_dianzan.setText(article.getLikedNumber() + "");
+        rtv_fenxiang.setText(article.getShareNumber() + "");
     }
+
     //点赞或评论
-    void submitComment(String contentId,String commentParentId,String commentContent,String articleCommentType){
+    void submitComment(String contentId, String commentParentId, String commentContent, String articleCommentType) {
         showLoading(R.string.msg_handing);
         TreeMap sm = new TreeMap<String, String>();
         sm.put("contentId", contentId);
@@ -256,7 +261,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
         LogicService.post(context, APIMethod.submitComment, sm, new ApiSubscriber<Response<Article>>() {
             @Override
             public void onSuccess(Response<Article> respon) {
-                Article newArticle=respon.getResult();
+                Article newArticle = respon.getResult();
                 edit_xiepinglun.setText("");
                 ArticleDetailActivity.this.article.setLikedNumber(newArticle.getLikedNumber());
                 ArticleDetailActivity.this.article.setShareNumber(newArticle.getShareNumber());
@@ -264,17 +269,17 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 ArticleDetailActivity.this.article.setShareUrl(newArticle.getShareUrl());
                 hideLoading();
                 showShortToast(respon.getMessage());
-                if (articleCommentType.equalsIgnoreCase(ArticleComment.comment_type_Comment)){
-                    String introduce=respon.getResult().getIntroduce();
+                if (articleCommentType.equalsIgnoreCase(ArticleComment.comment_type_Comment)) {
+                    String introduce = respon.getResult().getIntroduce();
                     agentWeb.getUrlLoader().loadDataWithBaseURL(null, getHtml(introduce), "text/html", "UTF-8", null);
-                }else {
+                } else {
                     updateCommont(newArticle);
                 }
-                EventBus.getDefault().post(new EventBusMessage<Article>(EventBusMessage.Type_article_comment,"评论数变化了",article));
+                EventBus.getDefault().post(new EventBusMessage<Article>(EventBusMessage.Type_article_comment, "评论数变化了", article));
             }
 
             @Override
-            protected void onFail(Throwable  error) {
+            protected void onFail(Throwable error) {
                 hideLoading();
                 showShortToast(error.getMessage());
                 error.printStackTrace();
@@ -282,7 +287,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
         });
     }
 
-    private void downLoadVideToCache(String url,String path){
+    private void downLoadVideToCache(String url, String path) {
         FileDownloader.getImpl().create(url)
                 .setPath(path)
                 .setListener(new FileDownloadListener() {
@@ -293,18 +298,18 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
 
                     @Override
                     protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        int percent=(int) ((double) soFarBytes / (double) totalBytes * 100);
-                        Log.d(TAG,"当前下载进度："+percent);
+                        int percent = (int) ((double) soFarBytes / (double) totalBytes * 100);
+                        Log.d(TAG, "当前下载进度：" + percent);
                     }
 
                     @Override
                     protected void completed(BaseDownloadTask task) {
                         showShortToast("缓存成功");
-                        ArticleCache dbArticleCache=DbUtils.getModelSingle(ArticleCache.class, ArticleCache_Table.contentId.eq(article.getContentId()));
-                        if (dbArticleCache!=null){
+                        ArticleCache dbArticleCache = DbUtils.getModelSingle(ArticleCache.class, ArticleCache_Table.contentId.eq(article.getContentId()));
+                        if (dbArticleCache != null) {
                             dbArticleCache.delete();
                         }
-                        ArticleCache articleCache=new ArticleCache(article);
+                        ArticleCache articleCache = new ArticleCache(article);
                         articleCache.save();
 
                     }
@@ -327,7 +332,6 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     }
 
 
-
     public void initEvent() {
         ib_share.setOnClickListener(this);
         rtv_dianzan.setOnClickListener(this);
@@ -342,6 +346,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
         }
         super.onBackPressed();
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -352,26 +357,26 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_down_cache:
-               if (!NetworkUtils.isConnected()){
-                   showShortToast("无法连接到网络");
-                   return;
-               }
-                String url=article.getActivityVideoUrl();
-                File file=XszCache.getCachedVideoFile(url);
-                if(file.exists()){
+                if (!NetworkUtils.isConnected()) {
+                    showShortToast("无法连接到网络");
+                    return;
+                }
+                String url = article.getActivityVideoUrl();
+                File file = XszCache.getCachedVideoFile(url);
+                if (file.exists()) {
                     showShortToast("缓存成功");
-                }else {
+                } else {
                     showShortToast("已加入缓存下载任务");
-                    downLoadVideToCache(url,file.getAbsolutePath());
+                    downLoadVideToCache(url, file.getAbsolutePath());
                 }
                 break;
             case R.id.rtv_dianzan:
-                if (!isLogin()){
+                if (!isLogin()) {
                     showShortToast("请先登录");
                     return;
                 }
 //                mShareAction.open();
-                submitComment(article.getContentId(),"0","", ArticleComment.comment_type_Liked);
+                submitComment(article.getContentId(), "0", "", ArticleComment.comment_type_Liked);
                 break;
             case R.id.rtv_fenxiang:
             case R.id.ib_share:
@@ -379,13 +384,15 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                 break;
         }
     }
+
     public void onReturnClick(View v) {
-            onBackPressed();//会从最外层子类调finish();BaseBottomWindow就是示例
+        onBackPressed();//会从最外层子类调finish();BaseBottomWindow就是示例
 
     }
 
-    private  class CustomShareListener implements UMShareListener {
+    private class CustomShareListener implements UMShareListener {
         private WeakReference<ShareBoardActivity> mActivity;
+
         private CustomShareListener(ArticleDetailActivity activity) {
             mActivity = new WeakReference(activity);
         }
@@ -400,7 +407,7 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
 
             if (platform.name().equals("WEIXIN_FAVORITE")) {
                 Toast.makeText(mActivity.get(), platform + " 收藏成功啦", Toast.LENGTH_SHORT).show();
-                submitComment(article.getContentId(),"0","", ArticleComment.comment_type_Share);
+                submitComment(article.getContentId(), "0", "", ArticleComment.comment_type_Share);
             } else {
                 if (platform != SHARE_MEDIA.MORE && platform != SHARE_MEDIA.SMS
                         && platform != SHARE_MEDIA.EMAIL
@@ -414,9 +421,9 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
                         && platform != SHARE_MEDIA.GOOGLEPLUS
                         && platform != SHARE_MEDIA.YNOTE
                         && platform != SHARE_MEDIA.EVERNOTE) {
-                    submitComment(article.getContentId(),"0","", ArticleComment.comment_type_Share);
+                    submitComment(article.getContentId(), "0", "", ArticleComment.comment_type_Share);
                     Toast.makeText(mActivity.get(), platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     showShortToast("分享失败啦");
                 }
             }
@@ -448,8 +455,6 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
     }
 
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -471,6 +476,53 @@ public class ArticleDetailActivity extends XszBaseActivity implements View.OnCli
         super.onDestroy();
         UMShareAPI.get(this).release();
         agentWeb.destroy();
+    }
+
+    /**
+     * 按字节截取字符串
+     *
+     * @param orignal 原始字符串
+     * @param count   截取位数
+     * @return 截取后的字符串
+     * @throws UnsupportedEncodingException 使用了JAVA不支持的编码格式
+     */
+    public static String substring(String orignal, int count){
+        try {
+            if (orignal != null && !"".equals(orignal)) {
+                orignal = new String(orignal.getBytes(), "UTF-8");
+                if (count > 0 && count < orignal.getBytes("UTF-8").length) {
+                    StringBuffer buff = new StringBuffer();
+                    char c;
+                    for (int i = 0; i < count; i++) {
+                        c = orignal.charAt(i);
+                        buff.append(c);
+                        if (isChineseChar(c)) {
+                            --count;
+                        }
+                    }
+                    return buff.toString();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return orignal;
+    }
+
+    /**
+     * 判断是否是一个中文汉字
+     *
+     * @param c 字符
+     * @return true表示是中文汉字，false表示是英文字母
+     * @throws UnsupportedEncodingException 使用了JAVA不支持的编码格式
+     */
+    public static boolean isChineseChar(char c){
+        try {
+            return String.valueOf(c).getBytes("UTF-8").length > 1;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
 }

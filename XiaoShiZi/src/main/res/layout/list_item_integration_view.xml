@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/txt_remark"
         android:padding="@dimen/dp_15"
+        android:textColor="@color/text_gray"
         android:text="2019-03-18" />
 
     <TextView
