@@ -31,7 +31,7 @@
                 android:drawablePadding="5dp"
                 android:textSize="14sp"
                 android:gravity="center_vertical"
-                android:drawableLeft="@drawable/icon_spbf"
+                android:drawableLeft="@drawable/icon_bfcs2"
                 android:text="156" />
             <TextView
                 android:padding="5dp"
