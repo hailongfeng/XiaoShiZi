@@ -14,9 +14,11 @@ public class Parent implements Serializable{
     private String studentName	;
     private String headPortrait	;
     private String phone; //电话号码
+    private String mobile; //电话号码
     private String userId;
     private String loginName;
     private String userName;
+    private String area;
     private String workingAddress;
     private String homeAddress;
     private String email;
@@ -124,5 +126,21 @@ public class Parent implements Serializable{
 
     public void setCardNum(String cardNum) {
         this.cardNum = cardNum;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 }

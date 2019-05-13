@@ -38,7 +38,24 @@
                 android:layout_marginTop="90dp"
                 >
                 <LinearLayout
-                    android:id="@+id/ll_parent_address"
+                    android:id="@+id/ll_parent_phone"
+                    style="@style/content_item_white">
+
+                    <TextView
+                        style="@style/content_item_lf_tv"
+                        android:layout_width="80dp"
+                        android:text="联系电话" />
+
+                    <TextView
+                        android:id="@+id/txt_parent_phone"
+                        style="@style/content_item_lf_tv"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="10dp" />
+                </LinearLayout>
+                <View style="@style/divider_horizontal_1px" />
+                <LinearLayout
+                    android:id="@+id/ll_parent_area"
                     style="@style/content_item_white">
 
                     <TextView
@@ -47,7 +64,7 @@
                         android:text="所在地" />
 
                     <TextView
-                        android:id="@+id/txt_parent_address"
+                        android:id="@+id/txt_parent_area"
                         style="@style/content_item_lf_tv"
                         android:layout_width="match_parent"
                         android:gravity="right"

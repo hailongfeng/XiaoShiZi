@@ -123,12 +123,11 @@ public class SuggestionActivity extends XszBaseActivity {
         DialogUIUtils.showAlert(context, "提示", "放弃提交当前反馈？", "", "", "取消", "确定", false, false, false, new DialogUIListener() {
             @Override
             public void onPositive() {
-                SuggestionActivity.super.onReturnClick(v);
             }
 
             @Override
             public void onNegative() {
-
+                SuggestionActivity.super.onReturnClick(v);
             }
         }).show();
     }

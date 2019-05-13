@@ -33,6 +33,7 @@ public class User extends BaseModel {
 	private String head; //头像
 	private String name; //名字
 	private String phone; //电话号码
+	private String mobile; //电话号码
 	private String tag; //标签
 	private boolean starred; //星标
 
@@ -43,6 +44,7 @@ public class User extends BaseModel {
 	private String headPortrait;
 	private String workingAddress;
 	private String homeAddress;
+	private String area;
 	private String email;
 	private String cardNum;
 	private String verifiedStatus; //是否实名认证。1 是 0不是
@@ -115,6 +117,14 @@ public class User extends BaseModel {
 	}
 	public void setStarred(boolean starred) {
 		this.starred = starred;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 	public String getUserId() {
@@ -208,6 +218,14 @@ public class User extends BaseModel {
 
 	public void setFirstGuardianStatus(String firstGuardianStatus) {
 		this.firstGuardianStatus = firstGuardianStatus;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
 	}
 
 	public String getAppShareUrl() {

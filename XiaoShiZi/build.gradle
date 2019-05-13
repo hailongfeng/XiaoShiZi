@@ -36,13 +36,12 @@ android {
         signingConfig signingConfigs.debug
     }
     buildTypes {
-//        release {
-//            minifyEnabled true // 混淆
-//            zipAlignEnabled true // Zipalign优化
-//            shrinkResources false // 移除无用的resource文件
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.debug
-//        }
+        release {
+            minifyEnabled false // 混淆
+            zipAlignEnabled true // Zipalign优化
+            shrinkResources false // 移除无用的resource文件
+            signingConfig signingConfigs.debug
+        }
         debug {
             minifyEnabled false // 混淆
             zipAlignEnabled false // Zipalign优化

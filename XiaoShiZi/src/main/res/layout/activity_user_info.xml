@@ -64,7 +64,7 @@
                                     android:text="所在地" />
 
                                 <TextView
-                                    android:id="@+id/txt_user_dizhi"
+                                    android:id="@+id/txt_user_area"
                                     style="@style/content_item_lf_tv"
                                     android:layout_weight="1"
                                     android:gravity="right|center_vertical"

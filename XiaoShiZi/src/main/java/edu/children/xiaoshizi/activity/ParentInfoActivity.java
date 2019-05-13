@@ -3,8 +3,6 @@ package edu.children.xiaoshizi.activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.gyf.barlibrary.ImmersionBar;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.TreeMap;
@@ -18,7 +16,6 @@ import edu.children.xiaoshizi.logic.APIMethod;
 import edu.children.xiaoshizi.logic.LogicService;
 import edu.children.xiaoshizi.net.rxjava.ApiSubscriber;
 import edu.children.xiaoshizi.net.rxjava.Response;
-import zuo.biao.library.util.Log;
 
 public class ParentInfoActivity extends XszBaseActivity  {
     private static final int REQUEST_TO_DATE_PICKER = 1;
@@ -26,8 +23,10 @@ public class ParentInfoActivity extends XszBaseActivity  {
     RoundedImageView iv_parent_face;
     @BindView(R.id.txt_parent_name)
     TextView txt_parent_name;
-    @BindView(R.id.txt_parent_address)
-    TextView txt_parent_address;
+    @BindView(R.id.txt_parent_phone)
+    TextView txt_parent_phone;
+    @BindView(R.id.txt_parent_area)
+    TextView txt_parent_area;
     @BindView(R.id.txt_work_address)
     TextView txt_work_address;
     @BindView(R.id.txt_parent_home_address)
@@ -61,7 +60,8 @@ public class ParentInfoActivity extends XszBaseActivity  {
     private void updateParent(Parent parent) {
         loadImage(parent.getHeadPortrait(),iv_parent_face);
         txt_parent_name.setText(parent.getParentUserName());
-        txt_parent_address.setText(parent.getHomeAddress());
+        txt_parent_phone.setText(parent.getMobile());
+        txt_parent_area.setText(parent.getArea());
         txt_parent_guanxi.setText(parent.getCustody());
         txt_parent_home_address.setText(parent.getHomeAddress());
         txt_work_address.setText(parent.getWorkingAddress());

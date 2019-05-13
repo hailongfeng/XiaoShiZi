@@ -7,7 +7,6 @@ import com.alibaba.fastjson.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +18,6 @@ import edu.children.xiaoshizi.DemoApplication;
 import edu.children.xiaoshizi.bean.User;
 import edu.children.xiaoshizi.net.rxjava.Response;
 import edu.children.xiaoshizi.net.rxjava.RetrofitClient;
-import edu.children.xiaoshizi.utils.ReflectionUtils;
 import edu.children.xiaoshizi.utils.StringUtils;
 import edu.children.xiaoshizi.utils.Tools;
 import io.reactivex.Observable;

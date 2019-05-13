@@ -30,6 +30,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.roundview.RoundTextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.umeng.socialize.ShareAction;
@@ -197,6 +199,10 @@ public class WoDeFragment extends XszBaseFragment implements OnClickListener{
 
 	@Override
 	public void initData() {//必须调用
+
+		if (!NetworkUtils.isConnected()){
+			showShortToast(R.string.net_error);
+		}
 		updateUserInfo();
 
 		updateStudent();

@@ -53,6 +53,10 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements It
     EditText edt_user_dizhi;
     @BindView(R.id.edt_user_email)
     EditText edt_user_email;
+    @BindView(R.id.edt_user_mobile)
+    EditText edt_user_mobile;
+    @BindView(R.id.edt_user_area)
+    EditText edt_user_area;
     @BindView(R.id.edt_user_work_adddress)
     EditText edt_user_work_adddress;
     @BindView(R.id.edt_user_home_adddress)
@@ -137,6 +141,8 @@ public class ChangeUserInfoActivity extends BaseTakePhotoActivity  implements It
             sm.put("sex", "U");
         }
 
+        sm.put("mobile",edt_user_mobile.getText().toString());
+        sm.put("area",edt_user_area.getText().toString());
         sm.put("workingAddress",edt_user_work_adddress.getText().toString());
         sm.put("homeAddress",edt_user_home_adddress.getText().toString());
         sm.put("headPortrait",headPortrait);

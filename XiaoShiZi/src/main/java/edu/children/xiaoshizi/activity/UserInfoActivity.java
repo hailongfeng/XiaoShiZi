@@ -30,8 +30,8 @@ public class UserInfoActivity extends XszBaseActivity implements View.OnClickLis
     ImageView iv_user_face;
     @BindView(R.id.txt_user_name)
     TextView txt_user_name;
-    @BindView(R.id.txt_user_dizhi)
-    TextView txt_user_dizhi;
+    @BindView(R.id.txt_user_area)
+    TextView txt_user_area;
     @BindView(R.id.txt_user_phone)
     TextView txt_user_phone;
     @BindView(R.id.txt_user_email)
@@ -61,10 +61,10 @@ public class UserInfoActivity extends XszBaseActivity implements View.OnClickLis
     @Override
     public void initData() {
         txt_user_name.setText(user.getUserName());
-        txt_user_phone.setText(user.getLoginName());
+        txt_user_phone.setText(user.getMobile());
         loadImage(user.getHeadPortrait(), iv_user_face);
         txt_user_home_adddress.setText(user.getHomeAddress());
-        txt_user_dizhi.setText(user.getHomeAddress());
+        txt_user_area.setText(user.getArea());
         txt_user_work_adddress.setText(user.getWorkingAddress());
         txt_user_email.setText(user.getEmail());
         txt_user_id_cardno.setText(user.getCardNum());
