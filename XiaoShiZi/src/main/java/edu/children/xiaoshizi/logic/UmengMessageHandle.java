@@ -13,6 +13,7 @@ import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 import com.umeng.socialize.PlatformConfig;
 
+import org.android.agoo.huawei.HuaWeiRegister;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Iterator;
@@ -67,6 +68,11 @@ public class UmengMessageHandle {
         PlatformConfig.setWeixin(wxKey, wxEncryKey);
 //        PlatformConfig.setQQZone("101571206", "369a35990daa3f5185eb2dfc02ef5ac7");
         PlatformConfig.setQQZone(qqKey, qqEncryKey);
+        registerHuaWei();
+    }
+
+    void registerHuaWei(){
+        HuaWeiRegister.register(DemoApplication.getInstance());
     }
 
     private UmengMessageHandler messageHandler = new UmengMessageHandler() {

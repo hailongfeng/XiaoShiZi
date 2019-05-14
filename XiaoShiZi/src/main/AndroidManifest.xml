@@ -39,12 +39,13 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:label">
-        <activity android:name=".activity.LoginOutActivity"
+        tools:replace="android:label,android:allowBackup"
+        >
+        <activity
+            android:name=".activity.LoginOutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Window"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            ></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activity.ConstraintActivity" />
         <activity
             android:name=".activity.SplashActivity"
@@ -203,7 +204,13 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="豌豆荚" />
-
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="100791207" />
+        <activity
+            android:name=".activity.MipushTestActivity"
+            android:launchMode="singleTask"
+            android:exported="true" />
         <activity
             android:name=".activity.ContributeArticleActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

@@ -1,2 +1,5 @@
 到微信开放平台拿到appkey
 到腾讯开放平台拿到key
+
+
+https://developer.umeng.com/docs/66632/detail/98589
