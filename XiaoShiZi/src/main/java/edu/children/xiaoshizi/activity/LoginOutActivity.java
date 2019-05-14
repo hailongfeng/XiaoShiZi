@@ -30,7 +30,7 @@ public class LoginOutActivity extends XszBaseActivity {
     public static Intent createIntent(Context context, String title) {
         Intent intent= new Intent(context, LoginOutActivity.class);
         intent.putExtra(INTENT_TITLE, title);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         return intent;
     }
 

@@ -32,7 +32,7 @@
                 <EditText
                     android:id="@+id/edit_query"
                     android:layout_marginLeft="5dp"
-                    android:drawableLeft="@drawable/icon_search"
+                    android:drawableLeft="@drawable/icon_search_gray"
                     android:drawablePadding="5dp"
                     android:hint="搜索你想要的内容"
                     android:singleLine="true"
@@ -62,8 +62,9 @@
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@id/rvBaseRecycler"
+        android:visibility="gone"
         style="@style/lv" />
-
+    <include  layout="@layout/article_search_word_layout"/>
         <LinearLayout
             android:id="@+id/ll_article_search_result_empty"
             android:orientation="vertical"

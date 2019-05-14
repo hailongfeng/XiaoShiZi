@@ -82,7 +82,8 @@
                 app:stl_indicatorCornerRadius="2dp"
                 app:stl_indicatorInFront="false"
                 app:stl_indicatorInterpolation="smart"
-                app:stl_indicatorThickness="2dp"
+                app:stl_indicatorThickness="3dp"
+                app:stl_indicatorWidth="10dp"
                 app:stl_underlineColor="#4D000000"
                 app:stl_underlineThickness="0dp" />
 

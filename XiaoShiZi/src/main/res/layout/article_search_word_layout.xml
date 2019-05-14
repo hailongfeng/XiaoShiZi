@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/activity_page"
+    android:id="@+id/ll_search_history_wrap"
     android:background="@color/white">
     <LinearLayout
         android:id="@+id/ll_search_history"

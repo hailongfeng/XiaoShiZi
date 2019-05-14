@@ -41,11 +41,11 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
 
     }
 
-   public static int i=0;
+//   public static int i=0;
     @Override
     public final void onNext(T t) {
-        i++;
-        Log.d(TAG, "code:" + t.getCode() + "，message ：" + t.getMessage()+",i=" +i);
+//        i++;
+        Log.d(TAG, "code:" + t.getCode() + "，message ：" + t.getMessage());
 //        if (i==36) t.setCode("10012");
         if (t!=null&&t.getCode().equals(Response.SUCCESS)) {
             onSuccess(t);
@@ -53,7 +53,7 @@ public abstract class ApiSubscriber<T extends Response> extends DisposableObserv
 //            t1(t.getMessage());
 //            EventBus.getDefault().post(new EventBusMessage<String>(EventBusMessage.Type_login_ineffective,t.getMessage()));
             String msg=(t!=null&&StringUtil.isNotEmpty(t.getMessage(),true)?t.getMessage():"服务器异常");
-            onFail(new Exception(msg));
+//            onFail(new Exception(msg));
             DemoApplication.getInstance().startActivity(LoginOutActivity.createIntent(DemoApplication.getInstance(), t.getMessage()));
         }else{
             String msg=(t!=null&&StringUtil.isNotEmpty(t.getMessage(),true)?t.getMessage():"服务器异常");

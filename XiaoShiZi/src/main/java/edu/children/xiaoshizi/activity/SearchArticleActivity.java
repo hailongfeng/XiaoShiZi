@@ -74,11 +74,26 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
         setContentView(R.layout.activity_search_article);
     }
 
+
+
+    List<SearchWorldHistory> data;
+    SearchWordHistoryAdapter adapter;
+    @BindView(R.id.lvBaseList)
+    ListView lv_search_word_history;
+    @BindView(R.id.ll_search_history_wrap)
+    LinearLayout ll_search_history_wrap;
+    @BindView(R.id.iv_delete_all)
+    ImageView iv_delete_all;
+    @BindView(R.id.ll_search_history)
+    LinearLayout ll_search_history;
+
     class HistoryHoleder {
         List<SearchWorldHistory> data;
         SearchWordHistoryAdapter adapter;
         @BindView(R.id.lvBaseList)
         ListView lv_search_word_history;
+        @BindView(R.id.ll_search_history_wrap)
+        LinearLayout ll_search_history_wrap;
         @BindView(R.id.iv_delete_all)
         ImageView iv_delete_all;
         @BindView(R.id.ll_search_history)
@@ -106,41 +121,78 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
             iv_delete_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    historyPopupWindow.dismiss();
+//                    historyPopupWindow.dismiss();
+                    ll_search_history_wrap.setVisibility(View.GONE);
                     DbUtils.deleteModel(SearchWorldHistory.class);
                 }
             });
             adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    historyPopupWindow.dismiss();
+//                    historyPopupWindow.dismiss();
+                    ll_search_history_wrap.setVisibility(View.GONE);
                     String searchkeyWord = data.get(position).getName();
                     edit_query.setText(searchkeyWord);
                     searchArticleByKeyWorld(searchkeyWord);
                 }
             });
-
             adapter.refresh(data);
         }
     }
 
-    private PopupWindow historyPopupWindow;
-    private HistoryHoleder historyHoleder;
+//    private PopupWindow historyPopupWindow;
+//    private HistoryHoleder historyHoleder;
 
     void showHistoryList() {
         List<SearchWorldHistory> data=DbUtils.getModelList(SearchWorldHistory.class);
+        adapter = new SearchWordHistoryAdapter(context);
+        adapter.setOnViewClickListener(new BaseView.OnViewClickListener() {
+            @Override
+            public void onViewClick(@NonNull BaseView bv, @NonNull View v) {
+//                    showShortToast(((SearchWorldHistory) bv.data).getName());
+                ((SearchWorldHistory) bv.data).delete();
+                data.remove(bv.data);
+                adapter.refresh(data);
+//                    adapter.notifyDataSetChanged();
+            }
+        });
+        lv_search_word_history.setAdapter(adapter);
+        iv_delete_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                    historyPopupWindow.dismiss();
+                ll_search_history_wrap.setVisibility(View.GONE);
+                DbUtils.deleteModel(SearchWorldHistory.class);
+            }
+        });
+        adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                    historyPopupWindow.dismiss();
+                ll_search_history_wrap.setVisibility(View.GONE);
+                String searchkeyWord = data.get(position).getName();
+                edit_query.setText(searchkeyWord);
+                searchArticleByKeyWorld(searchkeyWord);
+            }
+        });
         if (data!=null&&data.size()>0){
-            historyHoleder = new HistoryHoleder(data);
-            View contentView = LayoutInflater.from(context).inflate(R.layout.article_search_word_layout, null, false);
-            ButterKnife.bind(historyHoleder, contentView);
-            historyHoleder.bindView();
-            historyPopupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT,  1000, true);
-            historyPopupWindow.setOutsideTouchable(true);
-            historyPopupWindow.setTouchable(true);
-            historyPopupWindow.showAsDropDown(ll_top, 0, 0);
+            adapter.refresh(data);
+//            historyHoleder = new HistoryHoleder(data);
+//            View contentView = LayoutInflater.from(context).inflate(R.layout.article_search_word_layout, null, false);
+//            ButterKnife.bind(historyHoleder, super.view);
+//            historyHoleder.bindView();
+            ll_search_history_wrap.setVisibility(View.VISIBLE);
+//            historyPopupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT,  1000, true);
+//            historyPopupWindow.setOutsideTouchable(true);
+//            historyPopupWindow.setTouchable(true);
+//            historyPopupWindow.showAsDropDown(ll_top, 0, 0);
+        }else {
+            ll_search_history_wrap.setVisibility(View.GONE);
         }
-
     }
+
+
+
 
     @Override
     public void initView() {
@@ -183,13 +235,13 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
                 }
             }
         });
-        updataList(new ArrayList<>(),true);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+//        updataList(new ArrayList<>(),true);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
                 showHistoryList();
-            }
-        },300);
+//            }
+//        },300);
     }
 
 
@@ -200,6 +252,7 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
                 case R.id.edit_query://搜索
                     if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                         String key = edit_query.getText().toString();
+                        ll_search_history_wrap.setVisibility(View.GONE);
                         searchArticleByKeyWorld(key);
                     }
                     break;
@@ -216,6 +269,7 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
             @Override
             public void onSuccess(Response<List<Article>> respon) {
                 edit_query.clearFocus();
+                rvBaseRecycler.setVisibility(View.VISIBLE);
                 SearchWorldHistory historyExit= DbUtils.getModelSingle(SearchWorldHistory.class, SearchWorldHistory_Table.name.eq(searchkeyWord));
                 if (historyExit == null) {
                     SearchWorldHistory history = new SearchWorldHistory();
@@ -225,10 +279,10 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
                 }
                 hideLoading();
                 updataList(respon.getResult(),false);
-                if (historyPopupWindow!=null&&historyPopupWindow.isShowing()){
-                    historyPopupWindow.dismiss();
-                    historyPopupWindow=null;
-                }
+//                if (historyPopupWindow!=null&&historyPopupWindow.isShowing()){
+//                    historyPopupWindow.dismiss();
+//                    historyPopupWindow=null;
+//                }
             }
 
             @Override
@@ -284,7 +338,8 @@ public class SearchArticleActivity extends XszBaseActivity implements View.OnCli
             case R.id.iv_delete_all:
                 DbUtils.deleteModel(SearchWorldHistory.class);
                 initData();
-                historyPopupWindow.dismiss();
+//                historyPopupWindow.dismiss();
+                ll_search_history_wrap.setVisibility(View.GONE);
                 break;
             case R.id.iv_delete_input_text:
                 edit_query.setText("");
